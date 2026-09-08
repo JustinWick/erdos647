@@ -112,7 +112,7 @@
   "reciprocal_kernel": {
     "package": "research",
     "build": [
-      "+Erdos647Sieve.ReciprocalKernel"
+      "+Erdos647Research.ReciprocalKernel"
     ],
     "audits": {
       "Audit/ReciprocalKernel.lean": [
@@ -127,7 +127,7 @@
   "reciprocal_abel": {
     "package": "research",
     "build": [
-      "+Erdos647Sieve.PrimeReciprocalSummation"
+      "+Erdos647Research.PrimeReciprocalSummation"
     ],
     "audits": {
       "Audit/ReciprocalAbel.lean": [
@@ -143,10 +143,30 @@
     ],
     "historical_status": "accepted in earlier research workspace"
   },
+  "pntplus_inputs": {
+    "package": "research",
+    "build": [
+      "+Erdos647Research.Compat.PNTPlus"
+    ],
+    "audits": {
+      "Audit/PNTPlus.lean": [
+        "MediumPNT",
+        "RS_prime.pntBigO",
+        "RS_prime.pnt",
+        "RS_prime.intervalIntegrable_inv_log_pow",
+        "RS_prime.ioiIntegrable_inv_log_pow",
+        "RS_prime.bound_deriv",
+        "RS_prime.integrableOn_deriv",
+        "RS_prime.integrableOn_deriv_inv_div_log"
+      ]
+    },
+    "prerequisites": [],
+    "historical_status": "new source-restricted PNT+ boundary; separate from prior broad import"
+  },
   "analytic_inputs": {
     "package": "research",
     "build": [
-      "+Erdos647Sieve.AnalyticInputs"
+      "+Erdos647Research.AnalyticInputs"
     ],
     "audits": {
       "Audit/AnalyticInputs.lean": [
@@ -158,14 +178,15 @@
       ]
     },
     "prerequisites": [
-      "reciprocal_kernel"
+      "reciprocal_kernel",
+      "pntplus_inputs"
     ],
     "historical_status": "accepted in earlier research workspace"
   },
   "clean_mertens": {
     "package": "research",
     "build": [
-      "+Erdos647Sieve.CleanMertens"
+      "+Erdos647Research.CleanMertens"
     ],
     "audits": {
       "Audit/CleanMertens.lean": [
@@ -183,7 +204,7 @@
   "selected_prime_reciprocals": {
     "package": "research",
     "build": [
-      "+Erdos647Sieve.SelectedPrimeReciprocals"
+      "+Erdos647Research.SelectedPrimeReciprocals"
     ],
     "audits": {
       "Audit/SelectedPrimeReciprocals.lean": [
@@ -200,7 +221,7 @@
   "endpoint_log_bounds": {
     "package": "research",
     "build": [
-      "+Erdos647Sieve.EndpointLogBounds"
+      "+Erdos647Research.EndpointLogBounds"
     ],
     "audits": {
       "Audit/EndpointLogBounds.lean": [
@@ -215,7 +236,7 @@
   "factorial_bounds": {
     "package": "research",
     "build": [
-      "+Erdos647Sieve.FactorialBounds"
+      "+Erdos647Research.FactorialBounds"
     ],
     "audits": {
       "Audit/FactorialBounds.lean": [
@@ -230,7 +251,7 @@
   "factorial_estimate": {
     "package": "research",
     "build": [
-      "+Erdos647Sieve.FactorialEstimate"
+      "+Erdos647Research.FactorialEstimate"
     ],
     "audits": {
       "Audit/FactorialEstimate.lean": [
@@ -247,7 +268,7 @@
   "log_budget_factorial": {
     "package": "research",
     "build": [
-      "+Erdos647Sieve.LogBudgetFactorial"
+      "+Erdos647Research.LogBudgetFactorial"
     ],
     "audits": {
       "Audit/LogBudgetFactorial.lean": [
@@ -263,7 +284,7 @@
   "prime_reciprocal_lower": {
     "package": "research",
     "build": [
-      "+Erdos647Sieve.PrimeReciprocalLower"
+      "+Erdos647Research.PrimeReciprocalLower"
     ],
     "audits": {
       "Audit/PrimeReciprocalLower.lean": [
@@ -275,12 +296,12 @@
       ]
     },
     "prerequisites": [],
-    "historical_status": "pending"
+    "historical_status": "accepted in v34 run 20260908T064235Z_611434a1; v35 lint edits require a new audit"
   },
   "small_prime_debit_estimate": {
     "package": "research",
     "build": [
-      "+Erdos647Sieve.SmallPrimeDebitEstimate"
+      "+Erdos647Research.SmallPrimeDebitEstimate"
     ],
     "audits": {
       "Audit/SmallPrimeDebitEstimate.lean": [
@@ -297,7 +318,7 @@
   "corrected_budget_estimate": {
     "package": "research",
     "build": [
-      "+Erdos647Sieve.CorrectedBudgetEstimate"
+      "+Erdos647Research.CorrectedBudgetEstimate"
     ],
     "audits": {
       "Audit/CorrectedBudgetEstimate.lean": [

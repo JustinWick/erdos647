@@ -1,0 +1,1619 @@
+{
+  "schema": 1,
+  "run_id": "erdos647_repo_v36_results_20260908T073909Z_c7bbf1b5",
+  "started_utc": "2026-09-08T07:39:09.803340+00:00",
+  "status": "PASS_SELECTED_CHECKS",
+  "scope": "all",
+  "setup_requested": false,
+  "gates": {
+    "core": {
+      "status": "PASS",
+      "historical_status": "finite source chain accepted; standalone package boundary added in v31",
+      "axioms": {
+        "Erdos647Sieve.finiteMoment": [
+          "Classical.choice",
+          "Quot.sound",
+          "propext"
+        ],
+        "Erdos647Sieve.budgetDebit": [
+          "Classical.choice",
+          "Quot.sound",
+          "propext"
+        ],
+        "Erdos647Sieve.finiteCounting": [
+          "Classical.choice",
+          "Quot.sound",
+          "propext"
+        ],
+        "Erdos647Sieve.Bonferroni.pow_add_linear_le": [
+          "Classical.choice",
+          "Quot.sound",
+          "propext"
+        ],
+        "Erdos647Sieve.Bonferroni.factorial_mul_elementary_le_pow_sum": [
+          "Classical.choice",
+          "Quot.sound",
+          "propext"
+        ],
+        "Erdos647Sieve.Bonferroni.elementary_le_pow_sum_div_factorial": [
+          "Classical.choice",
+          "Quot.sound",
+          "propext"
+        ],
+        "Erdos647Sieve.Bonferroni.avoidProduct_le_exp_neg_sum": [
+          "Classical.choice",
+          "Quot.sound",
+          "propext"
+        ],
+        "Erdos647Sieve.Bonferroni.even_truncation_le_exp_add_tail": [
+          "Classical.choice",
+          "Quot.sound",
+          "propext"
+        ],
+        "Erdos647Sieve.Bonferroni.even_sum_le_exp_add_tail": [
+          "Classical.choice",
+          "Quot.sound",
+          "propext"
+        ],
+        "Erdos647Sieve.sum_map_toList_eq_sum": [
+          "Classical.choice",
+          "Quot.sound",
+          "propext"
+        ],
+        "Erdos647Sieve.prod_map_toList_eq_prod": [
+          "Classical.choice",
+          "Quot.sound",
+          "propext"
+        ],
+        "Erdos647Sieve.avoidProduct_map_toList": [
+          "Classical.choice",
+          "Quot.sound",
+          "propext"
+        ],
+        "Erdos647Sieve.prod_ite_eq_pow_card_filter": [
+          "Classical.choice",
+          "Quot.sound",
+          "propext"
+        ],
+        "Erdos647Sieve.hitWeights_bounds": [
+          "Classical.choice",
+          "Quot.sound",
+          "propext"
+        ],
+        "Erdos647Sieve.avoidProduct_hitWeights": [
+          "Classical.choice",
+          "Quot.sound",
+          "propext"
+        ],
+        "Erdos647Sieve.meanWeights_sum": [
+          "Classical.choice",
+          "Quot.sound",
+          "propext"
+        ],
+        "Erdos647Sieve.meanWeights_bounds": [
+          "Classical.choice",
+          "Quot.sound",
+          "propext"
+        ],
+        "Erdos647Sieve.hitWeight_pointwise_upper": [
+          "Classical.choice",
+          "Quot.sound",
+          "propext"
+        ],
+        "Erdos647Sieve.hitWeight_interval_upper": [
+          "Classical.choice",
+          "Quot.sound",
+          "propext"
+        ],
+        "Erdos647Sieve.meanWeight_truncation_upper": [
+          "Classical.choice",
+          "Quot.sound",
+          "propext"
+        ],
+        "Erdos647Sieve.card_filter_natCast_image": [
+          "Classical.choice",
+          "Quot.sound",
+          "propext"
+        ],
+        "Erdos647Sieve.hitCount_eq_nat_filter_card": [
+          "Classical.choice",
+          "Quot.sound",
+          "propext"
+        ],
+        "Erdos647Sieve.two_pow_primeFactors_card_le_tau": [
+          "Classical.choice",
+          "Quot.sound",
+          "propext"
+        ],
+        "Erdos647Sieve.primeFactors_card_le_log_floor": [
+          "Classical.choice",
+          "Quot.sound",
+          "propext"
+        ],
+        "Erdos647Sieve.prefix_primeFactor_sum_le_logBudget": [
+          "Classical.choice",
+          "Quot.sound",
+          "propext"
+        ],
+        "Erdos647Sieve.div_le_divisorOccurrences": [
+          "Classical.choice",
+          "Quot.sound",
+          "propext"
+        ],
+        "Erdos647Sieve.sum_divisorOccurrences_eq": [
+          "Classical.choice",
+          "Quot.sound",
+          "propext"
+        ],
+        "Erdos647Sieve.windowPolynomial_eq_nat_product": [
+          "Classical.choice",
+          "Quot.sound",
+          "propext"
+        ],
+        "Erdos647Sieve.prime_dvd_nat_product_iff": [
+          "Classical.choice",
+          "Quot.sound",
+          "propext"
+        ],
+        "Erdos647Sieve.prime_dvd_window_iff": [
+          "Classical.choice",
+          "Quot.sound",
+          "propext"
+        ],
+        "Erdos647Sieve.one_le_divisorOccurrences_of_hit": [
+          "Classical.choice",
+          "Quot.sound",
+          "propext"
+        ],
+        "Erdos647Sieve.smallPrimes_disjoint_selectedPrimes": [
+          "Classical.choice",
+          "Quot.sound",
+          "propext"
+        ],
+        "Erdos647Sieve.smallPrimeDebit_add_hitCount_le_primeFactor_sum": [
+          "Classical.choice",
+          "Quot.sound",
+          "propext"
+        ],
+        "Erdos647Sieve.no_prefix_of_negative_correctedBudget": [
+          "Classical.choice",
+          "Quot.sound",
+          "propext"
+        ],
+        "Erdos647Sieve.finiteCounting_of_finiteMoment": [
+          "Classical.choice",
+          "Quot.sound",
+          "propext"
+        ],
+        "Erdos647Sieve.candidateCount_le_window_of_negative_correctedBudget": [
+          "Classical.choice",
+          "Quot.sound",
+          "propext"
+        ],
+        "Erdos647Sieve.count_le_exceptions_add_weight": [
+          "Classical.choice",
+          "Quot.sound",
+          "propext"
+        ],
+        "Erdos647Sieve.one_le_budget_weight": [
+          "Classical.choice",
+          "Quot.sound",
+          "propext"
+        ],
+        "Erdos647Sieve.Bonferroni.signedError_nonneg": [
+          "Classical.choice",
+          "Quot.sound",
+          "propext"
+        ],
+        "Erdos647Sieve.Bonferroni.even_sum_bounds": [
+          "Classical.choice",
+          "Quot.sound",
+          "propext"
+        ],
+        "Erdos647Sieve.candidate_prefix": [
+          "Classical.choice",
+          "Quot.sound",
+          "propext"
+        ],
+        "Erdos647Sieve.candidateCount_eq_filter_Icc": [
+          "Classical.choice",
+          "Quot.sound",
+          "propext"
+        ],
+        "Erdos647Sieve.sum_nat_Icc_eq_int": [
+          "Classical.choice",
+          "Quot.sound",
+          "propext"
+        ],
+        "Erdos647Sieve.no_prefix_of_negative_budget": [
+          "Classical.choice",
+          "Quot.sound",
+          "propext"
+        ],
+        "Erdos647Sieve.finiteCounting_of_budgetDebit_of_finiteMoment": [
+          "Classical.choice",
+          "Quot.sound",
+          "propext"
+        ],
+        "Erdos647Sieve.candidateCount_le_window_of_negative_budget": [
+          "Classical.choice",
+          "Quot.sound",
+          "propext"
+        ],
+        "Erdos647Sieve.sum_powersetCard_succ_insert": [
+          "Classical.choice",
+          "Quot.sound",
+          "propext"
+        ],
+        "Erdos647Sieve.elementary_map_eq_sum_powersetCard": [
+          "Classical.choice",
+          "Quot.sound",
+          "propext"
+        ],
+        "Erdos647Sieve.elementary_toList_eq_sum_powersetCard": [
+          "Classical.choice",
+          "Quot.sound",
+          "propext"
+        ],
+        "Erdos647Sieve.elementary_map_eq_of_toFinset_eq": [
+          "Classical.choice",
+          "Quot.sound",
+          "propext"
+        ],
+        "Erdos647Sieve.primeSubsetProduct_pos": [
+          "Quot.sound",
+          "propext"
+        ],
+        "Erdos647Sieve.selected_subset_product_pos": [
+          "Classical.choice",
+          "Quot.sound",
+          "propext"
+        ],
+        "Erdos647Sieve.prime_dvd_primeSubsetProduct_iff_mem": [
+          "Classical.choice",
+          "Quot.sound",
+          "propext"
+        ],
+        "Erdos647Sieve.primeSubsetProduct_injective": [
+          "Classical.choice",
+          "Quot.sound",
+          "propext"
+        ],
+        "Erdos647Sieve.primeSubsetProduct_int_dvd_iff": [
+          "Classical.choice",
+          "Quot.sound",
+          "propext"
+        ],
+        "Erdos647Sieve.card_primeSubsetFamily_le": [
+          "Classical.choice",
+          "Quot.sound",
+          "propext"
+        ],
+        "Erdos647Sieve.prime_dvd_window_iff_int": [
+          "Classical.choice",
+          "Quot.sound",
+          "propext"
+        ],
+        "Erdos647Sieve.prime_dvd_window_iff_mem_residues": [
+          "Classical.choice",
+          "Quot.sound",
+          "propext"
+        ],
+        "Erdos647Sieve.card_primeWindowResidues": [
+          "Classical.choice",
+          "Quot.sound",
+          "propext"
+        ],
+        "Erdos647Sieve.subsetHitCount_empty": [
+          "Classical.choice",
+          "Quot.sound",
+          "propext"
+        ],
+        "Erdos647Sieve.subsetHitCount_eq_modulus_count": [
+          "Classical.choice",
+          "Quot.sound",
+          "propext"
+        ],
+        "Erdos647Sieve.prod_ite_zero_eq_pow_card": [
+          "Classical.choice",
+          "Quot.sound",
+          "propext"
+        ],
+        "Erdos647Sieve.hitWeights_elementary_eq_subset_sum": [
+          "Classical.choice",
+          "Quot.sound",
+          "propext"
+        ],
+        "Erdos647Sieve.sum_hitWeights_elementary_eq_subset_counts": [
+          "Classical.choice",
+          "Quot.sound",
+          "propext"
+        ],
+        "Erdos647Sieve.interval_hitWeights_elementary_eq_subset_counts": [
+          "Classical.choice",
+          "Quot.sound",
+          "propext"
+        ],
+        "Erdos647Sieve.meanWeights_elementary_eq_subset_sum": [
+          "Classical.choice",
+          "Quot.sound",
+          "propext"
+        ],
+        "Erdos647Sieve.coefficient_discrepancy_eq_subset_errors": [
+          "Classical.choice",
+          "Quot.sound",
+          "propext"
+        ],
+        "Erdos647Sieve.signed_discrepancy_eq_subset_errors": [
+          "Classical.choice",
+          "Quot.sound",
+          "propext"
+        ],
+        "Erdos647Sieve.mul_le_iff_le_euclideanQuotient": [
+          "Classical.choice",
+          "Quot.sound",
+          "propext"
+        ],
+        "Erdos647Sieve.progressionCount_eq_quotient_difference": [
+          "Classical.choice",
+          "Quot.sound",
+          "propext"
+        ],
+        "Erdos647Sieve.euclideanQuotient_real_bounds": [
+          "Classical.choice",
+          "Quot.sound",
+          "propext"
+        ],
+        "Erdos647Sieve.progressionCount_error_le_one": [
+          "Classical.choice",
+          "Quot.sound",
+          "propext"
+        ],
+        "Erdos647Sieve.residueClassCount_eq_progressionCount": [
+          "Classical.choice",
+          "Quot.sound",
+          "propext"
+        ],
+        "Erdos647Sieve.residueClassCount_error_le_one": [
+          "Classical.choice",
+          "Quot.sound",
+          "propext"
+        ],
+        "Erdos647Sieve.residueSetCount_error_le_card": [
+          "Classical.choice",
+          "Quot.sound",
+          "propext"
+        ],
+        "Erdos647Sieve.map_windowEvaluation": [
+          "Classical.choice",
+          "Quot.sound",
+          "propext"
+        ],
+        "Erdos647Sieve.windowEvaluation_intCast": [
+          "Classical.choice",
+          "Quot.sound",
+          "propext"
+        ],
+        "Erdos647Sieve.mem_windowRootResidues": [
+          "Classical.choice",
+          "Quot.sound",
+          "propext"
+        ],
+        "Erdos647Sieve.intCast_mem_windowRootResidues_iff": [
+          "Classical.choice",
+          "Quot.sound",
+          "propext"
+        ],
+        "Erdos647Sieve.windowRootResidues_eq_primeWindowResidues": [
+          "Classical.choice",
+          "Quot.sound",
+          "propext"
+        ],
+        "Erdos647Sieve.card_windowRootResidues_prime": [
+          "Classical.choice",
+          "Quot.sound",
+          "propext"
+        ],
+        "Erdos647Sieve.card_windowRootResidues_one": [
+          "Classical.choice",
+          "Quot.sound",
+          "propext"
+        ],
+        "Erdos647Sieve.card_windowRootResidues_mul": [
+          "Classical.choice",
+          "Quot.sound",
+          "propext"
+        ],
+        "Erdos647Sieve.card_windowRootResidues_primeSubsetProduct": [
+          "Classical.choice",
+          "Quot.sound",
+          "propext"
+        ],
+        "Erdos647Sieve.subsetHitCount_eq_windowRootResidues_count": [
+          "Classical.choice",
+          "Quot.sound",
+          "propext"
+        ],
+        "Erdos647Sieve.subsetHitCount_error_le": [
+          "Classical.choice",
+          "Quot.sound",
+          "propext"
+        ],
+        "Erdos647Sieve.selected_subsetHitCount_error_le": [
+          "Classical.choice",
+          "Quot.sound",
+          "propext"
+        ],
+        "Erdos647Sieve.mem_retainedSubsets": [
+          "Classical.choice",
+          "Quot.sound",
+          "propext"
+        ],
+        "Erdos647Sieve.sum_powersetCard_le_eq_retained": [
+          "Classical.choice",
+          "Quot.sound",
+          "propext"
+        ],
+        "Erdos647Sieve.real_pow_mono_of_one_le": [
+          "Classical.choice",
+          "Quot.sound",
+          "propext"
+        ],
+        "Erdos647Sieve.retained_primeSubsetProduct_le": [
+          "Classical.choice",
+          "Quot.sound",
+          "propext"
+        ],
+        "Erdos647Sieve.card_retainedSubsets_le_floor": [
+          "Classical.choice",
+          "Quot.sound",
+          "propext"
+        ],
+        "Erdos647Sieve.card_retainedSubsets_cast_le": [
+          "Classical.choice",
+          "Quot.sound",
+          "propext"
+        ],
+        "Erdos647Sieve.retained_weighted_subset_error_le": [
+          "Classical.choice",
+          "Quot.sound",
+          "propext"
+        ],
+        "Erdos647Sieve.arithmetic_discrepancy_le": [
+          "Classical.choice",
+          "Quot.sound",
+          "propext"
+        ]
+      },
+      "build_warnings": []
+    },
+    "reciprocal_kernel": {
+      "status": "PASS",
+      "historical_status": "accepted in earlier research workspace",
+      "axioms": {
+        "Erdos647Sieve.Analytic.hasDerivAt_reciprocalLog": [
+          "Classical.choice",
+          "Quot.sound",
+          "propext"
+        ],
+        "Erdos647Sieve.Analytic.deriv_reciprocalLog_integrableOn": [
+          "Classical.choice",
+          "Quot.sound",
+          "propext"
+        ],
+        "Erdos647Sieve.Analytic.mainPrimitive_integral": [
+          "Classical.choice",
+          "Quot.sound",
+          "propext"
+        ]
+      },
+      "build_warnings": []
+    },
+    "reciprocal_abel": {
+      "status": "PASS",
+      "historical_status": "accepted in earlier research workspace",
+      "axioms": {
+        "Erdos647Sieve.Analytic.primeLogCoefficient_partial_sum": [
+          "Classical.choice",
+          "Quot.sound",
+          "propext"
+        ],
+        "Erdos647Sieve.Analytic.reciprocalPrimeSum_eq_weighted_sum": [
+          "Classical.choice",
+          "Quot.sound",
+          "propext"
+        ],
+        "Erdos647Sieve.Analytic.reciprocalPrimeSum_abel": [
+          "Classical.choice",
+          "Quot.sound",
+          "propext"
+        ],
+        "Erdos647Sieve.Analytic.reciprocalPrimeSum_partial_summation": [
+          "Classical.choice",
+          "Quot.sound",
+          "propext"
+        ],
+        "Erdos647Sieve.Analytic.reciprocalPrimeSum_error_identity": [
+          "Classical.choice",
+          "Quot.sound",
+          "propext"
+        ]
+      },
+      "build_warnings": []
+    },
+    "pntplus_inputs": {
+      "status": "PASS",
+      "historical_status": "new source-restricted PNT+ boundary; separate from prior broad import",
+      "axioms": {
+        "MediumPNT": [
+          "Classical.choice",
+          "Quot.sound",
+          "propext"
+        ],
+        "RS_prime.pntBigO": [
+          "Classical.choice",
+          "Quot.sound",
+          "propext"
+        ],
+        "RS_prime.pnt": [
+          "Classical.choice",
+          "Quot.sound",
+          "propext"
+        ],
+        "RS_prime.intervalIntegrable_inv_log_pow": [
+          "Classical.choice",
+          "Quot.sound",
+          "propext"
+        ],
+        "RS_prime.ioiIntegrable_inv_log_pow": [
+          "Classical.choice",
+          "Quot.sound",
+          "propext"
+        ],
+        "RS_prime.bound_deriv": [
+          "Classical.choice",
+          "Quot.sound",
+          "propext"
+        ],
+        "RS_prime.integrableOn_deriv": [
+          "Classical.choice",
+          "Quot.sound",
+          "propext"
+        ],
+        "RS_prime.integrableOn_deriv_inv_div_log": [
+          "Classical.choice",
+          "Quot.sound",
+          "propext"
+        ]
+      },
+      "build_warnings": []
+    },
+    "analytic_inputs": {
+      "status": "PASS",
+      "historical_status": "accepted in earlier research workspace",
+      "axioms": {
+        "RS_prime.pnt": [
+          "Classical.choice",
+          "Quot.sound",
+          "propext"
+        ],
+        "RS_prime.integrableOn_deriv_inv_div_log": [
+          "Classical.choice",
+          "Quot.sound",
+          "propext"
+        ],
+        "Erdos647Sieve.Analytic.theta_pnt_bound": [
+          "Classical.choice",
+          "Quot.sound",
+          "propext"
+        ],
+        "Erdos647Sieve.Analytic.theta_error_deriv_integrable": [
+          "Classical.choice",
+          "Quot.sound",
+          "propext"
+        ],
+        "Erdos647Sieve.Analytic.theta_error_boundary_tendsto_zero": [
+          "Classical.choice",
+          "Quot.sound",
+          "propext"
+        ]
+      },
+      "build_warnings": []
+    },
+    "clean_mertens": {
+      "status": "PASS",
+      "historical_status": "accepted in earlier research workspace",
+      "axioms": {
+        "Erdos647Sieve.Analytic.reciprocalPrimeSum_tendsto": [
+          "Classical.choice",
+          "Quot.sound",
+          "propext"
+        ],
+        "Erdos647Sieve.Analytic.reciprocalPrimeLimit_exists": [
+          "Classical.choice",
+          "Quot.sound",
+          "propext"
+        ],
+        "Erdos647Sieve.Analytic.reciprocalPrime_difference_tendsto_zero": [
+          "Classical.choice",
+          "Quot.sound",
+          "propext"
+        ]
+      },
+      "build_warnings": []
+    },
+    "selected_prime_reciprocals": {
+      "status": "PASS",
+      "historical_status": "accepted in earlier research workspace",
+      "axioms": {
+        "Erdos647Sieve.Analytic.selectedPrimeSum_eq_difference": [
+          "Classical.choice",
+          "Quot.sound",
+          "propext"
+        ],
+        "Erdos647Sieve.Analytic.primeMass_eq_reciprocal_difference": [
+          "Classical.choice",
+          "Quot.sound",
+          "propext"
+        ],
+        "Erdos647Sieve.Analytic.selectedPrimeSum_difference_tendsto_zero": [
+          "Classical.choice",
+          "Quot.sound",
+          "propext"
+        ]
+      },
+      "build_warnings": []
+    },
+    "endpoint_log_bounds": {
+      "status": "PASS",
+      "historical_status": "accepted in earlier research workspace",
+      "axioms": {
+        "Erdos647Sieve.Elementary.neg_log_one_sub_le_add_sq": [
+          "Classical.choice",
+          "Quot.sound",
+          "propext"
+        ],
+        "Erdos647Sieve.Elementary.endpoint_log_gap": [
+          "Classical.choice",
+          "Quot.sound",
+          "propext"
+        ],
+        "Erdos647Sieve.Elementary.endpoint_tail_log_constant": [
+          "Classical.choice",
+          "Quot.sound",
+          "propext"
+        ]
+      },
+      "build_warnings": []
+    },
+    "factorial_bounds": {
+      "status": "PASS",
+      "historical_status": "accepted in earlier research workspace",
+      "axioms": {
+        "Erdos647Sieve.Elementary.log_factorial_upper": [
+          "Classical.choice",
+          "Quot.sound",
+          "propext"
+        ],
+        "Erdos647Sieve.Elementary.log_factorial_lower": [
+          "Classical.choice",
+          "Quot.sound",
+          "propext"
+        ],
+        "Erdos647Sieve.Elementary.factorial_pow_lower": [
+          "Classical.choice",
+          "Quot.sound",
+          "propext"
+        ]
+      },
+      "build_warnings": []
+    },
+    "factorial_estimate": {
+      "status": "PASS",
+      "historical_status": "accepted in earlier research workspace",
+      "axioms": {
+        "Erdos647Sieve.Elementary.shiftedFactorialLog_eq_expanded": [
+          "Classical.choice",
+          "Quot.sound",
+          "propext"
+        ],
+        "Erdos647Sieve.Elementary.log_factorial_residual_tendsto_zero": [
+          "Classical.choice",
+          "Quot.sound",
+          "propext"
+        ],
+        "Erdos647Sieve.Elementary.shiftedFactorialLog_residual_tendsto_zero": [
+          "Classical.choice",
+          "Quot.sound",
+          "propext"
+        ]
+      },
+      "build_warnings": []
+    },
+    "log_budget_factorial": {
+      "status": "PASS",
+      "historical_status": "accepted in earlier research workspace",
+      "axioms": {
+        "Erdos647Sieve.Elementary.sum_log_shift_eq_factorial": [
+          "Classical.choice",
+          "Quot.sound",
+          "propext"
+        ],
+        "Erdos647Sieve.Elementary.logBudget_le_factorial": [
+          "Classical.choice",
+          "Quot.sound",
+          "propext"
+        ]
+      },
+      "build_warnings": []
+    },
+    "prime_reciprocal_lower": {
+      "status": "PASS",
+      "historical_status": "accepted in v34 run 20260908T064235Z_611434a1; v35 lint edits require a new audit",
+      "axioms": {
+        "Erdos647Sieve.Elementary.harmonic_sum_le_finitePrimeEuler": [
+          "Classical.choice",
+          "Quot.sound",
+          "propext"
+        ],
+        "Erdos647Sieve.Elementary.reciprocal_remainder_telescope": [
+          "Classical.choice",
+          "Quot.sound",
+          "propext"
+        ],
+        "Erdos647Sieve.Elementary.prime_log_factor_le": [
+          "Classical.choice",
+          "Quot.sound",
+          "propext"
+        ],
+        "Erdos647Sieve.Elementary.log_finitePrimeEuler_le": [
+          "Classical.choice",
+          "Quot.sound",
+          "propext"
+        ],
+        "Erdos647Sieve.Elementary.prime_reciprocal_lower": [
+          "Classical.choice",
+          "Quot.sound",
+          "propext"
+        ]
+      },
+      "build_warnings": []
+    },
+    "small_prime_debit_estimate": {
+      "status": "PASS",
+      "historical_status": "pending",
+      "axioms": {
+        "Erdos647Sieve.Elementary.nat_quotient_cast_lower": [
+          "Classical.choice",
+          "Quot.sound",
+          "propext"
+        ],
+        "Erdos647Sieve.Elementary.smallPrimeDebit_ge_sum_sub_card": [
+          "Classical.choice",
+          "Quot.sound",
+          "propext"
+        ],
+        "Erdos647Sieve.Elementary.smallPrimeDebit_lower": [
+          "Classical.choice",
+          "Quot.sound",
+          "propext"
+        ]
+      },
+      "build_warnings": []
+    },
+    "corrected_budget_estimate": {
+      "status": "PASS",
+      "historical_status": "pending",
+      "axioms": {
+        "Erdos647Sieve.Elementary.correctedBudget_upper_eventually": [
+          "Classical.choice",
+          "Quot.sound",
+          "propext"
+        ]
+      },
+      "build_warnings": []
+    }
+  },
+  "commands": [
+    {
+      "label": "tooling_tests",
+      "command": [
+        "/usr/sbin/python3",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "tests",
+        "-v"
+      ],
+      "cwd": "<REPO>",
+      "log": "logs/001_tooling_tests.log",
+      "exit_code": 0
+    },
+    {
+      "label": "compiler_probe",
+      "command": [
+        "<REPO>/.tools/elan/toolchains/leanprover--lean4---v4.32.2/bin/lean",
+        "--version"
+      ],
+      "cwd": "<REPO>",
+      "log": "logs/002_compiler_probe.log",
+      "exit_code": 0
+    },
+    {
+      "label": "lean_version",
+      "command": [
+        "<REPO>/.tools/elan/toolchains/leanprover--lean4---v4.32.2/bin/lean",
+        "--version"
+      ],
+      "cwd": "<REPO>",
+      "log": "logs/003_lean_version.log",
+      "exit_code": 0
+    },
+    {
+      "label": "lake_version",
+      "command": [
+        "<REPO>/.tools/elan/toolchains/leanprover--lean4---v4.32.2/bin/lake",
+        "--version"
+      ],
+      "cwd": "<REPO>",
+      "log": "logs/004_lake_version.log",
+      "exit_code": 0
+    },
+    {
+      "label": "lean_prefix",
+      "command": [
+        "<REPO>/.tools/elan/toolchains/leanprover--lean4---v4.32.2/bin/lean",
+        "--print-prefix"
+      ],
+      "cwd": "<REPO>",
+      "log": "logs/005_lean_prefix.log",
+      "exit_code": 0
+    },
+    {
+      "label": "manifest_schema",
+      "command": [
+        "<REPO>/.tools/elan/toolchains/leanprover--lean4---v4.32.2/bin/lean",
+        "--run",
+        "<REPO>/scripts/check_manifests.lean",
+        "<REPO>/lake-manifest.json",
+        "<REPO>/research/lake-manifest.json"
+      ],
+      "cwd": "<REPO>",
+      "log": "logs/006_manifest_schema.log",
+      "exit_code": 0
+    },
+    {
+      "label": "search_path_core",
+      "command": [
+        "<REPO>/.tools/elan/toolchains/leanprover--lean4---v4.32.2/bin/lake",
+        "env",
+        "python3",
+        "-c",
+        "import os,json; print(json.dumps(os.environ.get('LEAN_PATH','').split(os.pathsep)))"
+      ],
+      "cwd": "<REPO>",
+      "log": "logs/007_search_path_core.log",
+      "exit_code": 0
+    },
+    {
+      "label": "search_path_research",
+      "command": [
+        "<REPO>/.tools/elan/toolchains/leanprover--lean4---v4.32.2/bin/lake",
+        "env",
+        "python3",
+        "-c",
+        "import os,json; print(json.dumps(os.environ.get('LEAN_PATH','').split(os.pathsep)))"
+      ],
+      "cwd": "<REPO>/research",
+      "log": "logs/008_search_path_research.log",
+      "exit_code": 0
+    },
+    {
+      "label": "core_build",
+      "command": [
+        "<REPO>/.tools/elan/toolchains/leanprover--lean4---v4.32.2/bin/lake",
+        "build",
+        "Erdos647Sieve",
+        "Examples"
+      ],
+      "cwd": "<REPO>",
+      "log": "logs/009_core_build.log",
+      "exit_code": 0
+    },
+    {
+      "label": "core_audit_0",
+      "command": [
+        "<REPO>/.tools/elan/toolchains/leanprover--lean4---v4.32.2/bin/lake",
+        "env",
+        "lean",
+        "-DwarningAsError=true",
+        "Audit/Finite.lean"
+      ],
+      "cwd": "<REPO>",
+      "log": "logs/010_core_audit_0.log",
+      "exit_code": 0
+    },
+    {
+      "label": "core_audit_1",
+      "command": [
+        "<REPO>/.tools/elan/toolchains/leanprover--lean4---v4.32.2/bin/lake",
+        "env",
+        "lean",
+        "-DwarningAsError=true",
+        "Audit/Components.lean"
+      ],
+      "cwd": "<REPO>",
+      "log": "logs/011_core_audit_1.log",
+      "exit_code": 0
+    },
+    {
+      "label": "reciprocal_kernel_build",
+      "command": [
+        "<REPO>/.tools/elan/toolchains/leanprover--lean4---v4.32.2/bin/lake",
+        "build",
+        "+Erdos647Research.ReciprocalKernel"
+      ],
+      "cwd": "<REPO>/research",
+      "log": "logs/012_reciprocal_kernel_build.log",
+      "exit_code": 0
+    },
+    {
+      "label": "reciprocal_kernel_audit_0",
+      "command": [
+        "<REPO>/.tools/elan/toolchains/leanprover--lean4---v4.32.2/bin/lake",
+        "env",
+        "lean",
+        "-DwarningAsError=true",
+        "Audit/ReciprocalKernel.lean"
+      ],
+      "cwd": "<REPO>/research",
+      "log": "logs/013_reciprocal_kernel_audit_0.log",
+      "exit_code": 0
+    },
+    {
+      "label": "reciprocal_abel_build",
+      "command": [
+        "<REPO>/.tools/elan/toolchains/leanprover--lean4---v4.32.2/bin/lake",
+        "build",
+        "+Erdos647Research.PrimeReciprocalSummation"
+      ],
+      "cwd": "<REPO>/research",
+      "log": "logs/014_reciprocal_abel_build.log",
+      "exit_code": 0
+    },
+    {
+      "label": "reciprocal_abel_audit_0",
+      "command": [
+        "<REPO>/.tools/elan/toolchains/leanprover--lean4---v4.32.2/bin/lake",
+        "env",
+        "lean",
+        "-DwarningAsError=true",
+        "Audit/ReciprocalAbel.lean"
+      ],
+      "cwd": "<REPO>/research",
+      "log": "logs/015_reciprocal_abel_audit_0.log",
+      "exit_code": 0
+    },
+    {
+      "label": "pntplus_inputs_build",
+      "command": [
+        "<REPO>/.tools/elan/toolchains/leanprover--lean4---v4.32.2/bin/lake",
+        "build",
+        "+Erdos647Research.Compat.PNTPlus"
+      ],
+      "cwd": "<REPO>/research",
+      "log": "logs/016_pntplus_inputs_build.log",
+      "exit_code": 0
+    },
+    {
+      "label": "pntplus_inputs_audit_0",
+      "command": [
+        "<REPO>/.tools/elan/toolchains/leanprover--lean4---v4.32.2/bin/lake",
+        "env",
+        "lean",
+        "-DwarningAsError=true",
+        "Audit/PNTPlus.lean"
+      ],
+      "cwd": "<REPO>/research",
+      "log": "logs/017_pntplus_inputs_audit_0.log",
+      "exit_code": 0
+    },
+    {
+      "label": "analytic_inputs_build",
+      "command": [
+        "<REPO>/.tools/elan/toolchains/leanprover--lean4---v4.32.2/bin/lake",
+        "build",
+        "+Erdos647Research.AnalyticInputs"
+      ],
+      "cwd": "<REPO>/research",
+      "log": "logs/018_analytic_inputs_build.log",
+      "exit_code": 0
+    },
+    {
+      "label": "analytic_inputs_audit_0",
+      "command": [
+        "<REPO>/.tools/elan/toolchains/leanprover--lean4---v4.32.2/bin/lake",
+        "env",
+        "lean",
+        "-DwarningAsError=true",
+        "Audit/AnalyticInputs.lean"
+      ],
+      "cwd": "<REPO>/research",
+      "log": "logs/019_analytic_inputs_audit_0.log",
+      "exit_code": 0
+    },
+    {
+      "label": "clean_mertens_build",
+      "command": [
+        "<REPO>/.tools/elan/toolchains/leanprover--lean4---v4.32.2/bin/lake",
+        "build",
+        "+Erdos647Research.CleanMertens"
+      ],
+      "cwd": "<REPO>/research",
+      "log": "logs/020_clean_mertens_build.log",
+      "exit_code": 0
+    },
+    {
+      "label": "clean_mertens_audit_0",
+      "command": [
+        "<REPO>/.tools/elan/toolchains/leanprover--lean4---v4.32.2/bin/lake",
+        "env",
+        "lean",
+        "-DwarningAsError=true",
+        "Audit/CleanMertens.lean"
+      ],
+      "cwd": "<REPO>/research",
+      "log": "logs/021_clean_mertens_audit_0.log",
+      "exit_code": 0
+    },
+    {
+      "label": "selected_prime_reciprocals_build",
+      "command": [
+        "<REPO>/.tools/elan/toolchains/leanprover--lean4---v4.32.2/bin/lake",
+        "build",
+        "+Erdos647Research.SelectedPrimeReciprocals"
+      ],
+      "cwd": "<REPO>/research",
+      "log": "logs/022_selected_prime_reciprocals_build.log",
+      "exit_code": 0
+    },
+    {
+      "label": "selected_prime_reciprocals_audit_0",
+      "command": [
+        "<REPO>/.tools/elan/toolchains/leanprover--lean4---v4.32.2/bin/lake",
+        "env",
+        "lean",
+        "-DwarningAsError=true",
+        "Audit/SelectedPrimeReciprocals.lean"
+      ],
+      "cwd": "<REPO>/research",
+      "log": "logs/023_selected_prime_reciprocals_audit_0.log",
+      "exit_code": 0
+    },
+    {
+      "label": "endpoint_log_bounds_build",
+      "command": [
+        "<REPO>/.tools/elan/toolchains/leanprover--lean4---v4.32.2/bin/lake",
+        "build",
+        "+Erdos647Research.EndpointLogBounds"
+      ],
+      "cwd": "<REPO>/research",
+      "log": "logs/024_endpoint_log_bounds_build.log",
+      "exit_code": 0
+    },
+    {
+      "label": "endpoint_log_bounds_audit_0",
+      "command": [
+        "<REPO>/.tools/elan/toolchains/leanprover--lean4---v4.32.2/bin/lake",
+        "env",
+        "lean",
+        "-DwarningAsError=true",
+        "Audit/EndpointLogBounds.lean"
+      ],
+      "cwd": "<REPO>/research",
+      "log": "logs/025_endpoint_log_bounds_audit_0.log",
+      "exit_code": 0
+    },
+    {
+      "label": "factorial_bounds_build",
+      "command": [
+        "<REPO>/.tools/elan/toolchains/leanprover--lean4---v4.32.2/bin/lake",
+        "build",
+        "+Erdos647Research.FactorialBounds"
+      ],
+      "cwd": "<REPO>/research",
+      "log": "logs/026_factorial_bounds_build.log",
+      "exit_code": 0
+    },
+    {
+      "label": "factorial_bounds_audit_0",
+      "command": [
+        "<REPO>/.tools/elan/toolchains/leanprover--lean4---v4.32.2/bin/lake",
+        "env",
+        "lean",
+        "-DwarningAsError=true",
+        "Audit/FactorialBounds.lean"
+      ],
+      "cwd": "<REPO>/research",
+      "log": "logs/027_factorial_bounds_audit_0.log",
+      "exit_code": 0
+    },
+    {
+      "label": "factorial_estimate_build",
+      "command": [
+        "<REPO>/.tools/elan/toolchains/leanprover--lean4---v4.32.2/bin/lake",
+        "build",
+        "+Erdos647Research.FactorialEstimate"
+      ],
+      "cwd": "<REPO>/research",
+      "log": "logs/028_factorial_estimate_build.log",
+      "exit_code": 0
+    },
+    {
+      "label": "factorial_estimate_audit_0",
+      "command": [
+        "<REPO>/.tools/elan/toolchains/leanprover--lean4---v4.32.2/bin/lake",
+        "env",
+        "lean",
+        "-DwarningAsError=true",
+        "Audit/FactorialEstimate.lean"
+      ],
+      "cwd": "<REPO>/research",
+      "log": "logs/029_factorial_estimate_audit_0.log",
+      "exit_code": 0
+    },
+    {
+      "label": "log_budget_factorial_build",
+      "command": [
+        "<REPO>/.tools/elan/toolchains/leanprover--lean4---v4.32.2/bin/lake",
+        "build",
+        "+Erdos647Research.LogBudgetFactorial"
+      ],
+      "cwd": "<REPO>/research",
+      "log": "logs/030_log_budget_factorial_build.log",
+      "exit_code": 0
+    },
+    {
+      "label": "log_budget_factorial_audit_0",
+      "command": [
+        "<REPO>/.tools/elan/toolchains/leanprover--lean4---v4.32.2/bin/lake",
+        "env",
+        "lean",
+        "-DwarningAsError=true",
+        "Audit/LogBudgetFactorial.lean"
+      ],
+      "cwd": "<REPO>/research",
+      "log": "logs/031_log_budget_factorial_audit_0.log",
+      "exit_code": 0
+    },
+    {
+      "label": "prime_reciprocal_lower_build",
+      "command": [
+        "<REPO>/.tools/elan/toolchains/leanprover--lean4---v4.32.2/bin/lake",
+        "build",
+        "+Erdos647Research.PrimeReciprocalLower"
+      ],
+      "cwd": "<REPO>/research",
+      "log": "logs/032_prime_reciprocal_lower_build.log",
+      "exit_code": 0
+    },
+    {
+      "label": "prime_reciprocal_lower_audit_0",
+      "command": [
+        "<REPO>/.tools/elan/toolchains/leanprover--lean4---v4.32.2/bin/lake",
+        "env",
+        "lean",
+        "-DwarningAsError=true",
+        "Audit/PrimeReciprocalLower.lean"
+      ],
+      "cwd": "<REPO>/research",
+      "log": "logs/033_prime_reciprocal_lower_audit_0.log",
+      "exit_code": 0
+    },
+    {
+      "label": "small_prime_debit_estimate_build",
+      "command": [
+        "<REPO>/.tools/elan/toolchains/leanprover--lean4---v4.32.2/bin/lake",
+        "build",
+        "+Erdos647Research.SmallPrimeDebitEstimate"
+      ],
+      "cwd": "<REPO>/research",
+      "log": "logs/034_small_prime_debit_estimate_build.log",
+      "exit_code": 0
+    },
+    {
+      "label": "small_prime_debit_estimate_audit_0",
+      "command": [
+        "<REPO>/.tools/elan/toolchains/leanprover--lean4---v4.32.2/bin/lake",
+        "env",
+        "lean",
+        "-DwarningAsError=true",
+        "Audit/SmallPrimeDebitEstimate.lean"
+      ],
+      "cwd": "<REPO>/research",
+      "log": "logs/035_small_prime_debit_estimate_audit_0.log",
+      "exit_code": 0
+    },
+    {
+      "label": "corrected_budget_estimate_build",
+      "command": [
+        "<REPO>/.tools/elan/toolchains/leanprover--lean4---v4.32.2/bin/lake",
+        "build",
+        "+Erdos647Research.CorrectedBudgetEstimate"
+      ],
+      "cwd": "<REPO>/research",
+      "log": "logs/036_corrected_budget_estimate_build.log",
+      "exit_code": 0
+    },
+    {
+      "label": "corrected_budget_estimate_audit_0",
+      "command": [
+        "<REPO>/.tools/elan/toolchains/leanprover--lean4---v4.32.2/bin/lake",
+        "env",
+        "lean",
+        "-DwarningAsError=true",
+        "Audit/CorrectedBudgetEstimate.lean"
+      ],
+      "cwd": "<REPO>/research",
+      "log": "logs/037_corrected_budget_estimate_audit_0.log",
+      "exit_code": 0
+    }
+  ],
+  "toolchain": "leanprover/lean4:v4.32.2",
+  "incremental_builds": "Lake traces; audits rerun on every selected invocation",
+  "endpoint_proved": false,
+  "historical_reports_are_current_results": false,
+  "selected_gates": [
+    "core",
+    "reciprocal_kernel",
+    "reciprocal_abel",
+    "pntplus_inputs",
+    "analytic_inputs",
+    "clean_mertens",
+    "selected_prime_reciprocals",
+    "endpoint_log_bounds",
+    "factorial_bounds",
+    "factorial_estimate",
+    "log_budget_factorial",
+    "prime_reciprocal_lower",
+    "small_prime_debit_estimate",
+    "corrected_budget_estimate"
+  ],
+  "checks_role": "BUILD_TYPE_AXIOM",
+  "retired_module_paths": [],
+  "source_sha256_before": {
+    ".gitattributes": "e05fd0192d2cad5c2156bc3a2f5892d6081fd03ab92544895c8583b4671bcb44",
+    ".github/workflows/ci.yml": "2c5fceb5eb895fdfd7ee2ca834c88a499b237c46d3118d7eb74130f0b36397b7",
+    ".github/workflows/research.yml": "c028d6e7aec205c25bbf11a3d0e1f428b75a03188616cdab80fde78e156a22b4",
+    ".gitignore": "ff7610861e0c1eeab2e299d3f1cd68dd915a2fb5b1fb9f2215940d49f4fa19be",
+    "AGENTS.md": "600f32803983fd6563eca6e12fed8f4ac5cf67b06152842c1ed2d071ac24c60a",
+    "Audit/Components.lean": "f3283d3bf24e6eceaadb3c6f9f515b1b4afbb1a1d9f44749bd8c70a04a49b435",
+    "Audit/Finite.lean": "e6480a1d1eac14413da8b4181b0ff739bbb3c2b2919b2a6707b3b982d8926f27",
+    "CONTRIBUTING.md": "45a09a9b1b15bc817416ab09ca822328b2c6eef50794867a6c7620ae5c71eef8",
+    "Erdos647Sieve/ArithmeticDiscrepancy.lean": "7b2770edf4ae2901336f46bf50d2108d3c446ece484ac4f8a9e65d3f95746bd5",
+    "Erdos647Sieve/Basic.lean": "801483b731fbdbcfd08582b0567267c60296f2874a502ef1cb4efb43a054449a",
+    "Erdos647Sieve/Bonferroni.lean": "fa6681c9e1193ad131660a70f15ebbccafd581d669899ad1f6d87e84f495b6b9",
+    "Erdos647Sieve/BonferroniMajorant.lean": "8d455a41ecc304dc3783d9a25578124489ef30c4dd9b947338150db0720da5c6",
+    "Erdos647Sieve/BudgetConsequences.lean": "404951e385f8bab9f1c03d56a5dd6a687037f8652f7ebe22a256e9a46aabc37a",
+    "Erdos647Sieve/BudgetDebit.lean": "9e5e0e9e7c487db01f5df02f9a6bd21b1cade7f51d9fa8f9a189d8866d21f7df",
+    "Erdos647Sieve/CoefficientBounds.lean": "3acbc15b73e30719befb9390cbb70c5213f909848c3933556c0cefc131dd34e9",
+    "Erdos647Sieve/DivisorBudget.lean": "6e13592c2257315c3f67f113033fc0cb110e63afff6c483c915805929a4f9469",
+    "Erdos647Sieve/ExponentialProduct.lean": "1c2994bccfff93af5c25f4b209a88d15f4a1552ff0a776f933c68fc032e4263e",
+    "Erdos647Sieve/Finite.lean": "cfd298bd1807bc6817feca47cc701269814c95db481a3bbb7437552a6a8a5409",
+    "Erdos647Sieve/FiniteCounting.lean": "fe68b3177cd3b0078e9108a854fc58ebcd9e1ae7dba792c31c4a04cde25e1dea",
+    "Erdos647Sieve/FiniteCountingAssembly.lean": "959a694d2ea2c627c98a8637b8f5fa9eff59273f4f659507fbdc9db7b22b6612",
+    "Erdos647Sieve/FiniteMoment.lean": "666dece16c9c67f989a76e5af3aa105852df6409013e1dce989d1cac587e9e9c",
+    "Erdos647Sieve/HitCountBridge.lean": "3fed51085afd72c0d6bbc5b5f1c94e927063d2cc216d6d644241f22f8ae8a8fe",
+    "Erdos647Sieve/IntegerWindowRoots.lean": "5e42d61897ec840959c6e403a1b214c895e122b0230d172c1f648ff69efb6cb7",
+    "Erdos647Sieve/Occupancy.lean": "5a64098aa3ad2783999740d309b84da85bc309eca91ee6e6e4ad322b7da4a99b",
+    "Erdos647Sieve/PrimeSubsetCoefficients.lean": "baabc8d6d395a9ff7aab98e7e8dd48e57a16d76eaa1650a0a613cd180d04db73",
+    "Erdos647Sieve/PrimeSubsetProducts.lean": "c77f4366aefa92243977ce65728ba5d0237c0adf5c241fc472d00815cd5b803d",
+    "Erdos647Sieve/ProgressionCount.lean": "2519b4c5689d42f673479daf2410d99bcc68d76b111bd5d6df8dc904b8061f6f",
+    "Erdos647Sieve/RetainedSubsets.lean": "1d7aac7cd64da63303632c6741363021caab8138ab4ac0fd579bf416fe6d9042",
+    "Erdos647Sieve/SieveWeights.lean": "4990d5fb123787498ff07405b734f9175762243c31624d0f3e4d9c3c297cd80a",
+    "Erdos647Sieve/Specification.lean": "39d7c9e69faba89c27d738c6bf37f8b363197e2e5942281c5aedbbba7374c574",
+    "Erdos647Sieve/SubsetCountError.lean": "4ae9ec3a289b52e47664685180c3050eca8f72e8de59e127414560872b3f14ee",
+    "Erdos647Sieve/SubsetWeightIdentities.lean": "243d7f006c7d2262d2d74c3986ec6429ff230e3547685e7da56557683611024e",
+    "Erdos647Sieve/WeightedCounting.lean": "1e21212539c6b939b7b812d8c962ee3ecb2085f3b68a7f18f50d25a054ebdeca",
+    "Erdos647Sieve/WindowCRT.lean": "4ba4e9056b09ab39345615ae896788701bcee1bb89be361e2999c83d0d7deb8a",
+    "Erdos647Sieve.lean": "f22620cd952b6b6715d0ef94a62d64dd45e90dd1b8c7950e27fb43aa10e75d74",
+    "Examples/BasicUsage.lean": "6cb246f96717dc70383efe48c49931a8c3166e7d6ee6f876e65a9d07885d929c",
+    "Examples/MomentSpecialization.lean": "c325485055f7e5b568e383170c068d283476508083e8d31f2d54a508d736c63b",
+    "LICENSE": "cfc7749b96f63bd31c3c42b5c471bf756814053e847c10f3eb003417bc523d30",
+    "NOTICE": "7f79d93a9df1e0e5ff90e20f6adac2707cbddbcb21ef5b4d3286e6c4fac54575",
+    "README.md": "aef6a08baceb059475bb2e12bd0d24bf6e9c3cace38d610767f68ae5c18e0a6e",
+    "RUN.sh": "ed9bd7fa718ffab1e5e1dd51810b253b960fa764bc1509b1750dc0c0aac8f471",
+    "TEST_ALL.sh": "a6d7b9be9e5d6025fc2097afacac25148c7f12f59c7c65723a85721bb83a347d",
+    "docs/changes/v33.md": "2a15f8ca556a986e34a1557a3bd46e02dd7aab32073017be91129c0b9678a630",
+    "docs/changes/v34.md": "3e7170e84ad9402af7c924546a9856a4b4c29feeeeb48c22f4434a0a916599d6",
+    "docs/changes/v35.md": "f365c026491e3184627179eeda34df1c5a3806d21fe5485cdb9aeb6ee5356dca",
+    "docs/changes/v36.md": "0c9ae77c08e4feb403bc43e6b2d8dab9fa7dde7e6b95aa31f6c5bf2e80dff7e9",
+    "docs/dependency-boundaries.md": "dd4d34c114ea57c24fffcb380ffa7f3f0f7bd8769ee97b9ff36c724c886db015",
+    "docs/pntplus-trust-boundary.md": "0714a8da2b91c3d3cd3bf1e3527b420a612eba8f53795c506bb208541f4b6601",
+    "docs/proof-status.md": "5f7feb97a2e22254b8c1061870a826f1699569afd7467ac336bf420d8a1604b4",
+    "docs/pull-requests/core-research-fixes.md": "cbd2a3f324ac86a81d90e11c33a4d32ecfc8dce1b3eae29e5543f9400fc4d06f",
+    "docs/source-references.md": "9419decd8b4ea75dfaf339c0246c72937883035ab62abbf7c311cbd44207d6c1",
+    "docs/theorems.md": "dd0ed863e58301273407077e9f4c59d5005ba98dbf1b9fa65e5df4fc049086b2",
+    "lake-manifest.json": "7ab2cedf2baf7b8fd42d250179375644220278ca9579e49747228f72aaed47b3",
+    "lakefile.lean": "1e96eef1df7079683bd551bc2b57bde067bba4be0bd561da792bce18b059c364",
+    "lean-toolchain": "2bdc48adfa58d0017e538a0ad117c5d73d35deec879978f909406a80c8037273",
+    "research/Audit/AnalyticInputs.lean": "0f11d20c229f79e7680525b46ac2c8a66c93277ab0e2c8cda645e6a207b81abe",
+    "research/Audit/CleanMertens.lean": "08a1877c54a0d25800ff9bb6ab5acca22cb79fb7c8d21578189e576746874009",
+    "research/Audit/CorrectedBudgetEstimate.lean": "1aca4d18fa6cde9d49447d415cc9fe5ee22ff693d6549d0a02e2566be99c3169",
+    "research/Audit/EndpointLogBounds.lean": "17979f237156366db382cfe3ca58bc5794438e578649820a210b5ef44ef07f08",
+    "research/Audit/FactorialBounds.lean": "5e17e07371641ca3b61186c3e3c3f1c06e55665509c7a7afe8adeb2cd2589ac6",
+    "research/Audit/FactorialEstimate.lean": "ef32a83328383408a41ead58a38468e8e3f7fd328dc2c4f13a6b7665295ee76d",
+    "research/Audit/LogBudgetFactorial.lean": "72b719e371704458e82cd13876d8f1ab11da491bfd38c07da521b90e626eb417",
+    "research/Audit/PNTPlus.lean": "bf5ccb4456ff85788d15175a5f9b42b4e9e2b522048856fe4fc9a168070875e0",
+    "research/Audit/PrimeReciprocalLower.lean": "818b85246c3eb0f088e29fa1e000c81f0981329a941ed608940752e2f81f70e5",
+    "research/Audit/ReciprocalAbel.lean": "f16d2027ced573d5320a9813318a971e22f364f943f7414ca2f4a55307f8d621",
+    "research/Audit/ReciprocalKernel.lean": "62adb40f692c88d444119e83cd97c2784fdf7f1ac38448f1f0eaa851b8b60f5d",
+    "research/Audit/SelectedPrimeReciprocals.lean": "cb5021cdca73b80b147528c0f3ef5e22dad9429338b6930f879c495e5dbd4b77",
+    "research/Audit/SmallPrimeDebitEstimate.lean": "e42f6ef65b61d294e756a80ef29073685e2f8ce9295b40019c42316ca36f333c",
+    "research/Erdos647Research/AnalyticInputs.lean": "df46dee45c8a536801f468772befdf14bceda030a36d391c515e9d0b700c59f3",
+    "research/Erdos647Research/CleanMertens.lean": "b2e9935c9e72ce23f81ec57946badb92631fe7a7e1bf3c4fba4d6fec9fab07cc",
+    "research/Erdos647Research/Compat/PNTPlus.lean": "be9ea21290ba047a63e75eed972ffd40c803c0c59f4fbf23925a9c9e98056759",
+    "research/Erdos647Research/CorrectedBudgetEstimate.lean": "58a6e2c48580408e2d7797d8ece5c1079d86ee6127ea1ae496b54d0d5f91ac1a",
+    "research/Erdos647Research/EndpointLogBounds.lean": "29c06d7f25237e66f22b39296e4e70673b96e8c642836d67500e08fc12823585",
+    "research/Erdos647Research/FactorialBounds.lean": "7fe2f547ac29f06000dc35e7cdc6f2b464324bff42a7776016c6b6f5426fb110",
+    "research/Erdos647Research/FactorialEstimate.lean": "40c0ab51a12e3ef7096bb74395f05499dcde5b66248b2d5a4da64e718f13e2fe",
+    "research/Erdos647Research/LogBudgetFactorial.lean": "b81222c33ab8c74c8862adc17e1af25a78cedf91d00b6e2b14acd7b712b2407e",
+    "research/Erdos647Research/PrimeReciprocalLower.lean": "63948e4056a6244bd16587ba8a252dbf38053d02cb83fa6e44e6842931ba93c5",
+    "research/Erdos647Research/PrimeReciprocalSummation.lean": "9e457bec1731f08ba0265c25b6b47d7cac49696d7ee3ce229bc0e3f2646bc4b6",
+    "research/Erdos647Research/ReciprocalKernel.lean": "263fa9c8abb0d1d3994bdb64ce490d1feed1c27470be210ba111cb279ffc192c",
+    "research/Erdos647Research/SelectedPrimeReciprocals.lean": "17df5a48ef4d6fd3fadab695309ecb73371a158fe94284759e8a329e52eb8a84",
+    "research/Erdos647Research/SmallPrimeDebitEstimate.lean": "b43230461e0f9da6624ba5005c8403bb33bb762e06034895a7bde713ee4f83e1",
+    "research/README.md": "067eb04c783f01845a5957182c2ab7cce3c452bc1e7e8a3678f8f54c8e519a52",
+    "research/docs/MANUSCRIPT.md": "90ac02d53fc39673d2981654d09e845a0dd9f1b2b6be6a7e3cb34508545ef114",
+    "research/docs/REVIEW_REQUEST.md": "910e243889b171f48ab314e2a9ff810ba2f76a7cd6d252d9f032ef3f5cb1833c",
+    "research/docs/SOURCES.md": "c9b30db59dbfede7305f2c5466e6cbc595ceec87dbf46073fdbfef9638ced63b",
+    "research/lake-manifest.json": "6eb58cda2cd32dbca952e9c51d0c8b28c6c024886bcb1c03d2236d9c02ae4bd0",
+    "research/lakefile.lean": "fea1e57b3c3b76bc53b299f700e56cb543146cb41339684d13ae03071c5d156c",
+    "research/lean-toolchain": "2bdc48adfa58d0017e538a0ad117c5d73d35deec879978f909406a80c8037273",
+    "scripts/check.py": "fb95590d2094ba2ff4ab5072c1dfdd9efd791650979daa7ea8361edbfa456f40",
+    "scripts/check_manifests.lean": "65be26610d0fe253b771d8967c7f91dafd14b5b87015d6fe6e039e04b3f9fbaf",
+    "scripts/gates.json": "3c429e2c6cdf7d776c548ecf007c468a76184a56f36512ecc3b67c7a2266c55d",
+    "scripts/module_moves_v34.json": "d80d1a5111d7d298167c55cb407de7e6633bb4bd517f039177c44c015f924954",
+    "scripts/pins.json": "14ff05f485e4f901387a14bdb43931db51bb9bc5781deb3de446ea2378ead4d5",
+    "scripts/pntplus_closure.py": "d8212751b8579a87d6732e591037eb8a88bb4004463d860b104f88eea3ee1df0",
+    "tests/test_module_paths_v34.py": "50362adf4bd8c9a4d85e4da42eed7ed226effafd060611d6d2bf4588504a1fd5",
+    "tests/test_packaging_v33.py": "0a431bf0bc852727ec47be7637b792202a0cf8ae12600ab9c4f4ddf89557e57c",
+    "tests/test_pntplus_lint_v35.py": "c6d11b207d1699e26f3f7d877b7884ed9da8a261849f3a102e3e0b24a56befc1",
+    "tests/test_runner.py": "2f16940469919578db65770e0d0d35cd62caa609364c8b2ec42fab9f9620dd51"
+  },
+  "compiler_version": "Lean (version 4.32.2, x86_64-unknown-linux-gnu, commit f3b06c705e6c85f5314019d5d3baab0fec5b580c, Release)",
+  "dependencies": {
+    ".": {
+      "mathlib": "905b95818eb32af7874a58b427f50c1711a5e96c",
+      "plausible": "e12c1910fe855cbfc38803cd4e55543906d5fa62",
+      "LeanSearchClient": "c5d5b8fe6e5158def25cd28eb94e4141ad97c843",
+      "importGraph": "7e9612bf0b9ee66db3cb5b9988a35afc706f5a12",
+      "proofwidgets": "6e311e2a844da9b2cc3971187df2fe0066947b93",
+      "aesop": "a7dbf0c63b694e47f425f3dcddbc0e178bb432d3",
+      "Qq": "38d591e778f100aec9762bb582f9c7f55f50e9dc",
+      "batteries": "023ce7d62a0531e22a5331e20b587817a80d49ff",
+      "Cli": "88679d088c9720c27ebdf2ba4dafe17341747f94"
+    },
+    "research": {
+      "mathlib": "905b95818eb32af7874a58b427f50c1711a5e96c",
+      "PrimeCert": "6cac6fcb55fe9070afc4c42cad1d0eaa1c59e6a1",
+      "leancert": "6b11513512c9d27183fb4725bfc291ab38b4a6d7",
+      "checkdecls": "3d425859e73fcfbef85b9638c2a91708ef4a22d4",
+      "LeanArchitect": "d9013cc08bd2b5483e837368dfa4cc7ead92a5c2",
+      "plausible": "e12c1910fe855cbfc38803cd4e55543906d5fa62",
+      "LeanSearchClient": "c5d5b8fe6e5158def25cd28eb94e4141ad97c843",
+      "importGraph": "7e9612bf0b9ee66db3cb5b9988a35afc706f5a12",
+      "proofwidgets": "6e311e2a844da9b2cc3971187df2fe0066947b93",
+      "aesop": "a7dbf0c63b694e47f425f3dcddbc0e178bb432d3",
+      "Qq": "38d591e778f100aec9762bb582f9c7f55f50e9dc",
+      "batteries": "023ce7d62a0531e22a5331e20b587817a80d49ff",
+      "Cli": "88679d088c9720c27ebdf2ba4dafe17341747f94",
+      "PrimeNumberTheoremAnd": "a5154676af9aa3095150ee410cdda80555aa0642"
+    }
+  },
+  "cache_actions": {
+    ".": "reuse_existing",
+    "research": "reuse_existing"
+  },
+  "search_paths": {
+    ".": [
+      "<REPO>/.lake/packages/Cli/.lake/build/lib/lean",
+      "<REPO>/.lake/packages/batteries/.lake/build/lib/lean",
+      "<REPO>/.lake/packages/Qq/.lake/build/lib/lean",
+      "<REPO>/.lake/packages/aesop/.lake/build/lib/lean",
+      "<REPO>/.lake/packages/proofwidgets/.lake/build/lib/lean",
+      "<REPO>/.lake/packages/importGraph/.lake/build/lib/lean",
+      "<REPO>/.lake/packages/LeanSearchClient/.lake/build/lib/lean",
+      "<REPO>/.lake/packages/plausible/.lake/build/lib/lean",
+      "<REPO>/.lake/packages/mathlib/.lake/build/lib/lean",
+      "<REPO>/.lake/build/lib/lean",
+      "<REPO>/.tools/elan/toolchains/leanprover--lean4---v4.32.2/lib/lean"
+    ],
+    "research": [
+      "<REPO>/.lake/packages/Cli/.lake/build/lib/lean",
+      "<REPO>/.lake/packages/batteries/.lake/build/lib/lean",
+      "<REPO>/.lake/packages/Qq/.lake/build/lib/lean",
+      "<REPO>/.lake/packages/aesop/.lake/build/lib/lean",
+      "<REPO>/.lake/packages/proofwidgets/.lake/build/lib/lean",
+      "<REPO>/.lake/packages/importGraph/.lake/build/lib/lean",
+      "<REPO>/.lake/packages/LeanSearchClient/.lake/build/lib/lean",
+      "<REPO>/.lake/packages/plausible/.lake/build/lib/lean",
+      "<REPO>/research/.lake/packages/LeanArchitect/.lake/build/lib/lean",
+      "<REPO>/research/.lake/packages/checkdecls/.lake/build/lib/lean",
+      "<REPO>/research/.lake/packages/leancert/.lake/build/lib/lean",
+      "<REPO>/research/.lake/packages/PrimeCert/.lake/build/lib/lean",
+      "<REPO>/.lake/packages/mathlib/.lake/build/lib/lean",
+      "<REPO>/.lake/build/lib/lean",
+      "<REPO>/research/.lake/packages/PrimeNumberTheoremAnd/.lake/build/lib/lean",
+      "<REPO>/research/.lake/build/lib/lean",
+      "<REPO>/.tools/elan/toolchains/leanprover--lean4---v4.32.2/lib/lean"
+    ]
+  },
+  "package_errors": {},
+  "module_resolution_checks": {
+    "core": {
+      "count": 29,
+      "passed": true
+    },
+    "reciprocal_kernel": {
+      "count": 1,
+      "passed": true
+    },
+    "reciprocal_abel": {
+      "count": 2,
+      "passed": true
+    },
+    "pntplus_inputs": {
+      "count": 2,
+      "passed": true
+    },
+    "analytic_inputs": {
+      "count": 4,
+      "passed": true
+    },
+    "clean_mertens": {
+      "count": 6,
+      "passed": true
+    },
+    "selected_prime_reciprocals": {
+      "count": 8,
+      "passed": true
+    },
+    "endpoint_log_bounds": {
+      "count": 1,
+      "passed": true
+    },
+    "factorial_bounds": {
+      "count": 1,
+      "passed": true
+    },
+    "factorial_estimate": {
+      "count": 2,
+      "passed": true
+    },
+    "log_budget_factorial": {
+      "count": 4,
+      "passed": true
+    },
+    "prime_reciprocal_lower": {
+      "count": 1,
+      "passed": true
+    },
+    "small_prime_debit_estimate": {
+      "count": 3,
+      "passed": true
+    },
+    "corrected_budget_estimate": {
+      "count": 7,
+      "passed": true
+    }
+  },
+  "pntplus_source_closure": {
+    "status": "SOURCE_CLOSURE_CLEAN",
+    "module_count": 14,
+    "report": "dependency_closure/pntplus.json"
+  },
+  "source_sha256_after": {
+    ".gitattributes": "e05fd0192d2cad5c2156bc3a2f5892d6081fd03ab92544895c8583b4671bcb44",
+    ".github/workflows/ci.yml": "2c5fceb5eb895fdfd7ee2ca834c88a499b237c46d3118d7eb74130f0b36397b7",
+    ".github/workflows/research.yml": "c028d6e7aec205c25bbf11a3d0e1f428b75a03188616cdab80fde78e156a22b4",
+    ".gitignore": "ff7610861e0c1eeab2e299d3f1cd68dd915a2fb5b1fb9f2215940d49f4fa19be",
+    "AGENTS.md": "600f32803983fd6563eca6e12fed8f4ac5cf67b06152842c1ed2d071ac24c60a",
+    "Audit/Components.lean": "f3283d3bf24e6eceaadb3c6f9f515b1b4afbb1a1d9f44749bd8c70a04a49b435",
+    "Audit/Finite.lean": "e6480a1d1eac14413da8b4181b0ff739bbb3c2b2919b2a6707b3b982d8926f27",
+    "CONTRIBUTING.md": "45a09a9b1b15bc817416ab09ca822328b2c6eef50794867a6c7620ae5c71eef8",
+    "Erdos647Sieve/ArithmeticDiscrepancy.lean": "7b2770edf4ae2901336f46bf50d2108d3c446ece484ac4f8a9e65d3f95746bd5",
+    "Erdos647Sieve/Basic.lean": "801483b731fbdbcfd08582b0567267c60296f2874a502ef1cb4efb43a054449a",
+    "Erdos647Sieve/Bonferroni.lean": "fa6681c9e1193ad131660a70f15ebbccafd581d669899ad1f6d87e84f495b6b9",
+    "Erdos647Sieve/BonferroniMajorant.lean": "8d455a41ecc304dc3783d9a25578124489ef30c4dd9b947338150db0720da5c6",
+    "Erdos647Sieve/BudgetConsequences.lean": "404951e385f8bab9f1c03d56a5dd6a687037f8652f7ebe22a256e9a46aabc37a",
+    "Erdos647Sieve/BudgetDebit.lean": "9e5e0e9e7c487db01f5df02f9a6bd21b1cade7f51d9fa8f9a189d8866d21f7df",
+    "Erdos647Sieve/CoefficientBounds.lean": "3acbc15b73e30719befb9390cbb70c5213f909848c3933556c0cefc131dd34e9",
+    "Erdos647Sieve/DivisorBudget.lean": "6e13592c2257315c3f67f113033fc0cb110e63afff6c483c915805929a4f9469",
+    "Erdos647Sieve/ExponentialProduct.lean": "1c2994bccfff93af5c25f4b209a88d15f4a1552ff0a776f933c68fc032e4263e",
+    "Erdos647Sieve/Finite.lean": "cfd298bd1807bc6817feca47cc701269814c95db481a3bbb7437552a6a8a5409",
+    "Erdos647Sieve/FiniteCounting.lean": "fe68b3177cd3b0078e9108a854fc58ebcd9e1ae7dba792c31c4a04cde25e1dea",
+    "Erdos647Sieve/FiniteCountingAssembly.lean": "959a694d2ea2c627c98a8637b8f5fa9eff59273f4f659507fbdc9db7b22b6612",
+    "Erdos647Sieve/FiniteMoment.lean": "666dece16c9c67f989a76e5af3aa105852df6409013e1dce989d1cac587e9e9c",
+    "Erdos647Sieve/HitCountBridge.lean": "3fed51085afd72c0d6bbc5b5f1c94e927063d2cc216d6d644241f22f8ae8a8fe",
+    "Erdos647Sieve/IntegerWindowRoots.lean": "5e42d61897ec840959c6e403a1b214c895e122b0230d172c1f648ff69efb6cb7",
+    "Erdos647Sieve/Occupancy.lean": "5a64098aa3ad2783999740d309b84da85bc309eca91ee6e6e4ad322b7da4a99b",
+    "Erdos647Sieve/PrimeSubsetCoefficients.lean": "baabc8d6d395a9ff7aab98e7e8dd48e57a16d76eaa1650a0a613cd180d04db73",
+    "Erdos647Sieve/PrimeSubsetProducts.lean": "c77f4366aefa92243977ce65728ba5d0237c0adf5c241fc472d00815cd5b803d",
+    "Erdos647Sieve/ProgressionCount.lean": "2519b4c5689d42f673479daf2410d99bcc68d76b111bd5d6df8dc904b8061f6f",
+    "Erdos647Sieve/RetainedSubsets.lean": "1d7aac7cd64da63303632c6741363021caab8138ab4ac0fd579bf416fe6d9042",
+    "Erdos647Sieve/SieveWeights.lean": "4990d5fb123787498ff07405b734f9175762243c31624d0f3e4d9c3c297cd80a",
+    "Erdos647Sieve/Specification.lean": "39d7c9e69faba89c27d738c6bf37f8b363197e2e5942281c5aedbbba7374c574",
+    "Erdos647Sieve/SubsetCountError.lean": "4ae9ec3a289b52e47664685180c3050eca8f72e8de59e127414560872b3f14ee",
+    "Erdos647Sieve/SubsetWeightIdentities.lean": "243d7f006c7d2262d2d74c3986ec6429ff230e3547685e7da56557683611024e",
+    "Erdos647Sieve/WeightedCounting.lean": "1e21212539c6b939b7b812d8c962ee3ecb2085f3b68a7f18f50d25a054ebdeca",
+    "Erdos647Sieve/WindowCRT.lean": "4ba4e9056b09ab39345615ae896788701bcee1bb89be361e2999c83d0d7deb8a",
+    "Erdos647Sieve.lean": "f22620cd952b6b6715d0ef94a62d64dd45e90dd1b8c7950e27fb43aa10e75d74",
+    "Examples/BasicUsage.lean": "6cb246f96717dc70383efe48c49931a8c3166e7d6ee6f876e65a9d07885d929c",
+    "Examples/MomentSpecialization.lean": "c325485055f7e5b568e383170c068d283476508083e8d31f2d54a508d736c63b",
+    "LICENSE": "cfc7749b96f63bd31c3c42b5c471bf756814053e847c10f3eb003417bc523d30",
+    "NOTICE": "7f79d93a9df1e0e5ff90e20f6adac2707cbddbcb21ef5b4d3286e6c4fac54575",
+    "README.md": "aef6a08baceb059475bb2e12bd0d24bf6e9c3cace38d610767f68ae5c18e0a6e",
+    "RUN.sh": "ed9bd7fa718ffab1e5e1dd51810b253b960fa764bc1509b1750dc0c0aac8f471",
+    "TEST_ALL.sh": "a6d7b9be9e5d6025fc2097afacac25148c7f12f59c7c65723a85721bb83a347d",
+    "docs/changes/v33.md": "2a15f8ca556a986e34a1557a3bd46e02dd7aab32073017be91129c0b9678a630",
+    "docs/changes/v34.md": "3e7170e84ad9402af7c924546a9856a4b4c29feeeeb48c22f4434a0a916599d6",
+    "docs/changes/v35.md": "f365c026491e3184627179eeda34df1c5a3806d21fe5485cdb9aeb6ee5356dca",
+    "docs/changes/v36.md": "0c9ae77c08e4feb403bc43e6b2d8dab9fa7dde7e6b95aa31f6c5bf2e80dff7e9",
+    "docs/dependency-boundaries.md": "dd4d34c114ea57c24fffcb380ffa7f3f0f7bd8769ee97b9ff36c724c886db015",
+    "docs/pntplus-trust-boundary.md": "0714a8da2b91c3d3cd3bf1e3527b420a612eba8f53795c506bb208541f4b6601",
+    "docs/proof-status.md": "5f7feb97a2e22254b8c1061870a826f1699569afd7467ac336bf420d8a1604b4",
+    "docs/pull-requests/core-research-fixes.md": "cbd2a3f324ac86a81d90e11c33a4d32ecfc8dce1b3eae29e5543f9400fc4d06f",
+    "docs/source-references.md": "9419decd8b4ea75dfaf339c0246c72937883035ab62abbf7c311cbd44207d6c1",
+    "docs/theorems.md": "dd0ed863e58301273407077e9f4c59d5005ba98dbf1b9fa65e5df4fc049086b2",
+    "lake-manifest.json": "7ab2cedf2baf7b8fd42d250179375644220278ca9579e49747228f72aaed47b3",
+    "lakefile.lean": "1e96eef1df7079683bd551bc2b57bde067bba4be0bd561da792bce18b059c364",
+    "lean-toolchain": "2bdc48adfa58d0017e538a0ad117c5d73d35deec879978f909406a80c8037273",
+    "research/Audit/AnalyticInputs.lean": "0f11d20c229f79e7680525b46ac2c8a66c93277ab0e2c8cda645e6a207b81abe",
+    "research/Audit/CleanMertens.lean": "08a1877c54a0d25800ff9bb6ab5acca22cb79fb7c8d21578189e576746874009",
+    "research/Audit/CorrectedBudgetEstimate.lean": "1aca4d18fa6cde9d49447d415cc9fe5ee22ff693d6549d0a02e2566be99c3169",
+    "research/Audit/EndpointLogBounds.lean": "17979f237156366db382cfe3ca58bc5794438e578649820a210b5ef44ef07f08",
+    "research/Audit/FactorialBounds.lean": "5e17e07371641ca3b61186c3e3c3f1c06e55665509c7a7afe8adeb2cd2589ac6",
+    "research/Audit/FactorialEstimate.lean": "ef32a83328383408a41ead58a38468e8e3f7fd328dc2c4f13a6b7665295ee76d",
+    "research/Audit/LogBudgetFactorial.lean": "72b719e371704458e82cd13876d8f1ab11da491bfd38c07da521b90e626eb417",
+    "research/Audit/PNTPlus.lean": "bf5ccb4456ff85788d15175a5f9b42b4e9e2b522048856fe4fc9a168070875e0",
+    "research/Audit/PrimeReciprocalLower.lean": "818b85246c3eb0f088e29fa1e000c81f0981329a941ed608940752e2f81f70e5",
+    "research/Audit/ReciprocalAbel.lean": "f16d2027ced573d5320a9813318a971e22f364f943f7414ca2f4a55307f8d621",
+    "research/Audit/ReciprocalKernel.lean": "62adb40f692c88d444119e83cd97c2784fdf7f1ac38448f1f0eaa851b8b60f5d",
+    "research/Audit/SelectedPrimeReciprocals.lean": "cb5021cdca73b80b147528c0f3ef5e22dad9429338b6930f879c495e5dbd4b77",
+    "research/Audit/SmallPrimeDebitEstimate.lean": "e42f6ef65b61d294e756a80ef29073685e2f8ce9295b40019c42316ca36f333c",
+    "research/Erdos647Research/AnalyticInputs.lean": "df46dee45c8a536801f468772befdf14bceda030a36d391c515e9d0b700c59f3",
+    "research/Erdos647Research/CleanMertens.lean": "b2e9935c9e72ce23f81ec57946badb92631fe7a7e1bf3c4fba4d6fec9fab07cc",
+    "research/Erdos647Research/Compat/PNTPlus.lean": "be9ea21290ba047a63e75eed972ffd40c803c0c59f4fbf23925a9c9e98056759",
+    "research/Erdos647Research/CorrectedBudgetEstimate.lean": "58a6e2c48580408e2d7797d8ece5c1079d86ee6127ea1ae496b54d0d5f91ac1a",
+    "research/Erdos647Research/EndpointLogBounds.lean": "29c06d7f25237e66f22b39296e4e70673b96e8c642836d67500e08fc12823585",
+    "research/Erdos647Research/FactorialBounds.lean": "7fe2f547ac29f06000dc35e7cdc6f2b464324bff42a7776016c6b6f5426fb110",
+    "research/Erdos647Research/FactorialEstimate.lean": "40c0ab51a12e3ef7096bb74395f05499dcde5b66248b2d5a4da64e718f13e2fe",
+    "research/Erdos647Research/LogBudgetFactorial.lean": "b81222c33ab8c74c8862adc17e1af25a78cedf91d00b6e2b14acd7b712b2407e",
+    "research/Erdos647Research/PrimeReciprocalLower.lean": "63948e4056a6244bd16587ba8a252dbf38053d02cb83fa6e44e6842931ba93c5",
+    "research/Erdos647Research/PrimeReciprocalSummation.lean": "9e457bec1731f08ba0265c25b6b47d7cac49696d7ee3ce229bc0e3f2646bc4b6",
+    "research/Erdos647Research/ReciprocalKernel.lean": "263fa9c8abb0d1d3994bdb64ce490d1feed1c27470be210ba111cb279ffc192c",
+    "research/Erdos647Research/SelectedPrimeReciprocals.lean": "17df5a48ef4d6fd3fadab695309ecb73371a158fe94284759e8a329e52eb8a84",
+    "research/Erdos647Research/SmallPrimeDebitEstimate.lean": "b43230461e0f9da6624ba5005c8403bb33bb762e06034895a7bde713ee4f83e1",
+    "research/README.md": "067eb04c783f01845a5957182c2ab7cce3c452bc1e7e8a3678f8f54c8e519a52",
+    "research/docs/MANUSCRIPT.md": "90ac02d53fc39673d2981654d09e845a0dd9f1b2b6be6a7e3cb34508545ef114",
+    "research/docs/REVIEW_REQUEST.md": "910e243889b171f48ab314e2a9ff810ba2f76a7cd6d252d9f032ef3f5cb1833c",
+    "research/docs/SOURCES.md": "c9b30db59dbfede7305f2c5466e6cbc595ceec87dbf46073fdbfef9638ced63b",
+    "research/lake-manifest.json": "6eb58cda2cd32dbca952e9c51d0c8b28c6c024886bcb1c03d2236d9c02ae4bd0",
+    "research/lakefile.lean": "fea1e57b3c3b76bc53b299f700e56cb543146cb41339684d13ae03071c5d156c",
+    "research/lean-toolchain": "2bdc48adfa58d0017e538a0ad117c5d73d35deec879978f909406a80c8037273",
+    "scripts/check.py": "fb95590d2094ba2ff4ab5072c1dfdd9efd791650979daa7ea8361edbfa456f40",
+    "scripts/check_manifests.lean": "65be26610d0fe253b771d8967c7f91dafd14b5b87015d6fe6e039e04b3f9fbaf",
+    "scripts/gates.json": "3c429e2c6cdf7d776c548ecf007c468a76184a56f36512ecc3b67c7a2266c55d",
+    "scripts/module_moves_v34.json": "d80d1a5111d7d298167c55cb407de7e6633bb4bd517f039177c44c015f924954",
+    "scripts/pins.json": "14ff05f485e4f901387a14bdb43931db51bb9bc5781deb3de446ea2378ead4d5",
+    "scripts/pntplus_closure.py": "d8212751b8579a87d6732e591037eb8a88bb4004463d860b104f88eea3ee1df0",
+    "tests/test_module_paths_v34.py": "50362adf4bd8c9a4d85e4da42eed7ed226effafd060611d6d2bf4588504a1fd5",
+    "tests/test_packaging_v33.py": "0a431bf0bc852727ec47be7637b792202a0cf8ae12600ab9c4f4ddf89557e57c",
+    "tests/test_pntplus_lint_v35.py": "c6d11b207d1699e26f3f7d877b7884ed9da8a261849f3a102e3e0b24a56befc1",
+    "tests/test_runner.py": "2f16940469919578db65770e0d0d35cd62caa609364c8b2ec42fab9f9620dd51"
+  },
+  "source_changes": {},
+  "finished_utc": "2026-09-08T07:40:58.001217+00:00"
+}

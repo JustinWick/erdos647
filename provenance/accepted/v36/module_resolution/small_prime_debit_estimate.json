@@ -1,0 +1,23 @@
+[
+  {
+    "module": "Erdos647Research.PrimeReciprocalLower",
+    "expected": "<REPO>/research/.lake/build/lib/lean/Erdos647Research/PrimeReciprocalLower.olean",
+    "resolved": "<REPO>/research/.lake/build/lib/lean/Erdos647Research/PrimeReciprocalLower.olean",
+    "correct_owner": true,
+    "object_exists": true
+  },
+  {
+    "module": "Erdos647Research.SmallPrimeDebitEstimate",
+    "expected": "<REPO>/research/.lake/build/lib/lean/Erdos647Research/SmallPrimeDebitEstimate.olean",
+    "resolved": "<REPO>/research/.lake/build/lib/lean/Erdos647Research/SmallPrimeDebitEstimate.olean",
+    "correct_owner": true,
+    "object_exists": true
+  },
+  {
+    "module": "Erdos647Sieve.Specification",
+    "expected": "<REPO>/.lake/build/lib/lean/Erdos647Sieve/Specification.olean",
+    "resolved": "<REPO>/.lake/build/lib/lean/Erdos647Sieve/Specification.olean",
+    "correct_owner": true,
+    "object_exists": true
+  }
+]

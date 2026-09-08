@@ -1,4 +1,4 @@
-import Erdos647Sieve.AnalyticInputs
+import Erdos647Research.AnalyticInputs
 
 set_option autoImplicit false
 set_option warningAsError true

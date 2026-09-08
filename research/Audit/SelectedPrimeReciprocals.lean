@@ -1,4 +1,4 @@
-import Erdos647Sieve.SelectedPrimeReciprocals
+import Erdos647Research.SelectedPrimeReciprocals
 
 set_option autoImplicit false
 set_option warningAsError true

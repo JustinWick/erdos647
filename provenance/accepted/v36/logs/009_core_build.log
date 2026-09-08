@@ -1,0 +1,9 @@
+$ <REPO>/.tools/elan/toolchains/leanprover--lean4---v4.32.2/bin/lake build Erdos647Sieve Examples
+ℹ [8683/8685] Replayed Examples.BasicUsage
+info: Examples/BasicUsage.lean:3:0: Erdos647Sieve.Candidate (n : ℕ) : Prop
+info: Examples/BasicUsage.lean:4:0: Erdos647Sieve.finiteMoment : Erdos647Sieve.FiniteMomentClaim
+info: Examples/BasicUsage.lean:5:0: Erdos647Sieve.budgetDebit : Erdos647Sieve.BudgetDebitClaim
+info: Examples/BasicUsage.lean:6:0: Erdos647Sieve.finiteCounting : Erdos647Sieve.FiniteCountingClaim
+Build completed successfully (8685 jobs).
+
+EXIT_CODE=0

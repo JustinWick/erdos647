@@ -1,5 +1,8 @@
 #!/usr/bin/env python3
-"""Incremental, fail-closed repository checks. No proof files are copied or patched.
+"""Incremental, fail-closed repository checks.
+
+The v34 overlay retires exactly the recorded obsolete module paths once, preserving
+originals in provenance. Ordinary checks never synchronize or rewrite proof bodies.
 
 Lake owns build invalidation. This runner always reruns the selected exact-type and
 axiom audits; a cached build is not silently reported as a fresh audit. Python 3.10+.
@@ -23,12 +26,17 @@ import time
 import uuid
 import zipfile
 
+# Local helper; never resolves from an installed third-party Python package.
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+from pntplus_closure import inspect_closure
+
 ROOT = Path(__file__).resolve().parents[1]
 PINS = json.loads((ROOT / 'scripts/pins.json').read_text())
 GATES = json.loads((ROOT / 'scripts/gates.json').read_text())
 ALLOW = frozenset(PINS['allowed_axioms'])
 FORBIDDEN = re.compile(r'\b(?:sorry|admit|axiom|native_decide)\b|debug\.skipKernelTC|'
-                       r'\b(?:Lean\.)?ofReduce(?:Bool|Nat)\b|\bdecide\s*\+native\b')
+                       r'\b(?:Lean\.)?ofReduce(?:Bool|Nat)\b|\bdecide\s*\+native\b|'
+                       r'\bset_option\s+(?:warningAsError|linter(?:\.[A-Za-z0-9_]+)*)\s+false\b')
 IGNORED = {'.git', '.lake', '.tools', '.audit', 'results', '__pycache__', '.venv'}
 SOURCE_ROOTS = ('Erdos647Sieve', 'Examples', 'Audit', 'scripts', 'tests', 'research', 'docs', '.github')
 TOP_FILES = ('Erdos647Sieve.lean', 'lakefile.lean', 'lake-manifest.json', 'lean-toolchain',
@@ -103,6 +111,135 @@ def snapshots(root: Path = ROOT) -> dict[str, str]:
     return {p.relative_to(root).as_posix(): sha(p) for p in source_files(root)}
 
 
+def changed_sources(before: dict[str, str], after: dict[str, str]) -> dict[str, dict]:
+    """List changed inputs. CI scheduling metadata does not affect a local proof run."""
+    changes = {}
+    for name in sorted(before.keys() | after.keys()):
+        if before.get(name) != after.get(name):
+            workflow = name.startswith('.github/') and Path(name).suffix in {'.yml', '.yaml'}
+            changes[name] = {'before': before.get(name), 'after': after.get(name),
+                             'role': 'ci_metadata' if workflow else 'checked_input'}
+    return changes
+
+
+def check_source_changes(record: dict, before: dict[str, str], after: dict[str, str]) -> None:
+    changes = changed_sources(before, after)
+    record['source_sha256_after'] = after
+    record['source_changes'] = changes
+    critical = [name for name, entry in changes.items() if entry['role'] == 'checked_input']
+    metadata = [name for name, entry in changes.items() if entry['role'] == 'ci_metadata']
+    if metadata:
+        record.setdefault('warnings', []).append(
+            'CI metadata changed during the local run (recorded separately): ' + ', '.join(metadata))
+    if critical:
+        raise ValueError('Checked source/configuration changed during checks: ' + ', '.join(critical))
+
+
+def retire_v33_module_paths(root: Path) -> list[dict]:
+    """One-time overlay rename, not a source-sync/backup framework.
+
+    ZIP extraction cannot remove old paths. Only the 13 exact predecessor files
+    recorded in the move manifest may be retired; originals stay in provenance.
+    A fresh checkout with no obsolete files is a no-op, including after later
+    edits to the new source paths. All conflicts are checked before any move.
+    """
+    manifest = root / 'scripts/module_moves_v34.json'
+    moves = json.loads(manifest.read_text())['moves']
+    pending = []
+    def local(name: str) -> Path:
+        rel = Path(name)
+        if rel.is_absolute() or '..' in rel.parts:
+            raise ValueError('Invalid module relocation path: ' + name)
+        target = root / rel
+        cursor = root
+        for part in rel.parts:
+            cursor = cursor / part
+            if cursor.is_symlink():
+                raise ValueError('Symlink in module relocation path: ' + name)
+        return target
+    for entry in moves:
+        old_name, new_name = Path(entry['old']), Path(entry['new'])
+        ordinary = (old_name.parent == Path('research/Erdos647Sieve')
+                    and old_name.suffix == '.lean'
+                    and new_name == Path('research/Erdos647Research') / old_name.name)
+        shim = (old_name == Path('research/PrimeNumberTheoremAnd/RosserSchoenfeldPrime.lean')
+                and new_name == Path('research/Erdos647Research/Compat/PNTPlus.lean'))
+        if not (ordinary or shim):
+            raise ValueError('Move is outside the v34 module relocation: ' + entry['old'])
+        old = local(entry['old'])
+        if not old.exists():
+            continue
+        new = local(entry['new'])
+        archive_name = 'provenance/refactors/v34/retired/' + entry['old']
+        archive = local(archive_name)
+        if not old.is_file() or sha(old) != entry['old_sha256']:
+            raise ValueError('Edited obsolete module; preserved without moving: ' + entry['old'])
+        if not new.is_file() or sha(new) != entry['new_sha256']:
+            raise ValueError('Replacement module does not match relocation: ' + entry['new'])
+        if archive.exists() and (not archive.is_file() or sha(archive) != entry['old_sha256']):
+            raise ValueError('Conflicting module provenance; nothing moved: ' + archive_name)
+        pending.append((entry, old, archive, archive_name))
+    recorded = []
+    for entry, old, archive, archive_name in pending:
+        archive.parent.mkdir(parents=True, exist_ok=True)
+        if archive.exists():
+            old.unlink()  # Only after verifying the identical archived original above.
+        else:
+            old.rename(archive)
+        recorded.append({**entry, 'archive': archive_name})
+    return recorded
+
+
+def resolve_module_object(module: str, search_paths: list[Path]) -> Path | None:
+    """Mirror Lean 4.32.2 SearchPath.findWithExt, including first-root selection.
+
+    A later exact file must NOT mask a collision with an earlier package root.
+    Reference: lean4/v4.32.2/src/Lean/Util/Path.lean, lines 53-66.
+    """
+    parts = module.split('.')
+    if not parts or any(not part or not re.fullmatch(r'[A-Za-z_][A-Za-z0-9_]*', part)
+                        for part in parts):
+        raise ValueError('Unsupported module identifier for path audit: ' + module)
+    for path in search_paths:
+        path = Path(path)
+        if (path / parts[0]).is_dir() or (path / (parts[0] + '.olean')).exists():
+            return path.joinpath(*parts).with_suffix('.olean')
+    return None
+
+
+def gate_module_sources(root: Path, gate: dict) -> dict[str, tuple[Path, Path]]:
+    """Actual project imports and their owners; no traversal of upstream source."""
+    pending = []
+    package = root / gate['package']
+    for file in gate['audits']:
+        pending.extend(imports((package / file).read_text()))
+    if gate['package'] == '.':
+        pending.extend('Examples.' + p.stem for p in (root / 'Examples').glob('*.lean'))
+    found = {}
+    while pending:
+        name = pending.pop()
+        if name in found or name == 'Mathlib' or name.startswith('Mathlib.'):
+            continue
+        first = name.split('.')[0]
+        if first in {'Erdos647Sieve', 'Examples'}:
+            owner = root
+        elif first == 'Erdos647Research' and gate['package'] == 'research':
+            owner = root / 'research'
+        elif first == 'PrimeNumberTheoremAnd' and gate['package'] == 'research':
+            owner = root / 'research/.lake/packages/PrimeNumberTheoremAnd'
+        else:
+            raise ValueError('Unregistered module owner: ' + name)
+        rel = Path(*name.split('.')).with_suffix('.lean')
+        src = owner / rel
+        if not src.is_file():
+            raise ValueError('Missing owned source module: ' + name)
+        expected = owner / '.lake/build/lib/lean' / rel.with_suffix('.olean')
+        found[name] = (src, expected)
+        if first != 'PrimeNumberTheoremAnd':
+            pending.extend(imports(src.read_text()))
+    return found
+
+
 def source_boundary(root: Path = ROOT, include_research: bool = True) -> None:
     if sha(root/'Erdos647Sieve/Specification.lean') != PINS['specification_sha256']:
         raise ValueError('Protected Specification.lean changed; review its exact statements explicitly.')
@@ -112,13 +249,22 @@ def source_boundary(root: Path = ROOT, include_research: bool = True) -> None:
         if (package/'lean-toolchain').read_text().strip() != PINS['toolchain']:
             raise ValueError(f'{scope}: compiler pin differs from scripts/pins.json')
         lock = json.loads((package/'lake-manifest.json').read_text())
+        # Manifest names are serialized Lean Names, not arbitrary display strings.
+        # In particular, a hyphenated component must retain its «...» escaping.
+        declared = re.search(r'^\s*package\s+(\S+)', strip_comments((package/'lakefile.lean').read_text()), re.M)
+        if declared is None or lock.get('name') != declared[1]:
+            raise ValueError(f'{scope}: manifest package name must match the escaped Lean identifier in lakefile.lean')
+        config = strip_comments((package/'lakefile.lean').read_text())
+        for block in re.split(r'(?m)^lean_lib\s+', config)[1:]:
+            if 'moreLeanArgs := #["-DwarningAsError=true"]' not in block.split('script audit', 1)[0]:
+                raise ValueError('Project library must promote warnings to errors: ' + block.split()[0])
         entries = lock['packages']
         if len({p['name'] for p in entries}) != len(entries): raise ValueError('Duplicate dependency name')
         actual = {p['name']:p['rev'] for p in entries if p['type']=='git'}
         if actual != PINS['dependencies'][scope]: raise ValueError(f'{scope}: dependency lock differs from pins')
         local = [p for p in entries if p['type']=='path']
         if scope=='.' and local: raise ValueError('Core may not depend on a local research package')
-        if scope=='research' and (len(local)!=1 or local[0]['name']!='erdos647-sieve' or local[0]['dir']!='..'):
+        if scope=='research' and (len(local)!=1 or local[0]['name']!='«erdos647-sieve»' or local[0]['dir']!='..'):
             raise ValueError('Research must use the single local core dependency')
     # The public package cannot acquire accidental PNT+ or research imports.
     for base in ('Erdos647Sieve','Examples','Audit','Erdos647Sieve.lean'):
@@ -133,26 +279,32 @@ def source_boundary(root: Path = ROOT, include_research: bool = True) -> None:
                     if (root/(name.replace('.','/')+'.lean')).is_file(): continue
                 raise ValueError('Public import crosses the package boundary: '+name)
     if include_research:
-        rootnames={p.name for p in (root/'Erdos647Sieve').glob('*.lean')}
-        researchnames={p.name for p in (root/'research/Erdos647Sieve').glob('*.lean')}
-        if rootnames & researchnames: raise ValueError('Duplicated core proof in research package')
+        # Lean resolves a module's FIRST component before looking for its leaf.
+        # Splitting Erdos647Sieve.* across Lake packages is therefore not safe.
+        for oldroot in ('Erdos647Sieve', 'PrimeNumberTheoremAnd'):
+            if any((root/'research'/oldroot).rglob('*.lean')):
+                raise ValueError('Research source uses a dependency-owned module root: ' + oldroot)
+        if (root/'Erdos647Research').exists() or (root/'Erdos647Research.lean').exists():
+            raise ValueError('Core may not own the research module root')
         for p in (root/'research').rglob('*.lean'):
             if '.lake' in p.parts or 'docs' in p.parts or p.name == 'lakefile.lean': continue
             if p.is_symlink(): raise ValueError('Symlinked research proof: '+str(p))
+            if p.relative_to(root/'research').parts[0] not in {'Erdos647Research', 'Audit'}:
+                raise ValueError('Unregistered research module root: ' + str(p))
             if FORBIDDEN.search(strip_comments(p.read_text())): raise ValueError('Forbidden proof shortcut: '+str(p))
             for name in imports(p.read_text()):
                 if name=='Mathlib' or name.startswith('Mathlib.'): continue
                 if name.startswith('PrimeNumberTheoremAnd.'):
-                    if p.relative_to(root).as_posix() in {
-                        'research/Erdos647Sieve/AnalyticInputs.lean',
-                        'research/PrimeNumberTheoremAnd/RosserSchoenfeldPrime.lean'}: continue
+                    if p.relative_to(root).as_posix() == 'research/Erdos647Research/Compat/PNTPlus.lean': continue
                     raise ValueError('PNT+ import escaped analytic compatibility boundary: '+str(p))
                 path=name.replace('.','/')+'.lean'
                 if (root/path).is_file() or (root/'research'/path).is_file(): continue
                 raise ValueError('Unresolved project import: '+name)
-        registered={Path(g['build'][0].lstrip('+').replace('.','/')+'.lean').name
-                    for g in GATES.values() if g['package']=='research'}
-        if researchnames != registered:
+        registered={g['build'][0].lstrip('+') for g in GATES.values() if g['package']=='research'}
+        registered.add('Erdos647Research.Compat.PNTPlus')
+        owned={'.'.join(p.relative_to(root/'research').with_suffix('').parts)
+               for p in (root/'research/Erdos647Research').rglob('*.lean')}
+        if owned != registered:
             raise ValueError('Research source/audit registry mismatch; register new modules in gates.json')
     for gate in GATES.values():
         if gate['package']=='research' and not include_research: continue
@@ -160,6 +312,13 @@ def source_boundary(root: Path = ROOT, include_research: bool = True) -> None:
             text=(root/gate['package']/path).read_text()
             printed=re.findall(r'^#print axioms\s+(\S+)\s*$',text,re.M)
             if printed != targets: raise ValueError('Audit file/target registry mismatch: '+path)
+
+
+def lean_warnings(text: str) -> list[str]:
+    """Cached warning replay is still a lint failure, never a new clean PASS."""
+    clean = re.sub(r'\x1b\[[0-9;]*m', '', text)
+    return list(dict.fromkeys(line for line in clean.splitlines()
+        if re.match(r'^\s*warning:', line) or re.search(r'\.lean:\d+:\d+:\s*warning:', line)))
 
 
 def clean_env() -> dict[str, str]:
@@ -197,7 +356,7 @@ class Run:
     def __init__(self, root: Path, args: argparse.Namespace):
         self.root=root; self.args=args; self.env=clean_env(); self.commands=0
         if args.jobs: self.env['LEAN_NUM_THREADS']=str(args.jobs)
-        self.id='erdos647_repo_v32_results_'+datetime.now(timezone.utc).strftime('%Y%m%dT%H%M%SZ')+'_'+uuid.uuid4().hex[:8]
+        self.id='erdos647_repo_v36_results_'+datetime.now(timezone.utc).strftime('%Y%m%dT%H%M%SZ')+'_'+uuid.uuid4().hex[:8]
         self.dest=root/'results'/self.id
         if (root/'results').is_symlink(): raise ValueError('Refusing symlinked results directory')
         self.dest.mkdir(parents=True,exist_ok=False)
@@ -329,12 +488,18 @@ class Run:
         mathlib=package/'.lake/packages/mathlib'
         marker=mathlib/'.lake/erdos647-cache-ready.json'
         sentinel=mathlib/'.lake/build/lib/lean/Mathlib.olean'
-        if self.args.setup and (self.args.refresh_cache or not marker.exists() or not sentinel.exists()):
+        # A failed first setup can leave valid repositories but no compiled Mathlib.
+        # Resume only that cache step. Tool/repository installation still requires --setup.
+        cache_missing = not sentinel.exists()
+        if cache_missing or (self.args.setup and (self.args.refresh_cache or not marker.exists())):
+            self.record.setdefault('cache_actions', {})[scope] = (
+                'resume_missing_pinned_cache' if cache_missing else 'explicit_cache_refresh')
+            self.save()
             self.command('mathlib_cache_'+('core' if scope=='.' else 'research'),[self.lake,'exe','cache','get'],package)
             if not sentinel.exists():raise RuntimeError('Mathlib cache completed without Mathlib.olean')
             atomic_json(marker,{'toolchain':PINS['toolchain'],'mathlib':PINS['mathlib_revision']})
-        elif not sentinel.exists():
-            raise RuntimeError('Mathlib cache missing; use RUN.sh --setup instead of rebuilding Mathlib from scratch')
+        else:
+            self.record.setdefault('cache_actions', {})[scope] = 'reuse_existing'
         # Verify the actual resolved compiled-library search path.
         _,raw=self.command('search_path_'+('core' if scope=='.' else 'research'),
             [self.lake,'env','python3','-c',"import os,json; print(json.dumps(os.environ.get('LEAN_PATH','').split(os.pathsep)))"],package)
@@ -349,12 +514,62 @@ class Run:
             raise ValueError('Package build directory absent from Lean search path')
         self.record.setdefault('search_paths',{})[scope]=[str(p) for p in observed];self.save()
 
+    def verify_gate_modules(self, name: str) -> None:
+        gate = GATES[name]
+        scope = gate['package']
+        paths = [Path(p) for p in self.record.get('search_paths', {}).get(scope, [])]
+        if not paths:
+            raise ValueError('No verified Lean search path for ' + scope)
+        rows = []
+        failures = []
+        for module, (_, expected) in sorted(gate_module_sources(self.root, gate).items()):
+            actual = resolve_module_object(module, paths)
+            same = actual is not None and actual.resolve() == expected.resolve()
+            exists = actual is not None and actual.is_file()
+            rows.append({'module': module, 'expected': str(expected),
+                         'resolved': str(actual) if actual else None,
+                         'correct_owner': same, 'object_exists': exists})
+            if not same or not exists:
+                failures.append(module + ': expected ' + str(expected) + ', resolved ' + str(actual))
+        atomic_json(self.dest / 'module_resolution' / (name + '.json'), rows)
+        self.record.setdefault('module_resolution_checks', {})[name] = {
+            'count': len(rows), 'passed': not failures}
+        self.save()
+        if failures:
+            raise ValueError('Compiled module ownership check failed: ' + '; '.join(failures))
+
+    def check_pntplus_sources(self):
+        upstream = self.root/'research/.lake/packages/PrimeNumberTheoremAnd'
+        compat = self.root/'research/Erdos647Research/Compat/PNTPlus.lean'
+        report = inspect_closure(upstream, compat)
+        atomic_json(self.dest/'dependency_closure/pntplus.json', report)
+        self.record['pntplus_source_closure'] = {
+            'status':report['status'], 'module_count':report['module_count'],
+            'report':'dependency_closure/pntplus.json'}
+        # Preserve exact inspected upstream sources, not just the final wrapper.
+        for item in report['modules'].values():
+            if item.get('missing'): continue
+            src = upstream/item['path']
+            dst = self.dest/'source_dependencies/PNTPlus'/item['path']
+            dst.parent.mkdir(parents=True, exist_ok=True)
+            shutil.copy2(src, dst)
+        self.save()
+        if report['status'] != 'SOURCE_CLOSURE_CLEAN':
+            raise ValueError('PNT+ source closure rejected: ' + '; '.join(report['errors']))
+
     def gate(self, name: str):
         gate=GATES[name];package=self.root/gate['package']
         result={'status':'RUNNING','historical_status':gate['historical_status'],'axioms':{}}
         self.record['gates'][name]=result;self.save()
         try:
-            self.command(name+'_build',[self.lake,'build',*gate['build']],package)
+            if name == 'pntplus_inputs':
+                self.check_pntplus_sources()
+            _, build_log = self.command(name+'_build',[self.lake,'build',*gate['build']],package)
+            warnings = lean_warnings(build_log)
+            result['build_warnings'] = warnings
+            if warnings:
+                raise ValueError('Build emitted warnings (including replayed warnings): ' + '; '.join(warnings))
+            self.verify_gate_modules(name)
             for i,(file,targets) in enumerate(gate['audits'].items()):
                 _,log=self.command(name+f'_audit_{i}',[self.lake,'env','lean','-DwarningAsError=true',file],package)
                 result['axioms'].update({t:parse_axioms(log,t) for t in targets})
@@ -368,7 +583,17 @@ class Run:
         lines=['# Repository check results','',f'Run: `{self.id}`',f'Status: **{self.record["status"]}**','',
             '| Gate | This invocation |','|---|---|']
         lines += [f'| {k} | {v["status"]} |' for k,v in self.record['gates'].items()]
+        if self.record.get('package_errors'):
+            lines += ['', '## Setup failures', '']
+            lines += [f'- `{scope}`: {error}' for scope, error in self.record['package_errors'].items()]
+        failures = [(name, entry) for name, entry in self.record['gates'].items()
+                    if entry.get('error') or entry.get('reason')]
+        if failures:
+            lines += ['', '## Gate details', '']
+            lines += [f'- `{name}`: {entry.get("error", entry.get("reason"))}' for name, entry in failures]
         if self.record.get('error'):lines += ['',self.record['error']]
+        if self.record.get('warnings'):
+            lines += ['', '## Recorded metadata changes', ''] + self.record['warnings']
         lines += ['','Historical proof acceptance is not a current run result.',
                   'A selected failure or blocked gate makes the overall command fail.',
                   'The asymptotic endpoint remains outside the completed theorem inventory.']
@@ -377,7 +602,7 @@ class Run:
             dst=self.dest/'source'/p.relative_to(self.root);dst.parent.mkdir(parents=True,exist_ok=True);shutil.copy2(p,dst)
         # Redact only diagnostics. Source must remain byte-exact for reproducing edits.
         for p in self.dest.rglob('*'):
-            if p.is_file() and 'source' not in p.relative_to(self.dest).parts:
+            if p.is_file() and not {'source', 'source_dependencies'} & set(p.relative_to(self.dest).parts):
                 p.write_text(redact(p.read_text(errors='replace'),self.root),encoding='utf-8')
         atomic_json(self.dest/'MANIFEST.json',{p.relative_to(self.dest).as_posix():sha(p)
                     for p in self.dest.rglob('*') if p.is_file()})
@@ -437,15 +662,23 @@ def main(argv=None) -> int:
                 run.record['selected_gates']=selected
                 run.record['gates']={k:{'status':'NOT_STARTED' if k in selected else 'NOT_REQUESTED'} for k in GATES}
                 run.record['checks_role']='BUILD_TYPE_AXIOM' if selected else 'TOOLING_ONLY'
-                source_boundary(ROOT,include_research=args.scope!='core' or any(GATES[g]['package']=='research' for g in selected))
+                include_research = args.scope!='core' or any(GATES[g]['package']=='research' for g in selected)
+                run.record['retired_module_paths'] = retire_v33_module_paths(ROOT)
+                run.save()
+                source_boundary(ROOT,include_research=include_research)
                 before=snapshots(ROOT);run.record['source_sha256_before']=before;run.save()
                 run.command('tooling_tests',[sys.executable,'-m','unittest','discover','-s','tests','-v'])
                 if selected:
                     run.compiler()
+                    manifest_scopes = list(dict.fromkeys(['.'] + [GATES[g]['package'] for g in selected]))
+                    run.command('manifest_schema', [run.lean, '--run', str(ROOT/'scripts/check_manifests.lean'),
+                        *[str(ROOT/scope/'lake-manifest.json') for scope in manifest_scopes]])
                     package_errors={}
                     for scope in dict.fromkeys(GATES[g]['package'] for g in selected):
                         try:run.prepare(scope)
                         except (OSError,ValueError,RuntimeError,subprocess.SubprocessError) as exc:package_errors[scope]=str(exc)
+                    run.record['package_errors'] = package_errors
+                    run.save()
                     for name in selected:
                         gate=GATES[name]
                         failed=[d for d in gate['prerequisites'] if run.record['gates'][d]['status']!='PASS']
@@ -459,8 +692,8 @@ def main(argv=None) -> int:
                         if scope in package_errors:continue
                         for entry in json.loads((ROOT/scope/'lake-manifest.json').read_text())['packages']:
                             if entry['type']=='git':run.verify_dependency(ROOT/scope/'.lake/packages'/entry['name'],entry)
-                after=snapshots(ROOT);run.record['source_sha256_after']=after
-                if before!=after:raise ValueError('Source/configuration changed during checks; this run cannot be accepted')
+                after=snapshots(ROOT)
+                check_source_changes(run.record, before, after)
                 success=all(run.record['gates'][k]['status']=='PASS' for k in selected)
                 run.record['status']='PASS_SELECTED_CHECKS' if success else 'FAIL_OR_BLOCKED'
                 rc=0 if success else 1

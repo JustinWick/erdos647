@@ -11,9 +11,11 @@ require mathlib from git
 
 @[default_target]
 lean_lib Erdos647Sieve where
+  moreLeanArgs := #["-DwarningAsError=true"]
   globs := #[.one `Erdos647Sieve, .submodules `Erdos647Sieve]
 
 lean_lib Examples where
+  moreLeanArgs := #["-DwarningAsError=true"]
   roots := #[`Examples.BasicUsage, `Examples.MomentSpecialization]
 
 /-- Check the public package, examples, exact theorem types, and transitive axioms. -/

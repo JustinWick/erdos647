@@ -1,4 +1,4 @@
-import Erdos647Sieve.ReciprocalKernel
+import Erdos647Research.ReciprocalKernel
 
 set_option autoImplicit false
 set_option warningAsError true

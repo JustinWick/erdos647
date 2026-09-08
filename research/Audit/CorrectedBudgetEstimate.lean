@@ -1,4 +1,4 @@
-import Erdos647Sieve.CorrectedBudgetEstimate
+import Erdos647Research.CorrectedBudgetEstimate
 
 set_option autoImplicit false
 set_option warningAsError true

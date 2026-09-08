@@ -1,0 +1,44 @@
+{
+  "package": "erdos647_repo_overlay_v33",
+  "base": "erdos647_repository_v32.zip",
+  "focus": "Lake manifest serialization and failure-safe cache resumption",
+  "tests": {
+    "suite": "python3 -m unittest discover -s tests -v",
+    "before_zip": {
+      "return_code": 0,
+      "tests": 79
+    },
+    "after_zip_application": {
+      "return_code": 0,
+      "tests": 79
+    }
+  },
+  "top_level_tooling": {
+    "command": "bash RUN.sh tooling",
+    "return_code": 0,
+    "status": "PASS_SELECTED_CHECKS",
+    "checks_role": "TOOLING_ONLY",
+    "theorem_gates_executed": [],
+    "results_archive_name": "erdos647_repo_v33_results_20260908T055736Z_58681bf1.zip",
+    "results_manifest_hash_mismatches": [],
+    "captured_new_manifest_parser": true
+  },
+  "shell_syntax_return_code": 0,
+  "preservation": {
+    "unexpected_file_or_mtime_changes": [],
+    "all_58_existing_lean_files_unchanged": true,
+    "mathematical_and_audit_sources_unchanged": true,
+    "pins_and_axiom_allowlist_unchanged": true,
+    "user_CI_edit_preserved": true,
+    "no_dot_git_or_dot_lake_or_tools_files_in_overlay": true
+  },
+  "uploaded_run_evidence": {
+    "result_manifest_entries": 152,
+    "source_snapshot_entries": 85,
+    "recorded_gate_results": "13 BLOCKED; no theorem gate started",
+    "compiler": "4.32.2"
+  },
+  "source_and_api_basis": "docs/changes/v33.md",
+  "configuration_smoke_test": "scripts/check_manifests.lean uses the installed Lake Manifest.load before cache commands",
+  "lean_proof_acceptance_claimed_by_this_validation": false
+}

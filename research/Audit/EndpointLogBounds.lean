@@ -1,4 +1,4 @@
-import Erdos647Sieve.EndpointLogBounds
+import Erdos647Research.EndpointLogBounds
 
 set_option autoImplicit false
 set_option warningAsError true

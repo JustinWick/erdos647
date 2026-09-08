@@ -1,0 +1,755 @@
+--- a/research/Erdos647Sieve/AnalyticInputs.lean
++++ b/research/Erdos647Research/AnalyticInputs.lean
+@@ -3,8 +3,8 @@
+ Only the two explicitly named inputs below are used here; their full transitive
+ axioms must be audited. The rejected Mertens identity chain is not a proof input.
+ -/
+-import Erdos647Sieve.ReciprocalKernel
+-import PrimeNumberTheoremAnd.RosserSchoenfeldPrime
++import Erdos647Research.ReciprocalKernel
++import Erdos647Research.Compat.PNTPlus
+ 
+ set_option autoImplicit false
+ open scoped Topology
+--- a/research/Erdos647Sieve/CleanMertens.lean
++++ b/research/Erdos647Research/CleanMertens.lean
+@@ -3,8 +3,8 @@
+ identity and separately audited growth/integrability inputs. The old rejected
+ MertensProbe is preserved and is not imported. No endpoint is claimed here.
+ -/
+-import Erdos647Sieve.PrimeReciprocalSummation
+-import Erdos647Sieve.AnalyticInputs
++import Erdos647Research.PrimeReciprocalSummation
++import Erdos647Research.AnalyticInputs
+ 
+ set_option autoImplicit false
+ open scoped BigOperators Topology
+--- a/research/Erdos647Sieve/CorrectedBudgetEstimate.lean
++++ b/research/Erdos647Research/CorrectedBudgetEstimate.lean
+@@ -2,8 +2,8 @@
+ Combines the fixed-constant small-prime debit and the Stirling-derived residual.
+ The budget remains signed. There is no assumed asymptotic budget bound.
+ -/
+-import Erdos647Sieve.LogBudgetFactorial
+-import Erdos647Sieve.SmallPrimeDebitEstimate
++import Erdos647Research.LogBudgetFactorial
++import Erdos647Research.SmallPrimeDebitEstimate
+ 
+ set_option autoImplicit false
+ open scoped Topology
+--- a/research/Erdos647Sieve/FactorialEstimate.lean
++++ b/research/Erdos647Research/FactorialEstimate.lean
+@@ -3,7 +3,7 @@
+ The H+2 shift is handled by the exact factorial recurrence, not a second
+ asymptotic expansion. All divisions here are real divisions after casting.
+ -/
+-import Erdos647Sieve.FactorialBounds
++import Erdos647Research.FactorialBounds
+ 
+ set_option autoImplicit false
+ open scoped Topology
+--- a/research/Erdos647Sieve/LogBudgetFactorial.lean
++++ b/research/Erdos647Research/LogBudgetFactorial.lean
+@@ -3,7 +3,7 @@
+ shifted real logarithm of a factorial. No asymptotic hypothesis is used.
+ -/
+ import Erdos647Sieve.Specification
+-import Erdos647Sieve.FactorialEstimate
++import Erdos647Research.FactorialEstimate
+ 
+ set_option autoImplicit false
+ open scoped BigOperators
+--- a/research/Erdos647Sieve/PrimeReciprocalSummation.lean
++++ b/research/Erdos647Research/PrimeReciprocalSummation.lean
+@@ -3,7 +3,7 @@
+ summation, not from RS_prime.eq_413 or any of its downstream identities.
+ No analytic growth estimate is a hypothesis of these identities.
+ -/
+-import Erdos647Sieve.ReciprocalKernel
++import Erdos647Research.ReciprocalKernel
+ import Mathlib.NumberTheory.AbelSummation
+ import Mathlib.NumberTheory.Chebyshev
+ 
+--- a/research/Erdos647Sieve/SelectedPrimeReciprocals.lean
++++ b/research/Erdos647Research/SelectedPrimeReciprocals.lean
+@@ -3,7 +3,7 @@
+ primeMass. Cutoff convergence is a reusable implication, not the endpoint's
+ parameter analysis. No finite proof file is edited or replaced.
+ -/
+-import Erdos647Sieve.CleanMertens
++import Erdos647Research.CleanMertens
+ import Erdos647Sieve.Specification
+ 
+ set_option autoImplicit false
+--- a/research/Erdos647Sieve/SmallPrimeDebitEstimate.lean
++++ b/research/Erdos647Research/SmallPrimeDebitEstimate.lean
+@@ -4,7 +4,7 @@
+ No imported Mertens or PNT theorem is used, and no estimate is assumed as a premise.
+ -/
+ import Erdos647Sieve.Specification
+-import Erdos647Sieve.PrimeReciprocalLower
++import Erdos647Research.PrimeReciprocalLower
+ 
+ set_option autoImplicit false
+ open scoped BigOperators Topology
+--- a/AGENTS.md
++++ b/AGENTS.md
+@@ -4,6 +4,10 @@
+   a separately reviewed version migration.
+ - The root is the Mathlib-only finite library; `research/` is a separate Lake
+   package. Never introduce PNT+ into the root's imports or lockfile.
++- Core import paths use `Erdos647Sieve`; research import paths use `Erdos647Research`.
++  The theorem namespaces are independent of module paths and remain unchanged.
++  Never split one top-level module root across separate packages or change
++  `LEAN_PATH` to compensate.
+ - Edit visible source directly. There are no managed-source copies, overlays,
+   immutable runner inventories, or automatic upstream proof patches.
+ - Preserve the signed `Int` corrected budget, arbitrary integer translations, exact
+--- a/README.md
++++ b/README.md
+@@ -166,17 +166,27 @@
+ lakefile.lean              Mathlib-only public Lake package
+ lake-manifest.json         Nine exact core dependency revisions
+ research/                 Separate Lake package; depends on this core by path
+-  Erdos647Sieve/           12 preserved analytic/elementary source files
+-  PrimeNumberTheoremAnd/   Import-only compatibility shim
++  Erdos647Research/       12 analytic/elementary modules; theorem names unchanged
++    Compat/PNTPlus.lean   Import-only upstream compatibility boundary
+   Audit/                  A separate audit for every research module
+   lake-manifest.json      Native PNT+ lock plus the local core dependency
+-scripts/check.py           One orchestrator; no overlay/migration synchronizer
++scripts/check.py           Incremental checks and compiled-module ownership guard
+ scripts/gates.json         Gate inventory and prerequisite graph
+ tests/                    Offline tests of tooling, packaging, and reporting
+ docs/                     Statements, scope, contribution and version policy
+ provenance/               Historical reports, source map, rejected probe, handoffs
+ .github/workflows/        Core CI and manually dispatched research CI
+ ```
++
++The core owns `Erdos647Sieve.*` import paths; research owns `Erdos647Research.*`.
++Their **theorem namespaces** are unchanged. These separate module roots prevent
++Lean's first-root import resolution from finding a research object in the core's
++build directory. See [dependency boundaries](docs/dependency-boundaries.md).
++
++For an overlay over v32/v33 only, the runner archives the 13 exact obsolete source
++paths under `provenance/refactors/v34/retired/` once. Unknown edits are preserved
++and stop that relocation. A new checkout with the new paths needs no migration;
++ordinary runs do not copy or rewrite source files. No compiled cache is deleted.
+ 
+ There is **one active copy of each mathematical source file**. The original
+ rejected `MertensProbe` is retained as text under `provenance/rejected/`, never
+--- a/docs/dependency-boundaries.md
++++ b/docs/dependency-boundaries.md
+@@ -16,16 +16,31 @@
+ 
+ ## Source ownership
+ 
+-There is no copied finite source tree inside `research/`. Its narrow Lake-library
+-roots own only the five analytical and seven elementary modules. The root library
+-owns the finite modules. Shared `Erdos647Sieve.*` names preserve the existing public
+-and internal theorem names without a namespace rewrite.
++There is no copied finite source tree inside `research/`. Module roots are disjoint:
+ 
+-The one old upstream import path is handled by
+-`research/PrimeNumberTheoremAnd/RosserSchoenfeldPrime.lean`, which contains only an
+-import of the pinned upstream module at its current path. `AnalyticInputs.lean`
+-is the single PNT+-aware project adapter. Endpoint work consumes its project-level
+-wrappers; the core cannot see these modules.
++| Owner | Import root | Theorem namespace |
++|---|---|---|
++| Mathlib-only core | `Erdos647Sieve.*` | `Erdos647Sieve.*` |
++| Project research | `Erdos647Research.*` | Existing `Erdos647Sieve.Analytic.*` and `Erdos647Sieve.Elementary.*` |
++| Upstream PNT+ | `PrimeNumberTheoremAnd.*` | Upstream names, used only by the compatibility boundary |
++
++Lean 4.32.2 selects the first search-path entry containing the top-level module
++root, *then* constructs the full object path. It does not keep searching if the
++leaf module is absent. Thus, putting some `Erdos647Sieve.*` modules in each package
++is unsafe even when the full module names differ. v33 reproduced precisely this
++failure: research builds succeeded, but audits sought their objects in the core.
++
++The import-only wrapper is now
++`research/Erdos647Research/Compat/PNTPlus.lean`. It imports the original upstream
++module at its pinned path. `AnalyticInputs.lean` consumes that wrapper; it remains
++the sole project proof adapter mentioning the upstream theorem API. There is no
++project-owned module under the upstream `PrimeNumberTheoremAnd` root.
++
++Only research module paths and import lines changed in v34. The stable public
++imports, declaration names, theorem statements, and proof bodies are unchanged.
++The relocation manifest and diff preserve the correspondence with historical
++source records. Old source copies from overlay installations are retained outside
++the active build graph, not linked back into it.
+ 
+ ## Incremental build state
+ 
+@@ -39,3 +54,10 @@
+ is the source being built. The runner reconstructs each package's Lean search path
+ and rejects paths outside that package, its locked dependencies, its local core
+ (if research), and the selected toolchain.
++
++After each module build, the runner checks which `.olean` each project import will
++resolve to using Lean 4.32.2's first-root rule. The owner must be the expected
++package, and the object must exist. Results are written under `module_resolution/`
++in the diagnostic ZIP. Reordering `LEAN_PATH` or combining build directories is
++not used as a workaround. The actual Lean exact-type and axiom audits still run
++separately and determine theorem acceptance.
+--- a/docs/proof-status.md
++++ b/docs/proof-status.md
+@@ -25,6 +25,19 @@
+ `results/`. Historical acceptance is never inserted as a current gate pass. A
+ successful source/package test is not itself theorem verification.
+ 
++## Standalone repository evidence: v33
++
++Run `erdos647_repo_v33_results_20260908T061726Z_5c0e7860` accepted the independent
++core package, both public examples, and both core audit files. Its 95 distinct
++axiom reports contain only the permitted foundations. The resolved core search
++path contains no PNT+ library directory.
++
++Four research modules compiled (`ReciprocalKernel`, `EndpointLogBounds`,
++`FactorialBounds`, `PrimeReciprocalLower`) but failed at audit import resolution.
++Eight dependent gates were blocked. Their successful builds are not recorded as
++passing theorem/audit gates. v34 changes module ownership to repair that packaging
++failure; it does not change a mathematical statement or fill the endpoint gap.
++
+ ## Acceptance standard
+ 
+ A Lean proof gate builds the relevant modules, checks its checked-in exact-type
+--- a/research/Audit/AnalyticInputs.lean
++++ b/research/Audit/AnalyticInputs.lean
+@@ -1,4 +1,4 @@
+-import Erdos647Sieve.AnalyticInputs
++import Erdos647Research.AnalyticInputs
+ 
+ set_option autoImplicit false
+ set_option warningAsError true
+--- a/research/Audit/CleanMertens.lean
++++ b/research/Audit/CleanMertens.lean
+@@ -1,4 +1,4 @@
+-import Erdos647Sieve.CleanMertens
++import Erdos647Research.CleanMertens
+ 
+ set_option autoImplicit false
+ set_option warningAsError true
+--- a/research/Audit/CorrectedBudgetEstimate.lean
++++ b/research/Audit/CorrectedBudgetEstimate.lean
+@@ -1,4 +1,4 @@
+-import Erdos647Sieve.CorrectedBudgetEstimate
++import Erdos647Research.CorrectedBudgetEstimate
+ 
+ set_option autoImplicit false
+ set_option warningAsError true
+--- a/research/Audit/EndpointLogBounds.lean
++++ b/research/Audit/EndpointLogBounds.lean
+@@ -1,4 +1,4 @@
+-import Erdos647Sieve.EndpointLogBounds
++import Erdos647Research.EndpointLogBounds
+ 
+ set_option autoImplicit false
+ set_option warningAsError true
+--- a/research/Audit/FactorialBounds.lean
++++ b/research/Audit/FactorialBounds.lean
+@@ -1,4 +1,4 @@
+-import Erdos647Sieve.FactorialBounds
++import Erdos647Research.FactorialBounds
+ 
+ set_option autoImplicit false
+ set_option warningAsError true
+--- a/research/Audit/FactorialEstimate.lean
++++ b/research/Audit/FactorialEstimate.lean
+@@ -1,4 +1,4 @@
+-import Erdos647Sieve.FactorialEstimate
++import Erdos647Research.FactorialEstimate
+ 
+ set_option autoImplicit false
+ set_option warningAsError true
+--- a/research/Audit/LogBudgetFactorial.lean
++++ b/research/Audit/LogBudgetFactorial.lean
+@@ -1,4 +1,4 @@
+-import Erdos647Sieve.LogBudgetFactorial
++import Erdos647Research.LogBudgetFactorial
+ 
+ set_option autoImplicit false
+ set_option warningAsError true
+--- a/research/Audit/PrimeReciprocalLower.lean
++++ b/research/Audit/PrimeReciprocalLower.lean
+@@ -1,4 +1,4 @@
+-import Erdos647Sieve.PrimeReciprocalLower
++import Erdos647Research.PrimeReciprocalLower
+ 
+ set_option autoImplicit false
+ set_option warningAsError true
+--- a/research/Audit/ReciprocalAbel.lean
++++ b/research/Audit/ReciprocalAbel.lean
+@@ -1,4 +1,4 @@
+-import Erdos647Sieve.PrimeReciprocalSummation
++import Erdos647Research.PrimeReciprocalSummation
+ 
+ set_option autoImplicit false
+ set_option warningAsError true
+--- a/research/Audit/ReciprocalKernel.lean
++++ b/research/Audit/ReciprocalKernel.lean
+@@ -1,4 +1,4 @@
+-import Erdos647Sieve.ReciprocalKernel
++import Erdos647Research.ReciprocalKernel
+ 
+ set_option autoImplicit false
+ set_option warningAsError true
+--- a/research/Audit/SelectedPrimeReciprocals.lean
++++ b/research/Audit/SelectedPrimeReciprocals.lean
+@@ -1,4 +1,4 @@
+-import Erdos647Sieve.SelectedPrimeReciprocals
++import Erdos647Research.SelectedPrimeReciprocals
+ 
+ set_option autoImplicit false
+ set_option warningAsError true
+--- a/research/Audit/SmallPrimeDebitEstimate.lean
++++ b/research/Audit/SmallPrimeDebitEstimate.lean
+@@ -1,4 +1,4 @@
+-import Erdos647Sieve.SmallPrimeDebitEstimate
++import Erdos647Research.SmallPrimeDebitEstimate
+ 
+ set_option autoImplicit false
+ set_option warningAsError true
+--- a/research/README.md
++++ b/research/README.md
+@@ -2,14 +2,19 @@
+ 
+ This is a separate Lake package, not a dependency of the public root library.
+ It uses the parent core by a local path dependency and PNT+ at its native locked
+-Lean/Mathlib 4.32.2 environment. The existing theorem/module names are preserved;
++Lean/Mathlib 4.32.2 environment. The existing theorem names and proof bodies are preserved;
+ there are no duplicate finite-source copies or upstream proof patches.
+ 
+ ## Inventory
+ 
++Research import paths begin with `Erdos647Research`, while theorem names remain
++in their existing `Erdos647Sieve` namespaces. The core and upstream PNT+ keep their
++own module roots.
++
+ The five analytic modules are `ReciprocalKernel`, `PrimeReciprocalSummation`,
+ `AnalyticInputs`, `CleanMertens`, and `SelectedPrimeReciprocals`. The PNT+ boundary
+-is the `AnalyticInputs` adapter plus one import-only compatibility shim.
++is the `AnalyticInputs` adapter plus `Erdos647Research.Compat.PNTPlus`, an
++import-only wrapper. No project module occupies an upstream-owned import root.
+ 
+ The seven elementary modules are `EndpointLogBounds`, `FactorialBounds`,
+ `FactorialEstimate`, `LogBudgetFactorial`, `PrimeReciprocalLower`,
+--- a/research/lakefile.lean
++++ b/research/lakefile.lean
+@@ -10,15 +10,15 @@
+   "https://github.com/AlexKontorovich/PrimeNumberTheoremAnd.git" @ "a5154676af9aa3095150ee410cdda80555aa0642"
+ 
+ lean_lib PNTPlusCompat where
+-  roots := #[`PrimeNumberTheoremAnd.RosserSchoenfeldPrime]
++  roots := #[`Erdos647Research.Compat.PNTPlus]
+ 
+ @[default_target]
+ lean_lib Erdos647Analytic where
+-  roots := #[`Erdos647Sieve.ReciprocalKernel, `Erdos647Sieve.PrimeReciprocalSummation, `Erdos647Sieve.AnalyticInputs, `Erdos647Sieve.CleanMertens, `Erdos647Sieve.SelectedPrimeReciprocals]
++  roots := #[`Erdos647Research.ReciprocalKernel, `Erdos647Research.PrimeReciprocalSummation, `Erdos647Research.AnalyticInputs, `Erdos647Research.CleanMertens, `Erdos647Research.SelectedPrimeReciprocals]
+ 
+ @[default_target]
+ lean_lib Erdos647Elementary where
+-  roots := #[`Erdos647Sieve.CorrectedBudgetEstimate, `Erdos647Sieve.EndpointLogBounds, `Erdos647Sieve.FactorialBounds, `Erdos647Sieve.FactorialEstimate, `Erdos647Sieve.LogBudgetFactorial, `Erdos647Sieve.PrimeReciprocalLower, `Erdos647Sieve.SmallPrimeDebitEstimate]
++  roots := #[`Erdos647Research.CorrectedBudgetEstimate, `Erdos647Research.EndpointLogBounds, `Erdos647Research.FactorialBounds, `Erdos647Research.FactorialEstimate, `Erdos647Research.LogBudgetFactorial, `Erdos647Research.PrimeReciprocalLower, `Erdos647Research.SmallPrimeDebitEstimate]
+ 
+ /-- All current research proof gates, including pending elementary estimates. -/
+ script audit (args) do
+--- a/scripts/check.py
++++ b/scripts/check.py
+@@ -1,5 +1,8 @@
+ #!/usr/bin/env python3
+-"""Incremental, fail-closed repository checks. No proof files are copied or patched.
++"""Incremental, fail-closed repository checks.
++
++The v34 overlay retires exactly the recorded obsolete module paths once, preserving
++originals in provenance. Ordinary checks never synchronize or rewrite proof bodies.
+ 
+ Lake owns build invalidation. This runner always reruns the selected exact-type and
+ axiom audits; a cached build is not silently reported as a fresh audit. Python 3.10+.
+@@ -125,6 +128,111 @@
+             'CI metadata changed during the local run (recorded separately): ' + ', '.join(metadata))
+     if critical:
+         raise ValueError('Checked source/configuration changed during checks: ' + ', '.join(critical))
++
++
++def retire_v33_module_paths(root: Path) -> list[dict]:
++    """One-time overlay rename, not a source-sync/backup framework.
++
++    ZIP extraction cannot remove old paths. Only the 13 exact predecessor files
++    recorded in the move manifest may be retired; originals stay in provenance.
++    A fresh checkout with no obsolete files is a no-op, including after later
++    edits to the new source paths. All conflicts are checked before any move.
++    """
++    manifest = root / 'scripts/module_moves_v34.json'
++    moves = json.loads(manifest.read_text())['moves']
++    pending = []
++    def local(name: str) -> Path:
++        rel = Path(name)
++        if rel.is_absolute() or '..' in rel.parts:
++            raise ValueError('Invalid module relocation path: ' + name)
++        target = root / rel
++        cursor = root
++        for part in rel.parts:
++            cursor = cursor / part
++            if cursor.is_symlink():
++                raise ValueError('Symlink in module relocation path: ' + name)
++        return target
++    for entry in moves:
++        old_name, new_name = Path(entry['old']), Path(entry['new'])
++        ordinary = (old_name.parent == Path('research/Erdos647Sieve')
++                    and old_name.suffix == '.lean'
++                    and new_name == Path('research/Erdos647Research') / old_name.name)
++        shim = (old_name == Path('research/PrimeNumberTheoremAnd/RosserSchoenfeldPrime.lean')
++                and new_name == Path('research/Erdos647Research/Compat/PNTPlus.lean'))
++        if not (ordinary or shim):
++            raise ValueError('Move is outside the v34 module relocation: ' + entry['old'])
++        old = local(entry['old'])
++        if not old.exists():
++            continue
++        new = local(entry['new'])
++        archive_name = 'provenance/refactors/v34/retired/' + entry['old']
++        archive = local(archive_name)
++        if not old.is_file() or sha(old) != entry['old_sha256']:
++            raise ValueError('Edited obsolete module; preserved without moving: ' + entry['old'])
++        if not new.is_file() or sha(new) != entry['new_sha256']:
++            raise ValueError('Replacement module does not match relocation: ' + entry['new'])
++        if archive.exists() and (not archive.is_file() or sha(archive) != entry['old_sha256']):
++            raise ValueError('Conflicting module provenance; nothing moved: ' + archive_name)
++        pending.append((entry, old, archive, archive_name))
++    recorded = []
++    for entry, old, archive, archive_name in pending:
++        archive.parent.mkdir(parents=True, exist_ok=True)
++        if archive.exists():
++            old.unlink()  # Only after verifying the identical archived original above.
++        else:
++            old.rename(archive)
++        recorded.append({**entry, 'archive': archive_name})
++    return recorded
++
++
++def resolve_module_object(module: str, search_paths: list[Path]) -> Path | None:
++    """Mirror Lean 4.32.2 SearchPath.findWithExt, including first-root selection.
++
++    A later exact file must NOT mask a collision with an earlier package root.
++    Reference: lean4/v4.32.2/src/Lean/Util/Path.lean, lines 53-66.
++    """
++    parts = module.split('.')
++    if not parts or any(not part or not re.fullmatch(r'[A-Za-z_][A-Za-z0-9_]*', part)
++                        for part in parts):
++        raise ValueError('Unsupported module identifier for path audit: ' + module)
++    for path in search_paths:
++        path = Path(path)
++        if (path / parts[0]).is_dir() or (path / (parts[0] + '.olean')).exists():
++            return path.joinpath(*parts).with_suffix('.olean')
++    return None
++
++
++def gate_module_sources(root: Path, gate: dict) -> dict[str, tuple[Path, Path]]:
++    """Actual project imports and their owners; no traversal of upstream source."""
++    pending = []
++    package = root / gate['package']
++    for file in gate['audits']:
++        pending.extend(imports((package / file).read_text()))
++    if gate['package'] == '.':
++        pending.extend('Examples.' + p.stem for p in (root / 'Examples').glob('*.lean'))
++    found = {}
++    while pending:
++        name = pending.pop()
++        if name in found or name == 'Mathlib' or name.startswith('Mathlib.'):
++            continue
++        first = name.split('.')[0]
++        if first in {'Erdos647Sieve', 'Examples'}:
++            owner = root
++        elif first == 'Erdos647Research' and gate['package'] == 'research':
++            owner = root / 'research'
++        elif first == 'PrimeNumberTheoremAnd' and gate['package'] == 'research':
++            owner = root / 'research/.lake/packages/PrimeNumberTheoremAnd'
++        else:
++            raise ValueError('Unregistered module owner: ' + name)
++        rel = Path(*name.split('.')).with_suffix('.lean')
++        src = owner / rel
++        if not src.is_file():
++            raise ValueError('Missing owned source module: ' + name)
++        expected = owner / '.lake/build/lib/lean' / rel.with_suffix('.olean')
++        found[name] = (src, expected)
++        if first != 'PrimeNumberTheoremAnd':
++            pending.extend(imports(src.read_text()))
++    return found
+ 
+ 
+ def source_boundary(root: Path = ROOT, include_research: bool = True) -> None:
+@@ -162,26 +270,32 @@
+                     if (root/(name.replace('.','/')+'.lean')).is_file(): continue
+                 raise ValueError('Public import crosses the package boundary: '+name)
+     if include_research:
+-        rootnames={p.name for p in (root/'Erdos647Sieve').glob('*.lean')}
+-        researchnames={p.name for p in (root/'research/Erdos647Sieve').glob('*.lean')}
+-        if rootnames & researchnames: raise ValueError('Duplicated core proof in research package')
++        # Lean resolves a module's FIRST component before looking for its leaf.
++        # Splitting Erdos647Sieve.* across Lake packages is therefore not safe.
++        for oldroot in ('Erdos647Sieve', 'PrimeNumberTheoremAnd'):
++            if any((root/'research'/oldroot).rglob('*.lean')):
++                raise ValueError('Research source uses a dependency-owned module root: ' + oldroot)
++        if (root/'Erdos647Research').exists() or (root/'Erdos647Research.lean').exists():
++            raise ValueError('Core may not own the research module root')
+         for p in (root/'research').rglob('*.lean'):
+             if '.lake' in p.parts or 'docs' in p.parts or p.name == 'lakefile.lean': continue
+             if p.is_symlink(): raise ValueError('Symlinked research proof: '+str(p))
++            if p.relative_to(root/'research').parts[0] not in {'Erdos647Research', 'Audit'}:
++                raise ValueError('Unregistered research module root: ' + str(p))
+             if FORBIDDEN.search(strip_comments(p.read_text())): raise ValueError('Forbidden proof shortcut: '+str(p))
+             for name in imports(p.read_text()):
+                 if name=='Mathlib' or name.startswith('Mathlib.'): continue
+                 if name.startswith('PrimeNumberTheoremAnd.'):
+-                    if p.relative_to(root).as_posix() in {
+-                        'research/Erdos647Sieve/AnalyticInputs.lean',
+-                        'research/PrimeNumberTheoremAnd/RosserSchoenfeldPrime.lean'}: continue
++                    if p.relative_to(root).as_posix() == 'research/Erdos647Research/Compat/PNTPlus.lean': continue
+                     raise ValueError('PNT+ import escaped analytic compatibility boundary: '+str(p))
+                 path=name.replace('.','/')+'.lean'
+                 if (root/path).is_file() or (root/'research'/path).is_file(): continue
+                 raise ValueError('Unresolved project import: '+name)
+-        registered={Path(g['build'][0].lstrip('+').replace('.','/')+'.lean').name
+-                    for g in GATES.values() if g['package']=='research'}
+-        if researchnames != registered:
++        registered={g['build'][0].lstrip('+') for g in GATES.values() if g['package']=='research'}
++        registered.add('Erdos647Research.Compat.PNTPlus')
++        owned={'.'.join(p.relative_to(root/'research').with_suffix('').parts)
++               for p in (root/'research/Erdos647Research').rglob('*.lean')}
++        if owned != registered:
+             raise ValueError('Research source/audit registry mismatch; register new modules in gates.json')
+     for gate in GATES.values():
+         if gate['package']=='research' and not include_research: continue
+@@ -226,7 +340,7 @@
+     def __init__(self, root: Path, args: argparse.Namespace):
+         self.root=root; self.args=args; self.env=clean_env(); self.commands=0
+         if args.jobs: self.env['LEAN_NUM_THREADS']=str(args.jobs)
+-        self.id='erdos647_repo_v33_results_'+datetime.now(timezone.utc).strftime('%Y%m%dT%H%M%SZ')+'_'+uuid.uuid4().hex[:8]
++        self.id='erdos647_repo_v34_results_'+datetime.now(timezone.utc).strftime('%Y%m%dT%H%M%SZ')+'_'+uuid.uuid4().hex[:8]
+         self.dest=root/'results'/self.id
+         if (root/'results').is_symlink(): raise ValueError('Refusing symlinked results directory')
+         self.dest.mkdir(parents=True,exist_ok=False)
+@@ -384,12 +498,37 @@
+             raise ValueError('Package build directory absent from Lean search path')
+         self.record.setdefault('search_paths',{})[scope]=[str(p) for p in observed];self.save()
+ 
++    def verify_gate_modules(self, name: str) -> None:
++        gate = GATES[name]
++        scope = gate['package']
++        paths = [Path(p) for p in self.record.get('search_paths', {}).get(scope, [])]
++        if not paths:
++            raise ValueError('No verified Lean search path for ' + scope)
++        rows = []
++        failures = []
++        for module, (_, expected) in sorted(gate_module_sources(self.root, gate).items()):
++            actual = resolve_module_object(module, paths)
++            same = actual is not None and actual.resolve() == expected.resolve()
++            exists = actual is not None and actual.is_file()
++            rows.append({'module': module, 'expected': str(expected),
++                         'resolved': str(actual) if actual else None,
++                         'correct_owner': same, 'object_exists': exists})
++            if not same or not exists:
++                failures.append(module + ': expected ' + str(expected) + ', resolved ' + str(actual))
++        atomic_json(self.dest / 'module_resolution' / (name + '.json'), rows)
++        self.record.setdefault('module_resolution_checks', {})[name] = {
++            'count': len(rows), 'passed': not failures}
++        self.save()
++        if failures:
++            raise ValueError('Compiled module ownership check failed: ' + '; '.join(failures))
++
+     def gate(self, name: str):
+         gate=GATES[name];package=self.root/gate['package']
+         result={'status':'RUNNING','historical_status':gate['historical_status'],'axioms':{}}
+         self.record['gates'][name]=result;self.save()
+         try:
+             self.command(name+'_build',[self.lake,'build',*gate['build']],package)
++            self.verify_gate_modules(name)
+             for i,(file,targets) in enumerate(gate['audits'].items()):
+                 _,log=self.command(name+f'_audit_{i}',[self.lake,'env','lean','-DwarningAsError=true',file],package)
+                 result['axioms'].update({t:parse_axioms(log,t) for t in targets})
+@@ -482,7 +621,10 @@
+                 run.record['selected_gates']=selected
+                 run.record['gates']={k:{'status':'NOT_STARTED' if k in selected else 'NOT_REQUESTED'} for k in GATES}
+                 run.record['checks_role']='BUILD_TYPE_AXIOM' if selected else 'TOOLING_ONLY'
+-                source_boundary(ROOT,include_research=args.scope!='core' or any(GATES[g]['package']=='research' for g in selected))
++                include_research = args.scope!='core' or any(GATES[g]['package']=='research' for g in selected)
++                run.record['retired_module_paths'] = retire_v33_module_paths(ROOT)
++                run.save()
++                source_boundary(ROOT,include_research=include_research)
+                 before=snapshots(ROOT);run.record['source_sha256_before']=before;run.save()
+                 run.command('tooling_tests',[sys.executable,'-m','unittest','discover','-s','tests','-v'])
+                 if selected:
+--- a/scripts/gates.json
++++ b/scripts/gates.json
+@@ -112,7 +112,7 @@
+   "reciprocal_kernel": {
+     "package": "research",
+     "build": [
+-      "+Erdos647Sieve.ReciprocalKernel"
++      "+Erdos647Research.ReciprocalKernel"
+     ],
+     "audits": {
+       "Audit/ReciprocalKernel.lean": [
+@@ -127,7 +127,7 @@
+   "reciprocal_abel": {
+     "package": "research",
+     "build": [
+-      "+Erdos647Sieve.PrimeReciprocalSummation"
++      "+Erdos647Research.PrimeReciprocalSummation"
+     ],
+     "audits": {
+       "Audit/ReciprocalAbel.lean": [
+@@ -146,7 +146,7 @@
+   "analytic_inputs": {
+     "package": "research",
+     "build": [
+-      "+Erdos647Sieve.AnalyticInputs"
++      "+Erdos647Research.AnalyticInputs"
+     ],
+     "audits": {
+       "Audit/AnalyticInputs.lean": [
+@@ -165,7 +165,7 @@
+   "clean_mertens": {
+     "package": "research",
+     "build": [
+-      "+Erdos647Sieve.CleanMertens"
++      "+Erdos647Research.CleanMertens"
+     ],
+     "audits": {
+       "Audit/CleanMertens.lean": [
+@@ -183,7 +183,7 @@
+   "selected_prime_reciprocals": {
+     "package": "research",
+     "build": [
+-      "+Erdos647Sieve.SelectedPrimeReciprocals"
++      "+Erdos647Research.SelectedPrimeReciprocals"
+     ],
+     "audits": {
+       "Audit/SelectedPrimeReciprocals.lean": [
+@@ -200,7 +200,7 @@
+   "endpoint_log_bounds": {
+     "package": "research",
+     "build": [
+-      "+Erdos647Sieve.EndpointLogBounds"
++      "+Erdos647Research.EndpointLogBounds"
+     ],
+     "audits": {
+       "Audit/EndpointLogBounds.lean": [
+@@ -215,7 +215,7 @@
+   "factorial_bounds": {
+     "package": "research",
+     "build": [
+-      "+Erdos647Sieve.FactorialBounds"
++      "+Erdos647Research.FactorialBounds"
+     ],
+     "audits": {
+       "Audit/FactorialBounds.lean": [
+@@ -230,7 +230,7 @@
+   "factorial_estimate": {
+     "package": "research",
+     "build": [
+-      "+Erdos647Sieve.FactorialEstimate"
++      "+Erdos647Research.FactorialEstimate"
+     ],
+     "audits": {
+       "Audit/FactorialEstimate.lean": [
+@@ -247,7 +247,7 @@
+   "log_budget_factorial": {
+     "package": "research",
+     "build": [
+-      "+Erdos647Sieve.LogBudgetFactorial"
++      "+Erdos647Research.LogBudgetFactorial"
+     ],
+     "audits": {
+       "Audit/LogBudgetFactorial.lean": [
+@@ -263,7 +263,7 @@
+   "prime_reciprocal_lower": {
+     "package": "research",
+     "build": [
+-      "+Erdos647Sieve.PrimeReciprocalLower"
++      "+Erdos647Research.PrimeReciprocalLower"
+     ],
+     "audits": {
+       "Audit/PrimeReciprocalLower.lean": [
+@@ -280,7 +280,7 @@
+   "small_prime_debit_estimate": {
+     "package": "research",
+     "build": [
+-      "+Erdos647Sieve.SmallPrimeDebitEstimate"
++      "+Erdos647Research.SmallPrimeDebitEstimate"
+     ],
+     "audits": {
+       "Audit/SmallPrimeDebitEstimate.lean": [
+@@ -297,7 +297,7 @@
+   "corrected_budget_estimate": {
+     "package": "research",
+     "build": [
+-      "+Erdos647Sieve.CorrectedBudgetEstimate"
++      "+Erdos647Research.CorrectedBudgetEstimate"
+     ],
+     "audits": {
+       "Audit/CorrectedBudgetEstimate.lean": [
+--- a/tests/test_packaging_v33.py
++++ b/tests/test_packaging_v33.py
+@@ -267,7 +267,7 @@
+         self.assertIn('.github/workflows/ci.yml', text)
+         archive = Path((self.root/'results/latest_result.txt').read_text().strip())
+         with zipfile.ZipFile(archive) as z:
+-            self.assertTrue(archive.name.startswith('erdos647_repo_v33_results_'))
++            self.assertTrue(archive.name.startswith('erdos647_repo_v34_results_'))
+             data = json.loads(z.read(self.run.id+'/summary.json'))
+             self.assertEqual(data['gates']['core']['status'], 'BLOCKED')
+ 
+--- a/tests/test_runner.py
++++ b/tests/test_runner.py
+@@ -57,7 +57,7 @@
+     def test_same_mathlib_pins(self):
+         self.assertEqual(check.PINS['dependencies']['.']['mathlib'],check.PINS['dependencies']['research']['mathlib'])
+     def test_no_duplicate_math_source(self):
+-        a={p.name for p in (ROOT/'Erdos647Sieve').glob('*.lean')};b={p.name for p in (ROOT/'research/Erdos647Sieve').glob('*.lean')}
++        a={p.name for p in (ROOT/'Erdos647Sieve').glob('*.lean')};b={p.name for p in (ROOT/'research/Erdos647Research').glob('*.lean')}
+         self.assertFalse(a&b)
+     def test_legacy_probe_archived(self):
+         self.assertTrue((ROOT/'provenance/rejected/MertensProbe.lean.txt').is_file())
+@@ -96,16 +96,16 @@
+         (self.root/'Erdos647Sieve/Bad.lean').write_text('import PrimeNumberTheoremAnd.MediumPNT\n')
+         with self.assertRaises(ValueError):check.source_boundary(self.root)
+     def test_core_no_research_import(self):
+-        (self.root/'Erdos647Sieve/Bad.lean').write_text('import Erdos647Sieve.CleanMertens\n')
++        (self.root/'Erdos647Sieve/Bad.lean').write_text('import Erdos647Research.CleanMertens\n')
+         with self.assertRaises(ValueError):check.source_boundary(self.root)
+     def test_extra_axiom_source(self):
+         (self.root/'Erdos647Sieve/Bad.lean').write_text('axiom bad : False\n')
+         with self.assertRaises(ValueError):check.source_boundary(self.root)
+     def test_unknown_research_file_not_silently_skipped(self):
+-        (self.root/'research/Erdos647Sieve/Unknown.lean').write_text('import Mathlib\n')
++        (self.root/'research/Erdos647Research/Unknown.lean').write_text('import Mathlib\n')
+         with self.assertRaises(ValueError):check.source_boundary(self.root)
+     def test_core_does_not_validate_research(self):
+-        (self.root/'research/Erdos647Sieve/Unknown.lean').write_text('axiom bad : False\n')
++        (self.root/'research/Erdos647Research/Unknown.lean').write_text('axiom bad : False\n')
+         check.source_boundary(self.root,include_research=False)
+     def test_dependency_revision_drift(self):
+         p=self.root/'lake-manifest.json';data=json.loads(p.read_text());data['packages'][0]['rev']='0'*40;p.write_text(json.dumps(data))
+@@ -114,7 +114,7 @@
+         p=self.root/'Erdos647Sieve/Bonferroni.lean';p.write_text(p.read_text()+'\n-- no sorry was inserted\n')
+         check.source_boundary(self.root)
+     def test_source_symlink_rejected(self):
+-        p=self.root/'Erdos647Sieve/Symlink.lean';p.symlink_to(self.root/'research/Erdos647Sieve/CleanMertens.lean')
++        p=self.root/'Erdos647Sieve/Symlink.lean';p.symlink_to(self.root/'research/Erdos647Research/CleanMertens.lean')
+         with self.assertRaises(ValueError):check.source_boundary(self.root)
+     def test_diagnostics_exclude_caches_and_env(self):
+         for name in ['.lake/deep/cache.lean','.tools/foo.py','results/prior/a.py','.env','research/.lake/fake.lean']:
+@@ -133,8 +133,10 @@
+         self.output=io.StringIO();self.redirect=contextlib.redirect_stdout(self.output);self.redirect.__enter__()
+         self.tmp=tempfile.TemporaryDirectory();self.root=Path(self.tmp.name)
+         self.run=check.Run(self.root,check.parser().parse_args(['tooling']))
++        self.path_audit = mock.patch.object(self.run, 'verify_gate_modules')
++        self.path_audit.start()
+     def tearDown(self):
+-        self.tmp.cleanup();self.redirect.__exit__(None,None,None)
++        self.path_audit.stop();self.tmp.cleanup();self.redirect.__exit__(None,None,None)
+     def test_nonzero_is_failure_even_with_pass_text(self):
+         with self.assertRaises(RuntimeError):
+             self.run.command('fake_failure',[sys.executable,'-c','print("PASS"); raise SystemExit(5)'])

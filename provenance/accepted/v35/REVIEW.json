@@ -1,0 +1,59 @@
+{
+  "run_id": "erdos647_repo_v35_results_20260908T071828Z_a8ef3d01",
+  "uploaded_archive_sha256": "1a45e7bd7eb214ccba14cdbffa793390b791f7b84689e25b5aedbfee540a24fb",
+  "review_basis": "Read-only comparison of supplied sources, raw build/type/axiom logs, and dependency snapshots.",
+  "manifest_entries_verified": 162,
+  "source_hashes_verified": 96,
+  "source_changes_during_run": {},
+  "source_match_to_delivered_package": {
+    "matches": 95,
+    "user_ci_edit_preserved": [
+      ".github/workflows/ci.yml"
+    ]
+  },
+  "gates": {
+    "core": "PASS",
+    "reciprocal_kernel": "PASS",
+    "reciprocal_abel": "PASS",
+    "pntplus_inputs": "PASS",
+    "analytic_inputs": "PASS",
+    "clean_mertens": "PASS",
+    "selected_prime_reciprocals": "PASS",
+    "endpoint_log_bounds": "PASS",
+    "factorial_bounds": "PASS",
+    "factorial_estimate": "PASS",
+    "log_budget_factorial": "PASS",
+    "prime_reciprocal_lower": "PASS",
+    "small_prime_debit_estimate": "PASS",
+    "corrected_budget_estimate": "FAIL"
+  },
+  "passed_gates": 13,
+  "total_gates": 14,
+  "successful_audit_commands": 14,
+  "exact_type_examples": 80,
+  "distinct_audited_declarations": 139,
+  "allowed_axioms": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "warning_lines_in_passing_commands": [],
+  "retained_pntplus_source_modules": 14,
+  "retained_pntplus_source_status": "SOURCE_CLOSURE_CLEAN",
+  "pntplus_scope": "Required PNT+ source import closure; not the full upstream catalogue",
+  "pntplus_closure_reproduced_from_uploaded_sources": true,
+  "dependency_revision_entries_verified": 23,
+  "distinct_dependency_revisions": 14,
+  "failure": {
+    "gate": "corrected_budget_estimate",
+    "source": "research/Erdos647Research/CorrectedBudgetEstimate.lean",
+    "line": 52,
+    "kind": "linter.unnecessarySeqFocus promoted to build error",
+    "axiom_audit_ran": false
+  },
+  "pr_review_ready": true,
+  "merge_ready": false,
+  "merge_blocker": "A passing current all-gates run including the corrected-budget exact-type and axiom audit.",
+  "endpoint_proved": false,
+  "remote_writes": false
+}
