@@ -1,4 +1,4 @@
-import Erdos647Sieve.LogBudgetFactorial
+import Erdos647Research.LogBudgetFactorial
 
 set_option autoImplicit false
 set_option warningAsError true

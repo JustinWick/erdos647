@@ -1,4 +1,4 @@
-import Erdos647Sieve.FactorialEstimate
+import Erdos647Research.FactorialEstimate
 
 set_option autoImplicit false
 set_option warningAsError true

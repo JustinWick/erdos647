@@ -1,0 +1,22 @@
+{
+  "mathematical_source_files": 40,
+  "changed_source_files": [
+    "Erdos647Sieve/CoefficientBounds.lean",
+    "Erdos647Sieve/FiniteCountingAssembly.lean",
+    "Erdos647Sieve/PrimeSubsetCoefficients.lean",
+    "Erdos647Sieve/SubsetWeightIdentities.lean",
+    "research/Erdos647Research/AnalyticInputs.lean",
+    "research/Erdos647Research/Compat/PNTPlus.lean",
+    "research/Erdos647Research/EndpointLogBounds.lean",
+    "research/Erdos647Research/LogBudgetFactorial.lean",
+    "research/Erdos647Research/PrimeReciprocalLower.lean",
+    "research/Erdos647Research/PrimeReciprocalSummation.lean",
+    "research/Erdos647Research/ReciprocalKernel.lean",
+    "research/Erdos647Research/SmallPrimeDebitEstimate.lean"
+  ],
+  "unchanged_source_files": 28,
+  "existing_project_declaration_headers_unchanged": true,
+  "protected_specification_sha256": "39d7c9e69faba89c27d738c6bf37f8b363197e2e5942281c5aedbbba7374c574",
+  "upstream_checkout_changed": false,
+  "toolchain_and_dependencies_changed": false
+}

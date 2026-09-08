@@ -1,4 +1,4 @@
-import Erdos647Sieve.PrimeReciprocalSummation
+import Erdos647Research.PrimeReciprocalSummation
 
 set_option autoImplicit false
 set_option warningAsError true

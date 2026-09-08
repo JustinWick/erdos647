@@ -1,0 +1,4 @@
+$ <REPO>/.tools/elan/toolchains/leanprover--lean4---v4.32.2/bin/lake env lean -DwarningAsError=true Audit/ReciprocalKernel.lean
+Audit/ReciprocalKernel.lean:1:0: error: object file '<REPO>/.lake/build/lib/lean/Erdos647Sieve/ReciprocalKernel.olean' of module Erdos647Sieve.ReciprocalKernel does not exist
+
+EXIT_CODE=1

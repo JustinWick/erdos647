@@ -1,0 +1,32 @@
+{
+  "schema": 1,
+  "upstream_repository": "AlexKontorovich/PrimeNumberTheoremAnd",
+  "upstream_commit": "a5154676af9aa3095150ee410cdda80555aa0642",
+  "origin_path": "PrimeNumberTheoremAnd/IEANTN/RosserSchoenfeld/RosserSchoenfeldPrime.lean",
+  "origin_git_blob": "0533123764856ac5bc38f95b18b56551747d380a",
+  "local_path": "research/Erdos647Research/Compat/PNTPlus.lean",
+  "extracted_declarations": [
+    "RS_prime.pntBigO",
+    "RS_prime.pnt",
+    "RS_prime.intervalIntegrable_inv_log_pow",
+    "RS_prime.ioiIntegrable_inv_log_pow",
+    "RS_prime.bound_deriv",
+    "RS_prime.integrableOn_deriv",
+    "RS_prime.integrableOn_deriv_inv_div_log"
+  ],
+  "changes": "Replace broad import graph by MediumPNT; retain the seven proved declaration bodies; omit unrelated declarations and blueprint annotations; preserve downstream interface types.",
+  "license": "Apache-2.0; see repository LICENSE and NOTICE",
+  "excluded_claims_not_proved_by_this_change": [
+    "HSW.main_theorem",
+    "HSW.corollary_1_2",
+    "MT_theorem_1",
+    "MT_R0_55666305",
+    "MTY_theorem",
+    "BTY_theorem",
+    "Platt_theorem",
+    "GW_theorem",
+    "PT_theorem_1"
+  ],
+  "complete_upstream_repository_claim": false,
+  "upstream_checkout_modified": false
+}

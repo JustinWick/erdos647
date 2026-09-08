@@ -1,0 +1,73 @@
+--- a/scripts/check.py
++++ b/scripts/check.py
+@@ -356,7 +356,7 @@
+     def __init__(self, root: Path, args: argparse.Namespace):
+         self.root=root; self.args=args; self.env=clean_env(); self.commands=0
+         if args.jobs: self.env['LEAN_NUM_THREADS']=str(args.jobs)
+-        self.id='erdos647_repo_v35_results_'+datetime.now(timezone.utc).strftime('%Y%m%dT%H%M%SZ')+'_'+uuid.uuid4().hex[:8]
++        self.id='erdos647_repo_v36_results_'+datetime.now(timezone.utc).strftime('%Y%m%dT%H%M%SZ')+'_'+uuid.uuid4().hex[:8]
+         self.dest=root/'results'/self.id
+         if (root/'results').is_symlink(): raise ValueError('Refusing symlinked results directory')
+         self.dest.mkdir(parents=True,exist_ok=False)
+--- a/docs/proof-status.md
++++ b/docs/proof-status.md
+@@ -67,3 +67,34 @@
+ 
+ The new combined PR threshold is all 14 implemented gates with no build warnings
+ and an acceptable PNT source-closure/axiom report. No endpoint theorem has been added.
++
++
++## v35 returned evidence / v36 focused lint repair
++
++The run `erdos647_repo_v35_results_20260908T071828Z_a8ef3d01` passed **13/14**
++implemented gates, with **139 distinct declarations** in the successful axiom
++reports. All use only the permitted foundations. Both core examples and all
++completed analytic adapters passed. The small-prime debit theorem is now accepted:
++
++```lean
++Erdos647Sieve.Elementary.smallPrimeDebit_lower
++```
++
++Its exact conclusion is `H * (log (log H) - 2) <= smallPrimeDebit H` over the
++reals for natural `H >= 2`, with the natural quotients unchanged.
++
++The new PNT+ compatibility boundary also passed. Its retained upstream source
++subtree comprises 14 modules with no admission tokens found; `MediumPNT` and the
++seven extracted adapters passed their separate theorem/axiom audits. This is not
++a claim that every unimported PNT+ catalogue is complete.
++
++`corrected_budget_estimate` failed solely on an unnecessary `<;>` linter diagnostic,
++which is fatal under the unchanged warning policy. Its axiom audit was not run.
++v36 replaces that tactic combinator with ordinary sequencing. The combined fixes
++can be reviewed in a draft PR; merge approval still requires a current 14/14 run.
++Historical or partial success is not substituted for that result.
++
++The source and audit review is recorded in
++`provenance/accepted/v35/REVIEW.json`, with selected raw logs alongside it.
++No endpoint theorem, explicit asymptotic onset, independent kernel replay, or
++novelty determination is added by this packaging/lint repair.
+--- a/tests/test_packaging_v33.py
++++ b/tests/test_packaging_v33.py
+@@ -267,7 +267,9 @@
+         self.assertIn('.github/workflows/ci.yml', text)
+         archive = Path((self.root/'results/latest_result.txt').read_text().strip())
+         with zipfile.ZipFile(archive) as z:
+-            self.assertTrue(archive.name.startswith('erdos647_repo_v35_results_'))
++            self.assertRegex(archive.name,
++                r'^erdos647_repo_v[0-9]+_results_[0-9]{8}T[0-9]{6}Z_[0-9a-f]{8}\.zip$')
++            self.assertEqual(archive.name, self.run.id + '.zip')
+             data = json.loads(z.read(self.run.id+'/summary.json'))
+             self.assertEqual(data['gates']['core']['status'], 'BLOCKED')
+ 
+--- a/research/Erdos647Research/CorrectedBudgetEstimate.lean
++++ b/research/Erdos647Research/CorrectedBudgetEstimate.lean
+@@ -49,7 +49,8 @@
+           2 - 1 / Real.log 2 +
+           ((shiftedFactorialLog H -
+             ((H : ℝ) * Real.log (H : ℝ) - (H : ℝ))) / (H : ℝ)) / Real.log 2 := by
+-      field_simp [hHR.ne', hl.ne'] <;> ring
++      field_simp [hHR.ne', hl.ne']
++      ring
+     _ ≤ Real.log (H : ℝ) / Real.log 2 - Real.log (Real.log (H : ℝ)) +
+           2 - 1 / Real.log 2 + ε := add_le_add le_rfl hsmallH.le
+ 

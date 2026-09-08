@@ -61,7 +61,7 @@ theorem elementary_map_eq_sum_powersetCard : ∀ (l : List ℕ), l.Nodup →
   | nil =>
       intro _hl w q
       cases q with
-      | zero => simp [elementary]
+      | zero => simp
       | succ q =>
           have he : (∅ : Finset ℕ).powersetCard (q + 1) = ∅ :=
             Finset.powersetCard_eq_empty.mpr (by simp)

@@ -1,4 +1,4 @@
-import Erdos647Sieve.SmallPrimeDebitEstimate
+import Erdos647Research.SmallPrimeDebitEstimate
 
 set_option autoImplicit false
 set_option warningAsError true

@@ -20,7 +20,7 @@ theorem pow_add_linear_le (s a : ℝ) (hs : 0 ≤ s) (ha : 0 ≤ a) (q : ℕ) :
   | succ q ih =>
       have hextra : 0 ≤ ((q : ℝ) + 1) * a * a * s ^ q := by positivity
       have hmul := mul_le_mul_of_nonneg_right ih (add_nonneg hs ha)
-      simp only [Nat.cast_add, Nat.cast_succ, Nat.cast_one]
+      simp only [Nat.cast_succ]
       calc
         s ^ (q + 1 + 1) + (((q : ℝ) + 1) + 1) * a * s ^ (q + 1)
             ≤ (s ^ (q + 1 + 1) + (((q : ℝ) + 1) + 1) * a * s ^ (q + 1)) +

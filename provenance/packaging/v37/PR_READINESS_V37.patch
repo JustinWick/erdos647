@@ -1,0 +1,490 @@
+--- a/README.md
++++ b/README.md
+@@ -5,9 +5,11 @@
+ package contains the analytic bridge and unfinished endpoint development.
+ 
+ **This project does not resolve Erdős #647 and does not contain a proof of the
+-proposed final asymptotic endpoint.** The finite theorem and several analytic
+-components have recorded acceptance evidence; remaining research obligations are
+-listed in [proof status](docs/proof-status.md).
++proposed final asymptotic endpoint.** The current implemented suite has a recorded **14/14** build/type/axiom pass
++in the v36 local run, covering **140 distinct audited declarations** with no
++build or audit warnings. This includes the finite core, analytic bridge and
++elementary budget estimates—not the final endpoint. See
++[proof status](docs/proof-status.md) and the [accepted record](provenance/accepted/v36/README.md).
+ 
+ ## Use the public library
+ 
+@@ -102,7 +104,7 @@
+ |---|---|
+ | `bash RUN.sh` or `bash TEST_ALL.sh` | All implemented core, analytic, and elementary gates. |
+ | `bash RUN.sh core` | Public finite library, examples, expanded types, and component/export axiom audits. No PNT+ setup required. |
+-| `bash RUN.sh research` | All 12 research gates; core imports are built as dependencies. |
++| `bash RUN.sh research` | All 13 research gates; core imports are built as dependencies. |
+ | `bash RUN.sh --gate corrected_budget_estimate` | That gate plus its explicitly registered prerequisites. |
+ | `bash RUN.sh tooling` | Offline runner/architecture tests only. Not a Lean proof check. |
+ | `bash RUN.sh --list` | Display the gate inventory. |
+@@ -152,9 +154,10 @@
+ results directory; `--collect-only` prints the last completed archive, not a new
+ acceptance claim.
+ 
+-**Some research gates are pending.** A failing `all` run is not silently converted
+-to success because the core passed. Conversely, a pending research proof is not a
+-reason to force PNT+ into the public library or block its core-only CI.
++**All 14 currently registered gates have passed in the v36 record.** Future
++changes must still pass their selected checks: a failing `all` run is never
++converted to success because the core passed. The remaining endpoint work is
++outside this completed gate inventory and remains separate from the public core.
+ 
+ ## Repository layout
+ 
+@@ -167,7 +170,7 @@
+ lake-manifest.json         Nine exact core dependency revisions
+ research/                 Separate Lake package; depends on this core by path
+   Erdos647Research/       12 analytic/elementary modules; theorem names unchanged
+-    Compat/PNTPlus.lean   Import-only upstream compatibility boundary
++    Compat/PNTPlus.lean   Restricted PNT+ import plus seven attributed adapters
+   Audit/                  A separate audit for every research module
+   lake-manifest.json      Native PNT+ lock plus the local core dependency
+ scripts/check.py           Incremental checks and compiled-module ownership guard
+@@ -198,8 +201,8 @@
+ 
+ The core GitHub workflow builds and tests only the public library. Its triggers
+ are controlled in `.github/workflows/ci.yml`; local checks do not rewrite them.
+-The full research workflow is manually dispatched because that tree contains
+-pending proofs. Both upload diagnostics, and neither swallows failed checks.
++The full research workflow remains manually dispatched under the existing CI
++policy; all currently registered research gates have local acceptance evidence. Both upload diagnostics, and neither swallows failed checks.
+ No repository name, owner, token, or upload credential is hardcoded. The ZIP does
+ not contain a `.git` directory or perform any GitHub write operation.
+ 
+--- a/research/README.md
++++ b/research/README.md
+@@ -13,17 +13,25 @@
+ 
+ The five analytic modules are `ReciprocalKernel`, `PrimeReciprocalSummation`,
+ `AnalyticInputs`, `CleanMertens`, and `SelectedPrimeReciprocals`. The PNT+ boundary
+-is the `AnalyticInputs` adapter plus `Erdos647Research.Compat.PNTPlus`, an
+-import-only wrapper. No project module occupies an upstream-owned import root.
++is the `AnalyticInputs` adapter plus `Erdos647Research.Compat.PNTPlus`. The
++compatibility module imports `PrimeNumberTheoremAnd.MediumPNT` and supplies
++seven attributed PNT/integrability routines extracted from the pinned source.
++It does not import the unfinished zeta or Rosser–Schoenfeld catalogues. No
++project module occupies an upstream-owned import root.
+ 
+ The seven elementary modules are `EndpointLogBounds`, `FactorialBounds`,
+ `FactorialEstimate`, `LogBudgetFactorial`, `PrimeReciprocalLower`,
+ `SmallPrimeDebitEstimate`, and `CorrectedBudgetEstimate`.
+ 
+-The prime-reciprocal/debit chain is pending. The factorial and logarithm components
+-have earlier acceptance evidence. The final parameter asymptotics, mass-versus-budget
+-gap, and amplified-error absorption are still missing. No endpoint `Main` proof
+-has been added merely to make the module tree appear complete.
++All **13 registered research gates** passed alongside the core in the v36
++repository-wide run. This includes the prime-reciprocal lower bound, the exact
++small-prime debit estimate, and `correctedBudget_upper_eventually`. The
++[accepted record](../provenance/accepted/v36/README.md) includes the raw audits.
++
++The final parameter asymptotics, mass-versus-budget gap, and amplified-error
++absorption remain to be proved. No endpoint `Main` proof has been added merely
++to make the module tree appear complete. Those obligations belong in a separate
++mathematical changeset, not in the completed build/dependency fixes PR.
+ 
+ ## Checking
+ 
+--- a/docs/dependency-boundaries.md
++++ b/docs/dependency-boundaries.md
+@@ -30,14 +30,18 @@
+ is unsafe even when the full module names differ. v33 reproduced precisely this
+ failure: research builds succeeded, but audits sought their objects in the core.
+ 
+-The import-only wrapper is now
+-`research/Erdos647Research/Compat/PNTPlus.lean`. It imports the original upstream
+-module at its pinned path. `AnalyticInputs.lean` consumes that wrapper; it remains
+-the sole project proof adapter mentioning the upstream theorem API. There is no
+-project-owned module under the upstream `PrimeNumberTheoremAnd` root.
++The compatibility boundary is
++`research/Erdos647Research/Compat/PNTPlus.lean`. It imports only
++`PrimeNumberTheoremAnd.MediumPNT` from PNT+ and supplies seven attributed
++PNT/integrability adapters. `AnalyticInputs.lean` consumes that interface; the
++PNT-specific definitions and adaptation stay in this analytic boundary. There
++is no project-owned module under the upstream `PrimeNumberTheoremAnd` root.
++The former broad catalogue import is not part of the active proof dependency.
+ 
+-Only research module paths and import lines changed in v34. The stable public
+-imports, declaration names, theorem statements, and proof bodies are unchanged.
++In v34, only research module paths and import lines changed. The stable public
++imports, declaration names, and theorem statements remain unchanged. Later
++v35/v36 changes added the restricted PNT interface and focused lint/adapter
++repairs; their accepted combined result is recorded in v36.
+ The relocation manifest and diff preserve the correspondence with historical
+ source records. Old source copies from overlay installations are retained outside
+ the active build graph, not linked back into it.
+@@ -71,3 +75,11 @@
+ The source-closure and theorem-audit scopes are documented in
+ `docs/pntplus-trust-boundary.md`. The original upstream repository remains pinned
+ and unchanged; no new compiler migration or forked dependency lock is introduced.
++
++## Accepted combined boundary
++
++The v36 run passed the core plus all 13 research gates, including the retained
++14-module PNT+ source-closure check and its separate theorem/axiom audit.
++All recorded compiled-module ownership checks passed. The complete upstream
++PNT+ repository is not asserted to be admission-free. See the
++[accepted record](../provenance/accepted/v36/README.md).
+--- a/docs/proof-status.md
++++ b/docs/proof-status.md
+@@ -1,100 +1,107 @@
+ # Proof status
+ 
+-This repository repackages the source through the **v31** repair/extraction.
+-It is not a new theorem or a new toolchain migration. Lean/Mathlib remain on 4.32.2.
++## Current accepted repository checkpoint: v36
+ 
+-## Historical evidence retained
++The local run `erdos647_repo_v36_results_20260908T073909Z_c7bbf1b5`, completed on
++September 8, 2026, passed **all 14 registered gates** under **Lean/Mathlib 4.32.2**.
++All **37 recorded commands** exited successfully. The 29 build/audit logs contain
++**zero warning or error diagnostics**; the tooling run passed **144 tests**.
+ 
+-| Layer | Last relevant recorded evidence | Status carried into this repository |
+-|---|---|---|
+-| Complete finite-moment, budget, finite-counting chain | v30 final finite audit | Accepted in the former research workspace. |
+-| Reciprocal-log calculus and Abel identity | v25/v27 analytic repair sequence | Accepted source retained. |
+-| Analytic input, clean Mertens, selected-prime bridge | v27/v28 | Accepted on the native PNT+ 4.32.2 dependency set. |
+-| Factorial bounds, normalized residual, log-budget connection, endpoint log inequalities | v29 | Accepted source retained. |
+-| Prime-reciprocal lower bound | v30 reported an attached-sum error; v31 supplied a repair | Pending acceptance of repaired source. |
+-| Small-prime debit and joint corrected-budget estimate | v30 blocked by the prime-reciprocal module | Pending. |
+-| Endpoint parameter limits, quantitative mass/budget gap, amplified-error absorption | Not implemented in the supplied source | Still required. |
+-| Final asymptotic endpoint | Only the target is defined | No proof. |
++The exact-type and transitive-axiom checks cover **140 distinct declarations**
++(142 report occurrences where a declaration is audited in more than one gate).
++Every reported axiom set is contained in:
+ 
+-The raw accepted axiom logs are under `provenance/accepted/`. The failed prime-sum
+-build and the later source repair are under `provenance/pending/`. The source map
+-records the hash and location of all 37 original files. Its checksums document
+-origin; normal development is not forced to match every historical proof hash.
+-
+-The new root/research package boundary and runner report their own results in
+-`results/`. Historical acceptance is never inserted as a current gate pass. A
+-successful source/package test is not itself theorem verification.
+-
+-## Standalone repository evidence: v33
+-
+-Run `erdos647_repo_v33_results_20260908T061726Z_5c0e7860` accepted the independent
+-core package, both public examples, and both core audit files. Its 95 distinct
+-axiom reports contain only the permitted foundations. The resolved core search
+-path contains no PNT+ library directory.
+-
+-Four research modules compiled (`ReciprocalKernel`, `EndpointLogBounds`,
+-`FactorialBounds`, `PrimeReciprocalLower`) but failed at audit import resolution.
+-Eight dependent gates were blocked. Their successful builds are not recorded as
+-passing theorem/audit gates. v34 changes module ownership to repair that packaging
+-failure; it does not change a mathematical statement or fill the endpoint gap.
+-
+-## Acceptance standard
+-
+-A Lean proof gate builds the relevant modules, checks its checked-in exact-type
+-examples, and reads fresh `#print axioms` output. Permitted transitive axioms are
+-`propext`, `Classical.choice`, and `Quot.sound`. Missing output, duplicate reports,
+-additional axioms, and nonzero command exit codes cause failure.
+-
+-The public audit includes named claim types and expanded statements. The signed
+-budget and arbitrary integer interval translation are preserved. The protected
+-specification's historical hash is also checked; changes to that definition file
+-need a separately reviewed statement change.
+-
+-These checks do not establish mathematical novelty, independent-kernel replay,
+-or a resolution of Erdős #647. None of those is claimed by a green core job.
+-
+-
+-## v34 returned results / v35 dependency and lint repair
+-
+-The v34 run passed 11/13 gates, covering 130 distinct audited declarations. The
+-prime reciprocal lower bound is now among those accepted results. The natural
+-index of the small-prime quotient sum remains the immediate reported proof repair;
+-the combined corrected-budget check was blocked. All selected PNT/analytic theorem
+-axiom reports passed, but the broad imported environment included 15 admitted
+-upstream declarations. v35 replaces that broad import with the completed PNT
+-subtree and adds a separate recursive source-closure check. Historical acceptance
+-of the broader adapter is not counted as acceptance of the new extracted module.
+-
+-The new combined PR threshold is all 14 implemented gates with no build warnings
+-and an acceptable PNT source-closure/axiom report. No endpoint theorem has been added.
+-
+-
+-## v35 returned evidence / v36 focused lint repair
+-
+-The run `erdos647_repo_v35_results_20260908T071828Z_a8ef3d01` passed **13/14**
+-implemented gates, with **139 distinct declarations** in the successful axiom
+-reports. All use only the permitted foundations. Both core examples and all
+-completed analytic adapters passed. The small-prime debit theorem is now accepted:
+-
+-```lean
+-Erdos647Sieve.Elementary.smallPrimeDebit_lower
++```text
++propext, Classical.choice, Quot.sound
+ ```
+ 
+-Its exact conclusion is `H * (log (log H) - 2) <= smallPrimeDebit H` over the
+-reals for natural `H >= 2`, with the natural quotients unchanged.
++[Accepted evidence](../provenance/accepted/v36/README.md) includes the original
++results archive, raw logs, source hashes, and a read-only consistency review.
++The report records no source changes during the run and cache reuse in both packages.
+ 
+-The new PNT+ compatibility boundary also passed. Its retained upstream source
+-subtree comprises 14 modules with no admission tokens found; `MediumPNT` and the
+-seven extracted adapters passed their separate theorem/axiom audits. This is not
+-a claim that every unimported PNT+ catalogue is complete.
++| Layer | Current recorded result |
++|---|---|
++| Mathlib-only finite core, public facades and both examples | Passed |
++| Complete `finiteMoment`, `budgetDebit`, and `finiteCounting` | Passed |
++| Reciprocal-log calculus and exact Abel-summation identity | Passed |
++| Restricted PNT+ inputs and improper-integrability adapters | Passed |
++| Replacement Mertens convergence and selected-prime cutoff cancellation | Passed |
++| Factorial bounds, shifted residual limit, and exact `logBudget` connection | Passed |
++| All three endpoint logarithm/constant inequalities | Passed |
++| Prime-reciprocal lower bound and fixed-constant small-prime debit | Passed |
++| `correctedBudget_upper_eventually` | **Newly passed in v36** |
++| Exact growing-parameter limits and eventual prime-mass/budget gap | Not yet proved |
++| Amplified-error absorption and final `EndpointClaim` | Not yet proved |
+ 
+-`corrected_budget_estimate` failed solely on an unnecessary `<;>` linter diagnostic,
+-which is fatal under the unchanged warning policy. Its axiom audit was not run.
+-v36 replaces that tactic combinator with ordinary sequencing. The combined fixes
+-can be reviewed in a draft PR; merge approval still requires a current 14/14 run.
+-Historical or partial success is not substituted for that result.
++## The new mathematical milestone
+ 
+-The source and audit review is recorded in
+-`provenance/accepted/v35/REVIEW.json`, with selected raw logs alongside it.
+-No endpoint theorem, explicit asymptotic onset, independent kernel replay, or
+-novelty determination is added by this packaging/lint repair.
++For every real `ε > 0`, eventually over natural `H`, the accepted declaration
++`Erdos647Sieve.Elementary.correctedBudget_upper_eventually` proves
++
++\[
++\frac{B_H}{H}\le
++\frac{\log H}{\log2}-\log\log H+2-\frac1{\log2}+\varepsilon,
++\qquad B_H=\operatorname{correctedBudget}(H).
++\]
++
++The budget is the exact signed integer budget, cast to the reals. There is no
++assumed debit, factorial asymptotic, or budget estimate among this declaration's
++premises. The explicit `ε > 0` and eventual quantifier remain part of its statement.
++
++Its checked type and axioms are in the
++[raw corrected-budget audit](../provenance/accepted/v36/logs/037_corrected_budget_estimate_audit_0.log).
++It completes the elementary-budget estimate, not the final endpoint deduction.
++
++## PNT+ scope
++
++The retained PNT+ source import subtree rooted at `MediumPNT` contains **14
++modules** in the recorded scan and has no detected admissions or forbidden
++shortcuts. `MediumPNT` and all seven extracted adapters also passed their separate
++axiom audits. Only the retained PNT+ subtree is covered by that lexical scan;
++Mathlib and tactic/compiler implementation source are outside its scope.
++
++This does not prove or import the unfinished upstream `ZetaSummary` catalogue.
++The restricted compatibility layer leaves the upstream checkout untouched. See
++[PNT+ trust boundary](pntplus-trust-boundary.md).
++
++## PR boundary
++
++**The accumulated core/research fixes are ready for a normal reviewable PR.**
++The previously outstanding local acceptance criterion—14/14 with no warnings and
++acceptable exact-type/axiom reports—is satisfied. Parameter asymptotics and the
++endpoint are separate future mathematical work; they should not keep this fixes
++PR open or expand its scope.
++
++v37 updates documentation and preserves the v36 evidence. It changes **no Lean
++source, audit source, runner, test, Lake configuration, lockfile, toolchain or CI
++workflow**. The checking implementation and generated-results version label stay
++at v36 deliberately, so the passing code is not churned just for a documentation
++version number. Future runner invocations continue to produce unique result names.
++
++The submitted archive identifies a source snapshot, not a remotely inspected PR
++head/base pair. This readiness judgment is based on that snapshot; it is not a
++claim that GitHub CI or maintainer review has already passed. Existing manual CI
++settings are preserved.
++
++## Historical record
++
++Prior source and audit records remain under `provenance/accepted/`,
++`provenance/pending/`, and `provenance/rejected/`. Earlier failures and rejected
++experiments are not deleted or retroactively marked successful. The previous
++version of this status page is preserved as
++[the pre-v37 status record](../provenance/packaging/v37/prior-docs/docs/proof-status.md).
++The original source map documents origin; it is not a requirement that future
++maintained proofs remain byte-identical forever.
++
++## Acceptance standard and limits
++
++A proof gate builds its relevant modules, checks the checked-in type examples,
++and reads fresh `#print axioms` output. Missing output, duplicate reports within
++an audit, extra axioms, warnings, failed commands and blocked prerequisites cannot
++produce an accepted gate. The core audits include the named claim types, expanded
++statements and the candidate predicate; signed subtraction and unrestricted integer
++interval translation remain protected.
++
++Compilation/type/axiom acceptance and the source/log consistency review do not
++establish mathematical novelty, independent-kernel replay, an explicit asymptotic
++onset, or a solution to Erdős #647. The final endpoint theorem remains absent.
+--- a/docs/pull-requests/core-research-fixes.md
++++ b/docs/pull-requests/core-research-fixes.md
+@@ -1,66 +1,78 @@
+ ## Summary
+ 
+-Stabilize the independently usable finite-sieve library and its separate research
+-package without changing the mathematical statements or pinned toolchain.
++Stabilize the independently usable Mathlib-only finite library and its separate
++research package without changing theorem statements or the pinned Lean/Mathlib
++4.32.2 environment.
+ 
+-- Keep the public finite core Mathlib-only and preserve the existing facade imports
+-  and `finiteMoment`, `budgetDebit`, and `finiteCounting` declarations.
+-- Give research modules the separate `Erdos647Research` import root and consolidate
+-  upstream adaptation in `Erdos647Research.Compat.PNTPlus`.
+-- Replace the broad Rosser–Schoenfeld catalogue import with the required
+-  `MediumPNT` subtree plus seven attributed PNT/integrability adapters. Retain both
+-  recursive admission screening and exact-type/transitive-axiom audits.
+-- Resolve reported project lint warnings and the natural-index quotient adapter;
+-  keep warnings fatal, including cached/replayed warnings.
++- Preserve the public facade imports and the existing `finiteMoment`, `budgetDebit`,
++  and `finiteCounting` declarations while keeping PNT+ out of the core dependency graph.
++- Give research modules a disjoint `Erdos647Research` import root and verify compiled
++  module ownership before theorem audits.
++- Restrict PNT+ imports to `MediumPNT` and seven attributed PNT/integrability adapters;
++  check both the retained source subtree and the consumed proof dependencies.
++- Fix the reported project lint and natural-quotient adapter errors while keeping
++  warnings fatal, including cached/replayed warnings.
+ 
+-The final v36 change replaces one unnecessary all-goals tactic combinator in
+-`CorrectedBudgetEstimate.lean` with ordinary sequencing. The runner's checking
+-behavior is unchanged; the new diagnostic prefix distinguishes the resulting run.
+-Its archive-name regression now checks the versioned format and the actual run ID.
++The final proof-source repair in v36 replaces the unnecessary `<;>` sequence in
++`CorrectedBudgetEstimate.lean` with ordinary tactic sequencing. v37 is documentation
++and evidence only; it leaves that passing code and all checking behavior unchanged.
+ 
+-## Evidence available at PR preparation
++## Validation: complete local pass
+ 
+-Run: `erdos647_repo_v35_results_20260908T071828Z_a8ef3d01`.
++Run: `erdos647_repo_v36_results_20260908T073909Z_c7bbf1b5`
+ 
+-| Area | Recorded result |
++| Check | Recorded result |
+ |---|---|
+-| Independent core and public examples | Passed |
+-| Restricted PNT+ boundary and Mertens/selected-prime chain | Passed |
+-| Factorial, logarithm, reciprocal-prime, and small-prime debit estimates | Passed |
+-| Corrected-budget estimate | Build rejected one `unnecessarySeqFocus` lint; final audit not reached |
++| Full implemented suite | **14/14 gates passed**, no failures or blocked gates |
++| Public finite core and both examples | Passed |
++| Restricted PNT+ inputs and Mertens/selected-prime chain | Passed |
++| Factorial, logarithm, prime-reciprocal and debit estimates | Passed |
++| Combined corrected-budget estimate | **Passed its build, expanded type check and axiom audit** |
++| Audited declarations | **140 distinct declarations**, permitted axioms only |
++| Build/audit warnings | **0** |
++| Offline runner tests in the submitted run | **144 passed** |
++| Checked sources changed during run | None |
+ 
+-Overall: **13/14 gates passed**. All **139 distinct audited declarations** use
+-only `propext`, `Classical.choice`, and `Quot.sound`. The retained PNT+ source
+-subtree contains **14 modules**, with no admission or forbidden shortcut detected.
+-Selected raw evidence and its integrity review are under `provenance/accepted/v35`.
++Allowed transitive axioms remain `propext`, `Classical.choice`, and `Quot.sound`.
++The retained PNT+ source-closure report covers 14 modules; it is not a blanket
++assertion about the complete upstream repository.
+ 
+-The v36 lint correction is present in this changeset. The attached v35 result is
+-not represented as a successful run of that new revision.
++The original result archive, human-readable logs and integrity review are in
++[`provenance/accepted/v36`](../../provenance/accepted/v36/README.md).
++Both packages reused their matching caches; no setup or compiler change was requested.
+ 
+-## Merge criterion
++## Local readiness criteria
+ 
+-- [x] Standalone core build, public examples, exact statement checks, and permitted axioms.
+-- [x] Restricted PNT+ source subtree and consumed theorem interfaces accepted.
+-- [x] Fixed-constant debit estimate accepted without changing natural division.
+-- [x] Final reported lint site repaired without disabling any linter.
+-- [ ] A current repository-wide **14/14** build/type/axiom result for the PR revision,
+-  including `corrected_budget_estimate`, with zero project warnings.
++- [x] Independently usable core, public examples and exact statement/axiom checks pass.
++- [x] Research compiled-module ownership and import boundaries pass.
++- [x] Restricted PNT+ source subtree and required theorem interfaces pass.
++- [x] Fixed-constant debit and combined eventual budget estimate pass.
++- [x] The current complete 14-gate suite passes with no project warnings.
++- [x] The final documentation/evidence overlay preserves all checked executable inputs.
+ 
+-The project keeps its existing manual CI settings; this changeset does not enable
+-automatic workflows or authorize paid execution.
++**Ready for normal PR review, not just a draft.** The previous local validation
++hold is cleared. Review of the actual branch diff and any required repository CI
++remain the normal maintainer checks; they are not represented as completed by this
++local result. Existing manual CI settings are unchanged.
+ 
+-## Scope and trust boundary
++## Mathematical scope
+ 
+-The pin remains Lean/Mathlib **4.32.2** and the original PNT+ lockfile. Upstream
+-sources and dependency revisions are unchanged. Unused catalogue assertions such
+-as `ZetaSummary` are excluded, not proved, and no claim is made that the entire
+-upstream repository is admission-free.
++The newly accepted `correctedBudget_upper_eventually` states, for every `ε > 0`,
++eventually over natural `H`:
+ 
+-This PR does not resolve Erdős #647 or supply the final asymptotic endpoint.
+-Parameter limits, the eventual prime-mass/budget gap, and amplified-error
+-absorption remain separate mathematical work. No endpoint completion is required
+-for merging this repair PR.
++```text
++(correctedBudget H : Real) / H <=
++  log H / log 2 - log (log H) + 2 - 1 / log 2 + ε.
++```
+ 
+-This description covers the accumulated prepared fixes; its scope should be
+-compared with the actual chosen Git base during PR review. No remote comparison,
+-branch push, or PR creation is represented as already performed.
++This retains the signed budget, small-prime debit and linear factorial term.
++No unproved asymptotic-budget or PNT premise is added to the project theorem.
++
++This PR does **not** resolve Erdős #647, prove finiteness, finish `EndpointClaim`,
++or complete the unused upstream `ZetaSummary` assertions. Parameter limits,
++the eventual prime-mass/budget gap and amplified-error absorption belong to the
++next mathematical PR. They are not prerequisites for this fixes PR.
++
++The description covers the accumulated prepared fixes. The submitted local evidence
++is tied to source hashes rather than a fetched GitHub head/base comparison. No
++remote branch, pull request, review status or merge action is claimed here.
+--- a/docs/changes/v37.md
++++ b/docs/changes/v37.md
+@@ -0,0 +1,23 @@
++# v37 — close the fixes PR with complete validation evidence
++
++The v36 local run passed all 14 registered gates, with 140 distinct audited
++declarations, zero build/audit warnings, and 144 passing runner tests.
++
++This overlay changes documentation and adds the accepted evidence record. It
++updates the PR description from the former 13/14 draft boundary to the complete
++14/14 local validation result, and records the newly accepted eventual corrected-
++budget estimate. It corrects stale documentation that called implemented elementary
++gates pending or described the PNT+ compatibility layer as import-only.
++
++No Lean source, test, runner, audit target, gate registry, dependency pin, Lake file,
++lockfile or workflow changes. The live checking program remains byte-for-byte v36,
++including its diagnostic prefix; timestamps and unique IDs still distinguish runs.
++No tool/cache setup, hidden source copying, cleanup or remote write is introduced.
++
++The fixes PR is ready for ordinary review. Do not enlarge it with new endpoint
++proofs or another architecture/toolchain migration. The following mathematical
++changeset should establish the exact protected parameter asymptotics and then
++the prime-mass/budget gap and weighted errors.
++
++The proof-status history is retained in `provenance/packaging/v37/prior-docs/`;
++the accepted local evidence is under `provenance/accepted/v36/`.

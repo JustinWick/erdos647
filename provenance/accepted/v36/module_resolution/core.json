@@ -1,0 +1,205 @@
+[
+  {
+    "module": "Erdos647Sieve",
+    "expected": "<REPO>/.lake/build/lib/lean/Erdos647Sieve.olean",
+    "resolved": "<REPO>/.lake/build/lib/lean/Erdos647Sieve.olean",
+    "correct_owner": true,
+    "object_exists": true
+  },
+  {
+    "module": "Erdos647Sieve.ArithmeticDiscrepancy",
+    "expected": "<REPO>/.lake/build/lib/lean/Erdos647Sieve/ArithmeticDiscrepancy.olean",
+    "resolved": "<REPO>/.lake/build/lib/lean/Erdos647Sieve/ArithmeticDiscrepancy.olean",
+    "correct_owner": true,
+    "object_exists": true
+  },
+  {
+    "module": "Erdos647Sieve.Basic",
+    "expected": "<REPO>/.lake/build/lib/lean/Erdos647Sieve/Basic.olean",
+    "resolved": "<REPO>/.lake/build/lib/lean/Erdos647Sieve/Basic.olean",
+    "correct_owner": true,
+    "object_exists": true
+  },
+  {
+    "module": "Erdos647Sieve.Bonferroni",
+    "expected": "<REPO>/.lake/build/lib/lean/Erdos647Sieve/Bonferroni.olean",
+    "resolved": "<REPO>/.lake/build/lib/lean/Erdos647Sieve/Bonferroni.olean",
+    "correct_owner": true,
+    "object_exists": true
+  },
+  {
+    "module": "Erdos647Sieve.BonferroniMajorant",
+    "expected": "<REPO>/.lake/build/lib/lean/Erdos647Sieve/BonferroniMajorant.olean",
+    "resolved": "<REPO>/.lake/build/lib/lean/Erdos647Sieve/BonferroniMajorant.olean",
+    "correct_owner": true,
+    "object_exists": true
+  },
+  {
+    "module": "Erdos647Sieve.BudgetConsequences",
+    "expected": "<REPO>/.lake/build/lib/lean/Erdos647Sieve/BudgetConsequences.olean",
+    "resolved": "<REPO>/.lake/build/lib/lean/Erdos647Sieve/BudgetConsequences.olean",
+    "correct_owner": true,
+    "object_exists": true
+  },
+  {
+    "module": "Erdos647Sieve.BudgetDebit",
+    "expected": "<REPO>/.lake/build/lib/lean/Erdos647Sieve/BudgetDebit.olean",
+    "resolved": "<REPO>/.lake/build/lib/lean/Erdos647Sieve/BudgetDebit.olean",
+    "correct_owner": true,
+    "object_exists": true
+  },
+  {
+    "module": "Erdos647Sieve.CoefficientBounds",
+    "expected": "<REPO>/.lake/build/lib/lean/Erdos647Sieve/CoefficientBounds.olean",
+    "resolved": "<REPO>/.lake/build/lib/lean/Erdos647Sieve/CoefficientBounds.olean",
+    "correct_owner": true,
+    "object_exists": true
+  },
+  {
+    "module": "Erdos647Sieve.DivisorBudget",
+    "expected": "<REPO>/.lake/build/lib/lean/Erdos647Sieve/DivisorBudget.olean",
+    "resolved": "<REPO>/.lake/build/lib/lean/Erdos647Sieve/DivisorBudget.olean",
+    "correct_owner": true,
+    "object_exists": true
+  },
+  {
+    "module": "Erdos647Sieve.ExponentialProduct",
+    "expected": "<REPO>/.lake/build/lib/lean/Erdos647Sieve/ExponentialProduct.olean",
+    "resolved": "<REPO>/.lake/build/lib/lean/Erdos647Sieve/ExponentialProduct.olean",
+    "correct_owner": true,
+    "object_exists": true
+  },
+  {
+    "module": "Erdos647Sieve.Finite",
+    "expected": "<REPO>/.lake/build/lib/lean/Erdos647Sieve/Finite.olean",
+    "resolved": "<REPO>/.lake/build/lib/lean/Erdos647Sieve/Finite.olean",
+    "correct_owner": true,
+    "object_exists": true
+  },
+  {
+    "module": "Erdos647Sieve.FiniteCounting",
+    "expected": "<REPO>/.lake/build/lib/lean/Erdos647Sieve/FiniteCounting.olean",
+    "resolved": "<REPO>/.lake/build/lib/lean/Erdos647Sieve/FiniteCounting.olean",
+    "correct_owner": true,
+    "object_exists": true
+  },
+  {
+    "module": "Erdos647Sieve.FiniteCountingAssembly",
+    "expected": "<REPO>/.lake/build/lib/lean/Erdos647Sieve/FiniteCountingAssembly.olean",
+    "resolved": "<REPO>/.lake/build/lib/lean/Erdos647Sieve/FiniteCountingAssembly.olean",
+    "correct_owner": true,
+    "object_exists": true
+  },
+  {
+    "module": "Erdos647Sieve.FiniteMoment",
+    "expected": "<REPO>/.lake/build/lib/lean/Erdos647Sieve/FiniteMoment.olean",
+    "resolved": "<REPO>/.lake/build/lib/lean/Erdos647Sieve/FiniteMoment.olean",
+    "correct_owner": true,
+    "object_exists": true
+  },
+  {
+    "module": "Erdos647Sieve.HitCountBridge",
+    "expected": "<REPO>/.lake/build/lib/lean/Erdos647Sieve/HitCountBridge.olean",
+    "resolved": "<REPO>/.lake/build/lib/lean/Erdos647Sieve/HitCountBridge.olean",
+    "correct_owner": true,
+    "object_exists": true
+  },
+  {
+    "module": "Erdos647Sieve.IntegerWindowRoots",
+    "expected": "<REPO>/.lake/build/lib/lean/Erdos647Sieve/IntegerWindowRoots.olean",
+    "resolved": "<REPO>/.lake/build/lib/lean/Erdos647Sieve/IntegerWindowRoots.olean",
+    "correct_owner": true,
+    "object_exists": true
+  },
+  {
+    "module": "Erdos647Sieve.Occupancy",
+    "expected": "<REPO>/.lake/build/lib/lean/Erdos647Sieve/Occupancy.olean",
+    "resolved": "<REPO>/.lake/build/lib/lean/Erdos647Sieve/Occupancy.olean",
+    "correct_owner": true,
+    "object_exists": true
+  },
+  {
+    "module": "Erdos647Sieve.PrimeSubsetCoefficients",
+    "expected": "<REPO>/.lake/build/lib/lean/Erdos647Sieve/PrimeSubsetCoefficients.olean",
+    "resolved": "<REPO>/.lake/build/lib/lean/Erdos647Sieve/PrimeSubsetCoefficients.olean",
+    "correct_owner": true,
+    "object_exists": true
+  },
+  {
+    "module": "Erdos647Sieve.PrimeSubsetProducts",
+    "expected": "<REPO>/.lake/build/lib/lean/Erdos647Sieve/PrimeSubsetProducts.olean",
+    "resolved": "<REPO>/.lake/build/lib/lean/Erdos647Sieve/PrimeSubsetProducts.olean",
+    "correct_owner": true,
+    "object_exists": true
+  },
+  {
+    "module": "Erdos647Sieve.ProgressionCount",
+    "expected": "<REPO>/.lake/build/lib/lean/Erdos647Sieve/ProgressionCount.olean",
+    "resolved": "<REPO>/.lake/build/lib/lean/Erdos647Sieve/ProgressionCount.olean",
+    "correct_owner": true,
+    "object_exists": true
+  },
+  {
+    "module": "Erdos647Sieve.RetainedSubsets",
+    "expected": "<REPO>/.lake/build/lib/lean/Erdos647Sieve/RetainedSubsets.olean",
+    "resolved": "<REPO>/.lake/build/lib/lean/Erdos647Sieve/RetainedSubsets.olean",
+    "correct_owner": true,
+    "object_exists": true
+  },
+  {
+    "module": "Erdos647Sieve.SieveWeights",
+    "expected": "<REPO>/.lake/build/lib/lean/Erdos647Sieve/SieveWeights.olean",
+    "resolved": "<REPO>/.lake/build/lib/lean/Erdos647Sieve/SieveWeights.olean",
+    "correct_owner": true,
+    "object_exists": true
+  },
+  {
+    "module": "Erdos647Sieve.Specification",
+    "expected": "<REPO>/.lake/build/lib/lean/Erdos647Sieve/Specification.olean",
+    "resolved": "<REPO>/.lake/build/lib/lean/Erdos647Sieve/Specification.olean",
+    "correct_owner": true,
+    "object_exists": true
+  },
+  {
+    "module": "Erdos647Sieve.SubsetCountError",
+    "expected": "<REPO>/.lake/build/lib/lean/Erdos647Sieve/SubsetCountError.olean",
+    "resolved": "<REPO>/.lake/build/lib/lean/Erdos647Sieve/SubsetCountError.olean",
+    "correct_owner": true,
+    "object_exists": true
+  },
+  {
+    "module": "Erdos647Sieve.SubsetWeightIdentities",
+    "expected": "<REPO>/.lake/build/lib/lean/Erdos647Sieve/SubsetWeightIdentities.olean",
+    "resolved": "<REPO>/.lake/build/lib/lean/Erdos647Sieve/SubsetWeightIdentities.olean",
+    "correct_owner": true,
+    "object_exists": true
+  },
+  {
+    "module": "Erdos647Sieve.WeightedCounting",
+    "expected": "<REPO>/.lake/build/lib/lean/Erdos647Sieve/WeightedCounting.olean",
+    "resolved": "<REPO>/.lake/build/lib/lean/Erdos647Sieve/WeightedCounting.olean",
+    "correct_owner": true,
+    "object_exists": true
+  },
+  {
+    "module": "Erdos647Sieve.WindowCRT",
+    "expected": "<REPO>/.lake/build/lib/lean/Erdos647Sieve/WindowCRT.olean",
+    "resolved": "<REPO>/.lake/build/lib/lean/Erdos647Sieve/WindowCRT.olean",
+    "correct_owner": true,
+    "object_exists": true
+  },
+  {
+    "module": "Examples.BasicUsage",
+    "expected": "<REPO>/.lake/build/lib/lean/Examples/BasicUsage.olean",
+    "resolved": "<REPO>/.lake/build/lib/lean/Examples/BasicUsage.olean",
+    "correct_owner": true,
+    "object_exists": true
+  },
+  {
+    "module": "Examples.MomentSpecialization",
+    "expected": "<REPO>/.lake/build/lib/lean/Examples/MomentSpecialization.olean",
+    "resolved": "<REPO>/.lake/build/lib/lean/Examples/MomentSpecialization.olean",
+    "correct_owner": true,
+    "object_exists": true
+  }
+]

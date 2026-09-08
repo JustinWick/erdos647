@@ -1,4 +1,4 @@
-import Erdos647Sieve.CleanMertens
+import Erdos647Research.CleanMertens
 
 set_option autoImplicit false
 set_option warningAsError true

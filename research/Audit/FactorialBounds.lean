@@ -1,4 +1,4 @@
-import Erdos647Sieve.FactorialBounds
+import Erdos647Research.FactorialBounds
 
 set_option autoImplicit false
 set_option warningAsError true

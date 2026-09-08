@@ -53,11 +53,11 @@ class Layout(unittest.TestCase):
         self.assertNotIn('PrimeNumberTheoremAnd',{x['name'] for x in lock['packages']})
     def test_research_local_core(self):
         entries=json.loads((ROOT/'research/lake-manifest.json').read_text())['packages']
-        self.assertEqual([(x['name'],x['dir']) for x in entries if x['type']=='path'],[('erdos647-sieve','..')])
+        self.assertEqual([(x['name'],x['dir']) for x in entries if x['type']=='path'],[('«erdos647-sieve»','..')])
     def test_same_mathlib_pins(self):
         self.assertEqual(check.PINS['dependencies']['.']['mathlib'],check.PINS['dependencies']['research']['mathlib'])
     def test_no_duplicate_math_source(self):
-        a={p.name for p in (ROOT/'Erdos647Sieve').glob('*.lean')};b={p.name for p in (ROOT/'research/Erdos647Sieve').glob('*.lean')}
+        a={p.name for p in (ROOT/'Erdos647Sieve').glob('*.lean')};b={p.name for p in (ROOT/'research/Erdos647Research').glob('*.lean')}
         self.assertFalse(a&b)
     def test_legacy_probe_archived(self):
         self.assertTrue((ROOT/'provenance/rejected/MertensProbe.lean.txt').is_file())
@@ -96,16 +96,16 @@ class GuardFixtures(unittest.TestCase):
         (self.root/'Erdos647Sieve/Bad.lean').write_text('import PrimeNumberTheoremAnd.MediumPNT\n')
         with self.assertRaises(ValueError):check.source_boundary(self.root)
     def test_core_no_research_import(self):
-        (self.root/'Erdos647Sieve/Bad.lean').write_text('import Erdos647Sieve.CleanMertens\n')
+        (self.root/'Erdos647Sieve/Bad.lean').write_text('import Erdos647Research.CleanMertens\n')
         with self.assertRaises(ValueError):check.source_boundary(self.root)
     def test_extra_axiom_source(self):
         (self.root/'Erdos647Sieve/Bad.lean').write_text('axiom bad : False\n')
         with self.assertRaises(ValueError):check.source_boundary(self.root)
     def test_unknown_research_file_not_silently_skipped(self):
-        (self.root/'research/Erdos647Sieve/Unknown.lean').write_text('import Mathlib\n')
+        (self.root/'research/Erdos647Research/Unknown.lean').write_text('import Mathlib\n')
         with self.assertRaises(ValueError):check.source_boundary(self.root)
     def test_core_does_not_validate_research(self):
-        (self.root/'research/Erdos647Sieve/Unknown.lean').write_text('axiom bad : False\n')
+        (self.root/'research/Erdos647Research/Unknown.lean').write_text('axiom bad : False\n')
         check.source_boundary(self.root,include_research=False)
     def test_dependency_revision_drift(self):
         p=self.root/'lake-manifest.json';data=json.loads(p.read_text());data['packages'][0]['rev']='0'*40;p.write_text(json.dumps(data))
@@ -114,7 +114,7 @@ class GuardFixtures(unittest.TestCase):
         p=self.root/'Erdos647Sieve/Bonferroni.lean';p.write_text(p.read_text()+'\n-- no sorry was inserted\n')
         check.source_boundary(self.root)
     def test_source_symlink_rejected(self):
-        p=self.root/'Erdos647Sieve/Symlink.lean';p.symlink_to(self.root/'research/Erdos647Sieve/CleanMertens.lean')
+        p=self.root/'Erdos647Sieve/Symlink.lean';p.symlink_to(self.root/'research/Erdos647Research/CleanMertens.lean')
         with self.assertRaises(ValueError):check.source_boundary(self.root)
     def test_diagnostics_exclude_caches_and_env(self):
         for name in ['.lake/deep/cache.lean','.tools/foo.py','results/prior/a.py','.env','research/.lake/fake.lean']:
@@ -133,8 +133,10 @@ class Reporting(unittest.TestCase):
         self.output=io.StringIO();self.redirect=contextlib.redirect_stdout(self.output);self.redirect.__enter__()
         self.tmp=tempfile.TemporaryDirectory();self.root=Path(self.tmp.name)
         self.run=check.Run(self.root,check.parser().parse_args(['tooling']))
+        self.path_audit = mock.patch.object(self.run, 'verify_gate_modules')
+        self.path_audit.start()
     def tearDown(self):
-        self.tmp.cleanup();self.redirect.__exit__(None,None,None)
+        self.path_audit.stop();self.tmp.cleanup();self.redirect.__exit__(None,None,None)
     def test_nonzero_is_failure_even_with_pass_text(self):
         with self.assertRaises(RuntimeError):
             self.run.command('fake_failure',[sys.executable,'-c','print("PASS"); raise SystemExit(5)'])

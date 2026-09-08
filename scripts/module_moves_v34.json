@@ -1,0 +1,83 @@
+{
+  "schema": 1,
+  "moves": [
+    {
+      "old": "research/Erdos647Sieve/AnalyticInputs.lean",
+      "new": "research/Erdos647Research/AnalyticInputs.lean",
+      "old_sha256": "77d5070b343c0df51c43460d1f9a2bd488b89f473f40b9ca1d4ff3cccd4ca881",
+      "new_sha256": "09a2f8d0e49a763fabe556d723ee5f21f7ba5f8abb419cf056596710f939bdbc"
+    },
+    {
+      "old": "research/Erdos647Sieve/CleanMertens.lean",
+      "new": "research/Erdos647Research/CleanMertens.lean",
+      "old_sha256": "188a076a80ecdcb7696b665ba579a86747ba16f743b6c7e6c6287dab5ef26f3b",
+      "new_sha256": "b2e9935c9e72ce23f81ec57946badb92631fe7a7e1bf3c4fba4d6fec9fab07cc"
+    },
+    {
+      "old": "research/Erdos647Sieve/CorrectedBudgetEstimate.lean",
+      "new": "research/Erdos647Research/CorrectedBudgetEstimate.lean",
+      "old_sha256": "e88d515207adf80d6dc492358cbe3970fd80394ef27ad601f5587025fd2036de",
+      "new_sha256": "75b288007dd7e4528cc305d048bd2339c66e8755f46b2335eb8742090ac2b2f1"
+    },
+    {
+      "old": "research/Erdos647Sieve/EndpointLogBounds.lean",
+      "new": "research/Erdos647Research/EndpointLogBounds.lean",
+      "old_sha256": "5f5e313b6bf350bf1354e957b5b0a342cfefee0df8351b81ace3781262ae615c",
+      "new_sha256": "5f5e313b6bf350bf1354e957b5b0a342cfefee0df8351b81ace3781262ae615c"
+    },
+    {
+      "old": "research/Erdos647Sieve/FactorialBounds.lean",
+      "new": "research/Erdos647Research/FactorialBounds.lean",
+      "old_sha256": "7fe2f547ac29f06000dc35e7cdc6f2b464324bff42a7776016c6b6f5426fb110",
+      "new_sha256": "7fe2f547ac29f06000dc35e7cdc6f2b464324bff42a7776016c6b6f5426fb110"
+    },
+    {
+      "old": "research/Erdos647Sieve/FactorialEstimate.lean",
+      "new": "research/Erdos647Research/FactorialEstimate.lean",
+      "old_sha256": "83213024a80ae6b8e2ab2ac1a7aaef8b4a08d74cd02847644dd9f2d8c66ba16b",
+      "new_sha256": "40c0ab51a12e3ef7096bb74395f05499dcde5b66248b2d5a4da64e718f13e2fe"
+    },
+    {
+      "old": "research/Erdos647Sieve/LogBudgetFactorial.lean",
+      "new": "research/Erdos647Research/LogBudgetFactorial.lean",
+      "old_sha256": "7b4e5734c5c6a0e0445d3136152aa8203bd1f8c7e90eb73cdeac9bbe736feb7d",
+      "new_sha256": "86882822f9f3272ee8fdb34734067655d40c2a9e04622b6ced0dccedc8bb6242"
+    },
+    {
+      "old": "research/Erdos647Sieve/PrimeReciprocalLower.lean",
+      "new": "research/Erdos647Research/PrimeReciprocalLower.lean",
+      "old_sha256": "7b626c6d462e5be5e03deb94abf8698139e4c1c2696e01e5e82aebac37a6a2fc",
+      "new_sha256": "7b626c6d462e5be5e03deb94abf8698139e4c1c2696e01e5e82aebac37a6a2fc"
+    },
+    {
+      "old": "research/Erdos647Sieve/PrimeReciprocalSummation.lean",
+      "new": "research/Erdos647Research/PrimeReciprocalSummation.lean",
+      "old_sha256": "5f7fbab946381f0c1781fc066c2071c4f98f33100bf5595c5cb506d06e1d4aae",
+      "new_sha256": "4956d6dd34d28054ee36185c2360f10e97425a96a5ea494634aa92a3f5351c9c"
+    },
+    {
+      "old": "research/Erdos647Sieve/ReciprocalKernel.lean",
+      "new": "research/Erdos647Research/ReciprocalKernel.lean",
+      "old_sha256": "3a7b8981e200c1d42485e353a8d2a03bd517be886ff8494cfbfa3cef5bfee108",
+      "new_sha256": "3a7b8981e200c1d42485e353a8d2a03bd517be886ff8494cfbfa3cef5bfee108"
+    },
+    {
+      "old": "research/Erdos647Sieve/SelectedPrimeReciprocals.lean",
+      "new": "research/Erdos647Research/SelectedPrimeReciprocals.lean",
+      "old_sha256": "ebf52c54f43019b2534468d5020dd07af0f3d43f05ffd61d342ecb653719a84f",
+      "new_sha256": "17df5a48ef4d6fd3fadab695309ecb73371a158fe94284759e8a329e52eb8a84"
+    },
+    {
+      "old": "research/Erdos647Sieve/SmallPrimeDebitEstimate.lean",
+      "new": "research/Erdos647Research/SmallPrimeDebitEstimate.lean",
+      "old_sha256": "29d53213e480a1a6ebc7a74dcd0bd3a4836a6c77ef49bda238b48620a9e609ed",
+      "new_sha256": "6c050f40341f09ef4bfe6b3b63941ae0409556b27d53fc4d6d98a32de6e53815"
+    },
+    {
+      "old": "research/PrimeNumberTheoremAnd/RosserSchoenfeldPrime.lean",
+      "new": "research/Erdos647Research/Compat/PNTPlus.lean",
+      "old_sha256": "84bfdb2a61829f6cd2cb331d9760a84062dae8fa589372c66105e6b9398d81f7",
+      "new_sha256": "84bfdb2a61829f6cd2cb331d9760a84062dae8fa589372c66105e6b9398d81f7"
+    }
+  ]
+}

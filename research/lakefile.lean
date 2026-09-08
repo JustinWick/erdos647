@@ -10,15 +10,18 @@ require PrimeNumberTheoremAnd from git
   "https://github.com/AlexKontorovich/PrimeNumberTheoremAnd.git" @ "a5154676af9aa3095150ee410cdda80555aa0642"
 
 lean_lib PNTPlusCompat where
-  roots := #[`PrimeNumberTheoremAnd.RosserSchoenfeldPrime]
+  moreLeanArgs := #["-DwarningAsError=true"]
+  roots := #[`Erdos647Research.Compat.PNTPlus]
 
 @[default_target]
 lean_lib Erdos647Analytic where
-  roots := #[`Erdos647Sieve.ReciprocalKernel, `Erdos647Sieve.PrimeReciprocalSummation, `Erdos647Sieve.AnalyticInputs, `Erdos647Sieve.CleanMertens, `Erdos647Sieve.SelectedPrimeReciprocals]
+  moreLeanArgs := #["-DwarningAsError=true"]
+  roots := #[`Erdos647Research.ReciprocalKernel, `Erdos647Research.PrimeReciprocalSummation, `Erdos647Research.AnalyticInputs, `Erdos647Research.CleanMertens, `Erdos647Research.SelectedPrimeReciprocals]
 
 @[default_target]
 lean_lib Erdos647Elementary where
-  roots := #[`Erdos647Sieve.CorrectedBudgetEstimate, `Erdos647Sieve.EndpointLogBounds, `Erdos647Sieve.FactorialBounds, `Erdos647Sieve.FactorialEstimate, `Erdos647Sieve.LogBudgetFactorial, `Erdos647Sieve.PrimeReciprocalLower, `Erdos647Sieve.SmallPrimeDebitEstimate]
+  moreLeanArgs := #["-DwarningAsError=true"]
+  roots := #[`Erdos647Research.CorrectedBudgetEstimate, `Erdos647Research.EndpointLogBounds, `Erdos647Research.FactorialBounds, `Erdos647Research.FactorialEstimate, `Erdos647Research.LogBudgetFactorial, `Erdos647Research.PrimeReciprocalLower, `Erdos647Research.SmallPrimeDebitEstimate]
 
 /-- All current research proof gates, including pending elementary estimates. -/
 script audit (args) do

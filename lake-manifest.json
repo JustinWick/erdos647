@@ -111,7 +111,7 @@
       "configFile": "lakefile.toml"
     }
   ],
-  "name": "erdos647-sieve",
+  "name": "«erdos647-sieve»",
   "lakeDir": ".lake",
   "fixedToolchain": true
 }

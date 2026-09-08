@@ -5,9 +5,11 @@ The repository root is a **Mathlib-only library**. The separate `research/` Lake
 package contains the analytic bridge and unfinished endpoint development.
 
 **This project does not resolve Erdős #647 and does not contain a proof of the
-proposed final asymptotic endpoint.** The finite theorem and several analytic
-components have recorded acceptance evidence; remaining research obligations are
-listed in [proof status](docs/proof-status.md).
+proposed final asymptotic endpoint.** The current implemented suite has a recorded **14/14** build/type/axiom pass
+in the v36 local run, covering **140 distinct audited declarations** with no
+build or audit warnings. This includes the finite core, analytic bridge and
+elementary budget estimates—not the final endpoint. See
+[proof status](docs/proof-status.md) and the [accepted record](provenance/accepted/v36/README.md).
 
 ## Use the public library
 
@@ -73,7 +75,7 @@ From the repository root:
 # Install/resume the exact pinned toolchain and dependencies, then test everything.
 bash RUN.sh --setup
 
-# Later runs: incremental builds, no explicit dependency/cache downloads.
+# Later runs: incremental builds; reuse tools/dependencies and fill only a missing cache.
 bash RUN.sh
 ```
 
@@ -90,7 +92,11 @@ An existing matching Lean installation is reused. Otherwise setup installs a
 repository-local Elan/toolchain under ignored `.tools/`, without changing the
 global default or shell profile. Git dependencies are materialized at the exact
 commits in the checked-in lockfiles. No version-mismatch reset, upstream proof
-patch, or destructive cache cleaning is performed.
+patch, or destructive cache cleaning is performed. Once the pinned toolchain and
+dependency checkouts exist, a missing compiled Mathlib cache is resumed automatically;
+already-present caches are reused. Compiler and repository installation still requires
+`--setup`. Both manifests are parsed by the installed Lake implementation before
+dependency/cache preparation.
 
 ### Choose the scope
 
@@ -98,7 +104,7 @@ patch, or destructive cache cleaning is performed.
 |---|---|
 | `bash RUN.sh` or `bash TEST_ALL.sh` | All implemented core, analytic, and elementary gates. |
 | `bash RUN.sh core` | Public finite library, examples, expanded types, and component/export axiom audits. No PNT+ setup required. |
-| `bash RUN.sh research` | All 12 research gates; core imports are built as dependencies. |
+| `bash RUN.sh research` | All 13 research gates; core imports are built as dependencies. |
 | `bash RUN.sh --gate corrected_budget_estimate` | That gate plus its explicitly registered prerequisites. |
 | `bash RUN.sh tooling` | Offline runner/architecture tests only. Not a Lean proof check. |
 | `bash RUN.sh --list` | Display the gate inventory. |
@@ -141,13 +147,17 @@ Log redaction is best-effort; review reports before sharing them publicly.
 Exit code `0` means **all selected gates passed**; `1` means a proof/audit failed or
 was blocked; `2` means a setup/integrity failure; `130` means interruption. A failed
 prerequisite blocks its downstream gates but does not suppress independent checks.
+Changes to Lean source, Lake configuration, scripts, or tests during a run invalidate
+that run. CI workflow YAML changes are recorded separately because they do not affect
+the locally invoked proof commands. Setup failures remain visible in the report.
 A normal Ctrl+C still packages partial output. A machine crash can leave a partial
 results directory; `--collect-only` prints the last completed archive, not a new
 acceptance claim.
 
-**Some research gates are pending.** A failing `all` run is not silently converted
-to success because the core passed. Conversely, a pending research proof is not a
-reason to force PNT+ into the public library or block its core-only CI.
+**All 14 currently registered gates have passed in the v36 record.** Future
+changes must still pass their selected checks: a failing `all` run is never
+converted to success because the core passed. The remaining endpoint work is
+outside this completed gate inventory and remains separate from the public core.
 
 ## Repository layout
 
@@ -159,17 +169,27 @@ Examples/                 Public-import usage examples
 lakefile.lean              Mathlib-only public Lake package
 lake-manifest.json         Nine exact core dependency revisions
 research/                 Separate Lake package; depends on this core by path
-  Erdos647Sieve/           12 preserved analytic/elementary source files
-  PrimeNumberTheoremAnd/   Import-only compatibility shim
+  Erdos647Research/       12 analytic/elementary modules; theorem names unchanged
+    Compat/PNTPlus.lean   Restricted PNT+ import plus seven attributed adapters
   Audit/                  A separate audit for every research module
   lake-manifest.json      Native PNT+ lock plus the local core dependency
-scripts/check.py           One orchestrator; no overlay/migration synchronizer
+scripts/check.py           Incremental checks and compiled-module ownership guard
 scripts/gates.json         Gate inventory and prerequisite graph
 tests/                    Offline tests of tooling, packaging, and reporting
 docs/                     Statements, scope, contribution and version policy
 provenance/               Historical reports, source map, rejected probe, handoffs
-.github/workflows/        Required core CI; manually dispatched research CI
+.github/workflows/        Core CI and manually dispatched research CI
 ```
+
+The core owns `Erdos647Sieve.*` import paths; research owns `Erdos647Research.*`.
+Their **theorem namespaces** are unchanged. These separate module roots prevent
+Lean's first-root import resolution from finding a research object in the core's
+build directory. See [dependency boundaries](docs/dependency-boundaries.md).
+
+For an overlay over v32/v33 only, the runner archives the 13 exact obsolete source
+paths under `provenance/refactors/v34/retired/` once. Unknown edits are preserved
+and stop that relocation. A new checkout with the new paths needs no migration;
+ordinary runs do not copy or rewrite source files. No compiled cache is deleted.
 
 There is **one active copy of each mathematical source file**. The original
 rejected `MertensProbe` is retained as text under `provenance/rejected/`, never
@@ -179,9 +199,10 @@ modified or deleted by this distribution.
 
 ## CI and status
 
-The GitHub workflow builds and tests the public core on pushes and pull requests.
-The full research workflow is manually dispatched because that tree contains
-pending proofs. Both upload diagnostics, and neither swallows failed checks.
+The core GitHub workflow builds and tests only the public library. Its triggers
+are controlled in `.github/workflows/ci.yml`; local checks do not rewrite them.
+The full research workflow remains manually dispatched under the existing CI
+policy; all currently registered research gates have local acceptance evidence. Both upload diagnostics, and neither swallows failed checks.
 No repository name, owner, token, or upload credential is hardcoded. The ZIP does
 not contain a `.git` directory or perform any GitHub write operation.
 

@@ -1,0 +1,68 @@
+{
+  "schema": 1,
+  "version": "v35",
+  "offline_test_count": 144,
+  "offline_test_result": "PASS",
+  "actual_zip_applied_to_v34_reconstruction": true,
+  "tests_reran_from_applied_zip": true,
+  "unchanged_existing_files_preserved_with_mtime": 123,
+  "preserved_sentinels": [
+    ".lake/build/lib/lean/cache-sentinel.olean",
+    "research/.lake/packages/mathlib/.lake/build/cache-sentinel",
+    ".tools/elan/bin/sentinel",
+    "results/existing-results-sentinel.zip"
+  ],
+  "user_ci_workflows_excluded_from_overlay": true,
+  "toolchain_files_unchanged": true,
+  "dependency_lockfiles_unchanged": true,
+  "existing_project_statement_headers_unchanged": true,
+  "top_level_tooling_mode_status": "PASS_SELECTED_CHECKS",
+  "test_commands": [
+    {
+      "command": [
+        "python3",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "tests",
+        "-v"
+      ],
+      "exit_code": 0,
+      "log": "tests_applied_v35.log"
+    },
+    {
+      "command": [
+        "bash",
+        "-n",
+        "RUN.sh",
+        "TEST_ALL.sh"
+      ],
+      "exit_code": 0,
+      "log": "shell_v35.log"
+    },
+    {
+      "command": [
+        "python3",
+        "scripts/check.py",
+        "--list"
+      ],
+      "exit_code": 0,
+      "log": "list_v35.log"
+    },
+    {
+      "command": [
+        "bash",
+        "RUN.sh",
+        "tooling"
+      ],
+      "exit_code": 0,
+      "log": "tooling_v35.log"
+    }
+  ],
+  "proof_acceptance_basis": "v34 uploaded logs only; v35 outcome is determined by the new all-gates run",
+  "source_boundary_scope": "PNT+ files transitively imported from MediumPNT, not the entire upstream repository",
+  "upstream_catalogue_completed": false,
+  "new_runtime_gate": "pntplus_inputs",
+  "expected_gate_count": 14
+}

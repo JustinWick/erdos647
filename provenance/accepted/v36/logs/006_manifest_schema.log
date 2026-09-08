@@ -1,0 +1,5 @@
+$ <REPO>/.tools/elan/toolchains/leanprover--lean4---v4.32.2/bin/lean --run <REPO>/scripts/check_manifests.lean <REPO>/lake-manifest.json <REPO>/research/lake-manifest.json
+MANIFEST_PARSED <REPO>/lake-manifest.json: «erdos647-sieve» (9 dependencies)
+MANIFEST_PARSED <REPO>/research/lake-manifest.json: «erdos647-research» (15 dependencies)
+
+EXIT_CODE=0

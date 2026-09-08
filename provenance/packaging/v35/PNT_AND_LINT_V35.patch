@@ -1,0 +1,907 @@
+--- a/Erdos647Sieve/CoefficientBounds.lean
++++ b/Erdos647Sieve/CoefficientBounds.lean
+@@ -20,7 +20,7 @@
+   | succ q ih =>
+       have hextra : 0 ≤ ((q : ℝ) + 1) * a * a * s ^ q := by positivity
+       have hmul := mul_le_mul_of_nonneg_right ih (add_nonneg hs ha)
+-      simp only [Nat.cast_add, Nat.cast_succ, Nat.cast_one]
++      simp only [Nat.cast_succ]
+       calc
+         s ^ (q + 1 + 1) + (((q : ℝ) + 1) + 1) * a * s ^ (q + 1)
+             ≤ (s ^ (q + 1 + 1) + (((q : ℝ) + 1) + 1) * a * s ^ (q + 1)) +
+--- a/Erdos647Sieve/FiniteCountingAssembly.lean
++++ b/Erdos647Sieve/FiniteCountingAssembly.lean
+@@ -48,8 +48,6 @@
+   classical
+   refine Finset.sum_bij (fun n _ => (n : ℤ)) ?_ ?_ ?_ ?_
+   · intro n hn
+-    -- Reduce the dependent bijection's lambda application before cast tactics.
+-    change (n : ℤ) ∈ Finset.Icc (1 : ℤ) (X : ℤ)
+     obtain ⟨hn1, hnX⟩ := Finset.mem_Icc.mp hn
+     exact Finset.mem_Icc.mpr ⟨by exact_mod_cast hn1, by exact_mod_cast hnX⟩
+   · intro n _ m _ hnm
+--- a/Erdos647Sieve/PrimeSubsetCoefficients.lean
++++ b/Erdos647Sieve/PrimeSubsetCoefficients.lean
+@@ -61,7 +61,7 @@
+   | nil =>
+       intro _hl w q
+       cases q with
+-      | zero => simp [elementary]
++      | zero => simp
+       | succ q =>
+           have he : (∅ : Finset ℕ).powersetCard (q + 1) = ∅ :=
+             Finset.powersetCard_eq_empty.mpr (by simp)
+--- a/Erdos647Sieve/SubsetWeightIdentities.lean
++++ b/Erdos647Sieve/SubsetWeightIdentities.lean
+@@ -52,7 +52,7 @@
+         exact if_pos (hall p hp)
+       _ = t ^ S.card := Finset.prod_const t
+   · rw [if_neg hall]
+-    push_neg at hall
++    push Not at hall
+     obtain ⟨p, hp, hnot⟩ := hall
+     exact Finset.prod_eq_zero hp (by simp only [if_neg hnot])
+ 
+--- a/NOTICE
++++ b/NOTICE
+@@ -11,3 +11,13 @@
+ Mathlib and PrimeNumberTheoremAnd are external Git dependencies with their own
+ licenses and notices. No third-party compiler binaries or complete library source
+ copies are bundled in this distribution.
++
++PNT+ analytic compatibility extraction (v35)
++-------------------------------------------
++research/Erdos647Research/Compat/PNTPlus.lean extracts seven proved routines from
++PrimeNumberTheoremAnd by its contributors, under Apache-2.0:
++https://github.com/AlexKontorovich/PrimeNumberTheoremAnd/blob/a5154676af9aa3095150ee410cdda80555aa0642/PrimeNumberTheoremAnd/IEANTN/RosserSchoenfeld/RosserSchoenfeldPrime.lean
++The broad catalogue imports and unrelated declarations/blueprint annotations are
++omitted; the mathematical PNT/integrability interfaces are retained. No claim is
++made that the complete upstream research catalogue is free of unfinished proofs.
++The source-map and license are included with this repository.
+--- a/lakefile.lean
++++ b/lakefile.lean
+@@ -11,9 +11,11 @@
+ 
+ @[default_target]
+ lean_lib Erdos647Sieve where
++  moreLeanArgs := #["-DwarningAsError=true"]
+   globs := #[.one `Erdos647Sieve, .submodules `Erdos647Sieve]
+ 
+ lean_lib Examples where
++  moreLeanArgs := #["-DwarningAsError=true"]
+   roots := #[`Examples.BasicUsage, `Examples.MomentSpecialization]
+ 
+ /-- Check the public package, examples, exact theorem types, and transitive axioms. -/
+--- /dev/null
++++ b/research/Audit/PNTPlus.lean
+@@ -0,0 +1,33 @@
++import Erdos647Research.Compat.PNTPlus
++
++set_option autoImplicit false
++set_option warningAsError true
++open scoped Topology
++
++#check MediumPNT
++#print axioms MediumPNT
++#check RS_prime.pntBigO
++#print axioms RS_prime.pntBigO
++
++example : (∃ C : ℝ, 0 ≤ C ∧ ∀ x : ℝ, 2 ≤ x →
++    |Chebyshev.theta x - x| ≤ C * x / Real.log x ^ 2) := RS_prime.pnt
++#check RS_prime.pnt
++#print axioms RS_prime.pnt
++
++#check RS_prime.intervalIntegrable_inv_log_pow
++#print axioms RS_prime.intervalIntegrable_inv_log_pow
++#check RS_prime.ioiIntegrable_inv_log_pow
++#print axioms RS_prime.ioiIntegrable_inv_log_pow
++#check RS_prime.bound_deriv
++#print axioms RS_prime.bound_deriv
++#check RS_prime.integrableOn_deriv
++#print axioms RS_prime.integrableOn_deriv
++
++example : (MeasureTheory.IntegrableOn
++    (fun y : ℝ => (Chebyshev.theta y - y) * deriv (fun t : ℝ => 1 / t / Real.log t) y)
++    (Set.Ioi 2) MeasureTheory.volume ∧
++    ∀ x : ℝ, 2 ≤ x → IntervalIntegrable (fun t : ℝ => deriv
++      (fun s : ℝ => 1 / s / Real.log s) t) MeasureTheory.volume 2 x) :=
++  RS_prime.integrableOn_deriv_inv_div_log
++#check RS_prime.integrableOn_deriv_inv_div_log
++#print axioms RS_prime.integrableOn_deriv_inv_div_log
+--- a/research/Erdos647Research/AnalyticInputs.lean
++++ b/research/Erdos647Research/AnalyticInputs.lean
+@@ -1,7 +1,6 @@
+ /-
+-New v15 source. The upstream file contains unrelated unfinished declarations.
+-Only the two explicitly named inputs below are used here; their full transitive
+-axioms must be audited. The rejected Mertens identity chain is not a proof input.
++Project-facing adapters to the source-restricted PNT+ compatibility module.
++The required source import closure and the theorem axioms are checked separately.
+ -/
+ import Erdos647Research.ReciprocalKernel
+ import Erdos647Research.Compat.PNTPlus
+@@ -45,7 +44,6 @@
+         div_le_div_of_nonneg_right (hC x hx) (le_of_lt (mul_pos hx0 hl0))
+       _ = C / Real.log x ^ 3 := by
+         field_simp [hx0.ne', hl0.ne']
+-        <;> ring
+   · exact ((tendsto_pow_atTop (by norm_num : (3 : ℕ) ≠ 0)).comp
+       Real.tendsto_log_atTop).const_div_atTop C
+ 
+--- a/research/Erdos647Research/Compat/PNTPlus.lean
++++ b/research/Erdos647Research/Compat/PNTPlus.lean
+@@ -1,3 +1,206 @@
+-/- Compatibility for the historical import path used by the preserved adapter.
+-No declarations or proof bodies are replaced here. -/
+-import PrimeNumberTheoremAnd.IEANTN.RosserSchoenfeld.RosserSchoenfeldPrime
++/-
++Adapted from the work of the PrimeNumberTheoremAnd contributors.
++Released under Apache 2.0 license as described in the file LICENSE.
++
++Project-local extraction from PrimeNumberTheoremAnd commit
++  a5154676af9aa3095150ee410cdda80555aa0642
++  PrimeNumberTheoremAnd/IEANTN/RosserSchoenfeld/RosserSchoenfeldPrime.lean
++  Git blob 0533123764856ac5bc38f95b18b56551747d380a.
++
++Modified for Erdős647: retain only the seven proved PNT/integrability declarations
++below, replace the broad IEANTN imports by MediumPNT, and omit blueprint metadata.
++The finite library never imports this module. The original repository is not
++claimed to be a completed catalogue of explicit zeta results.
++
++All retained upstream module sources are checked by scripts/pntplus_closure.py.
++The audit checks MediumPNT and every declaration below transitively.
++-/
++import Mathlib
++import PrimeNumberTheoremAnd.MediumPNT
++
++noncomputable section
++namespace RS_prime
++
++open scoped Topology
++open Chebyshev Finset Nat Real MeasureTheory Filter Asymptotics
++
++/-- The medium PNT implies the theta error bound required by the sieve. -/
++theorem pntBigO : (θ - id) =O[atTop] fun (x : ℝ) ↦ x / log x ^ 2 := by
++  obtain ⟨c, hc⟩ := MediumPNT
++  have hl : (ψ - id) =O[atTop] fun (x : ℝ) ↦ x / log x ^ 2 := by
++    have h_exp : (fun x : ℝ => exp (-c * (log x) ^ (1 / 10 : ℝ))) =O[atTop]
++      (fun x : ℝ => (log x) ^ (-2 : ℝ)) := by
++      -- This lemma is autoformalized by Aristotle in the upstream source.
++      have h_exp : Tendsto (fun x : ℝ => exp (-c * (log x) ^ (1 / 10 : ℝ)) * (log x) ^ 2)
++        atTop (𝓝 0) := by
++        suffices h_y : Tendsto (fun y : ℝ => exp (-c * y) * y ^ 20) atTop (nhds 0) by
++          have h_subst : Tendsto (fun x : ℝ => exp (-c * (log x) ^ (1 / 10 : ℝ)) *
++          ((log x) ^ (1 / 10 : ℝ)) ^ 20) atTop (𝓝 0) :=
++          h_y.comp (tendsto_rpow_atTop (by norm_num) |> Tendsto.comp <| tendsto_log_atTop)
++          refine h_subst.congr' ?_
++          filter_upwards [eventually_gt_atTop 1] with x hx
++          rw [← rpow_natCast, ← rpow_mul (log_nonneg hx.le)]
++          norm_num
++        suffices h_z : Tendsto (fun z : ℝ => exp (-z) * (z / c) ^ 20) atTop (nhds 0) by
++          convert h_z.comp (tendsto_id.const_mul_atTop hc.1) using 2
++          norm_num [hc.1.ne']
++        convert (tendsto_pow_mul_exp_neg_atTop_nhds_zero 20).div_const (c ^ 20) using 2 <;> ring
++      rw [isBigO_iff]
++      obtain ⟨M, hM⟩ := eventually_atTop.mp (h_exp.eventually (Metric.ball_mem_nhds _ zero_lt_one))
++      norm_cast
++      norm_num
++      refine ⟨1, Max.max M 2, fun x hx => ?_⟩
++      rw [← div_eq_mul_inv, le_div_iff₀ (sq_pos_of_pos <| log_pos <| by grind [le_max_right M 2])]
++      have := abs_lt.mp (hM x <| le_trans (le_max_left M 2) hx)
++      norm_num at *
++      nlinarith
++    refine hc.2.trans ?_
++    convert! (isBigO_refl (fun x : ℝ => x) atTop).mul h_exp using 2
++    simp [field]
++  have : θ - id = (ψ - id) + (θ - ψ) := by ring
++  refine this ▸ hl.add (isBigO_iff.2 ⟨432, ?_⟩)
++  filter_upwards [Ioi_mem_atTop 1] with x hx
++  simp only [Pi.sub_apply, norm_eq_abs, norm_div, norm_pow, sq_abs, mul_div]
++  have nonnegx : 0 ≤ x := by grind
++  calc
++  _ ≤ 2 * √x * log x := by rw [← neg_sub, abs_neg]; exact abs_psi_sub_theta_le_sqrt_mul_log hx.le
++  _ ≤ _ := by
++    rw [le_div_iff₀ (sq_pos_of_pos (log_pos hx)), mul_assoc, ← pow_succ' _ 2]
++    simp only [reduceAdd]
++    have : log x ^ 3 ≤ 216 * x ^ (1 / 2 : ℝ) := by
++      have := rpow_le_rpow (log_nonneg hx.le) (log_le_rpow_div nonnegx
++        (by grind : 0 < 1 / (6 : ℝ))) (by grind : 0 ≤ (3 : ℝ))
++      simp only [rpow_ofNat, one_div, div_inv_eq_mul, mul_comm,
++        mul_rpow (by grind : 0 ≤ (6 : ℝ)) (rpow_nonneg nonnegx _), ← rpow_mul nonnegx] at this
++      norm_num at this
++      exact this
++    have := mul_le_mul_of_nonneg_left this (mul_nonneg (by simp : 0 ≤ (2 : ℝ)) (by simp : 0 ≤ √x))
++    rw [← sqrt_eq_rpow, mul_comm 216 √x, ← mul_assoc, mul_assoc 2 √x √x, mul_self_sqrt nonnegx,
++      ← mul_comm 216, ← mul_assoc] at this
++    nth_rewrite 3 [← abs_of_nonneg nonnegx] at this
++    norm_num at this
++    exact this
++
++/-- A nonnegative constant controls the theta error for every real x ≥ 2. -/
++theorem pnt : ∃ C ≥ 0, ∀ x ≥ 2, |θ x - x| ≤ C * x / log x ^ 2 := by
++  obtain ⟨c, hc⟩ := isBigO_iff'.1 pntBigO
++  obtain ⟨N, hN⟩ := eventually_atTop.1 hc.2
++  by_cases! hn : 2 ≤ N
++  · refine ⟨max c (4 * (θ N + N)), le_max_of_le_left hc.1.le, fun x hx => ?_⟩
++    by_cases! h : x ≤ N
++    · suffices |θ x - x| * log x ^ 2 / x ≤ 4 * (θ N + N) from by
++        rw [le_div_iff₀ (sq_pos_of_pos (log_pos (by linarith))), ← div_le_iff₀ (by linarith)]
++        exact this.trans (le_max_right c (4 * (θ N + N)))
++      have : |θ x - x| ≤ θ N + N := calc
++        _ ≤ |θ x| + |x| := abs_sub _ _
++        _ = θ x + x := by rw [abs_of_nonneg (theta_nonneg _), abs_of_nonneg (by linarith)]
++        _ ≤ _ := by gcongr
++      calc
++      _ ≤ (θ N + N) * log x ^ 2 / x := by gcongr
++      _ ≤ (θ N + N) * (x ^ (1 / 2 : ℝ) / (1 / 2)) ^ 2 / x := by
++        gcongr
++        · exact log_nonneg (by linarith)
++        · exact log_le_rpow_div (by linarith) (by linarith)
++      _ = _ := by rw [← sqrt_eq_rpow, div_pow, sq_sqrt (by linarith)]; field_simp; ring
++    · simpa [abs_of_nonneg (by grind : 0 ≤ x), mul_div] using (hN x h.le).trans <|
++        mul_le_mul_of_nonneg_right (le_max_left c (4 * (θ N + N))) (norm_nonneg _)
++  · refine ⟨c, hc.1.le, fun x hx => ?_⟩
++    simpa [abs_of_nonneg (by grind : 0 ≤ x), mul_div] using hN x (hn.le.trans hx)
++
++theorem intervalIntegrable_inv_log_pow (n : ℕ) (m : ℕ) {x : ℝ} (hx : 1 < x) (y : ℝ) :
++    IntegrableOn (fun t ↦ 1 / (t ^ n * Real.log t ^ m)) (Set.Ioc x y) volume := by
++  by_cases h : x < y
++  · refine (ContinuousOn.integrableOn_Icc ?_).mono_set Set.Ioc_subset_Icc_self
++    refine ContinuousOn.div₀ (by fun_prop) (ContinuousOn.mul (by fun_prop) ?_) ?_
++    · exact (continuousOn_log.mono (by grind)).pow m
++    · simp_all; grind
++  · simp_all
++
++theorem ioiIntegrable_inv_log_pow {n : ℕ} (hn : 1 < n) {x : ℝ} (hx : 1 < x) :
++    IntegrableOn (fun t ↦ 1 / (t * Real.log t ^ n)) (Set.Ioi x) volume := by
++  refine integrableOn_Ioi_of_intervalIntegral_norm_tendsto (log x ^ (1 - (n : ℝ)) / (n - 1)) x
++    (fun k => ?_) tendsto_natCast_atTop_atTop ?_
++  · simpa using intervalIntegrable_inv_log_pow 1 n hx k
++  · have : 0 < (n : ℝ) - 1 := by linarith [(one_lt_cast (α := ℝ)).2 hn]
++    refine Tendsto.congr' (f₁ := fun i : ℕ => (log i : ℝ) ^ (1 - (n : ℝ)) / (1 - (n : ℝ)) -
++      (log x) ^ (1 - (n : ℝ)) / (1 - (n : ℝ))) ?_ ?_
++    · have := tendsto_def.1 tendsto_natCast_atTop_atTop (Set.Ici x) (Ici_mem_atTop x)
++      filter_upwards [this] with i hi
++      refine (intervalIntegral.integral_eq_sub_of_hasDerivAt
++        (f := fun r => log r ^ (1 - (n : ℝ)) / (1 - (n : ℝ))) (fun z hz => ?_) ?_).symm
++      · simp_all only [preimage_Ici, Set.mem_Ici, ceil_le, Set.uIcc_of_le, Set.mem_Icc]
++        have := Real.log_pos (by linarith)
++        rw [norm_of_nonneg <| one_div_nonneg.2 (mul_nonneg (by grind) (pow_nonneg this.le n))]
++        refine (((hasDerivAt_log (by grind)).rpow_const (by grind)).div_const _).congr_deriv ?_
++        have : 1 - (n : ℝ) ≠ 0 := by linarith
++        simp [field]
++      · apply IntervalIntegrable.norm
++        simpa using (intervalIntegrable_iff_integrableOn_Ioc_of_le hi).2
++          (intervalIntegrable_inv_log_pow 1 n hx i)
++    · suffices h : Tendsto (fun i : ℕ ↦ Real.log i ^ (1 - (n : ℝ)) / (1 - n)) atTop (𝓝 0) from by
++        have : (log x ^ (1 - (n : ℝ)) / (n - 1)) = 0 - (log x ^ (1 - (n : ℝ)) / (1 - n)) := by grind
++        exact this ▸ h.sub_const (log x ^ (1 - (n : ℝ)) / (1 - n))
++      simpa using (((tendsto_rpow_neg_atTop this).comp tendsto_log_atTop).comp
++        tendsto_natCast_atTop_atTop).div_const (1 - (n : ℝ))
++
++theorem bound_deriv {f : ℝ → ℝ} (hf : DifferentiableOn ℝ f (Set.Ici 2)) {C : ℝ}
++    (hC : ∀ x ∈ Set.Ici 2, |f x| ≤ C / x ∧ |deriv f x| ≤ C / x ^ 2) :
++    ∀ᵐ (a : ℝ) ∂volume.restrict (Set.Ioi 2), ‖deriv (fun t ↦ f t / log t) a‖ ≤
++    C * (1 / (a ^ 2 * log a) + 1 / (a ^ 2 * log a ^ 2)) := by
++  filter_upwards [ae_restrict_mem measurableSet_Ioi] with a ha
++  calc
++  _ = ‖deriv f a / log a - f a / (a * log a ^ 2)‖ := by
++    congr
++    rw [deriv_fun_div, deriv_log]
++    · field_simp
++    · exact hf.differentiableAt (mem_nhds_iff.2 ⟨Set.Ioi 2, Set.Ioi_subset_Ici_self,
++        ⟨isOpen_Ioi, ha⟩⟩)
++    · exact differentiableAt_log_iff.2 (by grind)
++    · simp_all; grind
++  _ ≤ ‖deriv f a‖ / ‖log a‖ + ‖f a‖ / ‖a * log a ^ 2‖ := by rw [← norm_div, ← norm_div]; bound
++  _ = |deriv f a| / ‖log a‖ + |f a| / ‖a * log a ^ 2‖ := by simp
++  _ ≤ C / a ^ 2 / ‖log a‖ + C / a / ‖a * log a ^ 2‖ := by
++    gcongr
++    exacts [(hC a (Set.Ioi_subset_Ici_self ha)).2, (hC a (Set.Ioi_subset_Ici_self ha)).1]
++  _ = C / a ^ 2 / log a + C / a / (a * log a ^ 2) := by
++    congr <;> rw [norm_of_nonneg]
++    · exact log_nonneg (by grind)
++    · exact mul_nonneg (by grind) (pow_nonneg (log_nonneg (by grind)) 2)
++  _ = _ := by field_simp
++
++theorem integrableOn_deriv {f : ℝ → ℝ} (hf : DifferentiableOn ℝ f (Set.Ici 2)) {C : ℝ}
++    (hC : ∀ x ∈ Set.Ici 2, |f x| ≤ C / x ∧ |deriv f x| ≤ C / x ^ 2) :
++    IntegrableOn (fun y ↦ (θ y - y) * deriv (fun t ↦ f t / log t) y) (Set.Ioi 2) volume
++    ∧ ∀ x ≥ 2, IntervalIntegrable (fun t ↦ deriv (fun s ↦ f s / Real.log s) t) volume 2 x := by
++  obtain ⟨A, hA⟩ := pnt
++  refine ⟨Integrable.mono' (g := fun t => (A * C) * (1 / (t * log t ^ 3) + 1 / (t * log t ^ 4)))
++    ?_ ?_ ?_, fun x hx => ?_⟩
++  · refine ((ioiIntegrable_inv_log_pow ?_ ?_).add (ioiIntegrable_inv_log_pow ?_ ?_)).const_mul
++      (A * C) <;> linarith
++  · exact (theta_mono.measurable.aestronglyMeasurable.sub (by fun_prop)).mul
++      (aestronglyMeasurable_deriv _ _)
++  · filter_upwards [bound_deriv hf hC, ae_restrict_mem measurableSet_Ioi] with a ha ho
++    calc
++    _ = |(θ a - a)| * ‖deriv (fun t ↦ f t / log t) a‖ := by simp
++    _ ≤ A * a / log a ^ 2 * (C * (1 / (a ^ 2 * log a) + 1 / (a ^ 2 * log a ^ 2))) := by
++      gcongr
++      · exact div_nonneg (mul_nonneg hA.1 (by grind)) (pow_nonneg (log_nonneg (by grind)) 2)
++      · exact hA.2 a (Set.mem_Ioi.1 ho).le
++    _ = _ := by field_simp
++  · refine (intervalIntegrable_iff_integrableOn_Ioc_of_le hx).2 (Integrable.mono'
++      (Integrable.const_mul (Integrable.add ?_ ?_) C) (aestronglyMeasurable_deriv _ _)
++      (ae_restrict_of_ae_restrict_of_subset Set.Ioc_subset_Ioi_self (bound_deriv hf hC)))
++    · simpa using! intervalIntegrable_inv_log_pow 2 1 (by linarith : 1 < (2 : ℝ)) x
++    · simpa using! intervalIntegrable_inv_log_pow 2 2 (by linarith : 1 < (2 : ℝ)) x
++
++/-- The improper integrability input used by CleanMertens. -/
++theorem integrableOn_deriv_inv_div_log : IntegrableOn (fun y ↦ (θ y - y) *
++    deriv (fun t ↦ 1 / t / Real.log t) y) (Set.Ioi 2) volume ∧
++    ∀ x ≥ 2, IntervalIntegrable (fun t ↦ deriv (fun s ↦ 1 / s / Real.log s) t) volume 2 x := by
++  refine integrableOn_deriv (C := 1) (by fun_prop (disch := grind)) (fun x hx => ⟨?_, ?_⟩)
++  · rw [abs_of_nonneg (one_div_nonneg.2 (by grind))]
++  · rw [deriv_fun_div (differentiableAt_const 1) differentiableAt_id (by grind), abs_div]
++    simp
++
++end RS_prime
++end
+--- a/research/Erdos647Research/EndpointLogBounds.lean
++++ b/research/Erdos647Research/EndpointLogBounds.lean
+@@ -23,7 +23,8 @@
+       (((hasDerivAt_id u).const_sub 1).log hden)
+     apply h.congr_deriv
+     dsimp [g]
+-    field_simp [hden] <;> ring
++    field_simp [hden]
++    ring
+   have hmono : MonotoneOn f (Set.Icc (0 : ℝ) (1 / 2)) := by
+     refine monotoneOn_of_hasDerivWithinAt_nonneg (convex_Icc _ _)
+       (fun u hu => (hd u hu).continuousAt.continuousWithinAt)
+--- a/research/Erdos647Research/LogBudgetFactorial.lean
++++ b/research/Erdos647Research/LogBudgetFactorial.lean
+@@ -32,7 +32,9 @@
+   | zero => norm_num [shiftedFactorialLog]
+   | succ H ih =>
+     rw [Finset.sum_Icc_succ_top (by omega), ih, shiftedFactorialLog_succ]
+-    congr 2 <;> push_cast <;> ring
++    congr 2
++    push_cast
++    ring
+ 
+ /-- The precise integer-floor budget is bounded by the real factorial expression. -/
+ theorem logBudget_le_factorial (H : ℕ) :
+--- a/research/Erdos647Research/PrimeReciprocalLower.lean
++++ b/research/Erdos647Research/PrimeReciprocalLower.lean
+@@ -84,7 +84,7 @@
+       have h2 : (n : ℝ) + 1 + 1 ≠ 0 := by positivity
+       simp only [add_sub_cancel_right]
+       field_simp [h1, h2]
+-      <;> ring
++      ring
+ 
+ theorem prime_remainder_sum_le_one (H : ℕ) (hH : 1 ≤ H) :
+     (∑ p ∈ debitPrimes H, 1 / ((p : ℝ) * ((p : ℝ) - 1))) ≤ 1 := by
+@@ -117,7 +117,7 @@
+     _ ≤ (1 - (p : ℝ)⁻¹)⁻¹ - 1 := h
+     _ = (p : ℝ)⁻¹ + 1 / ((p : ℝ) * ((p : ℝ) - 1)) := by
+       field_simp [hp0, hm0, ne_of_gt hbase]
+-      <;> ring
++      ring
+ 
+ theorem log_finitePrimeEuler_le (H : ℕ) (hH : 1 ≤ H) :
+     Real.log (finitePrimeEuler H) ≤ (∑ p ∈ debitPrimes H, (p : ℝ)⁻¹) + 1 := by
+--- a/research/Erdos647Research/PrimeReciprocalSummation.lean
++++ b/research/Erdos647Research/PrimeReciprocalSummation.lean
+@@ -67,7 +67,7 @@
+   rw [reciprocalPrimeSum_abel hx]
+   have hboundary : reciprocalLog x * Chebyshev.theta x =
+       Chebyshev.theta x / (x * Real.log x) := by
+-    simp only [reciprocalLog, div_div, one_div, div_eq_mul_inv]
++    simp only [reciprocalLog, div_eq_mul_inv]
+     ring
+   have hint : (∫ t in (2 : ℝ)..x, deriv reciprocalLog t * Chebyshev.theta t) =
+       -(∫ t in (2 : ℝ)..x,
+@@ -114,7 +114,7 @@
+   have hlog2 : Real.log (2 : ℝ) ≠ 0 := ne_of_gt (Real.log_pos (by norm_num))
+   dsimp [reciprocalLog, mainPrimitive]
+   field_simp [hx0, hl0, hlog2]
+-  <;> ring
++  ring
+ 
+ end Erdos647Sieve.Analytic
+ end
+--- a/research/Erdos647Research/ReciprocalKernel.lean
++++ b/research/Erdos647Research/ReciprocalKernel.lean
+@@ -39,7 +39,7 @@
+     exact reciprocalLog_eq_inv u
+   · dsimp [reciprocalKernel]
+     field_simp [hx0, hl0]
+-    <;> ring
++    ring
+ 
+ theorem deriv_reciprocalLog {x : ℝ} (hx : 1 < x) :
+     deriv reciprocalLog x = -reciprocalKernel x :=
+@@ -78,7 +78,7 @@
+   · rw [deriv_reciprocalLog hx]
+     dsimp [reciprocalKernel]
+     field_simp [hx0, hl0]
+-    <;> ring
++    ring
+ 
+ theorem mainPrimitive_integral (b : ℝ) (hb : 2 ≤ b) :
+     (∫ x in (2 : ℝ)..b, x * deriv reciprocalLog x) =
+--- a/research/Erdos647Research/SmallPrimeDebitEstimate.lean
++++ b/research/Erdos647Research/SmallPrimeDebitEstimate.lean
+@@ -37,8 +37,8 @@
+       (Erdos647Sieve.smallPrimeDebit H : ℝ) := by
+   classical
+   have hs := Finset.sum_le_sum (s := debitPrimes H)
+-    (f := fun p => (H : ℝ) / (p : ℝ) - 1)
+-    (g := fun p => ((H / p : ℕ) : ℝ)) (fun p hp =>
++    (f := fun p : ℕ => (H : ℝ) / (p : ℝ) - 1)
++    (g := fun p : ℕ => ((H / p : ℕ) : ℝ)) (fun (p : ℕ) hp =>
+       nat_quotient_cast_lower H p (Finset.mem_filter.mp hp).2.pos)
+   simpa only [Erdos647Sieve.smallPrimeDebit, debitPrimes, Nat.cast_sum,
+     Finset.sum_sub_distrib, div_eq_mul_inv, Finset.mul_sum,
+--- a/research/lakefile.lean
++++ b/research/lakefile.lean
+@@ -10,14 +10,17 @@
+   "https://github.com/AlexKontorovich/PrimeNumberTheoremAnd.git" @ "a5154676af9aa3095150ee410cdda80555aa0642"
+ 
+ lean_lib PNTPlusCompat where
++  moreLeanArgs := #["-DwarningAsError=true"]
+   roots := #[`Erdos647Research.Compat.PNTPlus]
+ 
+ @[default_target]
+ lean_lib Erdos647Analytic where
++  moreLeanArgs := #["-DwarningAsError=true"]
+   roots := #[`Erdos647Research.ReciprocalKernel, `Erdos647Research.PrimeReciprocalSummation, `Erdos647Research.AnalyticInputs, `Erdos647Research.CleanMertens, `Erdos647Research.SelectedPrimeReciprocals]
+ 
+ @[default_target]
+ lean_lib Erdos647Elementary where
++  moreLeanArgs := #["-DwarningAsError=true"]
+   roots := #[`Erdos647Research.CorrectedBudgetEstimate, `Erdos647Research.EndpointLogBounds, `Erdos647Research.FactorialBounds, `Erdos647Research.FactorialEstimate, `Erdos647Research.LogBudgetFactorial, `Erdos647Research.PrimeReciprocalLower, `Erdos647Research.SmallPrimeDebitEstimate]
+ 
+ /-- All current research proof gates, including pending elementary estimates. -/
+--- a/scripts/check.py
++++ b/scripts/check.py
+@@ -26,12 +26,17 @@
+ import uuid
+ import zipfile
+ 
++# Local helper; never resolves from an installed third-party Python package.
++sys.path.insert(0, str(Path(__file__).resolve().parent))
++from pntplus_closure import inspect_closure
++
+ ROOT = Path(__file__).resolve().parents[1]
+ PINS = json.loads((ROOT / 'scripts/pins.json').read_text())
+ GATES = json.loads((ROOT / 'scripts/gates.json').read_text())
+ ALLOW = frozenset(PINS['allowed_axioms'])
+ FORBIDDEN = re.compile(r'\b(?:sorry|admit|axiom|native_decide)\b|debug\.skipKernelTC|'
+-                       r'\b(?:Lean\.)?ofReduce(?:Bool|Nat)\b|\bdecide\s*\+native\b')
++                       r'\b(?:Lean\.)?ofReduce(?:Bool|Nat)\b|\bdecide\s*\+native\b|'
++                       r'\bset_option\s+(?:warningAsError|linter(?:\.[A-Za-z0-9_]+)*)\s+false\b')
+ IGNORED = {'.git', '.lake', '.tools', '.audit', 'results', '__pycache__', '.venv'}
+ SOURCE_ROOTS = ('Erdos647Sieve', 'Examples', 'Audit', 'scripts', 'tests', 'research', 'docs', '.github')
+ TOP_FILES = ('Erdos647Sieve.lean', 'lakefile.lean', 'lake-manifest.json', 'lean-toolchain',
+@@ -249,6 +254,10 @@
+         declared = re.search(r'^\s*package\s+(\S+)', strip_comments((package/'lakefile.lean').read_text()), re.M)
+         if declared is None or lock.get('name') != declared[1]:
+             raise ValueError(f'{scope}: manifest package name must match the escaped Lean identifier in lakefile.lean')
++        config = strip_comments((package/'lakefile.lean').read_text())
++        for block in re.split(r'(?m)^lean_lib\s+', config)[1:]:
++            if 'moreLeanArgs := #["-DwarningAsError=true"]' not in block.split('script audit', 1)[0]:
++                raise ValueError('Project library must promote warnings to errors: ' + block.split()[0])
+         entries = lock['packages']
+         if len({p['name'] for p in entries}) != len(entries): raise ValueError('Duplicate dependency name')
+         actual = {p['name']:p['rev'] for p in entries if p['type']=='git'}
+@@ -305,6 +314,13 @@
+             if printed != targets: raise ValueError('Audit file/target registry mismatch: '+path)
+ 
+ 
++def lean_warnings(text: str) -> list[str]:
++    """Cached warning replay is still a lint failure, never a new clean PASS."""
++    clean = re.sub(r'\x1b\[[0-9;]*m', '', text)
++    return list(dict.fromkeys(line for line in clean.splitlines()
++        if re.match(r'^\s*warning:', line) or re.search(r'\.lean:\d+:\d+:\s*warning:', line)))
++
++
+ def clean_env() -> dict[str, str]:
+     env = os.environ.copy()
+     # lake test inherits a workspace environment: reconstruct it for each package.
+@@ -340,7 +356,7 @@
+     def __init__(self, root: Path, args: argparse.Namespace):
+         self.root=root; self.args=args; self.env=clean_env(); self.commands=0
+         if args.jobs: self.env['LEAN_NUM_THREADS']=str(args.jobs)
+-        self.id='erdos647_repo_v34_results_'+datetime.now(timezone.utc).strftime('%Y%m%dT%H%M%SZ')+'_'+uuid.uuid4().hex[:8]
++        self.id='erdos647_repo_v35_results_'+datetime.now(timezone.utc).strftime('%Y%m%dT%H%M%SZ')+'_'+uuid.uuid4().hex[:8]
+         self.dest=root/'results'/self.id
+         if (root/'results').is_symlink(): raise ValueError('Refusing symlinked results directory')
+         self.dest.mkdir(parents=True,exist_ok=False)
+@@ -522,12 +538,37 @@
+         if failures:
+             raise ValueError('Compiled module ownership check failed: ' + '; '.join(failures))
+ 
++    def check_pntplus_sources(self):
++        upstream = self.root/'research/.lake/packages/PrimeNumberTheoremAnd'
++        compat = self.root/'research/Erdos647Research/Compat/PNTPlus.lean'
++        report = inspect_closure(upstream, compat)
++        atomic_json(self.dest/'dependency_closure/pntplus.json', report)
++        self.record['pntplus_source_closure'] = {
++            'status':report['status'], 'module_count':report['module_count'],
++            'report':'dependency_closure/pntplus.json'}
++        # Preserve exact inspected upstream sources, not just the final wrapper.
++        for item in report['modules'].values():
++            if item.get('missing'): continue
++            src = upstream/item['path']
++            dst = self.dest/'source_dependencies/PNTPlus'/item['path']
++            dst.parent.mkdir(parents=True, exist_ok=True)
++            shutil.copy2(src, dst)
++        self.save()
++        if report['status'] != 'SOURCE_CLOSURE_CLEAN':
++            raise ValueError('PNT+ source closure rejected: ' + '; '.join(report['errors']))
++
+     def gate(self, name: str):
+         gate=GATES[name];package=self.root/gate['package']
+         result={'status':'RUNNING','historical_status':gate['historical_status'],'axioms':{}}
+         self.record['gates'][name]=result;self.save()
+         try:
+-            self.command(name+'_build',[self.lake,'build',*gate['build']],package)
++            if name == 'pntplus_inputs':
++                self.check_pntplus_sources()
++            _, build_log = self.command(name+'_build',[self.lake,'build',*gate['build']],package)
++            warnings = lean_warnings(build_log)
++            result['build_warnings'] = warnings
++            if warnings:
++                raise ValueError('Build emitted warnings (including replayed warnings): ' + '; '.join(warnings))
+             self.verify_gate_modules(name)
+             for i,(file,targets) in enumerate(gate['audits'].items()):
+                 _,log=self.command(name+f'_audit_{i}',[self.lake,'env','lean','-DwarningAsError=true',file],package)
+@@ -561,7 +602,7 @@
+             dst=self.dest/'source'/p.relative_to(self.root);dst.parent.mkdir(parents=True,exist_ok=True);shutil.copy2(p,dst)
+         # Redact only diagnostics. Source must remain byte-exact for reproducing edits.
+         for p in self.dest.rglob('*'):
+-            if p.is_file() and 'source' not in p.relative_to(self.dest).parts:
++            if p.is_file() and not {'source', 'source_dependencies'} & set(p.relative_to(self.dest).parts):
+                 p.write_text(redact(p.read_text(errors='replace'),self.root),encoding='utf-8')
+         atomic_json(self.dest/'MANIFEST.json',{p.relative_to(self.dest).as_posix():sha(p)
+                     for p in self.dest.rglob('*') if p.is_file()})
+--- /dev/null
++++ b/scripts/pntplus_closure.py
+@@ -0,0 +1,132 @@
++#!/usr/bin/env python3
++"""Inspect the entire PNT+ SOURCE import closure of the small compatibility boundary.
++
++This is deliberately stronger than checking only the final theorem's axioms. It
++rejects placeholders in any reachable upstream module, even unused declarations.
++It is not a claim about unimported PNT+ research files or Lean tactic internals.
++The kernel/theorem audit is a separate mandatory gate.
++"""
++from __future__ import annotations
++import hashlib
++from pathlib import Path
++import re
++
++UPSTREAM_ROOT = 'PrimeNumberTheoremAnd.MediumPNT'
++PREFIX = 'PrimeNumberTheoremAnd'
++EXCLUDED = ('PrimeNumberTheoremAnd.IEANTN', 'PrimeNumberTheoremAnd.Wiener',
++            'LeanCert', 'PrimeCert')
++EXTERNAL_ROOTS = {'Mathlib', 'Architect', 'Batteries', 'Lean', 'Init', 'Std', 'Qq'}
++BAD = re.compile(r'\b(?:sorry|sorryAx|admit|axiom|native_decide)\b|debug\.skipKernelTC|'
++                 r'\b(?:Lean\.)?(?:ofReduceBool|ofReduceNat|trustCompiler)\b|\bdecide\s*\+native\b')
++IDENT = re.compile(r'[A-Za-z_][A-Za-z0-9_\']*(?:\.[A-Za-z_][A-Za-z0-9_\']*)*\Z')
++
++
++def code_only(text: str) -> str:
++    """Mask nested comments and strings without losing source line/column offsets."""
++    out = list(text)
++    i = depth = 0
++    quoted = False
++    while i < len(text):
++        if depth:
++            if text.startswith('/-', i):
++                out[i:i+2] = '  '; depth += 1; i += 2
++            elif text.startswith('-/', i):
++                out[i:i+2] = '  '; depth -= 1; i += 2
++            else:
++                if text[i] != '\n': out[i] = ' '
++                i += 1
++        elif quoted:
++            if text[i] == '\\':
++                out[i] = ' '; i += 1
++                if i < len(text):
++                    if text[i] != '\n': out[i] = ' '
++                    i += 1
++            elif text[i] == '"':
++                out[i] = ' '; quoted = False; i += 1
++            else:
++                if text[i] != '\n': out[i] = ' '
++                i += 1
++        elif text.startswith('/-', i):
++            out[i:i+2] = '  '; depth = 1; i += 2
++        elif text.startswith('--', i):
++            while i < len(text) and text[i] != '\n':
++                out[i] = ' '; i += 1
++        elif text[i] == '"':
++            out[i] = ' '; quoted = True; i += 1
++        else:
++            i += 1
++    if depth or quoted:
++        raise ValueError('Unterminated Lean comment/string in dependency source')
++    return ''.join(out)
++
++
++def source_imports(code: str) -> list[str]:
++    result = []
++    for line in re.findall(r'^\s*(?:(?:public|private|meta)\s+)*import\s+([^\n]+)', code, re.M):
++        for word in line.split():
++            if word == 'all': continue
++            if not IDENT.fullmatch(word):
++                raise ValueError('Unsupported import syntax in dependency closure: ' + word)
++            result.append(word)
++    return result
++
++
++def excluded(name: str) -> bool:
++    return any(name == p or name.startswith(p + '.') for p in EXCLUDED)
++
++
++def inspect_closure(upstream: Path, compat: Path) -> dict:
++    """Read only. Do not modify the Git checkout, imports, caches, or proofs."""
++    local_text = compat.read_text(encoding='utf-8')
++    local_code = code_only(local_text)
++    local_imports = source_imports(local_code)
++    starting = [n for n in local_imports if n == PREFIX or n.startswith(PREFIX+'.')]
++    errors = []
++    if starting != [UPSTREAM_ROOT]:
++        errors.append('Compatibility module must import exactly ' + UPSTREAM_ROOT)
++    if BAD.search(local_code):
++        errors.append('Forbidden proof shortcut in compatibility module')
++    todo = list(starting)
++    rows = {}
++    external = set()
++    while todo:
++        name = todo.pop()
++        if name in rows: continue
++        if excluded(name):
++            errors.append('Unfinished catalogue/import reintroduced: ' + name)
++            # Fail closed but still record the source and all offending tokens below.
++        if not IDENT.fullmatch(name):
++            errors.append('Invalid upstream module identifier: ' + name); continue
++        rel = Path(*name.split('.')).with_suffix('.lean')
++        path = upstream/rel
++        if not path.is_file():
++            errors.append('Missing upstream source: ' + rel.as_posix())
++            rows[name] = {'path': rel.as_posix(), 'missing': True}
++            continue
++        cursor = upstream
++        for part in rel.parts:
++            cursor = cursor/part
++            if cursor.is_symlink():
++                raise ValueError('Symlink inside upstream source tree: ' + rel.as_posix())
++        raw = path.read_bytes()
++        code = code_only(raw.decode('utf-8'))
++        imps = source_imports(code)
++        bad = [{'token':m.group(), 'line':code.count('\n', 0, m.start()) + 1}
++               for m in BAD.finditer(code)]
++        rows[name] = {'path':rel.as_posix(), 'sha256':hashlib.sha256(raw).hexdigest(),
++                      'imports':imps, 'forbidden_tokens':bad}
++        if bad:
++            errors.append(name + ': ' + ', '.join(f'{x["token"]} at line {x["line"]}' for x in bad))
++        for imp in imps:
++            if imp == PREFIX or imp.startswith(PREFIX + '.'):
++                if imp not in rows: todo.append(imp)
++            elif excluded(imp) or imp.split('.')[0] not in EXTERNAL_ROOTS:
++                errors.append('Unexpected external dependency: ' + imp)
++            else: external.add(imp)
++    return {'schema':1, 'scope':'Required PNT+ source import closure; not the full upstream catalogue',
++            'root_module':UPSTREAM_ROOT, 'compat_sha256':hashlib.sha256(local_text.encode()).hexdigest(),
++            'module_count':len(rows), 'modules':dict(sorted(rows.items())),
++            'external_library_imports':sorted(external),
++            'excluded_catalogues':list(EXCLUDED), 'errors':errors,
++            'status':'SOURCE_CLOSURE_CLEAN' if rows and not errors else 'REJECTED',
++            'kernel_axiom_audit_is_separate':True}
+--- a/tests/test_module_paths_v34.py
++++ b/tests/test_module_paths_v34.py
+@@ -215,14 +215,14 @@
+                 direct.append(p.relative_to(ROOT).as_posix())
+         self.assertEqual(direct, ['research/Erdos647Research/Compat/PNTPlus.lean'])
+ 
+-    def test_compat_module_is_import_only(self):
++    def test_compat_module_uses_only_the_completed_pnt_entrypoint(self):
+         p = ROOT/'research/Erdos647Research/Compat/PNTPlus.lean'
+-        self.assertEqual(check.strip_comments(p.read_text()).strip(),
+-            'import PrimeNumberTheoremAnd.IEANTN.RosserSchoenfeld.RosserSchoenfeldPrime')
++        self.assertEqual(check.imports(p.read_text()),
++            ['Mathlib', 'PrimeNumberTheoremAnd.MediumPNT'])
+ 
+     def test_numerical_and_theorem_audits_not_demoted(self):
+         check.source_boundary(ROOT)
+-        self.assertEqual(len(check.GATES), 13)
++        self.assertEqual(len(check.GATES), 14)
+         self.assertEqual(set(check.ALLOW), {'propext','Classical.choice','Quot.sound'})
+ 
+ 
+--- a/tests/test_packaging_v33.py
++++ b/tests/test_packaging_v33.py
+@@ -267,7 +267,7 @@
+         self.assertIn('.github/workflows/ci.yml', text)
+         archive = Path((self.root/'results/latest_result.txt').read_text().strip())
+         with zipfile.ZipFile(archive) as z:
+-            self.assertTrue(archive.name.startswith('erdos647_repo_v34_results_'))
++            self.assertTrue(archive.name.startswith('erdos647_repo_v35_results_'))
+             data = json.loads(z.read(self.run.id+'/summary.json'))
+             self.assertEqual(data['gates']['core']['status'], 'BLOCKED')
+ 
+--- /dev/null
++++ b/tests/test_pntplus_lint_v35.py
+@@ -0,0 +1,174 @@
++"""v35 source-closure/lint enforcement. Small fixtures are not Lean proof evidence."""
++from __future__ import annotations
++import contextlib
++import importlib.util
++import io
++import json
++from pathlib import Path
++import shutil
++import tempfile
++import unittest
++from unittest import mock
++
++ROOT = Path(__file__).resolve().parents[1]
++spec = importlib.util.spec_from_file_location('v35_check', ROOT/'scripts/check.py')
++check = importlib.util.module_from_spec(spec)
++spec.loader.exec_module(check)
++from pntplus_closure import code_only, inspect_closure, source_imports
++
++
++class Lexer(unittest.TestCase):
++    def test_nested_comments(self):
++        src = 'theorem a : True := by trivial /- sorry /- admit -/ -/\n'
++        out = code_only(src)
++        self.assertNotIn('sorry', out)
++        self.assertEqual(len(src), len(out))
++        self.assertEqual(src.count('\n'), out.count('\n'))
++    def test_strings_do_not_create_imports(self):
++        self.assertEqual(source_imports(code_only('def t := "\\nimport Bad"\nimport Mathlib')), ['Mathlib'])
++    def test_escaped_quotes(self):
++        self.assertNotIn('sorry', code_only('def t := "escaped \\\" sorry"'))
++    def test_unterminated_comment(self):
++        with self.assertRaises(ValueError): code_only('/- unclosed')
++    def test_unterminated_string(self):
++        with self.assertRaises(ValueError): code_only('"unclosed')
++    def test_module_import_syntax(self):
++        self.assertEqual(source_imports(code_only('public import A B\nmeta import all C\n')), ['A','B','C'])
++    def test_invalid_import_syntax_is_not_ignored(self):
++        with self.assertRaises(ValueError): source_imports('import ../Bad')
++
++
++class Closure(unittest.TestCase):
++    def setUp(self):
++        self.tmp = tempfile.TemporaryDirectory()
++        self.root = Path(self.tmp.name)
++        self.upstream = self.root/'upstream'
++        self.compat = self.root/'PNTPlus.lean'
++        self.compat.write_text('import Mathlib\nimport PrimeNumberTheoremAnd.MediumPNT\n')
++        self.put('MediumPNT', 'import Mathlib\nimport PrimeNumberTheoremAnd.Helper\ntheorem p : True := by trivial\n')
++        self.put('Helper','import Architect\ntheorem helper : True := by trivial\n')
++    def tearDown(self): self.tmp.cleanup()
++    def put(self, module, source):
++        path=self.upstream/'PrimeNumberTheoremAnd'/Path(*module.split('.')).with_suffix('.lean')
++        path.parent.mkdir(parents=True,exist_ok=True);path.write_text(source);return path
++    def scan(self): return inspect_closure(self.upstream,self.compat)
++    def test_full_transitive_sources_are_scanned(self):
++        result=self.scan();self.assertEqual(result['status'],'SOURCE_CLOSURE_CLEAN')
++        self.assertEqual(result['module_count'],2)
++        self.assertIn('PrimeNumberTheoremAnd.Helper',result['modules'])
++    def test_unused_admission_is_rejected(self):
++        self.put('Helper','theorem unused : False := by sorry\n')
++        result=self.scan();self.assertEqual(result['status'],'REJECTED')
++        self.assertIn('sorry at line 1',' '.join(result['errors']))
++    def test_other_shortcuts_are_rejected(self):
++        for text in ['theorem bad : False := by admit', 'axiom bad : False',
++                     'theorem bad : True := by native_decide',
++                     'theorem bad : True := sorryAx _',
++                     'set_option debug.skipKernelTC true in\ntheorem bad : True := by trivial']:
++            with self.subTest(text=text):
++                self.put('Helper',text)
++                self.assertEqual(self.scan()['status'],'REJECTED')
++    def test_missing_source_cannot_pass(self):
++        (self.upstream/'PrimeNumberTheoremAnd/Helper.lean').unlink()
++        self.assertEqual(self.scan()['status'],'REJECTED')
++    def test_summary_cannot_be_reintroduced(self):
++        self.put('Helper','import PrimeNumberTheoremAnd.IEANTN.ZetaSummary\n')
++        self.put('IEANTN.ZetaSummary','theorem a : True := by trivial\n')
++        self.assertEqual(self.scan()['status'],'REJECTED')
++    def test_unused_catalogue_outside_closure_is_not_claimed_clean(self):
++        self.put('IEANTN.ZetaSummary','theorem unused : False := sorry\n')
++        result=self.scan();self.assertEqual(result['status'],'SOURCE_CLOSURE_CLEAN')
++        self.assertNotIn('PrimeNumberTheoremAnd.IEANTN.ZetaSummary',result['modules'])
++        self.assertIn('not the full',result['scope'])
++    def test_leancert_interface_cannot_enter_closure(self):
++        self.put('Helper','import LeanCert.CertifiedBounds.Li2\n')
++        self.assertEqual(self.scan()['status'],'REJECTED')
++    def test_compat_must_use_the_declared_root(self):
++        self.compat.write_text('import PrimeNumberTheoremAnd.IEANTN.ZetaSummary\n')
++        self.assertEqual(self.scan()['status'],'REJECTED')
++    def test_empty_closure_cannot_pass(self):
++        self.compat.write_text('import Mathlib\n')
++        self.assertEqual(self.scan()['status'],'REJECTED')
++    def test_cycles_terminate(self):
++        self.put('Helper','import PrimeNumberTheoremAnd.MediumPNT\n')
++        self.assertEqual(self.scan()['module_count'],2)
++    def test_source_hashes_match_real_bytes(self):
++        row=self.scan()['modules']['PrimeNumberTheoremAnd.Helper']
++        self.assertEqual(row['sha256'],check.sha(self.upstream/row['path']))
++    def test_sources_and_timestamps_are_not_modified(self):
++        paths=[p for p in self.root.rglob('*') if p.is_file()]
++        before=[(p.read_bytes(),p.stat().st_mtime_ns) for p in paths]
++        self.scan();self.scan()
++        self.assertEqual(before,[(p.read_bytes(),p.stat().st_mtime_ns) for p in paths])
++    def test_symlinked_source_is_rejected(self):
++        p=self.upstream/'PrimeNumberTheoremAnd/Helper.lean'
++        p.unlink();p.symlink_to(self.compat)
++        with self.assertRaises(ValueError): self.scan()
++
++
++class LintAndGates(unittest.TestCase):
++    def test_pnt_guard_precedes_the_adapter(self):
++        names=check.selected_gates(check.parser().parse_args(['--gate','clean_mertens']))
++        self.assertLess(names.index('pntplus_inputs'),names.index('analytic_inputs'))
++    def test_prior_public_exact_audits_are_unchanged(self):
++        targets=check.GATES['core']['audits']['Audit/Finite.lean']
++        self.assertEqual(targets,['Erdos647Sieve.finiteMoment','Erdos647Sieve.budgetDebit','Erdos647Sieve.finiteCounting'])
++    def test_all_extracted_inputs_receive_axiom_checks(self):
++        self.assertEqual(len(check.GATES['pntplus_inputs']['audits']['Audit/PNTPlus.lean']),8)
++    def test_both_required_inputs_have_expanded_type_checks(self):
++        t=(ROOT/'research/Audit/PNTPlus.lean').read_text()
++        self.assertIn(':= RS_prime.pnt',t)
++        self.assertIn('RS_prime.integrableOn_deriv_inv_div_log',t)
++        self.assertEqual(t.count('example :'),2)
++    def test_local_libraries_treat_warnings_as_errors(self):
++        for file in ['lakefile.lean','research/lakefile.lean']:
++            text=(ROOT/file).read_text()
++            self.assertEqual(text.count('lean_lib '),text.count('moreLeanArgs := #["-DwarningAsError=true"]'))
++    def test_no_linter_is_disabled(self):
++        for directory in ['Erdos647Sieve','research/Erdos647Research']:
++            for p in (ROOT/directory).rglob('*.lean'):
++                self.assertNotRegex(code_only(p.read_text()),r'set_option\s+linter\.\S+\s+false')
++    def test_replayed_warning_is_still_failure(self):
++        self.assertEqual(check.lean_warnings('⚠ Replayed M\nwarning: M.lean:3:2: unused\n'),['warning: M.lean:3:2: unused'])
++    def test_direct_warning_format(self):
++        self.assertEqual(len(check.lean_warnings('M.lean:2:0: warning: deprecated')),1)
++    def test_info_not_confused_with_warning(self):
++        self.assertEqual(check.lean_warnings('info: M.lean:1:0: #check result'),[])
++    def test_repeated_warnings_deduplicated(self):
++        self.assertEqual(len(check.lean_warnings('warning: X\nwarning: X')),1)
++    def test_lint_failure_prevents_axiom_command(self):
++        with tempfile.TemporaryDirectory() as tmp:
++            run=check.Run(Path(tmp),check.parser().parse_args(['core']))
++            run.lake='test-only-lake'
++            with mock.patch.object(run,'command',return_value=(0,'warning: A.lean:1:0: unused')) as command, \
++                 mock.patch.object(run,'verify_gate_modules'), contextlib.redirect_stdout(io.StringIO()):
++                run.gate('core')
++            self.assertEqual(run.record['gates']['core']['status'],'FAIL')
++            self.assertEqual(command.call_count,1)
++    def test_pnt_source_failure_prevents_build(self):
++        with tempfile.TemporaryDirectory() as tmp:
++            run=check.Run(Path(tmp),check.parser().parse_args(['--gate','pntplus_inputs']))
++            run.lake='test-only-lake'
++            with mock.patch.object(run,'check_pntplus_sources',side_effect=ValueError('admission')), \
++                 mock.patch.object(run,'command') as command, contextlib.redirect_stdout(io.StringIO()):
++                run.gate('pntplus_inputs')
++            self.assertEqual(run.record['gates']['pntplus_inputs']['status'],'FAIL')
++            command.assert_not_called()
++    def test_small_prime_indices_are_explicit_naturals(self):
++        t=(ROOT/'research/Erdos647Research/SmallPrimeDebitEstimate.lean').read_text()
++        self.assertIn('(f := fun p : ℕ =>',t)
++        self.assertIn('(g := fun p : ℕ =>',t)
++        self.assertIn('(fun (p : ℕ) hp =>',t)
++    def test_linter_suppression_is_rejected_as_a_shortcut(self):
++        for directive in ['set_option linter.unusedTactic false',
++                          'set_option warningAsError false', 'set_option linter.unusedSimpArgs false']:
++            with self.subTest(directive=directive):
++                self.assertIsNotNone(check.FORBIDDEN.search(directive))
++
++    def test_unsafe_axiom_stays_rejected(self):
++        for ax in ['sorryAx','Lean.trustCompiler','Fake.PNT']:
++            with self.subTest(ax=ax), self.assertRaises(ValueError):
++                check.parse_axioms("'T' depends on axioms: ["+ax+"]",'T')
++
++
++if __name__=='__main__': unittest.main()

@@ -1,0 +1,43 @@
+{
+  "version": "v36",
+  "kind": "repo repair overlay; current v35 baseline",
+  "runner_tests": {
+    "count": 144,
+    "result": "PASS",
+    "extracted_overlay_repeat": "PASS"
+  },
+  "top_level_tooling": {
+    "result": "PASS",
+    "selected_lean_gates": 0
+  },
+  "preservation": {
+    "unchanged_files_content_and_mtime_verified": 150,
+    "unchanged_mathematical_modules": 39,
+    "total_mathematical_modules": 40,
+    "core_mathematical_files_unchanged": true,
+    "theorem_statement_unchanged": true,
+    "audits_unchanged": true,
+    "dependency_lockfiles_unchanged": true,
+    "warning_policy_unchanged": true,
+    "ci_files_not_in_overlay": true,
+    "cached_state_sentinels_preserved": 4
+  },
+  "changed_existing_files": [
+    "research/Erdos647Research/CorrectedBudgetEstimate.lean",
+    "scripts/check.py",
+    "tests/test_packaging_v33.py",
+    "docs/proof-status.md"
+  ],
+  "runner_code_change": "diagnostic filename prefix only",
+  "proof_source_change": "replace unnecessary all-goals sequencing with ordinary field_simp then ring",
+  "evidence_basis": {
+    "run": "erdos647_repo_v35_results_20260908T071828Z_a8ef3d01",
+    "gates_passed": 13,
+    "gates_total": 14
+  },
+  "pr_status": "REVIEW_READY_MERGE_GATED",
+  "merge_gate": "Current 14/14 all-gates run with warning, exact-type, axiom, and PNT+ source checks.",
+  "endpoint_proved": false,
+  "remote_write_performed": false,
+  "scope": "Packaging and source/evidence checks; no new Lean acceptance claim."
+}

@@ -1,0 +1,30 @@
+[
+  {
+    "module": "Erdos647Research.AnalyticInputs",
+    "expected": "<REPO>/research/.lake/build/lib/lean/Erdos647Research/AnalyticInputs.olean",
+    "resolved": "<REPO>/research/.lake/build/lib/lean/Erdos647Research/AnalyticInputs.olean",
+    "correct_owner": true,
+    "object_exists": true
+  },
+  {
+    "module": "Erdos647Research.Compat.PNTPlus",
+    "expected": "<REPO>/research/.lake/build/lib/lean/Erdos647Research/Compat/PNTPlus.olean",
+    "resolved": "<REPO>/research/.lake/build/lib/lean/Erdos647Research/Compat/PNTPlus.olean",
+    "correct_owner": true,
+    "object_exists": true
+  },
+  {
+    "module": "Erdos647Research.ReciprocalKernel",
+    "expected": "<REPO>/research/.lake/build/lib/lean/Erdos647Research/ReciprocalKernel.olean",
+    "resolved": "<REPO>/research/.lake/build/lib/lean/Erdos647Research/ReciprocalKernel.olean",
+    "correct_owner": true,
+    "object_exists": true
+  },
+  {
+    "module": "PrimeNumberTheoremAnd.MediumPNT",
+    "expected": "<REPO>/research/.lake/packages/PrimeNumberTheoremAnd/.lake/build/lib/lean/PrimeNumberTheoremAnd/MediumPNT.olean",
+    "resolved": "<REPO>/research/.lake/packages/PrimeNumberTheoremAnd/.lake/build/lib/lean/PrimeNumberTheoremAnd/MediumPNT.olean",
+    "correct_owner": true,
+    "object_exists": true
+  }
+]

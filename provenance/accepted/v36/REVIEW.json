@@ -1,0 +1,116 @@
+{
+  "schema": 1,
+  "source_run": "erdos647_repo_v36_results_20260908T073909Z_c7bbf1b5",
+  "source_archive_sha256": "18af0f4a69ca469da3d7493fa1c3f4932feed53ccc9ba41b81fb1dd003829fbd",
+  "review_type": "Read-only consistency review of uploaded source, command, build and axiom records",
+  "verdict": "READY_FOR_REVIEWABLE_FIXES_PR",
+  "recorded_result": "14/14 current implemented gates passed; no selected failure or blockage",
+  "gates": {
+    "core": {
+      "status": "PASS",
+      "axiom_reports": 95,
+      "resolved_module_checks": 29
+    },
+    "reciprocal_kernel": {
+      "status": "PASS",
+      "axiom_reports": 3,
+      "resolved_module_checks": 1
+    },
+    "reciprocal_abel": {
+      "status": "PASS",
+      "axiom_reports": 5,
+      "resolved_module_checks": 2
+    },
+    "pntplus_inputs": {
+      "status": "PASS",
+      "axiom_reports": 8,
+      "resolved_module_checks": 2
+    },
+    "analytic_inputs": {
+      "status": "PASS",
+      "axiom_reports": 5,
+      "resolved_module_checks": 4
+    },
+    "clean_mertens": {
+      "status": "PASS",
+      "axiom_reports": 3,
+      "resolved_module_checks": 6
+    },
+    "selected_prime_reciprocals": {
+      "status": "PASS",
+      "axiom_reports": 3,
+      "resolved_module_checks": 8
+    },
+    "endpoint_log_bounds": {
+      "status": "PASS",
+      "axiom_reports": 3,
+      "resolved_module_checks": 1
+    },
+    "factorial_bounds": {
+      "status": "PASS",
+      "axiom_reports": 3,
+      "resolved_module_checks": 1
+    },
+    "factorial_estimate": {
+      "status": "PASS",
+      "axiom_reports": 3,
+      "resolved_module_checks": 2
+    },
+    "log_budget_factorial": {
+      "status": "PASS",
+      "axiom_reports": 2,
+      "resolved_module_checks": 4
+    },
+    "prime_reciprocal_lower": {
+      "status": "PASS",
+      "axiom_reports": 5,
+      "resolved_module_checks": 1
+    },
+    "small_prime_debit_estimate": {
+      "status": "PASS",
+      "axiom_reports": 3,
+      "resolved_module_checks": 3
+    },
+    "corrected_budget_estimate": {
+      "status": "PASS",
+      "axiom_reports": 1,
+      "resolved_module_checks": 7
+    }
+  },
+  "allowed_axioms": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "unique_audited_declarations": 140,
+  "axiom_report_occurrences": 142,
+  "exact_type_examples_in_checked_files": 81,
+  "successful_commands": 37,
+  "build_and_audit_logs_checked": 29,
+  "build_or_audit_warnings": [],
+  "uploaded_tooling_tests_passed": 144,
+  "manifest_files_verified": 166,
+  "source_snapshot_hashes_verified": 98,
+  "mathematical_modules_matched_to_delivered_v36": 40,
+  "source_changes_during_run": {},
+  "delivered_source_difference": [
+    "User-edited .github/workflows/ci.yml; automatic CI remains disabled; no proof/configuration difference"
+  ],
+  "toolchain": "Lean (version 4.32.2, x86_64-unknown-linux-gnu, commit f3b06c705e6c85f5314019d5d3baab0fec5b580c, Release)",
+  "unique_dependency_revisions_checked": 14,
+  "retained_pntplus_source_modules_reported_clean": 14,
+  "pntplus_scope": "Retained PNT+ source subtree, not the entire upstream repository; upstream source not embedded in this diagnostic archive",
+  "cache_actions": {
+    ".": "reuse_existing",
+    "research": "reuse_existing"
+  },
+  "setup_requested": false,
+  "scope_limits": {
+    "endpoint_proved": false,
+    "remote_pr_diff_checked": false,
+    "github_ci_checked": false,
+    "remote_branch_or_pr_modified": false,
+    "independent_kernel_replay": false
+  },
+  "next_overlay_policy": "Documentation and evidence only; do not change the passing mathematical, audit, runner or dependency inputs"
+}

@@ -1,0 +1,49 @@
+{
+  "schema": 1,
+  "uploaded_run": "erdos647_repo_v33_results_20260908T061726Z_5c0e7860",
+  "basis": "Uploaded commands, exit codes, source snapshots and raw axiom reports.",
+  "manifest_entries_verified": 109,
+  "source_entries_verified": 88,
+  "source_unchanged_during_run": true,
+  "supplied_package_difference_preserved": [
+    ".github/workflows/ci.yml"
+  ],
+  "gate_counts": {
+    "PASS": 1,
+    "FAIL": 4,
+    "BLOCKED": 8
+  },
+  "core": {
+    "gate": "PASS",
+    "axiom_declarations": 95,
+    "only_permitted_axioms": true,
+    "examples_built": [
+      "Examples.BasicUsage",
+      "Examples.MomentSpecialization"
+    ]
+  },
+  "research": {
+    "builds_succeeded": [
+      "reciprocal_kernel",
+      "endpoint_log_bounds",
+      "factorial_bounds",
+      "prime_reciprocal_lower"
+    ],
+    "audit_failure": "Object imports selected the core Erdos647Sieve module root instead of the research build directory.",
+    "new_theorem_gate_acceptance": false
+  },
+  "pr_readiness": {
+    "core_only_local_checks": "PASS",
+    "combined_fixes": "HOLD_RESEARCH_IMPORT_AUDITS",
+    "remote_github_branch_or_ci_assessed": false,
+    "endpoint_completion_required_for_packaging_pr": false
+  },
+  "v34_preservation": {
+    "core_lean_files_unchanged": 33,
+    "moved_modules": 13,
+    "all_theorem_bodies_and_audit_types_unchanged_except_imports": true,
+    "same_gates_axiom_targets_prerequisites": true,
+    "pins_and_lockfiles_unchanged": true,
+    "ci_workflows_preserved": true
+  }
+}

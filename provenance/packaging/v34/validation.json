@@ -1,0 +1,27 @@
+{
+  "schema": 1,
+  "artifact": "erdos647_repo_overlay_v34.zip",
+  "offline_unittest_count": 109,
+  "offline_suite_passed_before_packaging": true,
+  "actual_zip_apply_and_suite_passed": true,
+  "top_level_tooling_entrypoint_passed_twice": true,
+  "retired_exact_source_count": 13,
+  "untouched_preexisting_files_with_same_bytes_and_mtimes": 84,
+  "cache_tool_previous_result_sentinels_preserved": [
+    ".lake/build/test-cache-sentinel",
+    "research/.lake/build/test-cache-sentinel",
+    ".tools/preservation-sentinel",
+    "results/prior-user-results.zip"
+  ],
+  "user_ci_workflow_preserved": true,
+  "relocation_repeat_noop": true,
+  "axiom_targets_or_expected_types_weakened": false,
+  "local_gate_attempt": {
+    "exit_code": 2,
+    "status": "SETUP_OR_AUDIT_ERROR",
+    "error": "Pinned Lean is missing. Setup is available through RUN.sh --setup (alias --upgrade).",
+    "theorem_gate_pass_claimed": false,
+    "failure_archive_collected": true
+  },
+  "verification_scope": "Offline packaging/import-path regression tests and uploaded-v33 evidence review."
+}

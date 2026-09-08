@@ -48,8 +48,6 @@ theorem sum_nat_Icc_eq_int (X : ℕ) (f : ℤ → ℝ) :
   classical
   refine Finset.sum_bij (fun n _ => (n : ℤ)) ?_ ?_ ?_ ?_
   · intro n hn
-    -- Reduce the dependent bijection's lambda application before cast tactics.
-    change (n : ℤ) ∈ Finset.Icc (1 : ℤ) (X : ℤ)
     obtain ⟨hn1, hnX⟩ := Finset.mem_Icc.mp hn
     exact Finset.mem_Icc.mpr ⟨by exact_mod_cast hn1, by exact_mod_cast hnX⟩
   · intro n _ m _ hnm

@@ -1,0 +1,18 @@
+{
+  "docs/changes/v36.md": "0c9ae77c08e4feb403bc43e6b2d8dab9fa7dde7e6b95aa31f6c5bf2e80dff7e9",
+  "docs/proof-status.md": "5f7feb97a2e22254b8c1061870a826f1699569afd7467ac336bf420d8a1604b4",
+  "docs/pull-requests/core-research-fixes-title.txt": "c6b4af750cb516428e1fa470cc75702c812fff17df56e2f5a5d40fafc6535d98",
+  "docs/pull-requests/core-research-fixes.md": "cbd2a3f324ac86a81d90e11c33a4d32ecfc8dce1b3eae29e5543f9400fc4d06f",
+  "provenance/accepted/v35/010_core_audit_0.log": "71c912b0a68123539cb13b852795b4a22a37acff61116469ccaa2a0cd1abdee0",
+  "provenance/accepted/v35/017_pntplus_inputs_audit_0.log": "722fb9068789c4ab0f72d6f7f68b88765465135965619f54281169190fafaab1",
+  "provenance/accepted/v35/035_small_prime_debit_estimate_audit_0.log": "fb8a7ae5c07214818cc735764dbc0d69681dc378e3cb367850ef514d9b0bd934",
+  "provenance/accepted/v35/036_corrected_budget_estimate_build.log": "9a10469ffe8cc3474e3fefcb3d258d18413e9648052b4e2749df32a5be6a2e7a",
+  "provenance/accepted/v35/REVIEW.json": "bf1c69406873b3847004917e2dbdddc7f9435ef8c2683fe2c0aaed96f8ba4c5d",
+  "provenance/accepted/v35/SUMMARY.md": "c08408d698fa94656e284d6a7e8763c545fcd6fc3f4b620b2737a13b2e9a0a76",
+  "provenance/accepted/v35/pntplus-source-closure.json": "1376e61effa6441ee09e3513f4a76ed666df3786129ad234268a787960e9de90",
+  "provenance/packaging/v36/PR_REPAIR_V36.patch": "46940fc568c3a7f227dfb3906184d5e95029022971cf295c0984ba1d78d8da48",
+  "provenance/packaging/v36/validation.json": "308c9a7e8761cc7a64a540a2d372ec3d83a7d583a4087eab6bf4a3fff8b4a676",
+  "research/Erdos647Research/CorrectedBudgetEstimate.lean": "58a6e2c48580408e2d7797d8ece5c1079d86ee6127ea1ae496b54d0d5f91ac1a",
+  "scripts/check.py": "fb95590d2094ba2ff4ab5072c1dfdd9efd791650979daa7ea8361edbfa456f40",
+  "tests/test_packaging_v33.py": "0a431bf0bc852727ec47be7637b792202a0cf8ae12600ab9c4f4ddf89557e57c"
+}

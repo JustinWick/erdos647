@@ -52,7 +52,7 @@ theorem prod_ite_zero_eq_pow_card (S : Finset ℕ) (P : ℕ → Prop)
         exact if_pos (hall p hp)
       _ = t ^ S.card := Finset.prod_const t
   · rw [if_neg hall]
-    push_neg at hall
+    push Not at hall
     obtain ⟨p, hp, hnot⟩ := hall
     exact Finset.prod_eq_zero hp (by simp only [if_neg hnot])
 

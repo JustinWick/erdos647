@@ -4,6 +4,10 @@
   a separately reviewed version migration.
 - The root is the Mathlib-only finite library; `research/` is a separate Lake
   package. Never introduce PNT+ into the root's imports or lockfile.
+- Core import paths use `Erdos647Sieve`; research import paths use `Erdos647Research`.
+  The theorem namespaces are independent of module paths and remain unchanged.
+  Never split one top-level module root across separate packages or change
+  `LEAN_PATH` to compensate.
 - Edit visible source directly. There are no managed-source copies, overlays,
   immutable runner inventories, or automatic upstream proof patches.
 - Preserve the signed `Int` corrected budget, arbitrary integer translations, exact

@@ -1,0 +1,231 @@
+{
+  "schema": 1,
+  "scope": "Required PNT+ source import closure; not the full upstream catalogue",
+  "root_module": "PrimeNumberTheoremAnd.MediumPNT",
+  "compat_sha256": "be9ea21290ba047a63e75eed972ffd40c803c0c59f4fbf23925a9c9e98056759",
+  "module_count": 14,
+  "modules": {
+    "PrimeNumberTheoremAnd.Auxiliary": {
+      "path": "PrimeNumberTheoremAnd/Auxiliary.lean",
+      "sha256": "6a57cc112e9a6dbe780c019cb22fa1469733afc78976f3aeeaaa80949acf0cfc",
+      "imports": [
+        "Mathlib.Analysis.Complex.RealDeriv",
+        "Mathlib.Analysis.InnerProductSpace.Basic"
+      ],
+      "forbidden_tokens": []
+    },
+    "PrimeNumberTheoremAnd.EulerMaclaurin": {
+      "path": "PrimeNumberTheoremAnd/EulerMaclaurin.lean",
+      "sha256": "a1def4a9f8f0b36864c5d480db137c1d86be3db1a47b67ae151e587a99167146",
+      "imports": [
+        "Mathlib.NumberTheory.AbelSummation"
+      ],
+      "forbidden_tokens": []
+    },
+    "PrimeNumberTheoremAnd.Fourier": {
+      "path": "PrimeNumberTheoremAnd/Fourier.lean",
+      "sha256": "e9db3c235cabf356d2b4aed528d0ceca6ad3e23c7a150d7049fd9ac796315823",
+      "imports": [
+        "Mathlib.Analysis.Distribution.SchwartzSpace.Deriv",
+        "Mathlib.MeasureTheory.Integral.IntegralEqImproper",
+        "Mathlib.Topology.ContinuousMap.Bounded.Basic",
+        "Mathlib.Order.Filter.ZeroAndBoundedAtFilter",
+        "Mathlib.Analysis.Fourier.FourierTransformDeriv",
+        "PrimeNumberTheoremAnd.Sobolev"
+      ],
+      "forbidden_tokens": []
+    },
+    "PrimeNumberTheoremAnd.Mathlib.Algebra.Notation.Support": {
+      "path": "PrimeNumberTheoremAnd/Mathlib/Algebra/Notation/Support.lean",
+      "sha256": "e688bf925c2130b291c536d3b93b72c20e41ae95d530c90915921d75a6f52504",
+      "imports": [
+        "Mathlib.Algebra.Notation.Support"
+      ],
+      "forbidden_tokens": []
+    },
+    "PrimeNumberTheoremAnd.Mathlib.Analysis.SpecialFunctions.Log.Basic": {
+      "path": "PrimeNumberTheoremAnd/Mathlib/Analysis/SpecialFunctions/Log/Basic.lean",
+      "sha256": "7e3e2b8f84e6c170051a6474272455bed2432e6fddac5660072318b9b4eda7ec",
+      "imports": [
+        "Mathlib.Algebra.Order.Floor.Defs",
+        "Mathlib.Algebra.Order.Floor.Ring",
+        "Mathlib.Algebra.Order.Floor.Semiring",
+        "Mathlib.Analysis.SpecialFunctions.Log.Basic",
+        "Mathlib.Analysis.SpecialFunctions.Pow.Continuity"
+      ],
+      "forbidden_tokens": []
+    },
+    "PrimeNumberTheoremAnd.MediumPNT": {
+      "path": "PrimeNumberTheoremAnd/MediumPNT.lean",
+      "sha256": "7044c41ae6df6798c743434ea82a682cc784b1dbf4a4817662eb7a0579ad747f",
+      "imports": [
+        "Architect",
+        "PrimeNumberTheoremAnd.MellinCalculus",
+        "PrimeNumberTheoremAnd.ZetaBounds",
+        "PrimeNumberTheoremAnd.ZetaConj",
+        "PrimeNumberTheoremAnd.SmoothExistence",
+        "Mathlib.Algebra.Group.Support",
+        "Mathlib.Analysis.MellinInversion",
+        "Mathlib.Analysis.Real.Pi.Bounds",
+        "Mathlib.NumberTheory.Chebyshev"
+      ],
+      "forbidden_tokens": []
+    },
+    "PrimeNumberTheoremAnd.MellinCalculus": {
+      "path": "PrimeNumberTheoremAnd/MellinCalculus.lean",
+      "sha256": "2a3d42e3fd811faff72cba349943144d063571f23ce5b13f82d897fe8bb9789b",
+      "imports": [
+        "Architect",
+        "Batteries.Tactic.Lemma",
+        "Mathlib.Algebra.GroupWithZero.Units.Basic",
+        "Mathlib.Analysis.MellinTransform",
+        "Mathlib.MeasureTheory.Integral.IntegrableOn",
+        "Mathlib.Tactic.Bound",
+        "Mathlib.Tactic.GCongr",
+        "PrimeNumberTheoremAnd.Auxiliary"
+      ],
+      "forbidden_tokens": []
+    },
+    "PrimeNumberTheoremAnd.Rectangle": {
+      "path": "PrimeNumberTheoremAnd/Rectangle.lean",
+      "sha256": "ab1c0c7c16ad9f3765e439fe42a739d4d25f09aa991df6c4c303f77380a89885",
+      "imports": [
+        "Architect",
+        "Mathlib.Analysis.Complex.Convex",
+        "Mathlib.Analysis.InnerProductSpace.Basic",
+        "Mathlib.Analysis.Normed.Order.Lattice",
+        "Mathlib.Order.Interval.Set.Monotone"
+      ],
+      "forbidden_tokens": []
+    },
+    "PrimeNumberTheoremAnd.ResidueCalcOnRectangles": {
+      "path": "PrimeNumberTheoremAnd/ResidueCalcOnRectangles.lean",
+      "sha256": "6a8ab0005546490f91b615f6bfbe8818ba21f3afe008a893174ab1a0e3e45cb8",
+      "imports": [
+        "Architect",
+        "Mathlib.Analysis.Complex.CauchyIntegral",
+        "Mathlib.Analysis.Complex.Convex",
+        "Mathlib.Analysis.Complex.RemovableSingularity",
+        "Mathlib.Analysis.SpecialFunctions.Integrals.Basic",
+        "Mathlib.Analysis.Meromorphic.NormalForm",
+        "PrimeNumberTheoremAnd.Rectangle",
+        "PrimeNumberTheoremAnd.Tactic.AdditiveCombination"
+      ],
+      "forbidden_tokens": []
+    },
+    "PrimeNumberTheoremAnd.SmoothExistence": {
+      "path": "PrimeNumberTheoremAnd/SmoothExistence.lean",
+      "sha256": "e689045a2d7f92c71c68fda6aa69a89d4a8692187475ba432ed010f453110ea0",
+      "imports": [
+        "Architect",
+        "Batteries.Tactic.Lemma",
+        "Mathlib.Geometry.Manifold.PartitionOfUnity",
+        "Mathlib.Tactic.Bound",
+        "PrimeNumberTheoremAnd.Mathlib.Algebra.Notation.Support"
+      ],
+      "forbidden_tokens": []
+    },
+    "PrimeNumberTheoremAnd.Sobolev": {
+      "path": "PrimeNumberTheoremAnd/Sobolev.lean",
+      "sha256": "fe06e13fad5b47dbd324307ba246110515c4cb50f4c41d6cb15764fd53b1b8ef",
+      "imports": [
+        "Mathlib.Analysis.Calculus.Deriv.Support",
+        "Mathlib.Analysis.Distribution.SchwartzSpace.Deriv",
+        "Mathlib.Order.Filter.ZeroAndBoundedAtFilter"
+      ],
+      "forbidden_tokens": []
+    },
+    "PrimeNumberTheoremAnd.Tactic.AdditiveCombination": {
+      "path": "PrimeNumberTheoremAnd/Tactic/AdditiveCombination.lean",
+      "sha256": "ea898bb0a4889d82fe4b94b7052daa73083d1f3aa3cddb5336f0513580a17040",
+      "imports": [
+        "Mathlib.Tactic.Abel",
+        "Mathlib.Tactic.LinearCombinationPrime"
+      ],
+      "forbidden_tokens": []
+    },
+    "PrimeNumberTheoremAnd.ZetaBounds": {
+      "path": "PrimeNumberTheoremAnd/ZetaBounds.lean",
+      "sha256": "aab01d422c0190b95dade7873261943997c554d55fcc9fff94a39005e5b5ad5a",
+      "imports": [
+        "Architect",
+        "Batteries.Tactic.Lemma",
+        "Mathlib.MeasureTheory.Function.Floor",
+        "Mathlib.MeasureTheory.Order.Group.Lattice",
+        "Mathlib.NumberTheory.Harmonic.Bounds",
+        "Mathlib.NumberTheory.LSeries.Nonvanishing",
+        "PrimeNumberTheoremAnd.Auxiliary",
+        "PrimeNumberTheoremAnd.Fourier",
+        "PrimeNumberTheoremAnd.Mathlib.Analysis.SpecialFunctions.Log.Basic",
+        "PrimeNumberTheoremAnd.ResidueCalcOnRectangles",
+        "PrimeNumberTheoremAnd.EulerMaclaurin"
+      ],
+      "forbidden_tokens": []
+    },
+    "PrimeNumberTheoremAnd.ZetaConj": {
+      "path": "PrimeNumberTheoremAnd/ZetaConj.lean",
+      "sha256": "08a9153c6500464c574f466a5569e82adbd5fb152a96a914fbb77c3208d0a71c",
+      "imports": [
+        "Architect",
+        "Mathlib.Analysis.Calculus.Deriv.Star",
+        "Mathlib.Analysis.Normed.Module.Connected",
+        "Mathlib.NumberTheory.Harmonic.ZetaAsymp"
+      ],
+      "forbidden_tokens": []
+    }
+  },
+  "external_library_imports": [
+    "Architect",
+    "Batteries.Tactic.Lemma",
+    "Mathlib.Algebra.Group.Support",
+    "Mathlib.Algebra.GroupWithZero.Units.Basic",
+    "Mathlib.Algebra.Notation.Support",
+    "Mathlib.Algebra.Order.Floor.Defs",
+    "Mathlib.Algebra.Order.Floor.Ring",
+    "Mathlib.Algebra.Order.Floor.Semiring",
+    "Mathlib.Analysis.Calculus.Deriv.Star",
+    "Mathlib.Analysis.Calculus.Deriv.Support",
+    "Mathlib.Analysis.Complex.CauchyIntegral",
+    "Mathlib.Analysis.Complex.Convex",
+    "Mathlib.Analysis.Complex.RealDeriv",
+    "Mathlib.Analysis.Complex.RemovableSingularity",
+    "Mathlib.Analysis.Distribution.SchwartzSpace.Deriv",
+    "Mathlib.Analysis.Fourier.FourierTransformDeriv",
+    "Mathlib.Analysis.InnerProductSpace.Basic",
+    "Mathlib.Analysis.MellinInversion",
+    "Mathlib.Analysis.MellinTransform",
+    "Mathlib.Analysis.Meromorphic.NormalForm",
+    "Mathlib.Analysis.Normed.Module.Connected",
+    "Mathlib.Analysis.Normed.Order.Lattice",
+    "Mathlib.Analysis.Real.Pi.Bounds",
+    "Mathlib.Analysis.SpecialFunctions.Integrals.Basic",
+    "Mathlib.Analysis.SpecialFunctions.Log.Basic",
+    "Mathlib.Analysis.SpecialFunctions.Pow.Continuity",
+    "Mathlib.Geometry.Manifold.PartitionOfUnity",
+    "Mathlib.MeasureTheory.Function.Floor",
+    "Mathlib.MeasureTheory.Integral.IntegrableOn",
+    "Mathlib.MeasureTheory.Integral.IntegralEqImproper",
+    "Mathlib.MeasureTheory.Order.Group.Lattice",
+    "Mathlib.NumberTheory.AbelSummation",
+    "Mathlib.NumberTheory.Chebyshev",
+    "Mathlib.NumberTheory.Harmonic.Bounds",
+    "Mathlib.NumberTheory.Harmonic.ZetaAsymp",
+    "Mathlib.NumberTheory.LSeries.Nonvanishing",
+    "Mathlib.Order.Filter.ZeroAndBoundedAtFilter",
+    "Mathlib.Order.Interval.Set.Monotone",
+    "Mathlib.Tactic.Abel",
+    "Mathlib.Tactic.Bound",
+    "Mathlib.Tactic.GCongr",
+    "Mathlib.Tactic.LinearCombinationPrime",
+    "Mathlib.Topology.ContinuousMap.Bounded.Basic"
+  ],
+  "excluded_catalogues": [
+    "PrimeNumberTheoremAnd.IEANTN",
+    "PrimeNumberTheoremAnd.Wiener",
+    "LeanCert",
+    "PrimeCert"
+  ],
+  "errors": [],
+  "status": "SOURCE_CLOSURE_CLEAN",
+  "kernel_axiom_audit_is_separate": true
+}

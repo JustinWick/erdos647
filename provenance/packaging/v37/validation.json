@@ -1,0 +1,33 @@
+{
+  "schema": 1,
+  "overlay": "erdos647_repo_overlay_v37.zip",
+  "kind": "Documentation and historical evidence only",
+  "result": "PASS",
+  "offline_suite_tests": 144,
+  "offline_suite_passes": 2,
+  "second_suite_location": "Separate reconstruction with actual overlay ZIP applied",
+  "existing_files_content_and_timestamp_preserved_outside_overlay": 180,
+  "existing_documentation_files_changed": [
+    "README.md",
+    "docs/dependency-boundaries.md",
+    "docs/proof-status.md",
+    "docs/pull-requests/core-research-fixes.md",
+    "research/README.md"
+  ],
+  "mathematical_modules_unchanged": 40,
+  "other_returned_source_files_unchanged": 93,
+  "runner_scripts_unchanged": true,
+  "tests_unchanged": true,
+  "all_lean_and_audit_sources_unchanged": true,
+  "lake_configurations_manifests_toolchains_unchanged": true,
+  "ci_workflows_and_manual_settings_unchanged": true,
+  "cache_toolchain_and_previous_result_sentinels_preserved": true,
+  "repeat_overlay_preserves_nonmembers": true,
+  "gitignore_accepts_evidence_and_docs": true,
+  "gitignore_excludes_runtime_caches": true,
+  "changed_document_internal_links_verified": true,
+  "evidence_hashes_verified": true,
+  "remote_operations": false,
+  "current_pr_readiness_basis": "The recorded v36 full 14/14 local Lean build/type/axiom result",
+  "no_new_mathematical_acceptance_inferred_from_documentation": true
+}

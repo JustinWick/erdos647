@@ -171,7 +171,7 @@
       "manifestFile": "lake-manifest.json"
     },
     {
-      "name": "erdos647-sieve",
+      "name": "«erdos647-sieve»",
       "type": "path",
       "scope": "",
       "dir": "..",
@@ -180,7 +180,7 @@
       "manifestFile": "lake-manifest.json"
     }
   ],
-  "name": "erdos647-research",
+  "name": "«erdos647-research»",
   "lakeDir": ".lake",
   "fixedToolchain": true
 }
