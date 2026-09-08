@@ -1,0 +1,10 @@
+$ lake env lean -DwarningAsError=true <PROJECT>/project/work/lean-4.32.2/PrimeNumberTheoremAnd/.verification/upstream_baseline_audit.lean
+RS_prime.pnt : ∃ C ≥ 0, ∀ x ≥ 2, |Chebyshev.theta x - x| ≤ C * x / Real.log x ^ 2
+'RS_prime.pnt' depends on axioms: [propext, Classical.choice, Quot.sound]
+RS_prime.integrableOn_deriv_inv_div_log :
+  MeasureTheory.IntegrableOn (fun y => (Chebyshev.theta y - y) * deriv (fun t => 1 / t / Real.log t) y) (Set.Ioi 2)
+      MeasureTheory.volume ∧
+    ∀ x ≥ 2, IntervalIntegrable (fun t => deriv (fun s => 1 / s / Real.log s) t) MeasureTheory.volume 2 x
+'RS_prime.integrableOn_deriv_inv_div_log' depends on axioms: [propext, Classical.choice, Quot.sound]
+
+EXIT_CODE=0

@@ -1,0 +1,21 @@
+$ lake build Erdos647Sieve.PrimeReciprocalLower
+✖ [8655/8655] Building Erdos647Sieve.PrimeReciprocalLower (3.5s)
+trace: .> LEAN_PATH=<PROJECT>/project/work/lean-4.32.2/PrimeNumberTheoremAnd/.lake/packages/Cli/.lake/build/lib/lean:<PROJECT>/project/work/lean-4.32.2/PrimeNumberTheoremAnd/.lake/packages/batteries/.lake/build/lib/lean:<PROJECT>/project/work/lean-4.32.2/PrimeNumberTheoremAnd/.lake/packages/Qq/.lake/build/lib/lean:<PROJECT>/project/work/lean-4.32.2/PrimeNumberTheoremAnd/.lake/packages/aesop/.lake/build/lib/lean:<PROJECT>/project/work/lean-4.32.2/PrimeNumberTheoremAnd/.lake/packages/proofwidgets/.lake/build/lib/lean:<PROJECT>/project/work/lean-4.32.2/PrimeNumberTheoremAnd/.lake/packages/importGraph/.lake/build/lib/lean:<PROJECT>/project/work/lean-4.32.2/PrimeNumberTheoremAnd/.lake/packages/LeanSearchClient/.lake/build/lib/lean:<PROJECT>/project/work/lean-4.32.2/PrimeNumberTheoremAnd/.lake/packages/plausible/.lake/build/lib/lean:<PROJECT>/project/work/lean-4.32.2/PrimeNumberTheoremAnd/.lake/packages/LeanArchitect/.lake/build/lib/lean:<PROJECT>/project/work/lean-4.32.2/PrimeNumberTheoremAnd/.lake/packages/checkdecls/.lake/build/lib/lean:<PROJECT>/project/work/lean-4.32.2/PrimeNumberTheoremAnd/.lake/packages/leancert/.lake/build/lib/lean:<PROJECT>/project/work/lean-4.32.2/PrimeNumberTheoremAnd/.lake/packages/PrimeCert/.lake/build/lib/lean:<PROJECT>/project/work/lean-4.32.2/PrimeNumberTheoremAnd/.lake/packages/mathlib/.lake/build/lib/lean:<PROJECT>/project/work/lean-4.32.2/PrimeNumberTheoremAnd/.lake/build/lib/lean <PROJECT>/.tools/elan/toolchains/leanprover--lean4---v4.32.2/bin/lean <PROJECT>/project/work/lean-4.32.2/PrimeNumberTheoremAnd/Erdos647Sieve/PrimeReciprocalLower.lean -o <PROJECT>/project/work/lean-4.32.2/PrimeNumberTheoremAnd/.lake/build/lib/lean/Erdos647Sieve/PrimeReciprocalLower.olean -i <PROJECT>/project/work/lean-4.32.2/PrimeNumberTheoremAnd/.lake/build/lib/lean/Erdos647Sieve/PrimeReciprocalLower.ilean -c <PROJECT>/project/work/lean-4.32.2/PrimeNumberTheoremAnd/.lake/build/ir/Erdos647Sieve/PrimeReciprocalLower.c --setup <PROJECT>/project/work/lean-4.32.2/PrimeNumberTheoremAnd/.lake/build/ir/Erdos647Sieve/PrimeReciprocalLower.setup.json --json
+error: Erdos647Sieve/PrimeReciprocalLower.lean:56:2: Type mismatch: After simplification, term
+  hle
+ has type
+  ∑ x ∈ (Finset.Icc 1 H).attach, (↑↑x)⁻¹ ≤ finitePrimeEuler H
+but is expected to have type
+  ∑ m ∈ Finset.Icc 1 H, (↑m)⁻¹ ≤ finitePrimeEuler H
+warning: Erdos647Sieve/PrimeReciprocalLower.lean:81:6: Used `tac1 <;> tac2` where `(tac1; tac2)` would suffice
+
+Note: This linter can be disabled with `set_option linter.unnecessarySeqFocus false`
+warning: Erdos647Sieve/PrimeReciprocalLower.lean:114:6: Used `tac1 <;> tac2` where `(tac1; tac2)` would suffice
+
+Note: This linter can be disabled with `set_option linter.unnecessarySeqFocus false`
+error: Lean exited with code 1
+Some required targets logged failures:
+- Erdos647Sieve.PrimeReciprocalLower
+error: build failed
+
+EXIT_CODE=1

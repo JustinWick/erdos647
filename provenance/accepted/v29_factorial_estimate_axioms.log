@@ -1,0 +1,18 @@
+$ lake env lean -DwarningAsError=true <PROJECT>/project/work/lean-4.32.2/PrimeNumberTheoremAnd/.verification/factorial_estimate_audit.lean
+Erdos647Sieve.Elementary.shiftedFactorialLog_eq_expanded (H : ℕ) :
+  Erdos647Sieve.Elementary.shiftedFactorialLog H =
+    Real.log ↑H.factorial + Real.log (↑H + 1) + Real.log (↑H + 2) - Real.log 2
+'Erdos647Sieve.Elementary.shiftedFactorialLog_eq_expanded' depends on axioms: [propext, Classical.choice, Quot.sound]
+Erdos647Sieve.Elementary.log_factorial_residual_tendsto_zero :
+  Filter.Tendsto (fun n => (Real.log ↑n.factorial - (↑n * Real.log ↑n - ↑n)) / ↑n) Filter.atTop (𝓝 0)
+'Erdos647Sieve.Elementary.log_factorial_residual_tendsto_zero' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+Erdos647Sieve.Elementary.shiftedFactorialLog_residual_tendsto_zero :
+  Filter.Tendsto (fun H => (Erdos647Sieve.Elementary.shiftedFactorialLog H - (↑H * Real.log ↑H - ↑H)) / ↑H) Filter.atTop
+    (𝓝 0)
+'Erdos647Sieve.Elementary.shiftedFactorialLog_residual_tendsto_zero' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+
+EXIT_CODE=0

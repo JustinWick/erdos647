@@ -1,0 +1,21 @@
+$ lake env lean -DwarningAsError=true <PROJECT>/project/work/lean-4.32.2/PrimeNumberTheoremAnd/.verification/selected_prime_reciprocals_audit.lean
+Erdos647Sieve.Analytic.selectedPrimeSum_eq_difference (H : ℕ) (y : ℝ) (hy : ↑H ≤ y) :
+  ∑ p ∈ Erdos647Sieve.selectedPrimes H y, 1 / ↑p =
+    Erdos647Sieve.Analytic.reciprocalPrimeSum y - Erdos647Sieve.Analytic.reciprocalPrimeSum ↑H
+'Erdos647Sieve.Analytic.selectedPrimeSum_eq_difference' depends on axioms: [propext, Classical.choice, Quot.sound]
+Erdos647Sieve.Analytic.primeMass_eq_reciprocal_difference (H : ℕ) (y : ℝ) (hy : ↑H ≤ y) :
+  Erdos647Sieve.primeMass H y =
+    ↑H * (Erdos647Sieve.Analytic.reciprocalPrimeSum y - Erdos647Sieve.Analytic.reciprocalPrimeSum ↑H)
+'Erdos647Sieve.Analytic.primeMass_eq_reciprocal_difference' depends on axioms: [propext, Classical.choice, Quot.sound]
+Erdos647Sieve.Analytic.selectedPrimeSum_difference_tendsto_zero.{u_1} {ι : Type u_1} {l : Filter ι} (H : ι → ℕ)
+  (y : ι → ℝ) (hH : Filter.Tendsto (fun i => ↑(H i)) l Filter.atTop) (hy : Filter.Tendsto y l Filter.atTop)
+  (hle : ∀ᶠ (i : ι) in l, ↑(H i) ≤ y i) :
+  Filter.Tendsto
+    (fun i =>
+      ∑ p ∈ Erdos647Sieve.selectedPrimes (H i) (y i), 1 / ↑p - (Real.log (Real.log (y i)) - Real.log (Real.log ↑(H i))))
+    l (𝓝 0)
+'Erdos647Sieve.Analytic.selectedPrimeSum_difference_tendsto_zero' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+
+EXIT_CODE=0

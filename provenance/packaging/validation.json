@@ -1,0 +1,93 @@
+{
+  "schema": 1,
+  "artifact": "erdos647_repository_v32.zip",
+  "basis": "v31 extraction and repaired source; v30 result snapshots",
+  "source_preservation": {
+    "original_files": 37,
+    "core_files": 24,
+    "research_files": 12,
+    "archived_rejected_probe": 1,
+    "all_byte_identical_to_basis": true
+  },
+  "toolchain": "leanprover/lean4:v4.32.2",
+  "core_git_dependencies": 9,
+  "research_git_dependencies": 14,
+  "research_local_core_dependencies": 1,
+  "proof_gates": 13,
+  "offline_runner_tests": {
+    "passed": 56,
+    "failed": 0
+  },
+  "end_to_end_tooling_run": {
+    "exit_code": 0,
+    "role": "TOOLING_ONLY"
+  },
+  "missing_setup_reporting_test": {
+    "exit_code": 2,
+    "diagnostic_zip_created": true,
+    "role": "FAILURE_HANDLING"
+  },
+  "fresh_archive_test": {
+    "passed": true,
+    "offline_tests_passed": 56,
+    "commands": [
+      {
+        "command": [
+          "bash",
+          "-n",
+          "RUN.sh",
+          "TEST_ALL.sh"
+        ],
+        "exit_code": 0
+      },
+      {
+        "command": [
+          "bash",
+          "RUN.sh",
+          "--help"
+        ],
+        "exit_code": 0
+      },
+      {
+        "command": [
+          "bash",
+          "RUN.sh",
+          "--list"
+        ],
+        "exit_code": 0
+      },
+      {
+        "command": [
+          "bash",
+          "TEST_ALL.sh",
+          "--list"
+        ],
+        "exit_code": 0
+      },
+      {
+        "command": [
+          "/opt/pyvenv/bin/python3",
+          "-m",
+          "unittest",
+          "discover",
+          "-s",
+          "tests",
+          "-v"
+        ],
+        "exit_code": 0
+      },
+      {
+        "command": [
+          "bash",
+          "RUN.sh",
+          "tooling"
+        ],
+        "exit_code": 0
+      }
+    ],
+    "post_run_gitignore_check": true,
+    "proof_sources_unchanged_after_run": true
+  },
+  "gitignore_checked": true,
+  "release_validation_scope": "Packaging, source preservation, offline runner tests, and report handling; historical theorem acceptance remains separately labeled."
+}

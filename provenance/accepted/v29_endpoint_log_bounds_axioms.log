@@ -1,0 +1,10 @@
+$ lake env lean -DwarningAsError=true <PROJECT>/project/work/lean-4.32.2/PrimeNumberTheoremAnd/.verification/endpoint_log_bounds_audit.lean
+Erdos647Sieve.Elementary.neg_log_one_sub_le_add_sq (t : ℝ) (ht0 : 0 ≤ t) (ht : t ≤ 1 / 2) :
+  -Real.log (1 - t) ≤ t + t ^ 2
+'Erdos647Sieve.Elementary.neg_log_one_sub_le_add_sq' depends on axioms: [propext, Classical.choice, Quot.sound]
+Erdos647Sieve.Elementary.endpoint_log_gap : 3 / 2 < Real.log (25 / 2) + 1 / Real.log 2 - 2
+'Erdos647Sieve.Elementary.endpoint_log_gap' depends on axioms: [propext, Classical.choice, Quot.sound]
+Erdos647Sieve.Elementary.endpoint_tail_log_constant : 1 / 30 ≤ (Real.log 20 - 1) / 50 - 1 / 500
+'Erdos647Sieve.Elementary.endpoint_tail_log_constant' depends on axioms: [propext, Classical.choice, Quot.sound]
+
+EXIT_CODE=0

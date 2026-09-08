@@ -1,0 +1,17 @@
+--- a/Erdos647Sieve/PrimeReciprocalLower.lean
++++ b/Erdos647Sieve/PrimeReciprocalLower.lean
+@@ -53,7 +53,13 @@
+   }
+   have hle := sum_le_hasSum ((Finset.Icc 1 H).attach.map e)
+     (fun m _ => inv_nonneg.mpr (Nat.cast_nonneg (m : ℕ))) hs
+-  simpa [e, Finset.sum_attach] using hle
++  rw [Finset.sum_map] at hle
++  change (∑ m ∈ (Finset.Icc 1 H).attach, (m.val : ℝ)⁻¹) ≤ finitePrimeEuler H at hle
++  calc
++    (∑ m ∈ Finset.Icc 1 H, (m : ℝ)⁻¹)
++        = ∑ m ∈ (Finset.Icc 1 H).attach, (m.val : ℝ)⁻¹ :=
++          (Finset.sum_attach (Finset.Icc 1 H) (fun m : ℕ => (m : ℝ)⁻¹)).symm
++    _ ≤ finitePrimeEuler H := hle
+ 
+ theorem log_le_finitePrimeEuler (H : ℕ) :
+     Real.log (H : ℝ) ≤ finitePrimeEuler H := by

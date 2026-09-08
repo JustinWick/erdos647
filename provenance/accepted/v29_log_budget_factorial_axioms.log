@@ -1,0 +1,9 @@
+$ lake env lean -DwarningAsError=true <PROJECT>/project/work/lean-4.32.2/PrimeNumberTheoremAnd/.verification/log_budget_factorial_audit.lean
+Erdos647Sieve.Elementary.sum_log_shift_eq_factorial (H : ℕ) :
+  ∑ k ∈ Finset.Icc 1 H, Real.log (↑k + 2) = Erdos647Sieve.Elementary.shiftedFactorialLog H
+'Erdos647Sieve.Elementary.sum_log_shift_eq_factorial' depends on axioms: [propext, Classical.choice, Quot.sound]
+Erdos647Sieve.Elementary.logBudget_le_factorial (H : ℕ) :
+  ↑(Erdos647Sieve.logBudget H) ≤ Erdos647Sieve.Elementary.shiftedFactorialLog H / Real.log 2
+'Erdos647Sieve.Elementary.logBudget_le_factorial' depends on axioms: [propext, Classical.choice, Quot.sound]
+
+EXIT_CODE=0

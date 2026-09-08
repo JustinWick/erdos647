@@ -1,0 +1,22 @@
+import Erdos647Sieve.FiniteCounting
+set_option autoImplicit false
+set_option warningAsError true
+open scoped BigOperators Topology
+#print Erdos647Sieve.Candidate
+#print Erdos647Sieve.Prefix
+#print Erdos647Sieve.hitCount
+#print Erdos647Sieve.logBudget
+#print Erdos647Sieve.correctedBudget
+#print Erdos647Sieve.momentBound
+#print Erdos647Sieve.FiniteMomentClaim
+#print Erdos647Sieve.FiniteCountingClaim
+#print Erdos647Sieve.EndpointClaim
+example : Erdos647Sieve.FiniteMomentClaim := Erdos647Sieve.finiteMoment
+#check Erdos647Sieve.finiteMoment
+#print axioms Erdos647Sieve.finiteMoment
+example : Erdos647Sieve.BudgetDebitClaim := Erdos647Sieve.budgetDebit
+#check Erdos647Sieve.budgetDebit
+#print axioms Erdos647Sieve.budgetDebit
+example : Erdos647Sieve.FiniteCountingClaim := Erdos647Sieve.finiteCounting
+#check Erdos647Sieve.finiteCounting
+#print axioms Erdos647Sieve.finiteCounting

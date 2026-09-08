@@ -1,0 +1,25 @@
+/-
+Dependency probe only. This wrapper was written against inspected source,
+but has NOT been compiled in this session. It is not a proof of the sieve.
+The pinned dependency and this wrapper must pass a transitive axiom audit.
+-/
+import PrimeNumberTheoremAnd.RosserSchoenfeldPrime
+
+set_option autoImplicit false
+open Filter
+open scoped BigOperators Topology
+
+noncomputable section
+namespace Erdos647Sieve
+
+def primeReciprocalSum (x : ℝ) : ℝ :=
+  ∑ p ∈ (Finset.Iic (Nat.floor x)).filter Nat.Prime, (1 : ℝ) / (p : ℝ)
+
+/-- This proves only the imported prime-sum limit, assuming its dependencies audit cleanly. -/
+theorem primeReciprocalLimit :
+    Tendsto (fun x : ℝ => primeReciprocalSum x - Real.log (Real.log x))
+      atTop (𝓝 meisselMertensConstant) := by
+  simpa only [primeReciprocalSum] using RS_prime.mertens_second_theorem
+
+end Erdos647Sieve
+end

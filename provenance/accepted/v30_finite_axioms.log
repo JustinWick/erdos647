@@ -1,0 +1,49 @@
+$ lake env lean -DwarningAsError=true <PROJECT>/project/work/lean-4.32.2/PrimeNumberTheoremAnd/.verification/finite_audit.lean
+def Erdos647Sieve.Candidate : ℕ → Prop :=
+fun n => 24 < n ∧ ∀ (k : ℕ), 1 ≤ k → k < n → Erdos647Sieve.tau (n - k) ≤ k + 2
+def Erdos647Sieve.Prefix : ℕ → ℕ → Prop :=
+fun H n => H < n ∧ ∀ (k : ℕ), 1 ≤ k → k ≤ H → Erdos647Sieve.tau (n - k) ≤ k + 2
+def Erdos647Sieve.hitCount : ℕ → ℝ → ℤ → ℕ :=
+fun H y n =>
+  {p ∈ do
+        let a ← Erdos647Sieve.selectedPrimes H y
+        pure ↑a |
+      p ∣ Erdos647Sieve.windowPolynomial H n}.card
+def Erdos647Sieve.logBudget : ℕ → ℤ :=
+fun H => ∑ k ∈ Finset.Icc 1 H, ⌊Real.log (↑k + 2) / Real.log 2⌋
+def Erdos647Sieve.correctedBudget : ℕ → ℤ :=
+fun H => Erdos647Sieve.logBudget H - ↑(Erdos647Sieve.smallPrimeDebit H)
+def Erdos647Sieve.momentBound : ℕ → ℕ → ℝ → ℝ → ℕ → ℝ :=
+fun X H y z J =>
+  have mu := (1 - z) * Erdos647Sieve.primeMass H y;
+  ↑X * (Real.exp (-mu) + mu ^ (J + 1) / ↑(J + 1).factorial) + (↑H * y) ^ J
+def Erdos647Sieve.FiniteMomentClaim : Prop :=
+∀ (A : ℤ) (X H : ℕ) (y z : ℝ) (J : ℕ),
+  1 ≤ X →
+    1 ≤ H →
+      ↑H < y →
+        0 < z →
+          z < 1 →
+            Even J →
+              ∑ n ∈ Finset.Icc (A + 1) (A + ↑X), z ^ Erdos647Sieve.hitCount H y n ≤ Erdos647Sieve.momentBound X H y z J
+def Erdos647Sieve.FiniteCountingClaim : Prop :=
+∀ (X H : ℕ) (y z : ℝ) (J : ℕ),
+  1 ≤ X →
+    1 ≤ H →
+      ↑H < y →
+        0 < z →
+          z < 1 →
+            Even J →
+              0 ≤ Erdos647Sieve.correctedBudget H →
+                ↑(Erdos647Sieve.candidateCount X) ≤
+                  ↑H + Real.exp (-Real.log z * ↑(Erdos647Sieve.correctedBudget H)) * Erdos647Sieve.momentBound X H y z J
+def Erdos647Sieve.EndpointClaim : Prop :=
+∃ X0, 3 ≤ X0 ∧ ∀ (X : ℕ), X0 ≤ X → ↑(Erdos647Sieve.candidateCount X) ≤ Erdos647Sieve.endpointRHS X
+Erdos647Sieve.finiteMoment : Erdos647Sieve.FiniteMomentClaim
+'Erdos647Sieve.finiteMoment' depends on axioms: [propext, Classical.choice, Quot.sound]
+Erdos647Sieve.budgetDebit : Erdos647Sieve.BudgetDebitClaim
+'Erdos647Sieve.budgetDebit' depends on axioms: [propext, Classical.choice, Quot.sound]
+Erdos647Sieve.finiteCounting : Erdos647Sieve.FiniteCountingClaim
+'Erdos647Sieve.finiteCounting' depends on axioms: [propext, Classical.choice, Quot.sound]
+
+EXIT_CODE=0
