@@ -1,5 +1,5 @@
 {
-  "version": "v41",
+  "version": "v42",
   "updated": "2026-09-08",
   "scope": "endpoint research, not the accepted finite core",
   "goal_declaration": "Erdos647Sieve.Endpoint.PositiveEndpointClaim",
@@ -56,9 +56,9 @@
     "is_endpoint_bound_proof": false
   },
   "next_effort": {
-    "status": "not implemented",
-    "scope": "eventual positive prime-mass/budget gap and supporting normalized size bounds",
-    "assignment": "docs/next-prime-mass-gap.md"
+    "status": "source implemented; acceptance pending",
+    "scope": "fixed positive prime-mass/budget gap and supporting normalized size bounds",
+    "assignment": "docs/prime-mass-gap-branch.md"
   },
   "parameter_pr_local_acceptance": {
     "status": "satisfied",
@@ -66,5 +66,21 @@
     "gates_passed": 19,
     "gates_total": 19,
     "new_proof_source_in_v41": false
+  },
+  "mass_budget_branch": {
+    "status": "source_implemented_acceptance_pending",
+    "fixed_gap_target": {
+      "numerator": 3,
+      "denominator": 2
+    },
+    "gap_is_not_endpoint_coefficient": true,
+    "general_margin": "every fixed delta < log(25/2) + 1/log(2) - 2",
+    "gates": [
+      "endpoint_prime_mass_gap",
+      "endpoint_mass_budget_bounds"
+    ],
+    "new_theorem_targets": 12,
+    "acceptance_evidence": null,
+    "subsequent_effort": "all amplified error terms, then a fixed-positive-coefficient endpoint"
   }
 }

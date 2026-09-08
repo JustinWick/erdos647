@@ -1,0 +1,43 @@
+{
+  "version": "v42",
+  "base": "accepted v40 proof source plus v41 documentation/evidence",
+  "new_mathematical_modules": [
+    "Erdos647Research.Endpoint.PrimeMassGap",
+    "Erdos647Research.Endpoint.MassBudgetBounds"
+  ],
+  "new_theorem_targets": 12,
+  "new_exact_type_and_definition_examples": 13,
+  "new_gates": [
+    "endpoint_prime_mass_gap",
+    "endpoint_mass_budget_bounds"
+  ],
+  "registered_gates": 21,
+  "accepted_baseline_gates": 19,
+  "new_gate_acceptance": "pending",
+  "fixed_gap_target": {
+    "numerator": 3,
+    "denominator": 2
+  },
+  "proved_endpoint_coefficient": null,
+  "mathlib_revision": "905b95818eb32af7874a58b427f50c1711a5e96c",
+  "library_input_inspected": {
+    "declaration": "Real.tendsto_pow_log_div_mul_add_atTop",
+    "url": "https://github.com/leanprover-community/mathlib4/blob/905b95818eb32af7874a58b427f50c1711a5e96c/Mathlib/Analysis/SpecialFunctions/Log/Basic.lean",
+    "git_blob_sha1": "fe745c1c5d5d34c918879e701c9dbf6119a4f91a"
+  },
+  "local_tooling_run": {
+    "exit_code": 0,
+    "tests_passed": 203
+  },
+  "local_new_gate_attempt": {
+    "exit_code": 2,
+    "stopped_before_build": true,
+    "reason": "Pinned Lean executable is absent in the authoring runtime",
+    "all_four_new_proof_and_audit_sources_collected": true
+  },
+  "scope_excludes": [
+    "amplified error bounds",
+    "final endpoint bound",
+    "remote PR writes"
+  ]
+}

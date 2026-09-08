@@ -440,5 +440,47 @@
       "selected_prime_reciprocals"
     ],
     "historical_status": "new v38 parameter proof source; acceptance pending"
+  },
+  "endpoint_prime_mass_gap": {
+    "package": "research",
+    "build": [
+      "+Erdos647Research.Endpoint.PrimeMassGap"
+    ],
+    "audits": {
+      "Audit/EndpointPrimeMassGap.lean": [
+        "Erdos647Sieve.Endpoint.primeMassGapConstant_gt_three_halves",
+        "Erdos647Sieve.Endpoint.endpoint_primeMass_budgetMain_gap_tendsto",
+        "Erdos647Sieve.Endpoint.eventually_primeMass_gap_of_lt",
+        "Erdos647Sieve.Endpoint.eventually_primeMass_sub_correctedBudget_ge",
+        "Erdos647Sieve.Endpoint.eventually_correctedBudget_le_primeMass"
+      ]
+    },
+    "prerequisites": [
+      "endpoint_prime_mass_parameters",
+      "corrected_budget_estimate",
+      "endpoint_log_bounds"
+    ],
+    "historical_status": "new v42 mass-budget proof source; acceptance pending"
+  },
+  "endpoint_mass_budget_bounds": {
+    "package": "research",
+    "build": [
+      "+Erdos647Research.Endpoint.MassBudgetBounds"
+    ],
+    "audits": {
+      "Audit/EndpointMassBudgetBounds.lean": [
+        "Erdos647Sieve.Endpoint.log_windowLength_tendsto_atTop",
+        "Erdos647Sieve.Endpoint.loglog_windowLength_div_logLog_tendsto_zero",
+        "Erdos647Sieve.Endpoint.endpoint_primeMass_div_window_logLog_tendsto",
+        "Erdos647Sieve.Endpoint.endpoint_primeMass_nonneg",
+        "Erdos647Sieve.Endpoint.eventually_primeMass_le_window_mul_logLog",
+        "Erdos647Sieve.Endpoint.eventually_correctedBudget_le_window_mul_logLog",
+        "Erdos647Sieve.Endpoint.eventually_endpoint_mass_budget_bounds"
+      ]
+    },
+    "prerequisites": [
+      "endpoint_prime_mass_gap"
+    ],
+    "historical_status": "new v42 mass-budget proof source; acceptance pending"
   }
 }

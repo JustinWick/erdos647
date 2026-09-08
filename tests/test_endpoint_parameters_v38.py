@@ -34,7 +34,7 @@ BASE_GATES = {
 
 class EndpointRegistration(unittest.TestCase):
     def test_baseline_and_new_gates_are_both_present(self):
-        self.assertEqual(set(check.GATES), BASE_GATES | set(MODULES))
+        self.assertLessEqual(BASE_GATES | set(MODULES), set(check.GATES))
 
     def test_every_new_theorem_gets_an_exact_type_and_axiom_audit(self):
         total = 0

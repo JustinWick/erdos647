@@ -35,7 +35,8 @@ turn earlier failed runs into successes.
 | Exact window and truncation asymptotics | Passed |
 | Cutoff growth, ordering and parameter admissibility | **Newly passed in v40** |
 | Actual selected-prime error and prime-mass expansion | **Newly passed in v40** |
-| Eventual positive gap between prime mass and corrected budget | Not yet proved as a project declaration |
+| Eventual positive gap between prime mass and corrected budget | v42 source implemented; two new gates pending |
+| Normalized mass growth and signed mass/budget size bounds | v42 source implemented; pending |
 | Amplified-error bounds and final positive-coefficient endpoint | Not yet proved |
 
 ## The accepted parameter result
@@ -80,9 +81,11 @@ before `X`. It is not allowed to vary with `X`.
 `1/1000`. The historical `EndpointClaim` is an optional corollary when available
 without substantial extra effort. No alternative rigid numerical target is set.
 
-The next mathematical changeset is the fixed positive mass-budget gap and
-supporting size bounds. Every amplified error must then be bounded before final
-assembly. See [the next implementation assignment](next-prime-mass-gap.md).
+The v42 changeset implements the fixed positive mass-budget gap and supporting
+size bounds in two new modules. Their exact-type and axiom gates are pending;
+the accepted 19-gate v40 baseline remains unchanged. There are now **21 registered
+gates**, not 21 accepted gates. See [the current mathematical scope](prime-mass-gap-branch.md).
+Every amplified error must then be bounded before final assembly.
 
 ## PR boundary
 
@@ -95,10 +98,12 @@ The earlier v36 core/research fixes remain a separate accepted changeset.
 result. Review of an actual GitHub head/base diff, repository CI policy and external
 mathematical review are separate; no remote PR or CI result was inspected here.
 
-The v41 overlay updates documentation and evidence only. It changes no mathematical
-source, audit, runner, test, Lake configuration, lockfile, toolchain or CI workflow.
-The runner intentionally retains its v40 results label; changing a documentation
-version does not justify modifying the accepted checking code.
+The v41 evidence update changed no checking or mathematical source. The subsequent
+v42 gap changeset adds two proof modules and two audits, without modifying any of
+the 45 existing mathematical modules or 20 existing audits. Its runner changes only
+the diagnostic prefix to `erdos647_repo_v42_results_`. Dependency pins, cache and
+checking behavior, and CI settings remain unchanged. The new proof source is not
+part of the completed parameter PR's acceptance record.
 
 ## PNT+ scope and historical evidence
 

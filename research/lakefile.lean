@@ -30,7 +30,9 @@ lean_lib Erdos647Endpoint where
     `Erdos647Research.Endpoint.WindowParameters,
     `Erdos647Research.Endpoint.TruncationParameters,
     `Erdos647Research.Endpoint.CutoffParameters,
-    `Erdos647Research.Endpoint.PrimeMassParameters]
+    `Erdos647Research.Endpoint.PrimeMassParameters,
+    `Erdos647Research.Endpoint.PrimeMassGap,
+    `Erdos647Research.Endpoint.MassBudgetBounds]
 
 /-- All registered research proof gates, including the endpoint parameter layer. -/
 script audit (args) do
