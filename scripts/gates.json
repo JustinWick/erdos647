@@ -581,5 +581,64 @@
       "endpoint_arithmetic_remainder"
     ],
     "historical_status": "new v44 amplified-error proof source; acceptance pending"
+  },
+  "endpoint_absorption_scales": {
+    "package": "research",
+    "build": [
+      "+Erdos647Research.Endpoint.AbsorptionScales"
+    ],
+    "audits": {
+      "Audit/EndpointAbsorptionScales.lean": [
+        "Erdos647Sieve.Endpoint.endpointRHSWith_pos",
+        "Erdos647Sieve.Endpoint.endpointScale_tendsto_atTop",
+        "Erdos647Sieve.Endpoint.endpointScale_div_window_tendsto_zero",
+        "Erdos647Sieve.Endpoint.endpointScale_div_logX_tendsto_zero"
+      ]
+    },
+    "prerequisites": [
+      "endpoint_statement",
+      "endpoint_error_scales"
+    ],
+    "historical_status": "new v46 final-absorption proof source; acceptance pending"
+  },
+  "endpoint_error_absorption": {
+    "package": "research",
+    "build": [
+      "+Erdos647Research.Endpoint.ErrorAbsorption"
+    ],
+    "audits": {
+      "Audit/EndpointErrorAbsorption.lean": [
+        "Erdos647Sieve.Endpoint.scaled_exp_div_endpointRHSWith",
+        "Erdos647Sieve.Endpoint.exp_div_endpointRHSWith",
+        "Erdos647Sieve.Endpoint.principal_ratio_tendsto_zero",
+        "Erdos647Sieve.Endpoint.momentTail_ratio_tendsto_zero",
+        "Erdos647Sieve.Endpoint.squareRoot_ratio_tendsto_zero",
+        "Erdos647Sieve.Endpoint.amplifiedErrorMajorant_ratio_tendsto_zero",
+        "Erdos647Sieve.Endpoint.eventually_amplifiedErrorMajorant_le_endpointRHSWith"
+      ]
+    },
+    "prerequisites": [
+      "endpoint_absorption_scales"
+    ],
+    "historical_status": "new v46 final-absorption proof source; acceptance pending"
+  },
+  "endpoint_final": {
+    "package": "research",
+    "build": [
+      "+Erdos647Research.Endpoint.Main"
+    ],
+    "audits": {
+      "Audit/EndpointFinal.lean": [
+        "Erdos647Sieve.Endpoint.endpointBound_of_lt_principal_rate",
+        "Erdos647Sieve.Endpoint.endpointBound_one_div_thousand",
+        "Erdos647Sieve.Endpoint.positiveEndpoint",
+        "Erdos647Sieve.endpoint"
+      ]
+    },
+    "prerequisites": [
+      "endpoint_counting_reduction",
+      "endpoint_error_absorption"
+    ],
+    "historical_status": "new v46 final-absorption proof source; acceptance pending"
   }
 }

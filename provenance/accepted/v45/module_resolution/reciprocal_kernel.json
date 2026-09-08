@@ -1,0 +1,9 @@
+[
+  {
+    "module": "Erdos647Research.ReciprocalKernel",
+    "expected": "<REPO>/research/.lake/build/lib/lean/Erdos647Research/ReciprocalKernel.olean",
+    "resolved": "<REPO>/research/.lake/build/lib/lean/Erdos647Research/ReciprocalKernel.olean",
+    "correct_owner": true,
+    "object_exists": true
+  }
+]

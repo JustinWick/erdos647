@@ -1,0 +1,35 @@
+{
+  "version": "v47",
+  "validation_scope": "offline runner, source-preservation, archive and reporting checks",
+  "runner_tests_passed": 284,
+  "math_modules_total": 55,
+  "mathematical_source_changes": [
+    "research/Erdos647Research/Endpoint/AbsorptionScales.lean"
+  ],
+  "other_mathematical_modules_preserved": 54,
+  "previously_accepted_mathematical_modules_preserved": 52,
+  "existing_audit_files_preserved": 30,
+  "gate_count": 29,
+  "gate_registry_unchanged": true,
+  "runner_change": "result-name prefix only; no checking, cache or acceptance behavior changed",
+  "result_prefix": "erdos647_repo_v47_results_",
+  "historical_run": "erdos647_repo_v46_results_20260908T203111Z_99d07146",
+  "historical_gates": {
+    "passed": 26,
+    "failed": 1,
+    "blocked": 2
+  },
+  "proved_coefficient": null,
+  "new_endpoint_acceptance": "pending",
+  "repair": "explicitly expose endpointScale definition in target before inv_div",
+  "extra_mathematical_assumptions": false,
+  "repeat_after_actual_archive_application": true,
+  "repeat_application_content_safe": true,
+  "unchanged_files_content_and_timestamps_checked": 919,
+  "cache_tool_previous_results_and_user_CI_preserved": true,
+  "top_level_tooling_runs_passed": 2,
+  "result_id_archive_path_summary_and_latest_pointer_agree": true,
+  "result_ids_unique": true,
+  "tooling_runs_do_not_claim_endpoint_acceptance": true,
+  "changed_source_and_tests_collected_in_diagnostics": true
+}

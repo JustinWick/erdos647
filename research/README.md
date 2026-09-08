@@ -35,19 +35,19 @@ alongside all established gates: **19/19 total**. The exact constant-sensitive
 prime-mass expansion completes the first parameter changeset. See the
 [accepted v40 record](../provenance/accepted/v40/README.md).
 
-The mass-versus-budget gap and amplified-error absorption remain subsequent
-targets. No endpoint `Main` proof has been added merely to make the module tree
-appear complete. The next changeset is specified in
-[the positive-gap assignment](../docs/next-prime-mass-gap.md), separate from both
-the completed build/dependency fixes and the accepted parameter layer.
+The gap and size bounds passed in v42. All amplified-error bounds and the
+all-sign counting reduction passed in the v45 **26/26** run. The next source in
+`Endpoint/AbsorptionScales`, `Endpoint/ErrorAbsorption`, and `Endpoint/Main`
+performs final same-scale absorption, with three separate pending gates. See the
+[final branch](../docs/final-endpoint-branch.md) for the precise proof boundary.
 
 ## Endpoint coefficient
 
 The branch seeks `EndpointBound c` for an explicit fixed c>0, preserving the critical
 exponent and (log X)^a/log(log X) scale. The arbitrary historical 1/1000 target is
 not mandatory. The coefficient is outside both the onset and X quantifiers; it
-cannot vary with X. No endpoint coefficient is yet accepted, and no replacement working
-coefficient is fixed. See the branch charter and coefficient status record.
+cannot vary with X. No endpoint coefficient is yet accepted. The v46 source implements the full
+strict coefficient range below 1499/10^6, with c=1/1000 as an explicit specialization. See the branch charter and coefficient status record.
 
 ## Checking
 

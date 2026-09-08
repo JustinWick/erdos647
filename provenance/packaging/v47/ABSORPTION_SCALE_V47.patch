@@ -1,0 +1,14 @@
+--- a/research/Erdos647Research/Endpoint/AbsorptionScales.lean
++++ b/research/Erdos647Research/Endpoint/AbsorptionScales.lean
+@@ -33,7 +33,10 @@
+   have hinv := tendsto_inv_nhdsGT_zero.comp hright
+   change Tendsto (fun X : ℕ => (Real.log (Real.log (X : ℝ)) /
+     Real.rpow (Real.log (X : ℝ)) endpointExponent)⁻¹) atTop atTop at hinv
+-  simpa only [inv_div, endpointScale] using hinv
++  change Tendsto (fun X : ℕ =>
++    Real.rpow (Real.log (X : ℝ)) endpointExponent /
++      Real.log (Real.log (X : ℝ))) atTop atTop
++  simpa only [inv_div] using hinv
+ 
+ /-- The factorial tail decays on the larger window scale: S/H tends to zero. -/
+ theorem endpointScale_div_window_tendsto_zero :

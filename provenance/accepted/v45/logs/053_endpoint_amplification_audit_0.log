@@ -1,0 +1,32 @@
+$ <REPO>/.tools/elan/toolchains/leanprover--lean4---v4.32.2/bin/lake env lean -DwarningAsError=true Audit/EndpointAmplification.lean
+Erdos647Sieve.Endpoint.neg_log_weight_bounds (t : ℝ) (ht0 : 0 ≤ t) (ht : t ≤ 1 / 2) :
+  0 ≤ -log (1 - t) ∧ -log (1 - t) ≤ t + t ^ 2 ∧ -log (1 - t) ≤ 2 * t
+'Erdos647Sieve.Endpoint.neg_log_weight_bounds' depends on axioms: [propext, Classical.choice, Quot.sound]
+Erdos647Sieve.Endpoint.amplification_exponents_le (H L B lam : ℝ) (hL : 0 < L) (ht : 1 / (1000 * L) ≤ 1 / 2)
+  (hB0 : 0 ≤ B) (hB : B ≤ H * L) (hgap : 3 / 2 * H ≤ lam - B) :
+  -log (1 - 1 / (1000 * L)) * B ≤ H / 500 ∧
+    -log (1 - 1 / (1000 * L)) * B - 1 / (1000 * L) * lam ≤ -(1499 / 1000000) * (H / L)
+'Erdos647Sieve.Endpoint.amplification_exponents_le' depends on axioms: [propext, Classical.choice, Quot.sound]
+Erdos647Sieve.Endpoint.eventually_endpointMu_bounds :
+  ∀ᶠ (X : ℕ) in atTop, 0 ≤ endpointMu X ∧ endpointMu X ≤ ↑(windowLength X) / 1000
+'Erdos647Sieve.Endpoint.eventually_endpointMu_bounds' depends on axioms: [propext, Classical.choice, Quot.sound]
+Erdos647Sieve.Endpoint.eventually_amplification_exponents_le :
+  ∀ᶠ (X : ℕ) in atTop,
+    0 ≤ correctedBudget (windowLength X) →
+      amplificationExponent X ≤ ↑(windowLength X) / 500 ∧
+        amplificationExponent X - endpointMu X ≤ -(1499 / 1000000) * (↑(windowLength X) / log (log ↑X))
+'Erdos647Sieve.Endpoint.eventually_amplification_exponents_le' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+Erdos647Sieve.Endpoint.eventually_amplification_le :
+  ∀ᶠ (X : ℕ) in atTop,
+    0 ≤ correctedBudget (windowLength X) → rexp (amplificationExponent X) ≤ rexp (↑(windowLength X) / 500)
+'Erdos647Sieve.Endpoint.eventually_amplification_le' depends on axioms: [propext, Classical.choice, Quot.sound]
+Erdos647Sieve.Endpoint.eventually_principal_contribution_le :
+  ∀ᶠ (X : ℕ) in atTop,
+    0 ≤ correctedBudget (windowLength X) →
+      ↑X * rexp (amplificationExponent X - endpointMu X) ≤
+        ↑X * rexp (-(1499 / 1000000) * (↑(windowLength X) / log (log ↑X)))
+'Erdos647Sieve.Endpoint.eventually_principal_contribution_le' depends on axioms: [propext, Classical.choice, Quot.sound]
+
+EXIT_CODE=0

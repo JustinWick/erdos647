@@ -36,6 +36,33 @@ def header(mod, name):
     return code(mod).split('theorem ' + name, 1)[1].split(' := by', 1)[0]
 
 
+def assert_amplified_acceptance(testcase, record):
+    branch = record['amplified_error_branch']
+    testcase.assertIn(branch['status'], {'source_implemented_acceptance_pending', 'accepted'})
+    if branch['status'] != 'accepted':
+        testcase.assertIsNone(branch['acceptance_evidence'])
+        return
+    evidence = ROOT / branch['acceptance_evidence']
+    testcase.assertTrue(evidence.is_file())
+    summary = json.loads((evidence.parent / 'summary.json').read_text())
+    testcase.assertEqual(summary['run_id'], branch['run_id'])
+    testcase.assertEqual(summary['status'], 'PASS_SELECTED_CHECKS')
+    testcase.assertEqual(summary['source_sha256_before'], summary['source_sha256_after'])
+    commands = {c['label']: c for c in summary['commands']}
+    for gate, module in MODULES.items():
+        testcase.assertEqual(summary['gates'][gate]['status'], 'PASS')
+        testcase.assertIn(gate, summary['selected_gates'])
+        for suffix in ['_build', '_audit_0']:
+            command = commands[gate + suffix]
+            testcase.assertEqual(command['exit_code'], 0)
+            text = (evidence.parent / command['log']).read_text()
+            testcase.assertRegex(text, r'EXIT_CODE=0\s*$')
+            testcase.assertFalse(check.lean_warnings(text))
+        targets = check.GATES[gate]['audits']['Audit/Endpoint' + module + '.lean']
+        for target in targets:
+            testcase.assertEqual(check.parse_axioms(text, target), summary['gates'][gate]['axioms'][target])
+
+
 class ErrorInterfaces(unittest.TestCase):
     def test_all_25_theorems_have_exact_types_and_axiom_targets(self):
         total = 0
@@ -133,15 +160,14 @@ class ErrorInterfaces(unittest.TestCase):
         for mod in MODULES.values():
             self.assertNotRegex(check.strip_comments(code(mod)), r'^theorem\s+(?:endpoint|positiveEndpoint)\b')
         record = json.loads((ROOT / 'docs/endpoint-coefficient-status.json').read_text())
-        self.assertEqual(record['amplified_error_branch']['status'], 'source_implemented_acceptance_pending')
-        self.assertIsNone(record['amplified_error_branch']['acceptance_evidence'])
+        assert_amplified_acceptance(self, record)
 
 
 class ErrorGateWorkflow(unittest.TestCase):
     def test_all_gates_includes_accepted_baseline_and_five_new_checks(self):
         selected = check.selected_gates(check.parser().parse_args([]))
         self.assertEqual(selected, list(check.GATES))
-        self.assertEqual(len(selected), 26)
+        self.assertGreaterEqual(len(selected), 26)
         self.assertTrue(set(MODULES).issubset(selected))
 
     def test_scale_checks_do_not_require_tail_or_pnt(self):

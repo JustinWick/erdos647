@@ -1,0 +1,20 @@
+$ <REPO>/.tools/elan/toolchains/leanprover--lean4---v4.32.2/bin/lake env lean -DwarningAsError=true Audit/EndpointArithmeticRemainder.lean
+Erdos647Sieve.Endpoint.amplified_arithmetic_remainder_eq (X : ℕ) (hX : 0 < X) (hH : 0 < windowLength X)
+  (hJ : 0 < truncationOrder X) :
+  rexp (amplificationExponent X) * (↑(windowLength X) * primeCutoff X) ^ truncationOrder X =
+    rexp (log ↑X / 4 + ↑(truncationOrder X) * log ↑(windowLength X) + amplificationExponent X)
+'Erdos647Sieve.Endpoint.amplified_arithmetic_remainder_eq' depends on axioms: [propext, Classical.choice, Quot.sound]
+Erdos647Sieve.Endpoint.eventually_arithmetic_overhead_le :
+  ∀ᶠ (X : ℕ) in atTop, ↑(truncationOrder X) * log ↑(windowLength X) + ↑(windowLength X) / 500 ≤ log ↑X / 4
+'Erdos647Sieve.Endpoint.eventually_arithmetic_overhead_le' depends on axioms: [propext, Classical.choice, Quot.sound]
+Erdos647Sieve.Endpoint.eventually_amplified_arithmetic_remainder_le :
+  ∀ᶠ (X : ℕ) in atTop,
+    0 ≤ correctedBudget (windowLength X) →
+      rexp (amplificationExponent X) * (↑(windowLength X) * primeCutoff X) ^ truncationOrder X ≤ rexp (log ↑X / 2)
+'Erdos647Sieve.Endpoint.eventually_amplified_arithmetic_remainder_le' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+Erdos647Sieve.Endpoint.eventually_exceptional_window_le : ∀ᶠ (X : ℕ) in atTop, ↑(windowLength X) ≤ rexp (log ↑X / 2)
+'Erdos647Sieve.Endpoint.eventually_exceptional_window_le' depends on axioms: [propext, Classical.choice, Quot.sound]
+
+EXIT_CODE=0

@@ -20,6 +20,7 @@ import zipfile
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / 'scripts'))
 import check
+from test_amplified_errors_v44 import assert_amplified_acceptance
 
 FIXTURE = json.loads((ROOT / 'tests/fixtures/v44_error_audit_interfaces.json').read_text())
 ENTRIES = FIXTURE['entries']
@@ -144,8 +145,7 @@ class BinderPatternRegression(unittest.TestCase):
 
     def test_current_version_has_no_endpoint_acceptance(self):
         record = json.loads((ROOT / 'docs/endpoint-coefficient-status.json').read_text())
-        self.assertEqual(record['amplified_error_branch']['status'],
-                         'source_implemented_acceptance_pending')
+        assert_amplified_acceptance(self, record)
         self.assertIsNone(record['proved_coefficient'])
         self.assertIsNone(record['proved_endpoint_theorem'])
 

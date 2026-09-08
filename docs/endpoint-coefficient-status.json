@@ -1,5 +1,5 @@
 {
-  "version": "v45",
+  "version": "v47",
   "updated": "2026-09-08",
   "scope": "endpoint research, not the accepted finite core",
   "goal_declaration": "Erdos647Sieve.Endpoint.PositiveEndpointClaim",
@@ -58,8 +58,8 @@
   },
   "next_effort": {
     "status": "source implemented; acceptance pending",
-    "scope": "all amplified contributions and all-sign intermediate counting bound; final same-scale absorption remains",
-    "assignment": "docs/amplified-errors-branch.md"
+    "scope": "divergence and comparison of endpointScale, absorption of every normalized error, final fixed-c theorem and historical corollary",
+    "assignment": "docs/final-endpoint-branch.md"
   },
   "parameter_pr_local_acceptance": {
     "status": "satisfied",
@@ -95,7 +95,7 @@
     "local_pr_acceptance": "satisfied on supplied source snapshot"
   },
   "amplified_error_branch": {
-    "status": "source_implemented_acceptance_pending",
+    "status": "accepted",
     "gates": [
       "endpoint_amplification",
       "endpoint_moment_tail",
@@ -105,7 +105,7 @@
     ],
     "new_theorem_targets": 25,
     "expanded_type_and_definition_checks": 31,
-    "acceptance_evidence": null,
+    "acceptance_evidence": "provenance/accepted/v45/README.md",
     "principal_rate": {
       "numerator": 1499,
       "denominator": 1000000
@@ -117,19 +117,57 @@
     "arithmetic_upper_scale": "exp(log X / 2)",
     "final_reduction_covers_negative_budget": true,
     "is_endpoint_bound_proof": false,
-    "remaining": "final absorption to EndpointBound c and PositiveEndpointClaim for an explicit fixed c>0",
+    "remaining": "final same-scale absorption; v46 source pending its own final audit",
     "latest_run": {
-      "run_id": "erdos647_repo_v44_results_20260908T123705Z_9d028f71",
-      "gates_passed": 21,
-      "gates_failed": 2,
-      "gates_blocked": 3,
-      "new_modules_built": [
-        "Amplification",
-        "ErrorScales"
-      ],
-      "failing_stage": "exact-type audit unused hypothesis-name lint",
-      "new_proof_gates_accepted": false,
-      "repair": "v45 retains every quantified hypothesis and makes its unused proof name anonymous in four new audit files; no mathematical module changes"
+      "run_id": "erdos647_repo_v45_results_20260908T125209Z_b6d9b2cb",
+      "gates_passed": 26,
+      "gates_failed": 0,
+      "gates_blocked": 0,
+      "new_proof_gates_accepted": true,
+      "warnings": 0
+    },
+    "run_id": "erdos647_repo_v45_results_20260908T125209Z_b6d9b2cb",
+    "accepted_declarations": 25
+  },
+  "final_absorption_branch": {
+    "status": "source_implemented_acceptance_pending",
+    "gates": [
+      "endpoint_absorption_scales",
+      "endpoint_error_absorption",
+      "endpoint_final"
+    ],
+    "new_theorem_targets": 15,
+    "expanded_type_definition_checks": 23,
+    "implemented_explicit_coefficient": {
+      "numerator": 1,
+      "denominator": 1000
+    },
+    "implemented_positive_coefficient_range": {
+      "upper_exclusive": {
+        "numerator": 1499,
+        "denominator": 1000000
+      },
+      "lower_exclusive": 0
+    },
+    "implemented_theorems": [
+      "Erdos647Sieve.Endpoint.endpointBound_of_lt_principal_rate",
+      "Erdos647Sieve.Endpoint.endpointBound_one_div_thousand",
+      "Erdos647Sieve.Endpoint.positiveEndpoint",
+      "Erdos647Sieve.endpoint"
+    ],
+    "acceptance_evidence": null,
+    "coefficient_is_not_yet_accepted": true,
+    "legacy_corollary_cost": "rational strict inequality and the already accepted statement equivalence; no parameter retuning",
+    "latest_run": {
+      "run_id": "erdos647_repo_v46_results_20260908T203111Z_99d07146",
+      "gates_passed": 26,
+      "gates_failed": 1,
+      "gates_blocked": 2,
+      "new_final_layer_gates_accepted": false,
+      "failure_module": "AbsorptionScales.lean",
+      "failure_kind": "explicit-quotient / named endpointScale target conversion",
+      "repair_overlay": "v47",
+      "repair_acceptance": "pending"
     }
   }
 }

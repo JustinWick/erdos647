@@ -1,0 +1,12 @@
+$ <REPO>/.tools/elan/toolchains/leanprover--lean4---v4.32.2/bin/lake env lean -DwarningAsError=true Audit/SmallPrimeDebitEstimate.lean
+Erdos647Sieve.Elementary.nat_quotient_cast_lower (H p : ℕ) (hp : 0 < p) : ↑H / ↑p - 1 ≤ ↑(H / p)
+'Erdos647Sieve.Elementary.nat_quotient_cast_lower' depends on axioms: [propext, Classical.choice, Quot.sound]
+Erdos647Sieve.Elementary.smallPrimeDebit_ge_sum_sub_card (H : ℕ) :
+  ↑H * ∑ p ∈ Erdos647Sieve.Elementary.debitPrimes H, (↑p)⁻¹ - ↑(Erdos647Sieve.Elementary.debitPrimes H).card ≤
+    ↑(Erdos647Sieve.smallPrimeDebit H)
+'Erdos647Sieve.Elementary.smallPrimeDebit_ge_sum_sub_card' depends on axioms: [propext, Classical.choice, Quot.sound]
+Erdos647Sieve.Elementary.smallPrimeDebit_lower (H : ℕ) (hH : 2 ≤ H) :
+  ↑H * (Real.log (Real.log ↑H) - 2) ≤ ↑(Erdos647Sieve.smallPrimeDebit H)
+'Erdos647Sieve.Elementary.smallPrimeDebit_lower' depends on axioms: [propext, Classical.choice, Quot.sound]
+
+EXIT_CODE=0

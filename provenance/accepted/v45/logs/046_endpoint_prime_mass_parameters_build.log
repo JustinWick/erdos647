@@ -1,0 +1,6 @@
+$ <REPO>/.tools/elan/toolchains/leanprover--lean4---v4.32.2/bin/lake build +Erdos647Research.Endpoint.PrimeMassParameters
+ℹ [8679/8691] Replayed PrimeNumberTheoremAnd.MediumPNT
+info: PrimeNumberTheoremAnd/MediumPNT.lean:4282:0: 'MediumPNT' depends on axioms: [propext, Classical.choice, Quot.sound]
+Build completed successfully (8691 jobs).
+
+EXIT_CODE=0

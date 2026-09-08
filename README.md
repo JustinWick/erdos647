@@ -4,17 +4,14 @@ Finite sieve and counting inequalities in Lean, motivated by **Erdős problem #6
 The repository root is a **Mathlib-only library**. The separate `research/` Lake
 package contains the analytic bridge and unfinished endpoint development.
 
-**This project does not resolve Erdős #647 and does not contain a proof of the
-proposed final asymptotic endpoint.** The accepted v42 snapshot passed **21/21**
-build/type/axiom gates, covering **195 distinct declarations** with no build or
-audit warnings. This includes the finite core, analytic bridge, elementary budget
-estimates, exact parameter asymptotics, and the positive prime-mass/budget gap
-with supporting size bounds—not the final endpoint. See
-[proof status](docs/proof-status.md) and the
-[accepted record](provenance/accepted/v42/README.md). The v43 run confirmed the
-same accepted checkpoint. The new v44 [amplified-error branch](docs/amplified-errors-branch.md)
-adds five pending proof gates; its 26-gate suite is not covered by the earlier
-21/21 acceptance record.
+**This project does not resolve Erdős #647.** The accepted v45 snapshot passed
+**26/26 build/type/axiom gates**, covering **220 distinct declarations** with no
+build or audit warnings. It includes the all-sign amplified-error counting bound;
+it does not yet establish the final fixed-coefficient endpoint.
+[Accepted evidence](provenance/accepted/v45/README.md) records that milestone.
+The new v46 [final-absorption branch](docs/final-endpoint-branch.md) implements the
+endpoint assembly in three additional gates with their own pending acceptance.
+See [proof status](docs/proof-status.md).
 
 ## Use the public library
 

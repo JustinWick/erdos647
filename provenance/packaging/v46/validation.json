@@ -1,0 +1,30 @@
+{
+  "version": "v46",
+  "run_at": "2026-09-08",
+  "scope": "offline source, exact-algebra, runner and overlay tests; new Lean acceptance is pending",
+  "runner_tests_passed": 279,
+  "repeat_after_actual_archive_application": true,
+  "top_level_tooling_exit_code": 0,
+  "top_level_result_correctly_says_tooling_only": true,
+  "new_endpoint_not_promoted_by_tooling": true,
+  "archive_prefix_correct": "erdos647_repo_v46_results_",
+  "prior_mathematical_modules_preserved": 52,
+  "prior_audit_files_preserved": 27,
+  "prior_gate_objects_preserved": 26,
+  "unchanged_files_content_and_timestamps_checked": 663,
+  "cache_tool_previous_results_and_CI_sentinels_preserved": true,
+  "new_math_modules": 3,
+  "new_theorem_targets": 15,
+  "new_expanded_type_definition_checks": 23,
+  "new_gate_count": 3,
+  "full_gate_count": 29,
+  "implemented_explicit_coefficient": {
+    "numerator": 1,
+    "denominator": 1000
+  },
+  "proved_coefficient": null,
+  "current_accepted_base": "v45 amplified-error 26/26",
+  "new_endpoint_acceptance_status": "pending",
+  "preservation_excludes": "only listed overlay paths change; no deletions",
+  "new_lean_sources_collected_in_tooling_diagnostics": true
+}
