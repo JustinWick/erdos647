@@ -1,7 +1,8 @@
 name: Finite core
 on:
-  push:
-  pull_request:
+  # Temporarily disabled automatic CI runs
+  # push:
+  # pull_request:
   workflow_dispatch:
 permissions:
   contents: read
