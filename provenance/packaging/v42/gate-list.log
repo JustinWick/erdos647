@@ -1,0 +1,21 @@
+core                           .        finite source chain accepted; standalone package boundary added in v31
+reciprocal_kernel              research accepted in earlier research workspace
+reciprocal_abel                research accepted in earlier research workspace
+pntplus_inputs                 research new source-restricted PNT+ boundary; separate from prior broad import
+analytic_inputs                research accepted in earlier research workspace
+clean_mertens                  research accepted in earlier research workspace
+selected_prime_reciprocals     research accepted in earlier research workspace
+endpoint_log_bounds            research accepted in earlier research workspace
+factorial_bounds               research accepted in earlier research workspace
+factorial_estimate             research accepted in earlier research workspace
+log_budget_factorial           research accepted in earlier research workspace
+prime_reciprocal_lower         research accepted in v34 run 20260908T064235Z_611434a1; v35 lint edits require a new audit
+small_prime_debit_estimate     research pending
+corrected_budget_estimate      research pending
+endpoint_statement             research new v38 coefficient interface; not an endpoint proof
+endpoint_window_parameters     research new v38 parameter proof source; acceptance pending
+endpoint_truncation_parameters research new v38 parameter proof source; acceptance pending
+endpoint_cutoff_parameters     research new v38 parameter proof source; acceptance pending
+endpoint_prime_mass_parameters research new v38 parameter proof source; acceptance pending
+endpoint_prime_mass_gap        research new v42 mass-budget proof source; acceptance pending
+endpoint_mass_budget_bounds    research new v42 mass-budget proof source; acceptance pending

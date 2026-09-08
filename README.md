@@ -103,9 +103,9 @@ dependency/cache preparation.
 
 | Command | Scope |
 |---|---|
-| `bash RUN.sh` or `bash TEST_ALL.sh` | All implemented core, analytic, and elementary gates. |
+| `bash RUN.sh` or `bash TEST_ALL.sh` | All registered core, analytic, elementary, and endpoint-research gates. |
 | `bash RUN.sh core` | Public finite library, examples, expanded types, and component/export axiom audits. No PNT+ setup required. |
-| `bash RUN.sh research` | All 13 research gates; core imports are built as dependencies. |
+| `bash RUN.sh research` | All registered research gates; core imports are built as dependencies. |
 | `bash RUN.sh --gate corrected_budget_estimate` | That gate plus its explicitly registered prerequisites. |
 | `bash RUN.sh tooling` | Offline runner/architecture tests only. Not a Lean proof check. |
 | `bash RUN.sh --list` | Display the gate inventory. |
@@ -155,10 +155,10 @@ A normal Ctrl+C still packages partial output. A machine crash can leave a parti
 results directory; `--collect-only` prints the last completed archive, not a new
 acceptance claim.
 
-**All 19 currently registered gates have passed in the v40 record.** Future
-changes must still pass their selected checks: a failing `all` run is never
-converted to success because the core passed. The remaining endpoint work is
-outside this completed gate inventory and remains separate from the public core.
+**The 19-gate v40 baseline passed. The two new v42 mass/budget gates are pending.**
+The current full suite contains 21 gates. A failing `all` run is never converted
+to success because the core passed. The endpoint research remains separate from
+the public finite API. See [the new gap changeset](docs/prime-mass-gap-branch.md).
 
 ## Repository layout
 
@@ -203,7 +203,7 @@ modified or deleted by this distribution.
 The core GitHub workflow builds and tests only the public library. Its triggers
 are controlled in `.github/workflows/ci.yml`; local checks do not rewrite them.
 The full research workflow remains manually dispatched under the existing CI
-policy; all currently registered research gates have local acceptance evidence. Both upload diagnostics, and neither swallows failed checks.
+policy. The v40 baseline has local acceptance evidence; the two new gap/size gates remain pending. Both upload diagnostics, and neither swallows failed checks.
 No repository name, owner, token, or upload credential is hardcoded. The ZIP does
 not contain a `.git` directory or perform any GitHub write operation.
 
@@ -215,12 +215,13 @@ boundaries and gate registry. The source is distributed with `LICENSE` and `NOTI
 
 The finite library remains unchanged. Five research gates now accept the actual
 window, truncation and cutoff asymptotics, a fixed-coefficient statement interface,
-and the constant-sensitive prime-mass expansion. All 19 current gates passed in
+and the constant-sensitive prime-mass expansion. The 19 baseline gates passed in
 the v40 record; that is separate evidence from the earlier v36 fixes checkpoint.
 
 The remaining goal is an explicit fixed c>0 at the same critical exponent and scale.
 The historical 1/1000 coefficient is optional, and no positive-coefficient endpoint
-bound is yet claimed. The next proof obligation is the positive prime-mass/budget
-gap, followed by all amplified errors and final assembly. See
+bound is yet claimed. The v42 source implements the positive prime-mass/budget
+gap and supporting size bounds, with two new acceptance gates. All amplified
+errors and final assembly remain subsequent work. See
 [branch scope](docs/endpoint-parameter-branch.md) and
-[next mathematical effort](docs/next-prime-mass-gap.md).
+[current mathematical effort](docs/prime-mass-gap-branch.md).

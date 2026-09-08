@@ -356,7 +356,7 @@ class Run:
     def __init__(self, root: Path, args: argparse.Namespace):
         self.root=root; self.args=args; self.env=clean_env(); self.commands=0
         if args.jobs: self.env['LEAN_NUM_THREADS']=str(args.jobs)
-        self.id='erdos647_repo_v40_results_'+datetime.now(timezone.utc).strftime('%Y%m%dT%H%M%SZ')+'_'+uuid.uuid4().hex[:8]
+        self.id='erdos647_repo_v42_results_'+datetime.now(timezone.utc).strftime('%Y%m%dT%H%M%SZ')+'_'+uuid.uuid4().hex[:8]
         self.dest=root/'results'/self.id
         if (root/'results').is_symlink(): raise ValueError('Refusing symlinked results directory')
         self.dest.mkdir(parents=True,exist_ok=False)

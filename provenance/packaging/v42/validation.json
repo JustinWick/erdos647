@@ -1,0 +1,33 @@
+{
+  "version": "v42",
+  "status": "offline_checks_passed",
+  "base_suite_tests": 178,
+  "updated_suite_tests_passed": 203,
+  "new_tests_added": 25,
+  "tests_passed_after_actual_zip_application": 203,
+  "top_level_tooling_command_exit_code": 0,
+  "all_45_existing_mathematical_modules_unchanged": true,
+  "all_20_existing_audits_unchanged": true,
+  "all_19_existing_gate_entries_unchanged": true,
+  "registered_gates_after_overlay": 21,
+  "untouched_files_checked_contents_and_timestamps": 371,
+  "cache_and_results_sentinels_preserved": [
+    ".tools/local-cache-sentinel",
+    ".lake/build/lib/lean/KEEP.olean",
+    "research/.lake/build/lib/lean/KEEP.olean",
+    "research/.lake/packages/KEEP",
+    "results/keep-old-result.zip",
+    ".git/keep-local-history"
+  ],
+  "user_modified_CI_preserved": true,
+  "exact_algebra_checks": [
+    "critical exponent cancellation",
+    "constant-sensitive residual identity",
+    "fixed epsilon gap including negative budgets",
+    "mass normalization identity",
+    "double-log ratio cancellation",
+    "one-sided budget bound from positive gap"
+  ],
+  "gate_source_and_axiom_acceptance": "pending for the two new gates; tooling success is not theorem acceptance",
+  "endpoint_coefficient_proved": null
+}
