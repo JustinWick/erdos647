@@ -11,7 +11,10 @@ audit warnings. This includes the finite core, analytic bridge, elementary budge
 estimates, exact parameter asymptotics, and the positive prime-mass/budget gap
 with supporting size bounds—not the final endpoint. See
 [proof status](docs/proof-status.md) and the
-[accepted record](provenance/accepted/v42/README.md).
+[accepted record](provenance/accepted/v42/README.md). The v43 run confirmed the
+same accepted checkpoint. The new v44 [amplified-error branch](docs/amplified-errors-branch.md)
+adds five pending proof gates; its 26-gate suite is not covered by the earlier
+21/21 acceptance record.
 
 ## Use the public library
 

@@ -1,5 +1,5 @@
 {
-  "version": "v43",
+  "version": "v45",
   "updated": "2026-09-08",
   "scope": "endpoint research, not the accepted finite core",
   "goal_declaration": "Erdos647Sieve.Endpoint.PositiveEndpointClaim",
@@ -57,9 +57,9 @@
     "latest_recheck_run_id": "erdos647_repo_v42_results_20260908T111052Z_81bd3ce5"
   },
   "next_effort": {
-    "status": "not yet implemented",
-    "scope": "all amplified errors, followed by final fixed-positive-coefficient endpoint assembly",
-    "assignment": "docs/next-amplified-errors.md"
+    "status": "source implemented; acceptance pending",
+    "scope": "all amplified contributions and all-sign intermediate counting bound; final same-scale absorption remains",
+    "assignment": "docs/amplified-errors-branch.md"
   },
   "parameter_pr_local_acceptance": {
     "status": "satisfied",
@@ -93,5 +93,43 @@
     "assumes_nonnegative_budget": false,
     "accepted_snapshot_mathematical_modules": 47,
     "local_pr_acceptance": "satisfied on supplied source snapshot"
+  },
+  "amplified_error_branch": {
+    "status": "source_implemented_acceptance_pending",
+    "gates": [
+      "endpoint_amplification",
+      "endpoint_moment_tail",
+      "endpoint_error_scales",
+      "endpoint_arithmetic_remainder",
+      "endpoint_counting_reduction"
+    ],
+    "new_theorem_targets": 25,
+    "expanded_type_and_definition_checks": 31,
+    "acceptance_evidence": null,
+    "principal_rate": {
+      "numerator": 1499,
+      "denominator": 1000000
+    },
+    "tail_rate": {
+      "numerator": 1,
+      "denominator": 30
+    },
+    "arithmetic_upper_scale": "exp(log X / 2)",
+    "final_reduction_covers_negative_budget": true,
+    "is_endpoint_bound_proof": false,
+    "remaining": "final absorption to EndpointBound c and PositiveEndpointClaim for an explicit fixed c>0",
+    "latest_run": {
+      "run_id": "erdos647_repo_v44_results_20260908T123705Z_9d028f71",
+      "gates_passed": 21,
+      "gates_failed": 2,
+      "gates_blocked": 3,
+      "new_modules_built": [
+        "Amplification",
+        "ErrorScales"
+      ],
+      "failing_stage": "exact-type audit unused hypothesis-name lint",
+      "new_proof_gates_accepted": false,
+      "repair": "v45 retains every quantified hypothesis and makes its unused proof name anonymous in four new audit files; no mathematical module changes"
+    }
   }
 }

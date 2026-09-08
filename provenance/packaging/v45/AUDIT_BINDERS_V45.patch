@@ -1,0 +1,526 @@
+--- a/docs/amplified-errors-branch.md
++++ b/docs/amplified-errors-branch.md
+@@ -133,3 +133,18 @@
+ `905b95818eb32af7874a58b427f50c1711a5e96c`,
+ `Mathlib/Analysis/SpecialFunctions/Pow/Asymptotics.lean`.
+ No additional external theorem is adopted and no accepted proof is reopened.
++
++
++## v45 audit repair following the v44 run
++
++The v44 run retained the accepted 21/21 baseline. The new `Amplification` and
++`ErrorScales` proof modules both built successfully, but their audit commands
++exited 1 for ten unused hypothesis-name diagnostics. Although the audit logs
++printed allowed axiom sets for thirteen declarations, neither whole gate passed.
++`MomentTail`, `ArithmeticRemainder`, and `CountingReduction` were blocked.
++
++v45 leaves all mathematical modules and target statements unchanged. It replaces
++only unused proof-binder names with `_` in four audit files, including the two
++blocked files with the same pattern. Every premise, quantifier, check and axiom
++target remains present; warnings are still errors. The intermediate counting
++bound and final endpoint remain pending. No fixed endpoint coefficient is claimed.
+--- /dev/null
++++ b/docs/changes/v45.md
+@@ -0,0 +1,34 @@
++# v45 — preserve exact types while fixing audit-binder lint
++
++The v44 run passed all 21 established gates. The Amplification and ErrorScales
++modules built, but their exact-type audit invocations failed with ten unused
++hypothesis-name diagnostics. Three downstream gates were blocked. This is not
++an accepted five-gate error-layer result.
++
++## Changes
++
++Four audit files replace unused named proof binders with anonymous `_` binders.
++The hypotheses themselves are retained, including positivity, the nonnegative
++budget condition, the mass–budget gap, and all order/ratio conditions.
++
++| Audit | Unused proof names anonymized | Evidence |
++|---|---:|---|
++| EndpointAmplification | 7 | Reported in v44 |
++| EndpointErrorScales | 3 | Reported in v44 |
++| EndpointMomentTail | 9 | Same pattern in blocked source |
++| EndpointArithmeticRemainder | 3 | Same pattern in blocked source |
++
++All 31 expanded type/definition checks and 25 axiom targets in the error layer
++remain present. No theorem body, theorem statement, numerical constant, dependency
++pin, or gate changes. All 52 mathematical modules and the other 23 audit files
++are unchanged. Warning-as-error and the axiom allowlist remain enforced.
++
++The only runner change is the result prefix, now `erdos647_repo_v45_results_`.
++A version-label regression now checks consistency with the current status record
++instead of requiring an obsolete historical label. New targeted tests compare
++normalized expected types and catch this unused-binder pattern in audit source.
++They do not replace the actual Lean type/axiom gates.
++
++The completed mass–budget PR remains separate. This amplified-error PR still
++requires the full 26/26 gate result. Final same-scale endpoint absorption is
++subsequent work; no endpoint coefficient has yet been proved.
+--- a/docs/endpoint-coefficient-status.json
++++ b/docs/endpoint-coefficient-status.json
+@@ -1,5 +1,5 @@
+ {
+-  "version": "v44",
++  "version": "v45",
+   "updated": "2026-09-08",
+   "scope": "endpoint research, not the accepted finite core",
+   "goal_declaration": "Erdos647Sieve.Endpoint.PositiveEndpointClaim",
+@@ -117,6 +117,19 @@
+     "arithmetic_upper_scale": "exp(log X / 2)",
+     "final_reduction_covers_negative_budget": true,
+     "is_endpoint_bound_proof": false,
+-    "remaining": "final absorption to EndpointBound c and PositiveEndpointClaim for an explicit fixed c>0"
++    "remaining": "final absorption to EndpointBound c and PositiveEndpointClaim for an explicit fixed c>0",
++    "latest_run": {
++      "run_id": "erdos647_repo_v44_results_20260908T123705Z_9d028f71",
++      "gates_passed": 21,
++      "gates_failed": 2,
++      "gates_blocked": 3,
++      "new_modules_built": [
++        "Amplification",
++        "ErrorScales"
++      ],
++      "failing_stage": "exact-type audit unused hypothesis-name lint",
++      "new_proof_gates_accepted": false,
++      "repair": "v45 retains every quantified hypothesis and makes its unused proof name anonymous in four new audit files; no mathematical module changes"
++    }
+   }
+ }
+--- a/docs/proof-status.md
++++ b/docs/proof-status.md
+@@ -136,3 +136,13 @@
+ Hash comparison establishes file consistency, not source authenticity, independent
+ proof replay or novelty. No final endpoint, finiteness result or resolution of
+ Erdős #647 is claimed.
++
++
++### v44 result / v45 repair
++
++The latest full run `erdos647_repo_v44_results_20260908T123705Z_9d028f71` passed
++21/26 gates. Two new proof modules built, but their exact-type audit commands
++failed for unused hypothesis names; three downstream gates were blocked. The
++accepted baseline remains 195 declarations. v45 changes four audit files only
++among the Lean sources and preserves all 52 mathematical modules. The
++amplified-error PR is not yet at its all-gates acceptance checkpoint.
+--- a/research/Audit/EndpointAmplification.lean
++++ b/research/Audit/EndpointAmplification.lean
+@@ -5,7 +5,7 @@
+ open scoped Topology
+ open Filter Real Erdos647Sieve Erdos647Sieve.Endpoint
+ 
+-example : ∀ (t : ℝ) (ht0 : 0 ≤ t) (ht : t ≤ 1 / 2),
++example : ∀ (t : ℝ) (_ : 0 ≤ t) (_ : t ≤ 1 / 2),
+   0 ≤ -Real.log (1 - t) ∧
+       -Real.log (1 - t) ≤ t + t ^ 2 ∧ -Real.log (1 - t) ≤ 2 * t :=
+   Erdos647Sieve.Endpoint.neg_log_weight_bounds
+@@ -13,8 +13,8 @@
+ #print axioms Erdos647Sieve.Endpoint.neg_log_weight_bounds
+ 
+ example : ∀ (H L B lam : ℝ)
+-    (hL : 0 < L) (ht : 1 / (1000 * L) ≤ (1 : ℝ) / 2)
+-    (hB0 : 0 ≤ B) (hB : B ≤ H * L) (hgap : (3 / 2 : ℝ) * H ≤ lam - B),
++    (_ : 0 < L) (_ : 1 / (1000 * L) ≤ (1 : ℝ) / 2)
++    (_ : 0 ≤ B) (_ : B ≤ H * L) (_ : (3 / 2 : ℝ) * H ≤ lam - B),
+   (-Real.log (1 - 1 / (1000 * L))) * B ≤ H / 500 ∧
+       (-Real.log (1 - 1 / (1000 * L))) * B - (1 / (1000 * L)) * lam ≤
+         -(1499 / 1000000 : ℝ) * (H / L) :=
+--- a/research/Audit/EndpointArithmeticRemainder.lean
++++ b/research/Audit/EndpointArithmeticRemainder.lean
+@@ -5,8 +5,8 @@
+ open scoped Topology
+ open Filter Real Erdos647Sieve Erdos647Sieve.Endpoint
+ 
+-example : ∀ (X : ℕ) (hX : 0 < X)
+-    (hH : 0 < windowLength X) (hJ : 0 < truncationOrder X),
++example : ∀ (X : ℕ) (_ : 0 < X)
++    (_ : 0 < windowLength X) (_ : 0 < truncationOrder X),
+   Real.exp (amplificationExponent X) *
+       ((windowLength X : ℝ) * primeCutoff X) ^ truncationOrder X =
+       Real.exp (Real.log (X : ℝ) / 4 +
+--- a/research/Audit/EndpointErrorScales.lean
++++ b/research/Audit/EndpointErrorScales.lean
+@@ -5,7 +5,7 @@
+ open scoped Topology
+ open Filter Real Erdos647Sieve Erdos647Sieve.Endpoint
+ 
+-example : ∀ (X : ℕ) (hX : 2 ≤ X),
++example : ∀ (X : ℕ) (_ : 2 ≤ X),
+   Real.rpow (Real.log (X : ℝ)) endpointExponent *
+       Real.rpow (Real.log (X : ℝ)) (1 - endpointExponent) = Real.log (X : ℝ) :=
+   Erdos647Sieve.Endpoint.window_complementary_scale_product
+@@ -43,8 +43,8 @@
+ #check Erdos647Sieve.Endpoint.log_window_div_logX_tendsto_zero
+ #print axioms Erdos647Sieve.Endpoint.log_window_div_logX_tendsto_zero
+ 
+-example : ∀ (X : ℕ) (hX : 0 < X)
+-    (hJ : 0 < truncationOrder X),
++example : ∀ (X : ℕ) (_ : 0 < X)
++    (_ : 0 < truncationOrder X),
+   primeCutoff X ^ truncationOrder X = Real.rpow (X : ℝ) ((1 : ℝ) / 4) :=
+   Erdos647Sieve.Endpoint.primeCutoff_pow_truncation_eq
+ #check Erdos647Sieve.Endpoint.primeCutoff_pow_truncation_eq
+--- a/research/Audit/EndpointMomentTail.lean
++++ b/research/Audit/EndpointMomentTail.lean
+@@ -6,15 +6,15 @@
+ open Filter Real Erdos647Sieve Erdos647Sieve.Endpoint
+ 
+ example : ∀ (mu : ℝ) (q : ℕ)
+-    (hmu0 : 0 ≤ mu) (hq : 1 ≤ q) (hratio : mu ≤ (q : ℝ) / 20),
++    (_ : 0 ≤ mu) (_ : 1 ≤ q) (_ : mu ≤ (q : ℝ) / 20),
+   mu ^ q / (Nat.factorial q : ℝ) ≤ Real.exp ((1 - Real.log 20) * (q : ℝ)) :=
+   Erdos647Sieve.Endpoint.factorial_tail_le_geometric_exp
+ #check Erdos647Sieve.Endpoint.factorial_tail_le_geometric_exp
+ #print axioms Erdos647Sieve.Endpoint.factorial_tail_le_geometric_exp
+ 
+ example : ∀ (H A mu : ℝ) (q : ℕ)
+-    (hH : 0 ≤ H) (hA : A ≤ H / 500) (hmu0 : 0 ≤ mu)
+-    (hmu : mu ≤ H / 1000) (hq : 1 ≤ q) (horder : H / 50 ≤ (q : ℝ)),
++    (_ : 0 ≤ H) (_ : A ≤ H / 500) (_ : 0 ≤ mu)
++    (_ : mu ≤ H / 1000) (_ : 1 ≤ q) (_ : H / 50 ≤ (q : ℝ)),
+   Real.exp A * (mu ^ q / (Nat.factorial q : ℝ)) ≤ Real.exp (-H / 30) :=
+   Erdos647Sieve.Endpoint.amplified_factorial_tail_le
+ #check Erdos647Sieve.Endpoint.amplified_factorial_tail_le
+--- a/scripts/check.py
++++ b/scripts/check.py
+@@ -356,7 +356,7 @@
+     def __init__(self, root: Path, args: argparse.Namespace):
+         self.root=root; self.args=args; self.env=clean_env(); self.commands=0
+         if args.jobs: self.env['LEAN_NUM_THREADS']=str(args.jobs)
+-        self.id='erdos647_repo_v44_results_'+datetime.now(timezone.utc).strftime('%Y%m%dT%H%M%SZ')+'_'+uuid.uuid4().hex[:8]
++        self.id='erdos647_repo_v45_results_'+datetime.now(timezone.utc).strftime('%Y%m%dT%H%M%SZ')+'_'+uuid.uuid4().hex[:8]
+         self.dest=root/'results'/self.id
+         if (root/'results').is_symlink(): raise ValueError('Refusing symlinked results directory')
+         self.dest.mkdir(parents=True,exist_ok=False)
+--- /dev/null
++++ b/tests/fixtures/v44_error_audit_interfaces.json
+@@ -0,0 +1,138 @@
++{
++  "schema": 1,
++  "baseline_run": "erdos647_repo_v44_results_20260908T123705Z_9d028f71",
++  "purpose": "Preserve v44 expanded types modulo unused bound proof names and whitespace. This is a source regression fixture, not a kernel type check.",
++  "entries": {
++    "research/Audit/EndpointAmplification.lean": {
++      "source_v44_sha256": "8af0a8429b031b05a924818ed926dbe11476e2b214196e03c90e6ea4229678ee",
++      "anonymized_hypothesis_binders": 7,
++      "type_sha256": [
++        "47206175beb433a371a6b0f7a3562e466d212f6aa2f98b6a033729c946cf3ecf",
++        "6d46456bad77b4d2086aa465221e65a9d145e8bb853a2da337bdf1f5a1d58d79",
++        "76a1ea076ceceb375e9196b175063f2d1649e02f4e687d5f737475cf5fcb9f64",
++        "8da8b1260bde44f5f56fd053d35d195505de00543b3cf04ca11077a9aeba5f92",
++        "a3a18a05719eee04cf1cc4f4f5ceeae0012569297976250eb343a908dfcfd08e",
++        "41f85df06b9b49a39360afbe08345b6c4b351e77f75f3a219cd70d5478973ff3",
++        "85a32527081fd46f507145c12438a08e15fbecbf8c56ba667310d35480bf5706",
++        "bba28f51881f387a278359e328b8a7b96658b2c3d96851455f37a9cbd166879f",
++        "7a91447696260f297bb7a8b7c8fb1f97f9fa75ab685f50a6375ceee238684d36",
++        "457392fb89d645a79c6d76c6ea3471bd337de5e7e2198c1d2d73d8080d333650"
++      ],
++      "checks": [
++        "Erdos647Sieve.Endpoint.neg_log_weight_bounds",
++        "Erdos647Sieve.Endpoint.amplification_exponents_le",
++        "Erdos647Sieve.Endpoint.eventually_endpointMu_bounds",
++        "Erdos647Sieve.Endpoint.eventually_amplification_exponents_le",
++        "Erdos647Sieve.Endpoint.eventually_amplification_le",
++        "Erdos647Sieve.Endpoint.eventually_principal_contribution_le"
++      ],
++      "axioms": [
++        "Erdos647Sieve.Endpoint.neg_log_weight_bounds",
++        "Erdos647Sieve.Endpoint.amplification_exponents_le",
++        "Erdos647Sieve.Endpoint.eventually_endpointMu_bounds",
++        "Erdos647Sieve.Endpoint.eventually_amplification_exponents_le",
++        "Erdos647Sieve.Endpoint.eventually_amplification_le",
++        "Erdos647Sieve.Endpoint.eventually_principal_contribution_le"
++      ]
++    },
++    "research/Audit/EndpointMomentTail.lean": {
++      "source_v44_sha256": "70cc91edb98216545ed3f6dcedeca55f5dff976de4bc492c7ae97bef8f8ce00f",
++      "anonymized_hypothesis_binders": 9,
++      "type_sha256": [
++        "d3273e3a463ddf3053d0017cf1ddad7ac0e4ef7cfc236e1f0e390853366b05fe",
++        "4231e25dfb4741928e58b69de9bff40f7b257318ce0839db2b604b299ba01f1d",
++        "950271bb8e0c1b1ccf6ecf3aedc0bca40af6420d006776c39f6a689e6ebc2b89",
++        "6e94641dab08b93adc1c68579deb41f177300aa57d316411aa04e2b83ba7f0e7",
++        "d0b672a533b5714137817d03d50b80177a3d8fc3e59e987fce2dd339407540db"
++      ],
++      "checks": [
++        "Erdos647Sieve.Endpoint.factorial_tail_le_geometric_exp",
++        "Erdos647Sieve.Endpoint.amplified_factorial_tail_le",
++        "Erdos647Sieve.Endpoint.eventually_amplified_moment_tail_le",
++        "Erdos647Sieve.Endpoint.eventually_moment_tail_contribution_le"
++      ],
++      "axioms": [
++        "Erdos647Sieve.Endpoint.factorial_tail_le_geometric_exp",
++        "Erdos647Sieve.Endpoint.amplified_factorial_tail_le",
++        "Erdos647Sieve.Endpoint.eventually_amplified_moment_tail_le",
++        "Erdos647Sieve.Endpoint.eventually_moment_tail_contribution_le"
++      ]
++    },
++    "research/Audit/EndpointErrorScales.lean": {
++      "source_v44_sha256": "41bd520bc97a65a862764eb2683fd124834e1533fa4335e9691cbf2a3c352ce7",
++      "anonymized_hypothesis_binders": 3,
++      "type_sha256": [
++        "25c5fd8acc41de25c65232896419767989e21270c2f4b7e7f44de9b430635142",
++        "251a3ac14e072be71bf214bf59feb86af49398b0413e817aaea86fd8fb173e33",
++        "586335b0494f05288c2c5e1605f45bd8f57806f16ad98fd01906738fe9bce038",
++        "45b70b9c21ca8d7f59fd2cd0ca4bbe1951fda9340e8884429b99e6c6b5480977",
++        "4e0b66e472507d3407aa4ad03173c662ef8eaa9aec70a08ed1205649a05014da",
++        "99422914c384cff683c19118d26bfb37f59794219534764982a05f1cb739768f",
++        "c4d3c503524cfdba3339188ed8b1279239027030d4684738f17a0008bb7df409"
++      ],
++      "checks": [
++        "Erdos647Sieve.Endpoint.window_complementary_scale_product",
++        "Erdos647Sieve.Endpoint.window_mul_logLog_div_logX_tendsto_zero",
++        "Erdos647Sieve.Endpoint.window_div_logX_tendsto_zero",
++        "Erdos647Sieve.Endpoint.truncation_log_window_div_logX_tendsto_zero",
++        "Erdos647Sieve.Endpoint.arithmetic_overhead_div_logX_tendsto_zero",
++        "Erdos647Sieve.Endpoint.log_window_div_logX_tendsto_zero",
++        "Erdos647Sieve.Endpoint.primeCutoff_pow_truncation_eq"
++      ],
++      "axioms": [
++        "Erdos647Sieve.Endpoint.window_complementary_scale_product",
++        "Erdos647Sieve.Endpoint.window_mul_logLog_div_logX_tendsto_zero",
++        "Erdos647Sieve.Endpoint.window_div_logX_tendsto_zero",
++        "Erdos647Sieve.Endpoint.truncation_log_window_div_logX_tendsto_zero",
++        "Erdos647Sieve.Endpoint.arithmetic_overhead_div_logX_tendsto_zero",
++        "Erdos647Sieve.Endpoint.log_window_div_logX_tendsto_zero",
++        "Erdos647Sieve.Endpoint.primeCutoff_pow_truncation_eq"
++      ]
++    },
++    "research/Audit/EndpointArithmeticRemainder.lean": {
++      "source_v44_sha256": "15f85a3823f2fb641a245e15447cee5d3ee4a4e7b5b02f23df0a87427c67a043",
++      "anonymized_hypothesis_binders": 3,
++      "type_sha256": [
++        "a7a35834072f747999253713c08e8e5eb9e11c049e851166e267eccdf1100e28",
++        "70c70c4d19d94993f66552a94cf43bdf8217b125e5165065aafa6a435ae2fcf6",
++        "c237be2a83ac5f7552bd2a22e98f2fe8fee3061d6483b066df00e09aebf536d0",
++        "8ae34813a838cabd25a75e15b96dd3a37cc4a75d7a3213e70a481f9ebe5d1881",
++        "6d03d6377a3bf245cae64521da8495fc52f540ccb54bb1bdd4445522e2e07ba2"
++      ],
++      "checks": [
++        "Erdos647Sieve.Endpoint.amplified_arithmetic_remainder_eq",
++        "Erdos647Sieve.Endpoint.eventually_arithmetic_overhead_le",
++        "Erdos647Sieve.Endpoint.eventually_amplified_arithmetic_remainder_le",
++        "Erdos647Sieve.Endpoint.eventually_exceptional_window_le"
++      ],
++      "axioms": [
++        "Erdos647Sieve.Endpoint.amplified_arithmetic_remainder_eq",
++        "Erdos647Sieve.Endpoint.eventually_arithmetic_overhead_le",
++        "Erdos647Sieve.Endpoint.eventually_amplified_arithmetic_remainder_le",
++        "Erdos647Sieve.Endpoint.eventually_exceptional_window_le"
++      ]
++    },
++    "research/Audit/EndpointCountingReduction.lean": {
++      "source_v44_sha256": "cd9b3a26077a8296c254ff5aa8339e3d20b93cc98f3e3de65628938dd1ff61d3",
++      "anonymized_hypothesis_binders": 0,
++      "type_sha256": [
++        "4d8470dcd2e0785c04d954de796550761fc7e1beaee2cb0b4f6ed47ec7ad1bd7",
++        "eb469a7077849a03e04da1b2b78b385a35792ed79c6e692bc6510dca2f0e8586",
++        "f5f4b58b3b820149f83cbeb93ccaabd0ce42ea47f7cf0110bdb9ace2dc0fdd1f",
++        "5b74f6f4c6be77f1ded1326be4f96f52e3237a65ac80ef7d3544706768b77bfb"
++      ],
++      "checks": [
++        "Erdos647Sieve.Endpoint.amplified_momentBound_eq",
++        "Erdos647Sieve.Endpoint.eventually_candidateCount_le_four_contributions",
++        "Erdos647Sieve.Endpoint.eventually_candidateCount_le_of_negative_budget",
++        "Erdos647Sieve.Endpoint.eventually_candidateCount_le_amplified_errors"
++      ],
++      "axioms": [
++        "Erdos647Sieve.Endpoint.amplified_momentBound_eq",
++        "Erdos647Sieve.Endpoint.eventually_candidateCount_le_four_contributions",
++        "Erdos647Sieve.Endpoint.eventually_candidateCount_le_of_negative_budget",
++        "Erdos647Sieve.Endpoint.eventually_candidateCount_le_amplified_errors"
++      ]
++    }
++  }
++}
+--- a/tests/test_amplified_errors_v44.py
++++ b/tests/test_amplified_errors_v44.py
+@@ -176,9 +176,12 @@
+             self.assertIn('research/Erdos647Research/Endpoint/' + mod + '.lean', files)
+             self.assertIn('research/Audit/Endpoint' + mod + '.lean', files)
+ 
+-    def test_version_label_is_v44(self):
+-        self.assertIn("self.id='erdos647_repo_v44_results_'", (ROOT / 'scripts/check.py').read_text())
+-        self.assertNotIn("self.id='erdos647_repo_v43_results_'", (ROOT / 'scripts/check.py').read_text())
++    def test_version_label_matches_current_status_record(self):
++        record = json.loads((ROOT / 'docs/endpoint-coefficient-status.json').read_text())
++        match = re.search(r"self\.id='erdos647_repo_(v[0-9]+)_results_'",
++                          (ROOT / 'scripts/check.py').read_text())
++        self.assertIsNotNone(match)
++        self.assertEqual(match.group(1), record['version'])
+ 
+ 
+ class ExactErrorAlgebra(unittest.TestCase):
+--- /dev/null
++++ b/tests/test_audit_binders_v45.py
+@@ -0,0 +1,171 @@
++"""Regression for unused names in explicitly quantified exact-type audit examples.
++
++This checks a narrow source pattern and type-text preservation. It is not a Lean
++parser, a complete linter, or a substitute for the normal Lean audit commands.
++"""
++from __future__ import annotations
++
++import contextlib
++import hashlib
++import io
++import json
++from pathlib import Path
++import re
++import sys
++import tempfile
++import unittest
++from unittest import mock
++import zipfile
++
++ROOT = Path(__file__).resolve().parents[1]
++sys.path.insert(0, str(ROOT / 'scripts'))
++import check
++
++FIXTURE = json.loads((ROOT / 'tests/fixtures/v44_error_audit_interfaces.json').read_text())
++ENTRIES = FIXTURE['entries']
++
++
++def example_types(text: str) -> list[str]:
++    """Our audit files deliberately use `example : TYPE := PROOF`."""
++    return re.findall(r'^example\s*:\s*(.*?)\s*:=', check.strip_comments(text), re.M | re.S)
++
++
++def normalized_type(text: str) -> str:
++    text = re.sub(r'\((h\w*)\s*:', '(_ :', text)
++    return re.sub(r'\s+', ' ', text).strip()
++
++
++def unused_hypothesis_names(text: str) -> list[tuple[int, str]]:
++    """Detect unused h-prefixed binder names in this audit's forall type style."""
++    findings = []
++    for index, typ in enumerate(example_types(text), 1):
++        for name in re.findall(r'\((h\w*)\s*:', typ):
++            if len(re.findall(r'\b' + re.escape(name) + r'\b', typ)) == 1:
++                findings.append((index, name))
++    return findings
++
++
++class BinderPatternRegression(unittest.TestCase):
++    def test_original_pattern_is_detected(self):
++        text = 'example : ∀ (t : ℝ) (ht0 : 0 ≤ t) (ht : t ≤ 1 / 2), t ≤ 1 := T\n'
++        self.assertEqual(unused_hypothesis_names(text), [(1, 'ht0'), (1, 'ht')])
++
++    def test_anonymous_hypotheses_are_retained_and_not_flagged(self):
++        old = 'example : ∀ (t : ℝ) (ht0 : 0 ≤ t), t ≤ t := T\n'
++        new = 'example : ∀ (t : ℝ) (_ : 0 ≤ t), t ≤ t := T\n'
++        self.assertEqual(normalized_type(example_types(old)[0]),
++                         normalized_type(example_types(new)[0]))
++        self.assertEqual(unused_hypothesis_names(new), [])
++
++    def test_used_dependent_proof_name_is_not_flagged(self):
++        text = 'example : ∀ (h : P), dependentConclusion h := T\n'
++        self.assertEqual(unused_hypothesis_names(text), [])
++
++    def test_comments_do_not_count_as_references(self):
++        text = 'example : ∀ (h : P), Q /- h is mentioned only in a comment -/ := T\n'
++        self.assertEqual(unused_hypothesis_names(text), [(1, 'h')])
++
++    def test_all_five_error_audits_avoid_the_failing_pattern(self):
++        for name in ENTRIES:
++            with self.subTest(file=name):
++                self.assertEqual(unused_hypothesis_names((ROOT / name).read_text()), [])
++
++    def test_all_31_expanded_types_preserved_modulo_unused_names(self):
++        count = 0
++        for name, expected in ENTRIES.items():
++            types = example_types((ROOT / name).read_text())
++            with self.subTest(file=name):
++                actual = [hashlib.sha256(normalized_type(t).encode()).hexdigest() for t in types]
++                self.assertEqual(actual, expected['type_sha256'])
++            count += len(types)
++        self.assertEqual(count, 31)
++
++    def test_all_25_named_and_axiom_targets_preserved(self):
++        count = 0
++        for name, expected in ENTRIES.items():
++            text = (ROOT / name).read_text()
++            with self.subTest(file=name):
++                self.assertEqual(re.findall(r'^#check (\S+)', text, re.M), expected['checks'])
++                self.assertEqual(re.findall(r'^#print axioms (\S+)', text, re.M), expected['axioms'])
++            count += len(expected['axioms'])
++        self.assertEqual(count, 25)
++
++    def test_no_linter_or_warning_suppression(self):
++        for name in ENTRIES:
++            text = check.strip_comments((ROOT / name).read_text())
++            self.assertIn('set_option warningAsError true', text)
++            self.assertIn('set_option autoImplicit false', text)
++            self.assertNotRegex(text, r'set_option\s+linter\..*\s+false')
++            self.assertFalse(check.FORBIDDEN.search(text))
++
++    def test_four_files_and_twenty_two_names_in_record(self):
++        self.assertEqual(sum(e['anonymized_hypothesis_binders'] for e in ENTRIES.values()), 22)
++        self.assertEqual(sum(e['anonymized_hypothesis_binders'] > 0 for e in ENTRIES.values()), 4)
++
++    def test_deleting_a_hypothesis_is_not_a_permitted_rename(self):
++        before = '∀ (t : ℝ) (h : 0 ≤ t), t ≤ t'
++        self.assertNotEqual(normalized_type(before), normalized_type('∀ (t : ℝ), t ≤ t'))
++
++    def test_changing_a_numerical_bound_is_not_a_permitted_rename(self):
++        before = '∀ (t : ℝ) (h : t ≤ 1 / 2), t ≤ t'
++        after = '∀ (t : ℝ) (_ : t ≤ 1 / 3), t ≤ t'
++        self.assertNotEqual(normalized_type(before), normalized_type(after))
++
++    def test_failing_audit_cannot_be_promoted_by_printed_clean_axioms(self):
++        # Simulate the exact v44 failure shape: build succeeds; audit prints every
++        # allowed report but exits 1. This is a runner test, never proof evidence.
++        gate = 'endpoint_amplification'
++        targets = next(iter(check.GATES[gate]['audits'].values()))
++        reports = '\n'.join("'" + target + "' depends on axioms: [propext, Classical.choice, Quot.sound]"
++                            for target in targets)
++        with tempfile.TemporaryDirectory() as directory, contextlib.redirect_stdout(io.StringIO()):
++            root = Path(directory)
++            run = check.Run(root, check.parser().parse_args(['tooling']))
++            run.lake = 'unused-fixture-lake'
++            original_command = run.command
++
++            def fixture_command(label, command, cwd=None, allow_failure=False):
++                if label.endswith('_build'):
++                    return 0, 'simulated successful module build'
++                return original_command(label, [sys.executable, '-c',
++                    'print(' + repr(reports) + '); raise SystemExit(1)'], root)
++
++            with mock.patch.object(run, 'verify_gate_modules'), \
++                    mock.patch.object(run, 'command', side_effect=fixture_command):
++                run.gate(gate)
++            self.assertEqual(run.record['gates'][gate]['status'], 'FAIL')
++            self.assertEqual(run.record['gates'][gate]['axioms'], {})
++            self.assertEqual(run.record['commands'][-1]['exit_code'], 1)
++
++    def test_fixture_is_collected_for_reproducible_source_tests(self):
++        names = {p.relative_to(ROOT).as_posix() for p in check.source_files(ROOT)}
++        self.assertIn('tests/fixtures/v44_error_audit_interfaces.json', names)
++        self.assertIn('tests/test_audit_binders_v45.py', names)
++
++    def test_current_version_has_no_endpoint_acceptance(self):
++        record = json.loads((ROOT / 'docs/endpoint-coefficient-status.json').read_text())
++        self.assertEqual(record['amplified_error_branch']['status'],
++                         'source_implemented_acceptance_pending')
++        self.assertIsNone(record['proved_coefficient'])
++        self.assertIsNone(record['proved_endpoint_theorem'])
++
++    def test_actual_archive_names_and_latest_pointer_match(self):
++        version = json.loads((ROOT / 'docs/endpoint-coefficient-status.json').read_text())['version']
++        with tempfile.TemporaryDirectory() as directory, contextlib.redirect_stdout(io.StringIO()):
++            root = Path(directory)
++            for name in ENTRIES:
++                target = root / name
++                target.parent.mkdir(parents=True, exist_ok=True)
++                target.write_bytes((ROOT / name).read_bytes())
++            run = check.Run(root, check.parser().parse_args(['tooling']))
++            run.record['status'] = 'TOOLING_FIXTURE_NOT_LEAN'
++            run.finish()
++            archive = run.dest.with_suffix('.zip')
++            self.assertTrue(archive.name.startswith('erdos647_repo_' + version + '_results_'))
++            self.assertEqual(Path((root / 'results/latest_result.txt').read_text().strip()), archive)
++            with zipfile.ZipFile(archive) as z:
++                self.assertTrue(all(n.startswith(run.id + '/') for n in z.namelist()))
++                summary = json.loads(z.read(run.id + '/summary.json'))
++                self.assertEqual(summary['run_id'], run.id)
++                for name in ENTRIES:
++                    self.assertEqual(z.read(run.id + '/source/' + name), (ROOT / name).read_bytes())

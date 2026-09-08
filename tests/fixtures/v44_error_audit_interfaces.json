@@ -1,0 +1,138 @@
+{
+  "schema": 1,
+  "baseline_run": "erdos647_repo_v44_results_20260908T123705Z_9d028f71",
+  "purpose": "Preserve v44 expanded types modulo unused bound proof names and whitespace. This is a source regression fixture, not a kernel type check.",
+  "entries": {
+    "research/Audit/EndpointAmplification.lean": {
+      "source_v44_sha256": "8af0a8429b031b05a924818ed926dbe11476e2b214196e03c90e6ea4229678ee",
+      "anonymized_hypothesis_binders": 7,
+      "type_sha256": [
+        "47206175beb433a371a6b0f7a3562e466d212f6aa2f98b6a033729c946cf3ecf",
+        "6d46456bad77b4d2086aa465221e65a9d145e8bb853a2da337bdf1f5a1d58d79",
+        "76a1ea076ceceb375e9196b175063f2d1649e02f4e687d5f737475cf5fcb9f64",
+        "8da8b1260bde44f5f56fd053d35d195505de00543b3cf04ca11077a9aeba5f92",
+        "a3a18a05719eee04cf1cc4f4f5ceeae0012569297976250eb343a908dfcfd08e",
+        "41f85df06b9b49a39360afbe08345b6c4b351e77f75f3a219cd70d5478973ff3",
+        "85a32527081fd46f507145c12438a08e15fbecbf8c56ba667310d35480bf5706",
+        "bba28f51881f387a278359e328b8a7b96658b2c3d96851455f37a9cbd166879f",
+        "7a91447696260f297bb7a8b7c8fb1f97f9fa75ab685f50a6375ceee238684d36",
+        "457392fb89d645a79c6d76c6ea3471bd337de5e7e2198c1d2d73d8080d333650"
+      ],
+      "checks": [
+        "Erdos647Sieve.Endpoint.neg_log_weight_bounds",
+        "Erdos647Sieve.Endpoint.amplification_exponents_le",
+        "Erdos647Sieve.Endpoint.eventually_endpointMu_bounds",
+        "Erdos647Sieve.Endpoint.eventually_amplification_exponents_le",
+        "Erdos647Sieve.Endpoint.eventually_amplification_le",
+        "Erdos647Sieve.Endpoint.eventually_principal_contribution_le"
+      ],
+      "axioms": [
+        "Erdos647Sieve.Endpoint.neg_log_weight_bounds",
+        "Erdos647Sieve.Endpoint.amplification_exponents_le",
+        "Erdos647Sieve.Endpoint.eventually_endpointMu_bounds",
+        "Erdos647Sieve.Endpoint.eventually_amplification_exponents_le",
+        "Erdos647Sieve.Endpoint.eventually_amplification_le",
+        "Erdos647Sieve.Endpoint.eventually_principal_contribution_le"
+      ]
+    },
+    "research/Audit/EndpointMomentTail.lean": {
+      "source_v44_sha256": "70cc91edb98216545ed3f6dcedeca55f5dff976de4bc492c7ae97bef8f8ce00f",
+      "anonymized_hypothesis_binders": 9,
+      "type_sha256": [
+        "d3273e3a463ddf3053d0017cf1ddad7ac0e4ef7cfc236e1f0e390853366b05fe",
+        "4231e25dfb4741928e58b69de9bff40f7b257318ce0839db2b604b299ba01f1d",
+        "950271bb8e0c1b1ccf6ecf3aedc0bca40af6420d006776c39f6a689e6ebc2b89",
+        "6e94641dab08b93adc1c68579deb41f177300aa57d316411aa04e2b83ba7f0e7",
+        "d0b672a533b5714137817d03d50b80177a3d8fc3e59e987fce2dd339407540db"
+      ],
+      "checks": [
+        "Erdos647Sieve.Endpoint.factorial_tail_le_geometric_exp",
+        "Erdos647Sieve.Endpoint.amplified_factorial_tail_le",
+        "Erdos647Sieve.Endpoint.eventually_amplified_moment_tail_le",
+        "Erdos647Sieve.Endpoint.eventually_moment_tail_contribution_le"
+      ],
+      "axioms": [
+        "Erdos647Sieve.Endpoint.factorial_tail_le_geometric_exp",
+        "Erdos647Sieve.Endpoint.amplified_factorial_tail_le",
+        "Erdos647Sieve.Endpoint.eventually_amplified_moment_tail_le",
+        "Erdos647Sieve.Endpoint.eventually_moment_tail_contribution_le"
+      ]
+    },
+    "research/Audit/EndpointErrorScales.lean": {
+      "source_v44_sha256": "41bd520bc97a65a862764eb2683fd124834e1533fa4335e9691cbf2a3c352ce7",
+      "anonymized_hypothesis_binders": 3,
+      "type_sha256": [
+        "25c5fd8acc41de25c65232896419767989e21270c2f4b7e7f44de9b430635142",
+        "251a3ac14e072be71bf214bf59feb86af49398b0413e817aaea86fd8fb173e33",
+        "586335b0494f05288c2c5e1605f45bd8f57806f16ad98fd01906738fe9bce038",
+        "45b70b9c21ca8d7f59fd2cd0ca4bbe1951fda9340e8884429b99e6c6b5480977",
+        "4e0b66e472507d3407aa4ad03173c662ef8eaa9aec70a08ed1205649a05014da",
+        "99422914c384cff683c19118d26bfb37f59794219534764982a05f1cb739768f",
+        "c4d3c503524cfdba3339188ed8b1279239027030d4684738f17a0008bb7df409"
+      ],
+      "checks": [
+        "Erdos647Sieve.Endpoint.window_complementary_scale_product",
+        "Erdos647Sieve.Endpoint.window_mul_logLog_div_logX_tendsto_zero",
+        "Erdos647Sieve.Endpoint.window_div_logX_tendsto_zero",
+        "Erdos647Sieve.Endpoint.truncation_log_window_div_logX_tendsto_zero",
+        "Erdos647Sieve.Endpoint.arithmetic_overhead_div_logX_tendsto_zero",
+        "Erdos647Sieve.Endpoint.log_window_div_logX_tendsto_zero",
+        "Erdos647Sieve.Endpoint.primeCutoff_pow_truncation_eq"
+      ],
+      "axioms": [
+        "Erdos647Sieve.Endpoint.window_complementary_scale_product",
+        "Erdos647Sieve.Endpoint.window_mul_logLog_div_logX_tendsto_zero",
+        "Erdos647Sieve.Endpoint.window_div_logX_tendsto_zero",
+        "Erdos647Sieve.Endpoint.truncation_log_window_div_logX_tendsto_zero",
+        "Erdos647Sieve.Endpoint.arithmetic_overhead_div_logX_tendsto_zero",
+        "Erdos647Sieve.Endpoint.log_window_div_logX_tendsto_zero",
+        "Erdos647Sieve.Endpoint.primeCutoff_pow_truncation_eq"
+      ]
+    },
+    "research/Audit/EndpointArithmeticRemainder.lean": {
+      "source_v44_sha256": "15f85a3823f2fb641a245e15447cee5d3ee4a4e7b5b02f23df0a87427c67a043",
+      "anonymized_hypothesis_binders": 3,
+      "type_sha256": [
+        "a7a35834072f747999253713c08e8e5eb9e11c049e851166e267eccdf1100e28",
+        "70c70c4d19d94993f66552a94cf43bdf8217b125e5165065aafa6a435ae2fcf6",
+        "c237be2a83ac5f7552bd2a22e98f2fe8fee3061d6483b066df00e09aebf536d0",
+        "8ae34813a838cabd25a75e15b96dd3a37cc4a75d7a3213e70a481f9ebe5d1881",
+        "6d03d6377a3bf245cae64521da8495fc52f540ccb54bb1bdd4445522e2e07ba2"
+      ],
+      "checks": [
+        "Erdos647Sieve.Endpoint.amplified_arithmetic_remainder_eq",
+        "Erdos647Sieve.Endpoint.eventually_arithmetic_overhead_le",
+        "Erdos647Sieve.Endpoint.eventually_amplified_arithmetic_remainder_le",
+        "Erdos647Sieve.Endpoint.eventually_exceptional_window_le"
+      ],
+      "axioms": [
+        "Erdos647Sieve.Endpoint.amplified_arithmetic_remainder_eq",
+        "Erdos647Sieve.Endpoint.eventually_arithmetic_overhead_le",
+        "Erdos647Sieve.Endpoint.eventually_amplified_arithmetic_remainder_le",
+        "Erdos647Sieve.Endpoint.eventually_exceptional_window_le"
+      ]
+    },
+    "research/Audit/EndpointCountingReduction.lean": {
+      "source_v44_sha256": "cd9b3a26077a8296c254ff5aa8339e3d20b93cc98f3e3de65628938dd1ff61d3",
+      "anonymized_hypothesis_binders": 0,
+      "type_sha256": [
+        "4d8470dcd2e0785c04d954de796550761fc7e1beaee2cb0b4f6ed47ec7ad1bd7",
+        "eb469a7077849a03e04da1b2b78b385a35792ed79c6e692bc6510dca2f0e8586",
+        "f5f4b58b3b820149f83cbeb93ccaabd0ce42ea47f7cf0110bdb9ace2dc0fdd1f",
+        "5b74f6f4c6be77f1ded1326be4f96f52e3237a65ac80ef7d3544706768b77bfb"
+      ],
+      "checks": [
+        "Erdos647Sieve.Endpoint.amplified_momentBound_eq",
+        "Erdos647Sieve.Endpoint.eventually_candidateCount_le_four_contributions",
+        "Erdos647Sieve.Endpoint.eventually_candidateCount_le_of_negative_budget",
+        "Erdos647Sieve.Endpoint.eventually_candidateCount_le_amplified_errors"
+      ],
+      "axioms": [
+        "Erdos647Sieve.Endpoint.amplified_momentBound_eq",
+        "Erdos647Sieve.Endpoint.eventually_candidateCount_le_four_contributions",
+        "Erdos647Sieve.Endpoint.eventually_candidateCount_le_of_negative_budget",
+        "Erdos647Sieve.Endpoint.eventually_candidateCount_le_amplified_errors"
+      ]
+    }
+  }
+}

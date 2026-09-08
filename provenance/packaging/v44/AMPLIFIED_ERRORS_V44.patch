@@ -1,0 +1,1496 @@
+--- a/README.md
++++ b/README.md
+@@ -11,7 +11,10 @@
+ estimates, exact parameter asymptotics, and the positive prime-mass/budget gap
+ with supporting size bounds—not the final endpoint. See
+ [proof status](docs/proof-status.md) and the
+-[accepted record](provenance/accepted/v42/README.md).
++[accepted record](provenance/accepted/v42/README.md). The v43 run confirmed the
++same accepted checkpoint. The new v44 [amplified-error branch](docs/amplified-errors-branch.md)
++adds five pending proof gates; its 26-gate suite is not covered by the earlier
++21/21 acceptance record.
+ 
+ ## Use the public library
+ 
+--- /dev/null
++++ b/docs/amplified-errors-branch.md
+@@ -0,0 +1,135 @@
++# Amplified errors: the next mathematical changeset (v44)
++
++## Boundary between the two PRs
++
++The preceding prime-mass/budget-gap PR has a passing 21/21-gate record, confirmed
++by `erdos647_repo_v43_results_20260908T120436Z_93d219fb`. It is locally ready for a
++normal PR. This overlay starts a separate mathematical changeset; its new gates
++have pending acceptance. It does not change any of the 47 accepted mathematical
++modules or 22 existing audit files. Repository CI and review of the actual GitHub
++diff are not inferred from the uploaded local logs.
++
++## Objective
++
++Bound EVERY contribution in the accepted finite counting inequality, including
++the full amplification multiplier, then reduce endpoint assembly to a final
++asymptotic absorption argument. This is not an infrastructure or dependency port.
++
++Keep the protected definitions:
++
++\[
++Q=\log X,\quad L=\log\log X,\quad
++ a=\frac{\log2}{1+\log2},\quad H=\lfloor Q^a\rfloor,\quad
++J=2\lceil H/100\rceil,\quad y=X^{1/(4J)},\quad t=\frac1{1000L}.
++\]
++
++Write \(\lambda=\operatorname{primeMass}(H,y)\),
++\(B=\operatorname{correctedBudget}(H)\), \(\eta=-\log(1-t)\),
++\(A=\eta B\), and \(\mu=t\lambda\). Here A denotes amplification, not an interval
++translation. The three named adapters `endpointEta`, `endpointMu`, and
++`amplificationExponent` only package these exact expressions.
++
++## New proof-source targets
++
++### Amplification and principal term
++
++For the nonnegative-budget branch, combine the accepted gap and size estimates
++with the existing quadratic logarithm bound:
++
++\[
++A\le H/500,\quad 0\le\mu\le H/1000,\quad
++A-\mu\le-\frac{1499}{10^6}\frac HL.
++\]
++
++The rational coefficient is an algebraic consequence of the existing parameters,
++not an optimization target. The actual principal contribution is bounded by
++\(X\exp[-1499 H/(10^6 L)]\).
++
++### Factorial tail with a growing numerator
++
++For \(q=J+1\), use \(q\ge H/50\), \(\mu\le H/1000\), and the accepted
++\((q/e)^q\le q!\). The implementation targets
++
++\[
++e^A\frac{\mu^q}{q!}\le e^{-H/30}.
++\]
++
++No fixed-numerator `c^n/n!` limit is used. All factorials are formed in the
++naturals and cast to the reals before division.
++
++### Arithmetic and exceptional-window contributions
++
++Prove the exact identity \(y^J=X^{1/4}\) after establishing \(X,J>0\), then
++
++\[
++e^A(Hy)^J=\exp(Q/4+J\log H+A).
++\]
++
++Use \(HL/Q\to0\), \(J\log H/Q\to0\), and \(A\le H/500\) in the applicable
++budget branch to bound the full expression by \(e^{Q/2}\) eventually. Separately
++bound the exceptional window \(H\le e^{Q/2}\), with no budget sign assumption.
++For positive X, \(e^{Q/2}=X^{1/2}\).
++
++### All-sign counting reduction
++
++The final new declaration targets the unconditional intermediate estimate
++
++\[
++\boxed{
++C(X)\le
++X\exp\!\left[-\frac{1499}{10^6}\frac HL\right]
+++Xe^{-H/30}+2e^{Q/2}
++\quad\text{eventually}.
++}
++\]
++
++For B>=0 it is an application of `finiteCounting` and the three weighted bounds.
++For B<0 it uses `candidateCount_le_window_of_negative_correctedBudget` and the
++exceptional-window estimate. It does not assert that the budget is eventually
++nonnegative. The factor 2 accounts for both the arithmetic remainder and H.
++
++## Modules and checks
++
++| Module | Gate |
++|---|---|
++| `Endpoint/Amplification.lean` | `endpoint_amplification` |
++| `Endpoint/MomentTail.lean` | `endpoint_moment_tail` |
++| `Endpoint/ErrorScales.lean` | `endpoint_error_scales` |
++| `Endpoint/ArithmeticRemainder.lean` | `endpoint_arithmetic_remainder` |
++| `Endpoint/CountingReduction.lean` | `endpoint_counting_reduction` |
++
++The scope is 25 new theorem targets and 31 expanded type/definition checks.
++The full suite has 26 gates: the accepted 21 plus these five. `ErrorScales` is
++independent of the factorial/PNT/mass-gap route; an error on that route does not
++prevent useful feedback for the elementary growth comparisons.
++
++Warning handling and the transitive-axiom allowlist are unchanged. Lean/Mathlib
++stays at 4.32.2, with the same pinned dependency lockfiles. The runner changes
++only its output prefix to `erdos647_repo_v44_results_`; Lake still owns incremental
++build invalidation. No cache or prior result is deleted.
++
++## Remaining final absorption
++
++No declaration of `EndpointBound c` or `PositiveEndpointClaim` is introduced by
++this overlay. Once the new counting reduction is accepted, set \(S=Q^a/L\), prove
++\(S\to\infty\) and \(S/Q\to0\), and divide the intermediate bound by
++\(X e^{-cS}\). Choose any comfortable explicit fixed
++\(0<c<1499/10^6\) using the already accepted \(H/Q^a\to1\).
++
++The three normalized contributions then tend to zero; one eventual comparison
++absorbs their sum without an unspecified multiplicative constant. A value such
++as 1/2000 is sufficient as a planning example, not a required or proved value.
++The old 1/1000 statement is a corollary only if it follows with essentially no
++extra work. Preserve a and the asymptotic scale, record the actual final c, and
++do not mark it proved before its exact statement and axiom audit pass.
++
++This density theorem would not settle the existence question in Erdős #647.
++
++## Source reuse
++
++The new code consumes the accepted project factorial, logarithm, mass-gap, and
++parameter results. The growth comparison uses Mathlib's
++`isLittleO_log_rpow_atTop`, checked at commit
++`905b95818eb32af7874a58b427f50c1711a5e96c`,
++`Mathlib/Analysis/SpecialFunctions/Pow/Asymptotics.lean`.
++No additional external theorem is adopted and no accepted proof is reopened.
+--- /dev/null
++++ b/docs/changes/v44.md
+@@ -0,0 +1,16 @@
++# v44 — amplified-error proof layer
++
++New mathematical branch after the accepted v43 confirmation of the gap-and-size
++checkpoint. Adds five modules, five independent audit files, 25 theorem targets,
++and 31 expanded type/definition checks. The final target of this changeset is
++an all-sign three-term upper bound for candidateCount, retaining every amplified
++error and separately handling negative budgets.
++
++The 47 accepted mathematical modules and 22 accepted audits are unchanged. The
++existing 21 gate definitions, dependency pins, lockfiles, core configuration,
++warning policy, PNT+ boundary, and CI settings are unchanged. Five gates and
++five research Lake roots are added. The runner's only edit is the v44 filename
++prefix. New regression tests cover the interfaces and exact finite algebra.
++
++Acceptance of the five new gates is pending. No endpoint coefficient or final
++endpoint theorem is recorded as proved. See `docs/amplified-errors-branch.md`.
+--- a/docs/endpoint-coefficient-status.json
++++ b/docs/endpoint-coefficient-status.json
+@@ -1,5 +1,5 @@
+ {
+-  "version": "v43",
++  "version": "v44",
+   "updated": "2026-09-08",
+   "scope": "endpoint research, not the accepted finite core",
+   "goal_declaration": "Erdos647Sieve.Endpoint.PositiveEndpointClaim",
+@@ -57,9 +57,9 @@
+     "latest_recheck_run_id": "erdos647_repo_v42_results_20260908T111052Z_81bd3ce5"
+   },
+   "next_effort": {
+-    "status": "not yet implemented",
+-    "scope": "all amplified errors, followed by final fixed-positive-coefficient endpoint assembly",
+-    "assignment": "docs/next-amplified-errors.md"
++    "status": "source implemented; acceptance pending",
++    "scope": "all amplified contributions and all-sign intermediate counting bound; final same-scale absorption remains",
++    "assignment": "docs/amplified-errors-branch.md"
+   },
+   "parameter_pr_local_acceptance": {
+     "status": "satisfied",
+@@ -93,5 +93,30 @@
+     "assumes_nonnegative_budget": false,
+     "accepted_snapshot_mathematical_modules": 47,
+     "local_pr_acceptance": "satisfied on supplied source snapshot"
++  },
++  "amplified_error_branch": {
++    "status": "source_implemented_acceptance_pending",
++    "gates": [
++      "endpoint_amplification",
++      "endpoint_moment_tail",
++      "endpoint_error_scales",
++      "endpoint_arithmetic_remainder",
++      "endpoint_counting_reduction"
++    ],
++    "new_theorem_targets": 25,
++    "expanded_type_and_definition_checks": 31,
++    "acceptance_evidence": null,
++    "principal_rate": {
++      "numerator": 1499,
++      "denominator": 1000000
++    },
++    "tail_rate": {
++      "numerator": 1,
++      "denominator": 30
++    },
++    "arithmetic_upper_scale": "exp(log X / 2)",
++    "final_reduction_covers_negative_budget": true,
++    "is_endpoint_bound_proof": false,
++    "remaining": "final absorption to EndpointBound c and PositiveEndpointClaim for an explicit fixed c>0"
+   }
+ }
+--- a/docs/proof-status.md
++++ b/docs/proof-status.md
+@@ -1,6 +1,6 @@
+ # Proof status
+ 
+-## Current accepted repository checkpoint: v42
++## Current accepted repository checkpoint: v42, confirmed by v43
+ 
+ The newer run `erdos647_repo_v42_results_20260908T111052Z_81bd3ce5` passed **21/21 gates** on September 8, 2026,
+ using the pinned **Lean/Mathlib 4.32.2** environment. No gates failed or were blocked.
+@@ -29,6 +29,20 @@
+ | Fixed positive prime-mass/budget gap | **Newly passed in v42** |
+ | Normalized prime mass and signed budget size bounds | **Newly passed in v42** |
+ | Amplified-error bounds and final fixed-positive-coefficient endpoint | Not yet proved |
++
++## New v44 source: amplified errors (acceptance pending)
++
++The latest v43 confirmation passed the same 21 accepted gates, with all 47
++mathematical modules and 22 audits unchanged. It also confirmed the output-label
++correction. No new endpoint coefficient was proved by that rerun.
++
++The separate v44 branch adds five error-control modules and five audits: principal
++amplification, the growing-numerator factorial tail, elementary growth scales,
++the amplified arithmetic remainder and exceptional window, and an all-sign
++candidate-count reduction. Its 25 new theorem targets and 31 expanded checks
++are pending acceptance; the full suite now has 26 gates. The final absorption
++into `EndpointBound c` remains outside this overlay. See
++[the amplified-error branch](amplified-errors-branch.md).
+ 
+ ## The accepted parameter result
+ 
+@@ -91,8 +105,8 @@
+ need not be 1/1000; derive the historical `EndpointClaim` only when essentially
+ free. No replacement rigid coefficient target is imposed.
+ 
+-The next mathematical changeset is [every amplified error term](next-amplified-errors.md),
+-followed by final assembly and the separate negative-budget case. Do not reopen
++The current new mathematical changeset implements [every amplified error term](amplified-errors-branch.md)
++and the separate negative-budget case; final same-scale absorption follows its acceptance. Do not reopen
+ the accepted finite, PNT+, Mertens, factorial, debit or parameter proofs.
+ 
+ ## PR boundary
+--- /dev/null
++++ b/docs/pull-requests/amplified-errors.md
+@@ -0,0 +1,36 @@
++# Proposed next PR title
++
++Bound all amplified sieve errors and reduce endpoint counting
++
++## Scope
++
++This is the NEXT mathematical changeset after the locally accepted prime-mass/
++budget-gap PR. It is not covered by that PR's 21/21 evidence.
++
++Add bounds for the principal exponential contribution, the factorial tail with
++its growing numerator, the full amplified arithmetic remainder, and the initial
++exceptional window. Combine these with the accepted finite counting theorem,
++explicitly splitting on the signed corrected budget.
++
++The new target is, eventually,
++
++$$
++C(X)\le X\exp\!\left[-\frac{1499}{10^6}\frac{H}{\log\log X}\right]
+++X\exp(-H/30)+2\exp(\log X/2).
++$$
++
++The actual protected parameter definitions, critical exponent, and saving scale
++are unchanged. No final coefficient c or `PositiveEndpointClaim` is claimed by
++this changeset; final same-scale absorption is the remaining step.
++
++## Validation threshold
++
++Five new gates require warning-free build/type/transitive-axiom acceptance, with
++25 new theorem targets and 31 expanded statement/definition checks. The complete
++suite is now 26 gates. Current status: new source implemented; new acceptance
++pending. Do not substitute the older 21/21 record for these five new checks.
++
++## Preservation
++
++No edits to the 47 accepted mathematical modules, 22 accepted audit files,
++existing gate definitions, compiler and dependency pins, core API, or CI files.
+--- /dev/null
++++ b/research/Audit/EndpointAmplification.lean
+@@ -0,0 +1,69 @@
++import Erdos647Research.Endpoint.Amplification
++
++set_option autoImplicit false
++set_option warningAsError true
++open scoped Topology
++open Filter Real Erdos647Sieve Erdos647Sieve.Endpoint
++
++example : ∀ (t : ℝ) (ht0 : 0 ≤ t) (ht : t ≤ 1 / 2),
++  0 ≤ -Real.log (1 - t) ∧
++      -Real.log (1 - t) ≤ t + t ^ 2 ∧ -Real.log (1 - t) ≤ 2 * t :=
++  Erdos647Sieve.Endpoint.neg_log_weight_bounds
++#check Erdos647Sieve.Endpoint.neg_log_weight_bounds
++#print axioms Erdos647Sieve.Endpoint.neg_log_weight_bounds
++
++example : ∀ (H L B lam : ℝ)
++    (hL : 0 < L) (ht : 1 / (1000 * L) ≤ (1 : ℝ) / 2)
++    (hB0 : 0 ≤ B) (hB : B ≤ H * L) (hgap : (3 / 2 : ℝ) * H ≤ lam - B),
++  (-Real.log (1 - 1 / (1000 * L))) * B ≤ H / 500 ∧
++      (-Real.log (1 - 1 / (1000 * L))) * B - (1 / (1000 * L)) * lam ≤
++        -(1499 / 1000000 : ℝ) * (H / L) :=
++  Erdos647Sieve.Endpoint.amplification_exponents_le
++#check Erdos647Sieve.Endpoint.amplification_exponents_le
++#print axioms Erdos647Sieve.Endpoint.amplification_exponents_le
++
++example : ∀ᶠ X : ℕ in atTop,
++      0 ≤ endpointMu X ∧ endpointMu X ≤ (windowLength X : ℝ) / 1000 :=
++  Erdos647Sieve.Endpoint.eventually_endpointMu_bounds
++#check Erdos647Sieve.Endpoint.eventually_endpointMu_bounds
++#print axioms Erdos647Sieve.Endpoint.eventually_endpointMu_bounds
++
++example : ∀ᶠ X : ℕ in atTop, 0 ≤ correctedBudget (windowLength X) →
++      amplificationExponent X ≤ (windowLength X : ℝ) / 500 ∧
++      amplificationExponent X - endpointMu X ≤
++        -(1499 / 1000000 : ℝ) *
++          ((windowLength X : ℝ) / Real.log (Real.log (X : ℝ))) :=
++  Erdos647Sieve.Endpoint.eventually_amplification_exponents_le
++#check Erdos647Sieve.Endpoint.eventually_amplification_exponents_le
++#print axioms Erdos647Sieve.Endpoint.eventually_amplification_exponents_le
++
++example : ∀ᶠ X : ℕ in atTop, 0 ≤ correctedBudget (windowLength X) →
++      Real.exp (amplificationExponent X) ≤ Real.exp ((windowLength X : ℝ) / 500) :=
++  Erdos647Sieve.Endpoint.eventually_amplification_le
++#check Erdos647Sieve.Endpoint.eventually_amplification_le
++#print axioms Erdos647Sieve.Endpoint.eventually_amplification_le
++
++example : ∀ᶠ X : ℕ in atTop, 0 ≤ correctedBudget (windowLength X) →
++      (X : ℝ) * Real.exp (amplificationExponent X - endpointMu X) ≤
++        (X : ℝ) * Real.exp (-(1499 / 1000000 : ℝ) *
++          ((windowLength X : ℝ) / Real.log (Real.log (X : ℝ)))) :=
++  Erdos647Sieve.Endpoint.eventually_principal_contribution_le
++#check Erdos647Sieve.Endpoint.eventually_principal_contribution_le
++#print axioms Erdos647Sieve.Endpoint.eventually_principal_contribution_le
++
++-- Expanded definitions: these are presentation adapters, not extra hypotheses.
++example : endpointEta = fun X : ℕ => -Real.log (1 - momentT X) := rfl
++example : endpointMu = fun X : ℕ =>
++    momentT X * primeMass (windowLength X) (primeCutoff X) := rfl
++example : amplificationExponent = fun X : ℕ =>
++    (-Real.log (1 - momentT X)) * (correctedBudget (windowLength X) : ℝ) := rfl
++
++example : ∀ᶠ X : ℕ in atTop, 0 ≤ correctedBudget (windowLength X) →
++    (-Real.log (1 - momentT X)) * (correctedBudget (windowLength X) : ℝ) ≤
++        (windowLength X : ℝ) / 500 ∧
++    (-Real.log (1 - momentT X)) * (correctedBudget (windowLength X) : ℝ) -
++      momentT X * primeMass (windowLength X) (primeCutoff X) ≤
++        -(1499 / 1000000 : ℝ) *
++          ((windowLength X : ℝ) / Real.log (Real.log (X : ℝ))) := by
++  simpa only [amplificationExponent, endpointEta, endpointMu] using
++    eventually_amplification_exponents_le
+--- /dev/null
++++ b/research/Audit/EndpointArithmeticRemainder.lean
+@@ -0,0 +1,46 @@
++import Erdos647Research.Endpoint.ArithmeticRemainder
++
++set_option autoImplicit false
++set_option warningAsError true
++open scoped Topology
++open Filter Real Erdos647Sieve Erdos647Sieve.Endpoint
++
++example : ∀ (X : ℕ) (hX : 0 < X)
++    (hH : 0 < windowLength X) (hJ : 0 < truncationOrder X),
++  Real.exp (amplificationExponent X) *
++      ((windowLength X : ℝ) * primeCutoff X) ^ truncationOrder X =
++      Real.exp (Real.log (X : ℝ) / 4 +
++        (truncationOrder X : ℝ) * Real.log (windowLength X : ℝ) +
++        amplificationExponent X) :=
++  Erdos647Sieve.Endpoint.amplified_arithmetic_remainder_eq
++#check Erdos647Sieve.Endpoint.amplified_arithmetic_remainder_eq
++#print axioms Erdos647Sieve.Endpoint.amplified_arithmetic_remainder_eq
++
++example : ∀ᶠ X : ℕ in atTop,
++      (truncationOrder X : ℝ) * Real.log (windowLength X : ℝ) +
++        (windowLength X : ℝ) / 500 ≤ Real.log (X : ℝ) / 4 :=
++  Erdos647Sieve.Endpoint.eventually_arithmetic_overhead_le
++#check Erdos647Sieve.Endpoint.eventually_arithmetic_overhead_le
++#print axioms Erdos647Sieve.Endpoint.eventually_arithmetic_overhead_le
++
++example : ∀ᶠ X : ℕ in atTop, 0 ≤ correctedBudget (windowLength X) →
++      Real.exp (amplificationExponent X) *
++        ((windowLength X : ℝ) * primeCutoff X) ^ truncationOrder X ≤
++        Real.exp (Real.log (X : ℝ) / 2) :=
++  Erdos647Sieve.Endpoint.eventually_amplified_arithmetic_remainder_le
++#check Erdos647Sieve.Endpoint.eventually_amplified_arithmetic_remainder_le
++#print axioms Erdos647Sieve.Endpoint.eventually_amplified_arithmetic_remainder_le
++
++example : ∀ᶠ X : ℕ in atTop,
++      (windowLength X : ℝ) ≤ Real.exp (Real.log (X : ℝ) / 2) :=
++  Erdos647Sieve.Endpoint.eventually_exceptional_window_le
++#check Erdos647Sieve.Endpoint.eventually_exceptional_window_le
++#print axioms Erdos647Sieve.Endpoint.eventually_exceptional_window_le
++
++-- No disappearance of the amplification multiplier behind a named expression.
++example : ∀ᶠ X : ℕ in atTop, 0 ≤ correctedBudget (windowLength X) →
++    Real.exp ((-Real.log (1 - momentT X)) * (correctedBudget (windowLength X) : ℝ)) *
++      ((windowLength X : ℝ) * primeCutoff X) ^ truncationOrder X ≤
++      Real.exp (Real.log (X : ℝ) / 2) := by
++  simpa only [amplificationExponent, endpointEta] using
++    eventually_amplified_arithmetic_remainder_le
+--- /dev/null
++++ b/research/Audit/EndpointCountingReduction.lean
+@@ -0,0 +1,46 @@
++import Erdos647Research.Endpoint.CountingReduction
++
++set_option autoImplicit false
++set_option warningAsError true
++open scoped Topology
++open Filter Real Erdos647Sieve Erdos647Sieve.Endpoint
++
++example : ∀ (X : ℕ),
++  Real.exp (amplificationExponent X) *
++        momentBound X (windowLength X) (primeCutoff X) (1 - momentT X) (truncationOrder X) =
++      (X : ℝ) * Real.exp (amplificationExponent X - endpointMu X) +
++      (X : ℝ) * (Real.exp (amplificationExponent X) *
++        (endpointMu X ^ (truncationOrder X + 1) /
++          (Nat.factorial (truncationOrder X + 1) : ℝ))) +
++      Real.exp (amplificationExponent X) *
++        ((windowLength X : ℝ) * primeCutoff X) ^ truncationOrder X :=
++  Erdos647Sieve.Endpoint.amplified_momentBound_eq
++#check Erdos647Sieve.Endpoint.amplified_momentBound_eq
++#print axioms Erdos647Sieve.Endpoint.amplified_momentBound_eq
++
++example : ∀ᶠ X : ℕ in atTop, 0 ≤ correctedBudget (windowLength X) →
++      (candidateCount X : ℝ) ≤ (windowLength X : ℝ) +
++        (X : ℝ) * Real.exp (-(1499 / 1000000 : ℝ) *
++          ((windowLength X : ℝ) / Real.log (Real.log (X : ℝ)))) +
++        (X : ℝ) * Real.exp (-(windowLength X : ℝ) / 30) +
++        Real.exp (Real.log (X : ℝ) / 2) :=
++  Erdos647Sieve.Endpoint.eventually_candidateCount_le_four_contributions
++#check Erdos647Sieve.Endpoint.eventually_candidateCount_le_four_contributions
++#print axioms Erdos647Sieve.Endpoint.eventually_candidateCount_le_four_contributions
++
++example : ∀ᶠ X : ℕ in atTop, correctedBudget (windowLength X) < 0 →
++      (candidateCount X : ℝ) ≤ Real.exp (Real.log (X : ℝ) / 2) :=
++  Erdos647Sieve.Endpoint.eventually_candidateCount_le_of_negative_budget
++#check Erdos647Sieve.Endpoint.eventually_candidateCount_le_of_negative_budget
++#print axioms Erdos647Sieve.Endpoint.eventually_candidateCount_le_of_negative_budget
++
++example : ∀ᶠ X : ℕ in atTop,
++      (candidateCount X : ℝ) ≤
++        (X : ℝ) * Real.exp (-(1499 / 1000000 : ℝ) *
++          ((windowLength X : ℝ) / Real.log (Real.log (X : ℝ)))) +
++        (X : ℝ) * Real.exp (-(windowLength X : ℝ) / 30) +
++        2 * Real.exp (Real.log (X : ℝ) / 2) :=
++  Erdos647Sieve.Endpoint.eventually_candidateCount_le_amplified_errors
++#check Erdos647Sieve.Endpoint.eventually_candidateCount_le_amplified_errors
++#print axioms Erdos647Sieve.Endpoint.eventually_candidateCount_le_amplified_errors
++
+--- /dev/null
++++ b/research/Audit/EndpointErrorScales.lean
+@@ -0,0 +1,52 @@
++import Erdos647Research.Endpoint.ErrorScales
++
++set_option autoImplicit false
++set_option warningAsError true
++open scoped Topology
++open Filter Real Erdos647Sieve Erdos647Sieve.Endpoint
++
++example : ∀ (X : ℕ) (hX : 2 ≤ X),
++  Real.rpow (Real.log (X : ℝ)) endpointExponent *
++      Real.rpow (Real.log (X : ℝ)) (1 - endpointExponent) = Real.log (X : ℝ) :=
++  Erdos647Sieve.Endpoint.window_complementary_scale_product
++#check Erdos647Sieve.Endpoint.window_complementary_scale_product
++#print axioms Erdos647Sieve.Endpoint.window_complementary_scale_product
++
++example : Tendsto (fun X : ℕ => (windowLength X : ℝ) * Real.log (Real.log (X : ℝ)) /
++      Real.log (X : ℝ)) atTop (𝓝 0) :=
++  Erdos647Sieve.Endpoint.window_mul_logLog_div_logX_tendsto_zero
++#check Erdos647Sieve.Endpoint.window_mul_logLog_div_logX_tendsto_zero
++#print axioms Erdos647Sieve.Endpoint.window_mul_logLog_div_logX_tendsto_zero
++
++example : Tendsto (fun X : ℕ => (windowLength X : ℝ) / Real.log (X : ℝ))
++      atTop (𝓝 0) :=
++  Erdos647Sieve.Endpoint.window_div_logX_tendsto_zero
++#check Erdos647Sieve.Endpoint.window_div_logX_tendsto_zero
++#print axioms Erdos647Sieve.Endpoint.window_div_logX_tendsto_zero
++
++example : Tendsto (fun X : ℕ => (truncationOrder X : ℝ) * Real.log (windowLength X : ℝ) /
++      Real.log (X : ℝ)) atTop (𝓝 0) :=
++  Erdos647Sieve.Endpoint.truncation_log_window_div_logX_tendsto_zero
++#check Erdos647Sieve.Endpoint.truncation_log_window_div_logX_tendsto_zero
++#print axioms Erdos647Sieve.Endpoint.truncation_log_window_div_logX_tendsto_zero
++
++example : Tendsto (fun X : ℕ =>
++      ((truncationOrder X : ℝ) * Real.log (windowLength X : ℝ) +
++        (windowLength X : ℝ) / 500) / Real.log (X : ℝ)) atTop (𝓝 0) :=
++  Erdos647Sieve.Endpoint.arithmetic_overhead_div_logX_tendsto_zero
++#check Erdos647Sieve.Endpoint.arithmetic_overhead_div_logX_tendsto_zero
++#print axioms Erdos647Sieve.Endpoint.arithmetic_overhead_div_logX_tendsto_zero
++
++example : Tendsto (fun X : ℕ => Real.log (windowLength X : ℝ) / Real.log (X : ℝ))
++      atTop (𝓝 0) :=
++  Erdos647Sieve.Endpoint.log_window_div_logX_tendsto_zero
++#check Erdos647Sieve.Endpoint.log_window_div_logX_tendsto_zero
++#print axioms Erdos647Sieve.Endpoint.log_window_div_logX_tendsto_zero
++
++example : ∀ (X : ℕ) (hX : 0 < X)
++    (hJ : 0 < truncationOrder X),
++  primeCutoff X ^ truncationOrder X = Real.rpow (X : ℝ) ((1 : ℝ) / 4) :=
++  Erdos647Sieve.Endpoint.primeCutoff_pow_truncation_eq
++#check Erdos647Sieve.Endpoint.primeCutoff_pow_truncation_eq
++#print axioms Erdos647Sieve.Endpoint.primeCutoff_pow_truncation_eq
++
+--- /dev/null
++++ b/research/Audit/EndpointMomentTail.lean
+@@ -0,0 +1,48 @@
++import Erdos647Research.Endpoint.MomentTail
++
++set_option autoImplicit false
++set_option warningAsError true
++open scoped Topology
++open Filter Real Erdos647Sieve Erdos647Sieve.Endpoint
++
++example : ∀ (mu : ℝ) (q : ℕ)
++    (hmu0 : 0 ≤ mu) (hq : 1 ≤ q) (hratio : mu ≤ (q : ℝ) / 20),
++  mu ^ q / (Nat.factorial q : ℝ) ≤ Real.exp ((1 - Real.log 20) * (q : ℝ)) :=
++  Erdos647Sieve.Endpoint.factorial_tail_le_geometric_exp
++#check Erdos647Sieve.Endpoint.factorial_tail_le_geometric_exp
++#print axioms Erdos647Sieve.Endpoint.factorial_tail_le_geometric_exp
++
++example : ∀ (H A mu : ℝ) (q : ℕ)
++    (hH : 0 ≤ H) (hA : A ≤ H / 500) (hmu0 : 0 ≤ mu)
++    (hmu : mu ≤ H / 1000) (hq : 1 ≤ q) (horder : H / 50 ≤ (q : ℝ)),
++  Real.exp A * (mu ^ q / (Nat.factorial q : ℝ)) ≤ Real.exp (-H / 30) :=
++  Erdos647Sieve.Endpoint.amplified_factorial_tail_le
++#check Erdos647Sieve.Endpoint.amplified_factorial_tail_le
++#print axioms Erdos647Sieve.Endpoint.amplified_factorial_tail_le
++
++example : ∀ᶠ X : ℕ in atTop, 0 ≤ correctedBudget (windowLength X) →
++      Real.exp (amplificationExponent X) *
++        (endpointMu X ^ (truncationOrder X + 1) /
++          (Nat.factorial (truncationOrder X + 1) : ℝ)) ≤
++        Real.exp (-(windowLength X : ℝ) / 30) :=
++  Erdos647Sieve.Endpoint.eventually_amplified_moment_tail_le
++#check Erdos647Sieve.Endpoint.eventually_amplified_moment_tail_le
++#print axioms Erdos647Sieve.Endpoint.eventually_amplified_moment_tail_le
++
++example : ∀ᶠ X : ℕ in atTop, 0 ≤ correctedBudget (windowLength X) →
++      (X : ℝ) * (Real.exp (amplificationExponent X) *
++        (endpointMu X ^ (truncationOrder X + 1) /
++          (Nat.factorial (truncationOrder X + 1) : ℝ))) ≤
++        (X : ℝ) * Real.exp (-(windowLength X : ℝ) / 30) :=
++  Erdos647Sieve.Endpoint.eventually_moment_tail_contribution_le
++#check Erdos647Sieve.Endpoint.eventually_moment_tail_contribution_le
++#print axioms Erdos647Sieve.Endpoint.eventually_moment_tail_contribution_le
++
++-- The factorial is cast AFTER forming q!, and mu still grows with X.
++example : ∀ᶠ X : ℕ in atTop, 0 ≤ correctedBudget (windowLength X) →
++    Real.exp ((-Real.log (1 - momentT X)) * (correctedBudget (windowLength X) : ℝ)) *
++      ((momentT X * primeMass (windowLength X) (primeCutoff X)) ^ (truncationOrder X + 1) /
++        (Nat.factorial (truncationOrder X + 1) : ℝ)) ≤
++      Real.exp (-(windowLength X : ℝ) / 30) := by
++  simpa only [amplificationExponent, endpointEta, endpointMu] using
++    eventually_amplified_moment_tail_le
+--- /dev/null
++++ b/research/Erdos647Research/Endpoint/Amplification.lean
+@@ -0,0 +1,124 @@
++/-
++Exponential amplification and the principal contribution at the actual endpoint
++parameters. The sign condition on the integer budget is kept explicit.
++-/
++import Erdos647Research.Endpoint.MassBudgetBounds
++import Erdos647Research.EndpointLogBounds
++
++set_option autoImplicit false
++open scoped Topology
++open Filter Real
++
++noncomputable section
++namespace Erdos647Sieve.Endpoint
++
++/-- The logarithmic weight used by the finite counting theorem. -/
++def endpointEta (X : ℕ) : ℝ := -Real.log (1 - momentT X)
++
++/-- The growing numerator of the truncated exponential moment. -/
++def endpointMu (X : ℕ) : ℝ :=
++  momentT X * primeMass (windowLength X) (primeCutoff X)
++
++/-- The full amplification exponent, with a signed integer budget. -/
++def amplificationExponent (X : ℕ) : ℝ :=
++  endpointEta X * (correctedBudget (windowLength X) : ℝ)
++
++/-- The quadratic logarithm estimate and a convenient linear consequence. -/
++theorem neg_log_weight_bounds (t : ℝ) (ht0 : 0 ≤ t) (ht : t ≤ 1 / 2) :
++    0 ≤ -Real.log (1 - t) ∧
++      -Real.log (1 - t) ≤ t + t ^ 2 ∧ -Real.log (1 - t) ≤ 2 * t := by
++  have hq := Elementary.neg_log_one_sub_le_add_sq t ht0 ht
++  have hs := mul_nonneg ht0 (show 0 ≤ 1 - t by linarith)
++  refine ⟨?_, hq, ?_⟩
++  · have hlog := Real.log_nonpos (by linarith : 0 ≤ 1 - t)
++      (by linarith : 1 - t ≤ 1)
++    linarith
++  · nlinarith
++
++/-- Real-variable amplification algebra. Nonnegativity of B is needed before
++multiplying an upper estimate for the logarithmic weight by B. -/
++theorem amplification_exponents_le (H L B lam : ℝ)
++    (hL : 0 < L) (ht : 1 / (1000 * L) ≤ (1 : ℝ) / 2)
++    (hB0 : 0 ≤ B) (hB : B ≤ H * L) (hgap : (3 / 2 : ℝ) * H ≤ lam - B) :
++    (-Real.log (1 - 1 / (1000 * L))) * B ≤ H / 500 ∧
++      (-Real.log (1 - 1 / (1000 * L))) * B - (1 / (1000 * L)) * lam ≤
++        -(1499 / 1000000 : ℝ) * (H / L) := by
++  let t : ℝ := 1 / (1000 * L)
++  have ht0 : 0 ≤ t := le_of_lt (div_pos zero_lt_one (mul_pos (by norm_num) hL))
++  have he := neg_log_weight_bounds t ht0 ht
++  have htL : t * L = (1 : ℝ) / 1000 := by
++    dsimp only [t]
++    rw [← div_div, div_mul_cancel₀ _ hL.ne']
++  constructor
++  · calc
++      (-Real.log (1 - t)) * B ≤ (2 * t) * B :=
++        mul_le_mul_of_nonneg_right he.2.2 hB0
++      _ ≤ (2 * t) * (H * L) :=
++        mul_le_mul_of_nonneg_left hB (mul_nonneg (by norm_num) ht0)
++      _ = 2 * H * (t * L) := by ring
++      _ = H / 500 := by rw [htL]; ring
++  · have hmain := mul_le_mul_of_nonneg_right he.2.1 hB0
++    have hdebit := mul_le_mul_of_nonneg_left hgap ht0
++    have hquad := mul_le_mul_of_nonneg_left hB (sq_nonneg t)
++    calc
++      (-Real.log (1 - t)) * B - t * lam ≤
++          -t * ((3 / 2 : ℝ) * H) + t ^ 2 * (H * L) := by
++        nlinarith [hmain, hdebit, hquad]
++      _ = -(3 / 2 : ℝ) * (t * H) + (t * H) * (t * L) := by ring
++      _ = -(1499 / 1000 : ℝ) * (t * H) := by rw [htL]; ring
++      _ = -(1499 / 1000000 : ℝ) * (H / L) := by
++        dsimp only [t]
++        rw [← div_div]
++        ring
++
++/-- The exact numerator mu(X) is nonnegative and at most H/1000, eventually. -/
++theorem eventually_endpointMu_bounds :
++    ∀ᶠ X : ℕ in atTop,
++      0 ≤ endpointMu X ∧ endpointMu X ≤ (windowLength X : ℝ) / 1000 := by
++  filter_upwards [eventually_endpoint_mass_budget_bounds, eventually_momentT_bounds]
++    with X hb ht
++  have htL : momentT X * Real.log (Real.log (X : ℝ)) = (1 : ℝ) / 1000 := by
++    unfold momentT
++    rw [← div_div, div_mul_cancel₀ _ hb.2.1.ne']
++  refine ⟨mul_nonneg ht.1.le hb.2.2.1, ?_⟩
++  calc
++    endpointMu X ≤ momentT X *
++        ((windowLength X : ℝ) * Real.log (Real.log (X : ℝ))) :=
++      mul_le_mul_of_nonneg_left hb.2.2.2.1 ht.1.le
++    _ = (windowLength X : ℝ) * (momentT X * Real.log (Real.log (X : ℝ))) := by ring
++    _ = (windowLength X : ℝ) / 1000 := by rw [htL]; ring
++
++/-- Specialize the algebra to the actual signed budget and prime mass. -/
++theorem eventually_amplification_exponents_le :
++    ∀ᶠ X : ℕ in atTop, 0 ≤ correctedBudget (windowLength X) →
++      amplificationExponent X ≤ (windowLength X : ℝ) / 500 ∧
++      amplificationExponent X - endpointMu X ≤
++        -(1499 / 1000000 : ℝ) *
++          ((windowLength X : ℝ) / Real.log (Real.log (X : ℝ))) := by
++  filter_upwards [eventually_endpoint_mass_budget_bounds, eventually_momentT_bounds]
++    with X hb ht
++  intro hB
++  have hBR : 0 ≤ (correctedBudget (windowLength X) : ℝ) := by exact_mod_cast hB
++  exact amplification_exponents_le (windowLength X : ℝ)
++    (Real.log (Real.log (X : ℝ))) (correctedBudget (windowLength X) : ℝ)
++    (primeMass (windowLength X) (primeCutoff X)) hb.2.1 ht.2 hBR
++    hb.2.2.2.2.1 hb.2.2.2.2.2
++
++/-- The full multiplier is bounded, not omitted from the errors. -/
++theorem eventually_amplification_le :
++    ∀ᶠ X : ℕ in atTop, 0 ≤ correctedBudget (windowLength X) →
++      Real.exp (amplificationExponent X) ≤ Real.exp ((windowLength X : ℝ) / 500) := by
++  filter_upwards [eventually_amplification_exponents_le] with X h hB
++  exact Real.exp_le_exp.mpr (h hB).1
++
++/-- The actual principal contribution, including interval length X. -/
++theorem eventually_principal_contribution_le :
++    ∀ᶠ X : ℕ in atTop, 0 ≤ correctedBudget (windowLength X) →
++      (X : ℝ) * Real.exp (amplificationExponent X - endpointMu X) ≤
++        (X : ℝ) * Real.exp (-(1499 / 1000000 : ℝ) *
++          ((windowLength X : ℝ) / Real.log (Real.log (X : ℝ)))) := by
++  filter_upwards [eventually_amplification_exponents_le] with X h hB
++  exact mul_le_mul_of_nonneg_left (Real.exp_le_exp.mpr (h hB).2) (Nat.cast_nonneg X)
++
++end Erdos647Sieve.Endpoint
++end
+--- /dev/null
++++ b/research/Erdos647Research/Endpoint/ArithmeticRemainder.lean
+@@ -0,0 +1,85 @@
++/-
++The full amplified CRT remainder and the exceptional initial window.
++Square-root-scale upper bounds are sufficient; no coefficient is optimized.
++-/
++import Erdos647Research.Endpoint.Amplification
++import Erdos647Research.Endpoint.ErrorScales
++
++set_option autoImplicit false
++open scoped Topology
++open Filter Real
++
++noncomputable section
++namespace Erdos647Sieve.Endpoint
++
++/-- Exact logarithmic form of the arithmetic remainder, with its multiplier. -/
++theorem amplified_arithmetic_remainder_eq (X : ℕ) (hX : 0 < X)
++    (hH : 0 < windowLength X) (hJ : 0 < truncationOrder X) :
++    Real.exp (amplificationExponent X) *
++      ((windowLength X : ℝ) * primeCutoff X) ^ truncationOrder X =
++      Real.exp (Real.log (X : ℝ) / 4 +
++        (truncationOrder X : ℝ) * Real.log (windowLength X : ℝ) +
++        amplificationExponent X) := by
++  have hHR : 0 < (windowLength X : ℝ) := by exact_mod_cast hH
++  have hXR : 0 < (X : ℝ) := by exact_mod_cast hX
++  have hh : (windowLength X : ℝ) ^ truncationOrder X =
++      Real.exp ((truncationOrder X : ℝ) * Real.log (windowLength X : ℝ)) := by
++    calc
++      _ = Real.exp (Real.log ((windowLength X : ℝ) ^ truncationOrder X)) :=
++        (Real.exp_log (pow_pos hHR _)).symm
++      _ = _ := by rw [Real.log_pow]
++  have hy : primeCutoff X ^ truncationOrder X = Real.exp (Real.log (X : ℝ) / 4) := by
++    rw [primeCutoff_pow_truncation_eq X hX hJ,
++      Real.rpow_eq_pow, Real.rpow_def_of_pos hXR]
++    congr 1
++    ring
++  rw [mul_pow, hh, hy, ← Real.exp_add, ← Real.exp_add]
++  congr 1
++  ring
++
++/-- The exponent overhead is eventually at most a quarter of log X. -/
++theorem eventually_arithmetic_overhead_le :
++    ∀ᶠ X : ℕ in atTop,
++      (truncationOrder X : ℝ) * Real.log (windowLength X : ℝ) +
++        (windowLength X : ℝ) / 500 ≤ Real.log (X : ℝ) / 4 := by
++  have hsmall := arithmetic_overhead_div_logX_tendsto_zero.eventually
++    (gt_mem_nhds (by norm_num : (0 : ℝ) < 1 / 4))
++  filter_upwards [hsmall, logX_tendsto_atTop.eventually
++    (eventually_gt_atTop (0 : ℝ))] with X hs hQ
++  have h := (div_lt_iff₀ hQ).mp hs
++  linarith
++
++/-- The complete arithmetic term is at most exp(log X/2), not merely the
++unamplified CRT remainder. The nonnegative-budget counting branch is explicit. -/
++theorem eventually_amplified_arithmetic_remainder_le :
++    ∀ᶠ X : ℕ in atTop, 0 ≤ correctedBudget (windowLength X) →
++      Real.exp (amplificationExponent X) *
++        ((windowLength X : ℝ) * primeCutoff X) ^ truncationOrder X ≤
++        Real.exp (Real.log (X : ℝ) / 2) := by
++  filter_upwards [eventually_amplification_exponents_le, eventually_arithmetic_overhead_le,
++    eventually_ge_atTop (1 : ℕ), eventually_windowLength_pos, eventually_truncationOrder_pos]
++    with X hA ho hX hH hJ hB
++  rw [amplified_arithmetic_remainder_eq X (by omega) (by omega) (by omega)]
++  apply Real.exp_le_exp.mpr
++  linarith [(hA hB).1]
++
++/-- The initial exceptional window has the same harmless square-root-scale bound. -/
++theorem eventually_exceptional_window_le :
++    ∀ᶠ X : ℕ in atTop,
++      (windowLength X : ℝ) ≤ Real.exp (Real.log (X : ℝ) / 2) := by
++  have hsmall := log_window_div_logX_tendsto_zero.eventually
++    (gt_mem_nhds (by norm_num : (0 : ℝ) < 1 / 2))
++  filter_upwards [hsmall, eventually_windowLength_pos, logX_tendsto_atTop.eventually
++    (eventually_gt_atTop (0 : ℝ))] with X hs hH hQ
++  have hHR : 0 < (windowLength X : ℝ) := by
++    exact_mod_cast (show 0 < windowLength X by omega)
++  have hlog : Real.log (windowLength X : ℝ) ≤ Real.log (X : ℝ) / 2 := by
++    have h := (div_lt_iff₀ hQ).mp hs
++    linarith
++  calc
++    (windowLength X : ℝ) = Real.exp (Real.log (windowLength X : ℝ)) :=
++      (Real.exp_log hHR).symm
++    _ ≤ Real.exp (Real.log (X : ℝ) / 2) := Real.exp_le_exp.mpr hlog
++
++end Erdos647Sieve.Endpoint
++end
+--- /dev/null
++++ b/research/Erdos647Research/Endpoint/CountingReduction.lean
+@@ -0,0 +1,93 @@
++/-
++All amplified contributions in a single unconditional candidate-count estimate.
++This is an intermediate endpoint bound, not the final fixed-c endpoint theorem.
++-/
++import Erdos647Research.Endpoint.MomentTail
++import Erdos647Research.Endpoint.ArithmeticRemainder
++import Erdos647Sieve.FiniteCounting
++
++set_option autoImplicit false
++open scoped Topology
++open Filter Real
++
++noncomputable section
++namespace Erdos647Sieve.Endpoint
++
++/-- Expand the actual finite counting expression into its three weighted terms. -/
++theorem amplified_momentBound_eq (X : ℕ) :
++    Real.exp (amplificationExponent X) *
++        momentBound X (windowLength X) (primeCutoff X) (1 - momentT X) (truncationOrder X) =
++      (X : ℝ) * Real.exp (amplificationExponent X - endpointMu X) +
++      (X : ℝ) * (Real.exp (amplificationExponent X) *
++        (endpointMu X ^ (truncationOrder X + 1) /
++          (Nat.factorial (truncationOrder X + 1) : ℝ))) +
++      Real.exp (amplificationExponent X) *
++        ((windowLength X : ℝ) * primeCutoff X) ^ truncationOrder X := by
++  have hsub : 1 - (1 - momentT X) = momentT X := by ring
++  have hexp : Real.exp (amplificationExponent X - endpointMu X) =
++      Real.exp (amplificationExponent X) * Real.exp (-endpointMu X) := by
++    rw [sub_eq_add_neg, Real.exp_add]
++  rw [hexp]
++  dsimp only [momentBound]
++  rw [hsub]
++  change Real.exp (amplificationExponent X) *
++      ((X : ℝ) * (Real.exp (-endpointMu X) +
++        endpointMu X ^ (truncationOrder X + 1) /
++          (Nat.factorial (truncationOrder X + 1) : ℝ)) +
++        ((windowLength X : ℝ) * primeCutoff X) ^ truncationOrder X) = _
++  ring
++
++/-- For a nonnegative budget, every weighted term is bounded separately. -/
++theorem eventually_candidateCount_le_four_contributions :
++    ∀ᶠ X : ℕ in atTop, 0 ≤ correctedBudget (windowLength X) →
++      (candidateCount X : ℝ) ≤ (windowLength X : ℝ) +
++        (X : ℝ) * Real.exp (-(1499 / 1000000 : ℝ) *
++          ((windowLength X : ℝ) / Real.log (Real.log (X : ℝ)))) +
++        (X : ℝ) * Real.exp (-(windowLength X : ℝ) / 30) +
++        Real.exp (Real.log (X : ℝ) / 2) := by
++  filter_upwards [endpoint_parameters_admissible, eventually_principal_contribution_le,
++    eventually_moment_tail_contribution_le, eventually_amplified_arithmetic_remainder_le]
++    with X hp hm ht ha hB
++  have hc := finiteCounting X (windowLength X) (primeCutoff X) (1 - momentT X)
++    (truncationOrder X) hp.1 hp.2.1 hp.2.2.1 hp.2.2.2.1 hp.2.2.2.2.1 hp.2.2.2.2.2 hB
++  change (candidateCount X : ℝ) ≤ (windowLength X : ℝ) +
++    Real.exp (amplificationExponent X) *
++      momentBound X (windowLength X) (primeCutoff X) (1 - momentT X) (truncationOrder X) at hc
++  rw [amplified_momentBound_eq] at hc
++  linarith [hm hB, ht hB, ha hB]
++
++/-- The negative-budget branch uses the existing exact exclusion theorem. -/
++theorem eventually_candidateCount_le_of_negative_budget :
++    ∀ᶠ X : ℕ in atTop, correctedBudget (windowLength X) < 0 →
++      (candidateCount X : ℝ) ≤ Real.exp (Real.log (X : ℝ) / 2) := by
++  filter_upwards [endpoint_parameters_admissible, eventually_exceptional_window_le]
++    with X hp hw hneg
++  have hc := candidateCount_le_window_of_negative_correctedBudget X (windowLength X)
++    (primeCutoff X) hp.2.1 hp.2.2.1 hneg
++  have hcR : (candidateCount X : ℝ) ≤ (windowLength X : ℝ) := by exact_mod_cast hc
++  exact hcR.trans hw
++
++/-- All-sign intermediate endpoint estimate. The two square-root-scale terms
++account for BOTH the amplified CRT error and the exceptional window. -/
++theorem eventually_candidateCount_le_amplified_errors :
++    ∀ᶠ X : ℕ in atTop,
++      (candidateCount X : ℝ) ≤
++        (X : ℝ) * Real.exp (-(1499 / 1000000 : ℝ) *
++          ((windowLength X : ℝ) / Real.log (Real.log (X : ℝ)))) +
++        (X : ℝ) * Real.exp (-(windowLength X : ℝ) / 30) +
++        2 * Real.exp (Real.log (X : ℝ) / 2) := by
++  filter_upwards [eventually_candidateCount_le_four_contributions,
++    eventually_candidateCount_le_of_negative_budget, eventually_exceptional_window_le]
++    with X hpos hneg hw
++  by_cases hB : 0 ≤ correctedBudget (windowLength X)
++  · linarith [hpos hB]
++  · have h := hneg (lt_of_not_ge hB)
++    have hp : 0 ≤ (X : ℝ) * Real.exp (-(1499 / 1000000 : ℝ) *
++        ((windowLength X : ℝ) / Real.log (Real.log (X : ℝ)))) :=
++      mul_nonneg (Nat.cast_nonneg X) (Real.exp_pos _).le
++    have ht : 0 ≤ (X : ℝ) * Real.exp (-(windowLength X : ℝ) / 30) :=
++      mul_nonneg (Nat.cast_nonneg X) (Real.exp_pos _).le
++    linarith [Real.exp_pos (Real.log (X : ℝ) / 2)]
++
++end Erdos647Sieve.Endpoint
++end
+--- /dev/null
++++ b/research/Erdos647Research/Endpoint/ErrorScales.lean
+@@ -0,0 +1,129 @@
++/-
++Growth comparisons for the arithmetic remainder and the exceptional window.
++This module is independent of prime-mass estimates and the factorial tail.
++-/
++import Erdos647Research.Endpoint.CutoffParameters
++
++set_option autoImplicit false
++open scoped Topology
++open Filter Real
++
++noncomputable section
++namespace Erdos647Sieve.Endpoint
++
++/-- Exact complementary-power identity at positive logarithmic arguments. -/
++theorem window_complementary_scale_product (X : ℕ) (hX : 2 ≤ X) :
++    Real.rpow (Real.log (X : ℝ)) endpointExponent *
++      Real.rpow (Real.log (X : ℝ)) (1 - endpointExponent) = Real.log (X : ℝ) := by
++  have hQ : 0 < Real.log (X : ℝ) :=
++    Real.log_pos (by exact_mod_cast (show 1 < X by omega))
++  simp only [Real.rpow_eq_pow]
++  rw [← Real.rpow_add hQ]
++  simp
++
++/-- H log log X = o(log X), using the preserved exponent a<1. -/
++theorem window_mul_logLog_div_logX_tendsto_zero :
++    Tendsto (fun X : ℕ => (windowLength X : ℝ) * Real.log (Real.log (X : ℝ)) /
++      Real.log (X : ℝ)) atTop (𝓝 0) := by
++  have hsmall : Tendsto (fun X : ℕ => Real.log (Real.log (X : ℝ)) /
++      Real.rpow (Real.log (X : ℝ)) (1 - endpointExponent)) atTop (𝓝 0) :=
++    ((isLittleO_log_rpow_atTop (sub_pos.mpr endpointExponent_lt_one)).tendsto_div_nhds_zero).comp
++      logX_tendsto_atTop
++  have h : Tendsto (fun X : ℕ =>
++      ((windowLength X : ℝ) / Real.rpow (Real.log (X : ℝ)) endpointExponent) *
++        (Real.log (Real.log (X : ℝ)) /
++          Real.rpow (Real.log (X : ℝ)) (1 - endpointExponent))) atTop (𝓝 0) := by
++    simpa using windowLength_ratio_tendsto_one.mul hsmall
++  apply h.congr'
++  filter_upwards [eventually_ge_atTop (2 : ℕ)] with X hX
++  rw [div_mul_div_comm, window_complementary_scale_product X hX]
++
++/-- The exceptional window is also negligible on the logarithmic scale. -/
++theorem window_div_logX_tendsto_zero :
++    Tendsto (fun X : ℕ => (windowLength X : ℝ) / Real.log (X : ℝ))
++      atTop (𝓝 0) := by
++  have h : Tendsto (fun X : ℕ =>
++      ((windowLength X : ℝ) / Real.rpow (Real.log (X : ℝ)) endpointExponent) *
++        (1 / Real.rpow (Real.log (X : ℝ)) (1 - endpointExponent))) atTop (𝓝 0) := by
++    simpa using windowLength_ratio_tendsto_one.mul
++      (complementaryScale_tendsto_atTop.const_div_atTop (1 : ℝ))
++  apply h.congr'
++  filter_upwards [eventually_ge_atTop (2 : ℕ)] with X hX
++  rw [div_mul_div_comm, mul_one, window_complementary_scale_product X hX]
++
++/-- J log H = o(log X), with the exact rounded truncation order. -/
++theorem truncation_log_window_div_logX_tendsto_zero :
++    Tendsto (fun X : ℕ => (truncationOrder X : ℝ) * Real.log (windowLength X : ℝ) /
++      Real.log (X : ℝ)) atTop (𝓝 0) := by
++  have h : Tendsto (fun X : ℕ =>
++      ((truncationOrder X : ℝ) / (windowLength X : ℝ)) *
++        (Real.log (windowLength X : ℝ) / Real.log (Real.log (X : ℝ))) *
++        ((windowLength X : ℝ) * Real.log (Real.log (X : ℝ)) / Real.log (X : ℝ)))
++      atTop (𝓝 0) := by
++    simpa using (truncationOrder_div_windowLength_tendsto.mul
++      log_windowLength_div_logLog_tendsto).mul window_mul_logLog_div_logX_tendsto_zero
++  apply h.congr'
++  filter_upwards [eventually_windowLength_pos,
++    logLogX_tendsto_atTop.eventually (eventually_gt_atTop (0 : ℝ))] with X hH hL
++  have hHR : (windowLength X : ℝ) ≠ 0 := by
++    exact_mod_cast (show windowLength X ≠ 0 by omega)
++  rw [div_mul_div_comm, div_mul_div_cancel₀ (mul_ne_zero hHR hL.ne')]
++
++/-- An unconditional majorant for the logarithmic amplification overhead. -/
++theorem arithmetic_overhead_div_logX_tendsto_zero :
++    Tendsto (fun X : ℕ =>
++      ((truncationOrder X : ℝ) * Real.log (windowLength X : ℝ) +
++        (windowLength X : ℝ) / 500) / Real.log (X : ℝ)) atTop (𝓝 0) := by
++  have h : Tendsto (fun X : ℕ =>
++      (truncationOrder X : ℝ) * Real.log (windowLength X : ℝ) / Real.log (X : ℝ) +
++        ((windowLength X : ℝ) / Real.log (X : ℝ)) / 500) atTop (𝓝 0) := by
++    simpa using truncation_log_window_div_logX_tendsto_zero.add
++      (window_div_logX_tendsto_zero.div_const 500)
++  exact h.congr (fun X => by ring)
++
++/-- A logarithmic bound for the exceptional H contribution. -/
++theorem log_window_div_logX_tendsto_zero :
++    Tendsto (fun X : ℕ => Real.log (windowLength X : ℝ) / Real.log (X : ℝ))
++      atTop (𝓝 0) := by
++  have hsmall : Tendsto (fun X : ℕ =>
++      Real.log (Real.log (X : ℝ)) / Real.log (X : ℝ)) atTop (𝓝 0) := by
++    have hlog : Tendsto (fun u : ℝ => Real.log u / u) atTop (𝓝 0) := by
++      simpa using Real.tendsto_pow_log_div_mul_add_atTop 1 0 1 (by norm_num)
++    exact hlog.comp logX_tendsto_atTop
++  have h : Tendsto (fun X : ℕ =>
++      (Real.log (windowLength X : ℝ) / Real.log (Real.log (X : ℝ))) *
++        (Real.log (Real.log (X : ℝ)) / Real.log (X : ℝ))) atTop (𝓝 0) := by
++    simpa using log_windowLength_div_logLog_tendsto.mul hsmall
++  apply h.congr'
++  filter_upwards [logLogX_tendsto_atTop.eventually
++    (eventually_gt_atTop (0 : ℝ))] with X hL
++  rw [div_mul_div_cancel₀ hL.ne']
++
++/-- The variable cutoff exponent is cancelled only after proving J is nonzero. -/
++theorem primeCutoff_pow_truncation_eq (X : ℕ) (hX : 0 < X)
++    (hJ : 0 < truncationOrder X) :
++    primeCutoff X ^ truncationOrder X = Real.rpow (X : ℝ) ((1 : ℝ) / 4) := by
++  have hJR : (truncationOrder X : ℝ) ≠ 0 := by exact_mod_cast hJ.ne'
++  have hXR : 0 < (X : ℝ) := by exact_mod_cast hX
++  calc
++    primeCutoff X ^ truncationOrder X =
++        Real.exp (Real.log (primeCutoff X ^ truncationOrder X)) :=
++      (Real.exp_log (pow_pos (primeCutoff_pos X hX) _)).symm
++    _ = Real.exp (Real.log (X : ℝ) / 4) := by
++      rw [Real.log_pow, log_primeCutoff X hX]
++      congr 1
++      calc
++        (truncationOrder X : ℝ) *
++            (Real.log (X : ℝ) / (4 * (truncationOrder X : ℝ))) =
++          (Real.log (X : ℝ) / 4) *
++            ((truncationOrder X : ℝ) / (truncationOrder X : ℝ)) := by
++          simp only [div_eq_mul_inv, mul_inv_rev]
++          ring
++        _ = Real.log (X : ℝ) / 4 := by rw [div_self hJR, mul_one]
++    _ = Real.rpow (X : ℝ) ((1 : ℝ) / 4) := by
++      rw [Real.rpow_eq_pow, Real.rpow_def_of_pos hXR]
++      congr 1
++      ring
++
++end Erdos647Sieve.Endpoint
++end
+--- /dev/null
++++ b/research/Erdos647Research/Endpoint/MomentTail.lean
+@@ -0,0 +1,90 @@
++/-
++Uniform factorial-tail bounds when the numerator and truncation order both grow.
++The amplification multiplier is retained throughout.
++-/
++import Erdos647Research.Endpoint.Amplification
++import Erdos647Research.FactorialBounds
++
++set_option autoImplicit false
++open scoped Topology
++open Filter Real
++
++noncomputable section
++namespace Erdos647Sieve.Endpoint
++
++/-- A uniform ratio bound, not a fixed-numerator factorial limit. -/
++theorem factorial_tail_le_geometric_exp (mu : ℝ) (q : ℕ)
++    (hmu0 : 0 ≤ mu) (hq : 1 ≤ q) (hratio : mu ≤ (q : ℝ) / 20) :
++    mu ^ q / (Nat.factorial q : ℝ) ≤ Real.exp ((1 - Real.log 20) * (q : ℝ)) := by
++  have hqR : 0 < (q : ℝ) := by exact_mod_cast (show 0 < q by omega)
++  have hbase : 0 < (q : ℝ) / Real.exp 1 := div_pos hqR (Real.exp_pos 1)
++  have hratio' : mu / ((q : ℝ) / Real.exp 1) ≤ Real.exp 1 / 20 := by
++    apply (div_le_iff₀ hbase).mpr
++    calc
++      mu ≤ (q : ℝ) / 20 := hratio
++      _ = ((q : ℝ) * (Real.exp 1 / Real.exp 1)) / 20 := by
++        rw [div_self (Real.exp_ne_zero 1), mul_one]
++      _ = (Real.exp 1 / 20) * ((q : ℝ) / Real.exp 1) := by ring
++  calc
++    mu ^ q / (Nat.factorial q : ℝ) ≤ mu ^ q / ((q : ℝ) / Real.exp 1) ^ q :=
++      div_le_div_of_nonneg_left (pow_nonneg hmu0 q) (pow_pos hbase q)
++        (Elementary.factorial_pow_lower q)
++    _ = (mu / ((q : ℝ) / Real.exp 1)) ^ q := (div_pow _ _ q).symm
++    _ ≤ (Real.exp 1 / 20) ^ q :=
++      pow_le_pow_left₀ (div_nonneg hmu0 hbase.le) hratio' q
++    _ = Real.exp (Real.log ((Real.exp 1 / 20) ^ q)) :=
++      (Real.exp_log (pow_pos (div_pos (Real.exp_pos 1) (by norm_num)) q)).symm
++    _ = Real.exp ((1 - Real.log 20) * (q : ℝ)) := by
++      rw [Real.log_pow, Real.log_div (Real.exp_ne_zero 1) (by norm_num : (20 : ℝ) ≠ 0),
++        Real.log_exp]
++      congr 1
++      ring
++
++/-- The accepted logarithm constant gives a comfortable exponential tail rate. -/
++theorem amplified_factorial_tail_le (H A mu : ℝ) (q : ℕ)
++    (hH : 0 ≤ H) (hA : A ≤ H / 500) (hmu0 : 0 ≤ mu)
++    (hmu : mu ≤ H / 1000) (hq : 1 ≤ q) (horder : H / 50 ≤ (q : ℝ)) :
++    Real.exp A * (mu ^ q / (Nat.factorial q : ℝ)) ≤ Real.exp (-H / 30) := by
++  have hlog : 1 - Real.log 20 ≤ 0 := by
++    linarith [Elementary.endpoint_tail_log_constant]
++  have hratio : mu ≤ (q : ℝ) / 20 := by linarith
++  have horder' := mul_le_mul_of_nonpos_left horder hlog
++  have hconstant := mul_le_mul_of_nonneg_right Elementary.endpoint_tail_log_constant hH
++  calc
++    Real.exp A * (mu ^ q / (Nat.factorial q : ℝ)) ≤
++        Real.exp A * Real.exp ((1 - Real.log 20) * (q : ℝ)) :=
++      mul_le_mul_of_nonneg_left (factorial_tail_le_geometric_exp mu q hmu0 hq hratio)
++        (Real.exp_pos A).le
++    _ = Real.exp (A + (1 - Real.log 20) * (q : ℝ)) := (Real.exp_add _ _).symm
++    _ ≤ Real.exp (-H / 30) := by
++      apply Real.exp_le_exp.mpr
++      nlinarith [horder', hconstant]
++
++/-- Apply the uniform bound to mu(X) and q(X)=J(X)+1. -/
++theorem eventually_amplified_moment_tail_le :
++    ∀ᶠ X : ℕ in atTop, 0 ≤ correctedBudget (windowLength X) →
++      Real.exp (amplificationExponent X) *
++        (endpointMu X ^ (truncationOrder X + 1) /
++          (Nat.factorial (truncationOrder X + 1) : ℝ)) ≤
++        Real.exp (-(windowLength X : ℝ) / 30) := by
++  filter_upwards [eventually_amplification_exponents_le, eventually_endpointMu_bounds]
++    with X hA hmu hB
++  have horder : (windowLength X : ℝ) / 50 ≤ ((truncationOrder X + 1 : ℕ) : ℝ) := by
++    push_cast
++    linarith [(truncationOrder_bounds X).1]
++  exact amplified_factorial_tail_le (windowLength X : ℝ) (amplificationExponent X)
++    (endpointMu X) (truncationOrder X + 1) (Nat.cast_nonneg _) (hA hB).1
++    hmu.1 hmu.2 (by omega) horder
++
++/-- The entire tail contribution to the candidate count, with X restored. -/
++theorem eventually_moment_tail_contribution_le :
++    ∀ᶠ X : ℕ in atTop, 0 ≤ correctedBudget (windowLength X) →
++      (X : ℝ) * (Real.exp (amplificationExponent X) *
++        (endpointMu X ^ (truncationOrder X + 1) /
++          (Nat.factorial (truncationOrder X + 1) : ℝ))) ≤
++        (X : ℝ) * Real.exp (-(windowLength X : ℝ) / 30) := by
++  filter_upwards [eventually_amplified_moment_tail_le] with X h hB
++  exact mul_le_mul_of_nonneg_left (h hB) (Nat.cast_nonneg X)
++
++end Erdos647Sieve.Endpoint
++end
+--- a/research/lakefile.lean
++++ b/research/lakefile.lean
+@@ -32,7 +32,12 @@
+     `Erdos647Research.Endpoint.CutoffParameters,
+     `Erdos647Research.Endpoint.PrimeMassParameters,
+     `Erdos647Research.Endpoint.PrimeMassGap,
+-    `Erdos647Research.Endpoint.MassBudgetBounds]
++    `Erdos647Research.Endpoint.MassBudgetBounds,
++    `Erdos647Research.Endpoint.Amplification,
++    `Erdos647Research.Endpoint.MomentTail,
++    `Erdos647Research.Endpoint.ErrorScales,
++    `Erdos647Research.Endpoint.ArithmeticRemainder,
++    `Erdos647Research.Endpoint.CountingReduction]
+ 
+ /-- All registered research proof gates, including the endpoint parameter layer. -/
+ script audit (args) do
+--- a/scripts/check.py
++++ b/scripts/check.py
+@@ -356,7 +356,7 @@
+     def __init__(self, root: Path, args: argparse.Namespace):
+         self.root=root; self.args=args; self.env=clean_env(); self.commands=0
+         if args.jobs: self.env['LEAN_NUM_THREADS']=str(args.jobs)
+-        self.id='erdos647_repo_v43_results_'+datetime.now(timezone.utc).strftime('%Y%m%dT%H%M%SZ')+'_'+uuid.uuid4().hex[:8]
++        self.id='erdos647_repo_v44_results_'+datetime.now(timezone.utc).strftime('%Y%m%dT%H%M%SZ')+'_'+uuid.uuid4().hex[:8]
+         self.dest=root/'results'/self.id
+         if (root/'results').is_symlink(): raise ValueError('Refusing symlinked results directory')
+         self.dest.mkdir(parents=True,exist_ok=False)
+--- a/scripts/gates.json
++++ b/scripts/gates.json
+@@ -482,5 +482,104 @@
+       "endpoint_prime_mass_gap"
+     ],
+     "historical_status": "new v42 mass-budget proof source; acceptance pending"
++  },
++  "endpoint_amplification": {
++    "package": "research",
++    "build": [
++      "+Erdos647Research.Endpoint.Amplification"
++    ],
++    "audits": {
++      "Audit/EndpointAmplification.lean": [
++        "Erdos647Sieve.Endpoint.neg_log_weight_bounds",
++        "Erdos647Sieve.Endpoint.amplification_exponents_le",
++        "Erdos647Sieve.Endpoint.eventually_endpointMu_bounds",
++        "Erdos647Sieve.Endpoint.eventually_amplification_exponents_le",
++        "Erdos647Sieve.Endpoint.eventually_amplification_le",
++        "Erdos647Sieve.Endpoint.eventually_principal_contribution_le"
++      ]
++    },
++    "prerequisites": [
++      "endpoint_mass_budget_bounds",
++      "endpoint_log_bounds"
++    ],
++    "historical_status": "new v44 amplified-error proof source; acceptance pending"
++  },
++  "endpoint_moment_tail": {
++    "package": "research",
++    "build": [
++      "+Erdos647Research.Endpoint.MomentTail"
++    ],
++    "audits": {
++      "Audit/EndpointMomentTail.lean": [
++        "Erdos647Sieve.Endpoint.factorial_tail_le_geometric_exp",
++        "Erdos647Sieve.Endpoint.amplified_factorial_tail_le",
++        "Erdos647Sieve.Endpoint.eventually_amplified_moment_tail_le",
++        "Erdos647Sieve.Endpoint.eventually_moment_tail_contribution_le"
++      ]
++    },
++    "prerequisites": [
++      "endpoint_amplification",
++      "factorial_bounds"
++    ],
++    "historical_status": "new v44 amplified-error proof source; acceptance pending"
++  },
++  "endpoint_error_scales": {
++    "package": "research",
++    "build": [
++      "+Erdos647Research.Endpoint.ErrorScales"
++    ],
++    "audits": {
++      "Audit/EndpointErrorScales.lean": [
++        "Erdos647Sieve.Endpoint.window_complementary_scale_product",
++        "Erdos647Sieve.Endpoint.window_mul_logLog_div_logX_tendsto_zero",
++        "Erdos647Sieve.Endpoint.window_div_logX_tendsto_zero",
++        "Erdos647Sieve.Endpoint.truncation_log_window_div_logX_tendsto_zero",
++        "Erdos647Sieve.Endpoint.arithmetic_overhead_div_logX_tendsto_zero",
++        "Erdos647Sieve.Endpoint.log_window_div_logX_tendsto_zero",
++        "Erdos647Sieve.Endpoint.primeCutoff_pow_truncation_eq"
++      ]
++    },
++    "prerequisites": [
++      "endpoint_cutoff_parameters"
++    ],
++    "historical_status": "new v44 amplified-error proof source; acceptance pending"
++  },
++  "endpoint_arithmetic_remainder": {
++    "package": "research",
++    "build": [
++      "+Erdos647Research.Endpoint.ArithmeticRemainder"
++    ],
++    "audits": {
++      "Audit/EndpointArithmeticRemainder.lean": [
++        "Erdos647Sieve.Endpoint.amplified_arithmetic_remainder_eq",
++        "Erdos647Sieve.Endpoint.eventually_arithmetic_overhead_le",
++        "Erdos647Sieve.Endpoint.eventually_amplified_arithmetic_remainder_le",
++        "Erdos647Sieve.Endpoint.eventually_exceptional_window_le"
++      ]
++    },
++    "prerequisites": [
++      "endpoint_amplification",
++      "endpoint_error_scales"
++    ],
++    "historical_status": "new v44 amplified-error proof source; acceptance pending"
++  },
++  "endpoint_counting_reduction": {
++    "package": "research",
++    "build": [
++      "+Erdos647Research.Endpoint.CountingReduction"
++    ],
++    "audits": {
++      "Audit/EndpointCountingReduction.lean": [
++        "Erdos647Sieve.Endpoint.amplified_momentBound_eq",
++        "Erdos647Sieve.Endpoint.eventually_candidateCount_le_four_contributions",
++        "Erdos647Sieve.Endpoint.eventually_candidateCount_le_of_negative_budget",
++        "Erdos647Sieve.Endpoint.eventually_candidateCount_le_amplified_errors"
++      ]
++    },
++    "prerequisites": [
++      "endpoint_moment_tail",
++      "endpoint_arithmetic_remainder"
++    ],
++    "historical_status": "new v44 amplified-error proof source; acceptance pending"
+   }
+ }
+--- /dev/null
++++ b/tests/test_amplified_errors_v44.py
+@@ -0,0 +1,242 @@
++"""Interfaces, dependency boundaries, and exact finite algebra for the error layer.
++These tests do not replace Lean theorem checking.
++"""
++from fractions import Fraction as F
++import importlib.util
++import json
++from math import factorial
++from pathlib import Path
++import re
++import sys
++import unittest
++
++ROOT = Path(__file__).resolve().parents[1]
++sys.path.insert(0, str(ROOT / 'scripts'))
++import check
++
++NS = 'Erdos647Sieve.Endpoint.'
++MODULES = {
++    'endpoint_amplification': 'Amplification',
++    'endpoint_moment_tail': 'MomentTail',
++    'endpoint_error_scales': 'ErrorScales',
++    'endpoint_arithmetic_remainder': 'ArithmeticRemainder',
++    'endpoint_counting_reduction': 'CountingReduction',
++}
++
++
++def code(mod):
++    return (ROOT / 'research/Erdos647Research/Endpoint' / (mod + '.lean')).read_text()
++
++
++def audit(mod):
++    return (ROOT / 'research/Audit' / ('Endpoint' + mod + '.lean')).read_text()
++
++
++def header(mod, name):
++    return code(mod).split('theorem ' + name, 1)[1].split(' := by', 1)[0]
++
++
++class ErrorInterfaces(unittest.TestCase):
++    def test_all_25_theorems_have_exact_types_and_axiom_targets(self):
++        total = 0
++        for gate, mod in MODULES.items():
++            names = [NS + n for n in re.findall(r'^theorem (\w+)', code(mod), re.M)]
++            self.assertEqual(check.GATES[gate]['audits'], {'Audit/Endpoint' + mod + '.lean': names})
++            self.assertEqual(re.findall(r'^#print axioms (\S+)', audit(mod), re.M), names)
++            self.assertEqual(re.findall(r'^#check (\S+)', audit(mod), re.M), names)
++            self.assertGreaterEqual(len(re.findall(r'^example :', audit(mod), re.M)), len(names))
++            self.assertIn('set_option warningAsError true', audit(mod))
++            total += len(names)
++        self.assertEqual(total, 25)
++
++    def test_all_31_expanded_statement_and_definition_checks_present(self):
++        self.assertEqual(sum(len(re.findall(r'^example :', audit(m), re.M))
++                             for m in MODULES.values()), 31)
++
++    def test_weight_definitions_expand_to_the_actual_parameters(self):
++        text = audit('Amplification')
++        self.assertIn('endpointEta = fun X : ℕ => -Real.log (1 - momentT X)', text)
++        self.assertIn('endpointMu = fun X : ℕ =>', text)
++        self.assertIn('momentT X * primeMass (windowLength X) (primeCutoff X)', text)
++        self.assertIn('(correctedBudget (windowLength X) : ℝ)', text)
++
++    def test_no_parameter_redefinition_or_new_trust_shortcut(self):
++        for mod in MODULES.values():
++            text = check.strip_comments(code(mod))
++            self.assertFalse(check.FORBIDDEN.search(text))
++            self.assertNotRegex(text, r'\b(?:def|abbrev)\s+(?:momentT|primeCutoff|windowLength|endpointExponent)\b')
++            self.assertNotIn('PrimeNumberTheoremAnd.', text)
++            self.assertNotIn('RS_prime.', text)
++            self.assertNotIn('Int.toNat', text)
++            self.assertNotIn('Int.natAbs', text)
++        check.source_boundary(ROOT)
++
++    def test_nonnegative_budget_is_explicit_before_multiplication(self):
++        for mod, name in [('Amplification', 'eventually_amplification_exponents_le'),
++                          ('MomentTail', 'eventually_amplified_moment_tail_le'),
++                          ('ArithmeticRemainder', 'eventually_amplified_arithmetic_remainder_le')]:
++            self.assertIn('0 ≤ correctedBudget (windowLength X) →', header(mod, name))
++        self.assertIn('(hB0 : 0 ≤ B)', header('Amplification', 'amplification_exponents_le'))
++
++    def test_principal_coefficient_is_not_the_endpoint_coefficient(self):
++        text = header('Amplification', 'eventually_principal_contribution_le')
++        self.assertIn('(1499 / 1000000 : ℝ)', text)
++        self.assertIn('(windowLength X : ℝ) / Real.log (Real.log (X : ℝ))', text)
++        record = json.loads((ROOT / 'docs/endpoint-coefficient-status.json').read_text())
++        self.assertIsNone(record['proved_coefficient'])
++        self.assertIsNone(record['proved_endpoint_theorem'])
++        self.assertFalse(record['historical_coefficient']['required'])
++        self.assertFalse(record['coefficient_may_depend_on_X'])
++
++    def test_tail_keeps_growing_mu_and_real_cast_factorial(self):
++        text = audit('MomentTail')
++        self.assertIn('(momentT X * primeMass (windowLength X) (primeCutoff X)) ^', text)
++        self.assertIn('(Nat.factorial (truncationOrder X + 1) : ℝ)', text)
++        self.assertIn('Elementary.factorial_pow_lower q', code('MomentTail'))
++        self.assertNotIn('tendsto_factorial', code('MomentTail'))
++        self.assertIn('Elementary.endpoint_tail_log_constant', code('MomentTail'))
++
++    def test_arithmetic_remainder_keeps_full_multiplier(self):
++        text = audit('ArithmeticRemainder')
++        self.assertIn('Real.exp ((-Real.log (1 - momentT X)) *', text)
++        self.assertIn('((windowLength X : ℝ) * primeCutoff X) ^ truncationOrder X', text)
++        self.assertIn('Real.exp (Real.log (X : ℝ) / 2)', text)
++
++    def test_cutoff_power_requires_positive_truncation(self):
++        text = header('ErrorScales', 'primeCutoff_pow_truncation_eq')
++        self.assertIn('(hJ : 0 < truncationOrder X)', text)
++        self.assertIn('Real.rpow (X : ℝ) ((1 : ℝ) / 4)', text)
++
++    def test_final_reduction_has_no_budget_sign_or_analytic_premise(self):
++        text = header('CountingReduction', 'eventually_candidateCount_le_amplified_errors')
++        self.assertIn('∀ᶠ X : ℕ in atTop', text)
++        self.assertNotIn(' → ', text)
++        self.assertNotIn('(h', text)
++        self.assertNotIn('correctedBudget', text)
++        self.assertIn('2 * Real.exp (Real.log (X : ℝ) / 2)', text)
++
++    def test_final_reduction_really_handles_both_signs(self):
++        text = code('CountingReduction')
++        self.assertIn('candidateCount_le_window_of_negative_correctedBudget', text)
++        self.assertIn('by_cases hB : 0 ≤ correctedBudget (windowLength X)', text)
++        self.assertIn('finiteCounting X (windowLength X)', text)
++        self.assertIn('amplified_momentBound_eq', text)
++
++    def test_original_exponent_is_used_for_growth(self):
++        text = code('ErrorScales')
++        self.assertIn('windowLength_ratio_tendsto_one', text)
++        self.assertIn('sub_pos.mpr endpointExponent_lt_one', text)
++        self.assertIn('isLittleO_log_rpow_atTop', text)
++        self.assertIn('window_mul_logLog_div_logX_tendsto_zero', text)
++
++    def test_no_final_endpoint_declaration_is_promoted(self):
++        for mod in MODULES.values():
++            self.assertNotRegex(check.strip_comments(code(mod)), r'^theorem\s+(?:endpoint|positiveEndpoint)\b')
++        record = json.loads((ROOT / 'docs/endpoint-coefficient-status.json').read_text())
++        self.assertEqual(record['amplified_error_branch']['status'], 'source_implemented_acceptance_pending')
++        self.assertIsNone(record['amplified_error_branch']['acceptance_evidence'])
++
++
++class ErrorGateWorkflow(unittest.TestCase):
++    def test_all_gates_includes_accepted_baseline_and_five_new_checks(self):
++        selected = check.selected_gates(check.parser().parse_args([]))
++        self.assertEqual(selected, list(check.GATES))
++        self.assertEqual(len(selected), 26)
++        self.assertTrue(set(MODULES).issubset(selected))
++
++    def test_scale_checks_do_not_require_tail_or_pnt(self):
++        selected = check.selected_gates(check.parser().parse_args(['--gate', 'endpoint_error_scales']))
++        self.assertIn('endpoint_cutoff_parameters', selected)
++        for name in ['endpoint_moment_tail', 'pntplus_inputs', 'endpoint_prime_mass_gap']:
++            self.assertNotIn(name, selected)
++
++    def test_tail_checks_do_not_require_arithmetic_remainder(self):
++        selected = check.selected_gates(check.parser().parse_args(['--gate', 'endpoint_moment_tail']))
++        self.assertIn('endpoint_amplification', selected)
++        self.assertIn('factorial_bounds', selected)
++        self.assertNotIn('endpoint_arithmetic_remainder', selected)
++
++    def test_final_reduction_requires_both_error_routes(self):
++        selected = check.selected_gates(check.parser().parse_args(['--gate', 'endpoint_counting_reduction']))
++        for gate in MODULES:
++            self.assertIn(gate, selected)
++        self.assertEqual(selected[-1], 'endpoint_counting_reduction')
++
++    def test_core_scope_remains_mathlib_only(self):
++        self.assertEqual(check.selected_gates(check.parser().parse_args(['core'])), ['core'])
++        self.assertNotIn('core', check.selected_gates(check.parser().parse_args(['research'])))
++        for p in (ROOT / 'Erdos647Sieve').rglob('*.lean'):
++            self.assertNotIn('Erdos647Research.', p.read_text())
++
++    def test_lake_and_source_collection_include_new_files(self):
++        cfg = (ROOT / 'research/lakefile.lean').read_text()
++        files = {p.relative_to(ROOT).as_posix() for p in check.source_files(ROOT)}
++        for mod in MODULES.values():
++            self.assertIn('`Erdos647Research.Endpoint.' + mod, cfg)
++            self.assertIn('research/Erdos647Research/Endpoint/' + mod + '.lean', files)
++            self.assertIn('research/Audit/Endpoint' + mod + '.lean', files)
++
++    def test_version_label_is_v44(self):
++        self.assertIn("self.id='erdos647_repo_v44_results_'", (ROOT / 'scripts/check.py').read_text())
++        self.assertNotIn("self.id='erdos647_repo_v43_results_'", (ROOT / 'scripts/check.py').read_text())
++
++
++class ExactErrorAlgebra(unittest.TestCase):
++    def test_principal_and_amplification_bounds_in_rational_models(self):
++        for H in [F(0), F(1), F(7, 3), F(100), F(10000)]:
++            for L in [F(1, 500), F(1, 4), F(1), F(2), F(100)]:
++                t = 1 / (1000 * L)
++                for fraction in [F(0), F(1, 3), F(1)]:
++                    B = fraction * H * L
++                    for gap in [F(3, 2), F(2), F(10)]:
++                        lam = B + gap * H
++                        eta_upper = t + t*t
++                        self.assertLessEqual(eta_upper * B, H / 500)
++                        self.assertLessEqual(eta_upper * B - t*lam, -F(1499, 1000000) * H / L)
++                        self.assertEqual(-t * (F(3, 2) * H) + t*t*H*L,
++                                         -F(1499, 1000000) * H / L)
++
++    def test_negative_budget_requires_a_different_argument(self):
++        t = F(1, 1000)
++        eta = t + t*t/2
++        eta_upper = t + t*t
++        B = F(-10)
++        self.assertLessEqual(eta, eta_upper)
++        self.assertGreater(eta*B, eta_upper*B)
++
++    def test_uniform_tail_ratio_and_logarithmic_constant(self):
++        log20_lower = 4 * F(693, 1000)
++        self.assertGreaterEqual((log20_lower - 1)/50 - F(1, 500), F(1, 30))
++        for h in range(0, 1001):
++            H = F(h, 3)
++            q = max(1, (h + 149)//150)
++            self.assertGreaterEqual(F(q), H/50)
++            mu = H/1000
++            self.assertLessEqual(mu, F(q)/20)
++            self.assertLessEqual(H/500 + (1-log20_lower)*q, -H/30)
++
++    def test_exact_cutoff_exponent_for_positive_orders(self):
++        for J in range(1, 1001):
++            self.assertEqual(J*F(1, 4*J), F(1, 4))
++        self.assertNotEqual(F(0), F(1, 4))
++
++    def test_weighted_moment_decomposition(self):
++        for X in [0, 1, 7, 100]:
++            for q in range(1, 8):
++                for mu in [F(0), F(1, 10), F(3)]:
++                    for E, D in [(F(1, 3), F(2)), (F(7), F(9, 2))]:
++                        principal_base = F(2, 7)
++                        tail = mu**q / factorial(q)
++                        self.assertEqual(E*(X*(principal_base+tail)+D),
++                                         X*(E*principal_base) + X*(E*tail) + E*D)
++
++    def test_complementary_ratio_cancellation(self):
++        for P, R, H, L, J in [(F(2),F(3),F(1),F(4),F(5)),
++                              (F(17,3),F(29,7),F(11,5),F(37),F(13,2))]:
++            Q = P*R
++            self.assertEqual((H/P)*(L/R), H*L/Q)
++            self.assertEqual((J/H)*(F(2)/L)*(H*L/Q), J*2/Q)
++
++
++if __name__ == '__main__':
++    unittest.main()

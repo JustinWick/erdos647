@@ -482,5 +482,104 @@
       "endpoint_prime_mass_gap"
     ],
     "historical_status": "new v42 mass-budget proof source; acceptance pending"
+  },
+  "endpoint_amplification": {
+    "package": "research",
+    "build": [
+      "+Erdos647Research.Endpoint.Amplification"
+    ],
+    "audits": {
+      "Audit/EndpointAmplification.lean": [
+        "Erdos647Sieve.Endpoint.neg_log_weight_bounds",
+        "Erdos647Sieve.Endpoint.amplification_exponents_le",
+        "Erdos647Sieve.Endpoint.eventually_endpointMu_bounds",
+        "Erdos647Sieve.Endpoint.eventually_amplification_exponents_le",
+        "Erdos647Sieve.Endpoint.eventually_amplification_le",
+        "Erdos647Sieve.Endpoint.eventually_principal_contribution_le"
+      ]
+    },
+    "prerequisites": [
+      "endpoint_mass_budget_bounds",
+      "endpoint_log_bounds"
+    ],
+    "historical_status": "new v44 amplified-error proof source; acceptance pending"
+  },
+  "endpoint_moment_tail": {
+    "package": "research",
+    "build": [
+      "+Erdos647Research.Endpoint.MomentTail"
+    ],
+    "audits": {
+      "Audit/EndpointMomentTail.lean": [
+        "Erdos647Sieve.Endpoint.factorial_tail_le_geometric_exp",
+        "Erdos647Sieve.Endpoint.amplified_factorial_tail_le",
+        "Erdos647Sieve.Endpoint.eventually_amplified_moment_tail_le",
+        "Erdos647Sieve.Endpoint.eventually_moment_tail_contribution_le"
+      ]
+    },
+    "prerequisites": [
+      "endpoint_amplification",
+      "factorial_bounds"
+    ],
+    "historical_status": "new v44 amplified-error proof source; acceptance pending"
+  },
+  "endpoint_error_scales": {
+    "package": "research",
+    "build": [
+      "+Erdos647Research.Endpoint.ErrorScales"
+    ],
+    "audits": {
+      "Audit/EndpointErrorScales.lean": [
+        "Erdos647Sieve.Endpoint.window_complementary_scale_product",
+        "Erdos647Sieve.Endpoint.window_mul_logLog_div_logX_tendsto_zero",
+        "Erdos647Sieve.Endpoint.window_div_logX_tendsto_zero",
+        "Erdos647Sieve.Endpoint.truncation_log_window_div_logX_tendsto_zero",
+        "Erdos647Sieve.Endpoint.arithmetic_overhead_div_logX_tendsto_zero",
+        "Erdos647Sieve.Endpoint.log_window_div_logX_tendsto_zero",
+        "Erdos647Sieve.Endpoint.primeCutoff_pow_truncation_eq"
+      ]
+    },
+    "prerequisites": [
+      "endpoint_cutoff_parameters"
+    ],
+    "historical_status": "new v44 amplified-error proof source; acceptance pending"
+  },
+  "endpoint_arithmetic_remainder": {
+    "package": "research",
+    "build": [
+      "+Erdos647Research.Endpoint.ArithmeticRemainder"
+    ],
+    "audits": {
+      "Audit/EndpointArithmeticRemainder.lean": [
+        "Erdos647Sieve.Endpoint.amplified_arithmetic_remainder_eq",
+        "Erdos647Sieve.Endpoint.eventually_arithmetic_overhead_le",
+        "Erdos647Sieve.Endpoint.eventually_amplified_arithmetic_remainder_le",
+        "Erdos647Sieve.Endpoint.eventually_exceptional_window_le"
+      ]
+    },
+    "prerequisites": [
+      "endpoint_amplification",
+      "endpoint_error_scales"
+    ],
+    "historical_status": "new v44 amplified-error proof source; acceptance pending"
+  },
+  "endpoint_counting_reduction": {
+    "package": "research",
+    "build": [
+      "+Erdos647Research.Endpoint.CountingReduction"
+    ],
+    "audits": {
+      "Audit/EndpointCountingReduction.lean": [
+        "Erdos647Sieve.Endpoint.amplified_momentBound_eq",
+        "Erdos647Sieve.Endpoint.eventually_candidateCount_le_four_contributions",
+        "Erdos647Sieve.Endpoint.eventually_candidateCount_le_of_negative_budget",
+        "Erdos647Sieve.Endpoint.eventually_candidateCount_le_amplified_errors"
+      ]
+    },
+    "prerequisites": [
+      "endpoint_moment_tail",
+      "endpoint_arithmetic_remainder"
+    ],
+    "historical_status": "new v44 amplified-error proof source; acceptance pending"
   }
 }
