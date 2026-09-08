@@ -1,0 +1,976 @@
+{
+  "Erdos647Sieve.finiteMoment": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "Erdos647Sieve.budgetDebit": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "Erdos647Sieve.finiteCounting": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "Erdos647Sieve.Bonferroni.pow_add_linear_le": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "Erdos647Sieve.Bonferroni.factorial_mul_elementary_le_pow_sum": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "Erdos647Sieve.Bonferroni.elementary_le_pow_sum_div_factorial": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "Erdos647Sieve.Bonferroni.avoidProduct_le_exp_neg_sum": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "Erdos647Sieve.Bonferroni.even_truncation_le_exp_add_tail": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "Erdos647Sieve.Bonferroni.even_sum_le_exp_add_tail": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "Erdos647Sieve.sum_map_toList_eq_sum": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "Erdos647Sieve.prod_map_toList_eq_prod": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "Erdos647Sieve.avoidProduct_map_toList": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "Erdos647Sieve.prod_ite_eq_pow_card_filter": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "Erdos647Sieve.hitWeights_bounds": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "Erdos647Sieve.avoidProduct_hitWeights": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "Erdos647Sieve.meanWeights_sum": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "Erdos647Sieve.meanWeights_bounds": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "Erdos647Sieve.hitWeight_pointwise_upper": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "Erdos647Sieve.hitWeight_interval_upper": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "Erdos647Sieve.meanWeight_truncation_upper": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "Erdos647Sieve.card_filter_natCast_image": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "Erdos647Sieve.hitCount_eq_nat_filter_card": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "Erdos647Sieve.two_pow_primeFactors_card_le_tau": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "Erdos647Sieve.primeFactors_card_le_log_floor": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "Erdos647Sieve.prefix_primeFactor_sum_le_logBudget": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "Erdos647Sieve.div_le_divisorOccurrences": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "Erdos647Sieve.sum_divisorOccurrences_eq": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "Erdos647Sieve.windowPolynomial_eq_nat_product": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "Erdos647Sieve.prime_dvd_nat_product_iff": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "Erdos647Sieve.prime_dvd_window_iff": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "Erdos647Sieve.one_le_divisorOccurrences_of_hit": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "Erdos647Sieve.smallPrimes_disjoint_selectedPrimes": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "Erdos647Sieve.smallPrimeDebit_add_hitCount_le_primeFactor_sum": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "Erdos647Sieve.no_prefix_of_negative_correctedBudget": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "Erdos647Sieve.finiteCounting_of_finiteMoment": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "Erdos647Sieve.candidateCount_le_window_of_negative_correctedBudget": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "Erdos647Sieve.count_le_exceptions_add_weight": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "Erdos647Sieve.one_le_budget_weight": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "Erdos647Sieve.Bonferroni.signedError_nonneg": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "Erdos647Sieve.Bonferroni.even_sum_bounds": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "Erdos647Sieve.candidate_prefix": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "Erdos647Sieve.candidateCount_eq_filter_Icc": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "Erdos647Sieve.sum_nat_Icc_eq_int": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "Erdos647Sieve.no_prefix_of_negative_budget": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "Erdos647Sieve.finiteCounting_of_budgetDebit_of_finiteMoment": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "Erdos647Sieve.candidateCount_le_window_of_negative_budget": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "Erdos647Sieve.sum_powersetCard_succ_insert": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "Erdos647Sieve.elementary_map_eq_sum_powersetCard": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "Erdos647Sieve.elementary_toList_eq_sum_powersetCard": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "Erdos647Sieve.elementary_map_eq_of_toFinset_eq": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "Erdos647Sieve.primeSubsetProduct_pos": [
+    "Quot.sound",
+    "propext"
+  ],
+  "Erdos647Sieve.selected_subset_product_pos": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "Erdos647Sieve.prime_dvd_primeSubsetProduct_iff_mem": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "Erdos647Sieve.primeSubsetProduct_injective": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "Erdos647Sieve.primeSubsetProduct_int_dvd_iff": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "Erdos647Sieve.card_primeSubsetFamily_le": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "Erdos647Sieve.prime_dvd_window_iff_int": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "Erdos647Sieve.prime_dvd_window_iff_mem_residues": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "Erdos647Sieve.card_primeWindowResidues": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "Erdos647Sieve.subsetHitCount_empty": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "Erdos647Sieve.subsetHitCount_eq_modulus_count": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "Erdos647Sieve.prod_ite_zero_eq_pow_card": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "Erdos647Sieve.hitWeights_elementary_eq_subset_sum": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "Erdos647Sieve.sum_hitWeights_elementary_eq_subset_counts": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "Erdos647Sieve.interval_hitWeights_elementary_eq_subset_counts": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "Erdos647Sieve.meanWeights_elementary_eq_subset_sum": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "Erdos647Sieve.coefficient_discrepancy_eq_subset_errors": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "Erdos647Sieve.signed_discrepancy_eq_subset_errors": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "Erdos647Sieve.mul_le_iff_le_euclideanQuotient": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "Erdos647Sieve.progressionCount_eq_quotient_difference": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "Erdos647Sieve.euclideanQuotient_real_bounds": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "Erdos647Sieve.progressionCount_error_le_one": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "Erdos647Sieve.residueClassCount_eq_progressionCount": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "Erdos647Sieve.residueClassCount_error_le_one": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "Erdos647Sieve.residueSetCount_error_le_card": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "Erdos647Sieve.map_windowEvaluation": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "Erdos647Sieve.windowEvaluation_intCast": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "Erdos647Sieve.mem_windowRootResidues": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "Erdos647Sieve.intCast_mem_windowRootResidues_iff": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "Erdos647Sieve.windowRootResidues_eq_primeWindowResidues": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "Erdos647Sieve.card_windowRootResidues_prime": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "Erdos647Sieve.card_windowRootResidues_one": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "Erdos647Sieve.card_windowRootResidues_mul": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "Erdos647Sieve.card_windowRootResidues_primeSubsetProduct": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "Erdos647Sieve.subsetHitCount_eq_windowRootResidues_count": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "Erdos647Sieve.subsetHitCount_error_le": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "Erdos647Sieve.selected_subsetHitCount_error_le": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "Erdos647Sieve.mem_retainedSubsets": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "Erdos647Sieve.sum_powersetCard_le_eq_retained": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "Erdos647Sieve.real_pow_mono_of_one_le": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "Erdos647Sieve.retained_primeSubsetProduct_le": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "Erdos647Sieve.card_retainedSubsets_le_floor": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "Erdos647Sieve.card_retainedSubsets_cast_le": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "Erdos647Sieve.retained_weighted_subset_error_le": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "Erdos647Sieve.arithmetic_discrepancy_le": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "Erdos647Sieve.Analytic.hasDerivAt_reciprocalLog": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "Erdos647Sieve.Analytic.deriv_reciprocalLog_integrableOn": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "Erdos647Sieve.Analytic.mainPrimitive_integral": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "Erdos647Sieve.Analytic.primeLogCoefficient_partial_sum": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "Erdos647Sieve.Analytic.reciprocalPrimeSum_eq_weighted_sum": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "Erdos647Sieve.Analytic.reciprocalPrimeSum_abel": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "Erdos647Sieve.Analytic.reciprocalPrimeSum_partial_summation": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "Erdos647Sieve.Analytic.reciprocalPrimeSum_error_identity": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "MediumPNT": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "RS_prime.pntBigO": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "RS_prime.pnt": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "RS_prime.intervalIntegrable_inv_log_pow": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "RS_prime.ioiIntegrable_inv_log_pow": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "RS_prime.bound_deriv": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "RS_prime.integrableOn_deriv": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "RS_prime.integrableOn_deriv_inv_div_log": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "Erdos647Sieve.Analytic.theta_pnt_bound": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "Erdos647Sieve.Analytic.theta_error_deriv_integrable": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "Erdos647Sieve.Analytic.theta_error_boundary_tendsto_zero": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "Erdos647Sieve.Analytic.reciprocalPrimeSum_tendsto": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "Erdos647Sieve.Analytic.reciprocalPrimeLimit_exists": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "Erdos647Sieve.Analytic.reciprocalPrime_difference_tendsto_zero": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "Erdos647Sieve.Analytic.selectedPrimeSum_eq_difference": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "Erdos647Sieve.Analytic.primeMass_eq_reciprocal_difference": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "Erdos647Sieve.Analytic.selectedPrimeSum_difference_tendsto_zero": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "Erdos647Sieve.Elementary.neg_log_one_sub_le_add_sq": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "Erdos647Sieve.Elementary.endpoint_log_gap": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "Erdos647Sieve.Elementary.endpoint_tail_log_constant": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "Erdos647Sieve.Elementary.log_factorial_upper": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "Erdos647Sieve.Elementary.log_factorial_lower": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "Erdos647Sieve.Elementary.factorial_pow_lower": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "Erdos647Sieve.Elementary.shiftedFactorialLog_eq_expanded": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "Erdos647Sieve.Elementary.log_factorial_residual_tendsto_zero": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "Erdos647Sieve.Elementary.shiftedFactorialLog_residual_tendsto_zero": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "Erdos647Sieve.Elementary.sum_log_shift_eq_factorial": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "Erdos647Sieve.Elementary.logBudget_le_factorial": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "Erdos647Sieve.Elementary.harmonic_sum_le_finitePrimeEuler": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "Erdos647Sieve.Elementary.reciprocal_remainder_telescope": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "Erdos647Sieve.Elementary.prime_log_factor_le": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "Erdos647Sieve.Elementary.log_finitePrimeEuler_le": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "Erdos647Sieve.Elementary.prime_reciprocal_lower": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "Erdos647Sieve.Elementary.nat_quotient_cast_lower": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "Erdos647Sieve.Elementary.smallPrimeDebit_ge_sum_sub_card": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "Erdos647Sieve.Elementary.smallPrimeDebit_lower": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "Erdos647Sieve.Elementary.correctedBudget_upper_eventually": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "Erdos647Sieve.Endpoint.endpointScale_pos": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "Erdos647Sieve.Endpoint.endpointRHSWith_le_of_le": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "Erdos647Sieve.Endpoint.endpointBound_iff_eventually": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "Erdos647Sieve.Endpoint.endpointBound_mono": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "Erdos647Sieve.Endpoint.endpointRHSWith_one_div_thousand": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "Erdos647Sieve.Endpoint.legacyEndpointClaim_iff": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "Erdos647Sieve.Endpoint.positiveEndpointClaim_of_explicit": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "Erdos647Sieve.Endpoint.log_div_rpow_eq": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "Erdos647Sieve.Endpoint.endpointExponent_pos": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "Erdos647Sieve.Endpoint.endpointExponent_lt_one": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "Erdos647Sieve.Endpoint.endpointExponent_cancellation": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "Erdos647Sieve.Endpoint.logX_tendsto_atTop": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "Erdos647Sieve.Endpoint.logLogX_tendsto_atTop": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "Erdos647Sieve.Endpoint.windowScale_tendsto_atTop": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "Erdos647Sieve.Endpoint.windowLength_tendsto_atTop": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "Erdos647Sieve.Endpoint.windowLength_cast_tendsto_atTop": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "Erdos647Sieve.Endpoint.windowLength_ratio_tendsto_one": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "Erdos647Sieve.Endpoint.eventually_windowLength_pos": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "Erdos647Sieve.Endpoint.log_windowLength_sub_tendsto_zero": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "Erdos647Sieve.Endpoint.log_windowLength_div_logLog_tendsto": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "Erdos647Sieve.Endpoint.rounded_hundred_eq_ceil": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "Erdos647Sieve.Endpoint.truncationOrder_eq_ceil": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "Erdos647Sieve.Endpoint.truncationOrder_even": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "Erdos647Sieve.Endpoint.truncationOrder_bounds": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "Erdos647Sieve.Endpoint.eventually_truncationOrder_pos": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "Erdos647Sieve.Endpoint.truncationOrder_div_windowLength_tendsto": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "Erdos647Sieve.Endpoint.truncationOrder_scale_ratio_tendsto": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "Erdos647Sieve.Endpoint.truncationOrder_cast_tendsto_atTop": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "Erdos647Sieve.Endpoint.primeCutoff_pos": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "Erdos647Sieve.Endpoint.log_primeCutoff": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "Erdos647Sieve.Endpoint.complementaryScale_tendsto_atTop": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "Erdos647Sieve.Endpoint.log_primeCutoff_scale_ratio_tendsto": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "Erdos647Sieve.Endpoint.log_primeCutoff_tendsto_atTop": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "Erdos647Sieve.Endpoint.primeCutoff_tendsto_atTop": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "Erdos647Sieve.Endpoint.loglog_primeCutoff_sub_tendsto": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "Erdos647Sieve.Endpoint.log_windowLength_div_complementaryScale_tendsto_zero": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "Erdos647Sieve.Endpoint.log_windowLength_div_log_primeCutoff_tendsto_zero": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "Erdos647Sieve.Endpoint.eventually_windowLength_lt_primeCutoff": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "Erdos647Sieve.Endpoint.momentT_tendsto_zero": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "Erdos647Sieve.Endpoint.eventually_momentT_bounds": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "Erdos647Sieve.Endpoint.endpoint_parameters_admissible": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "Erdos647Sieve.Endpoint.endpoint_selectedPrimeSum_error_tendsto_zero": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "Erdos647Sieve.Endpoint.endpoint_primeMass_expansion_tendsto_zero": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "Erdos647Sieve.Endpoint.primeMassGapConstant_gt_three_halves": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "Erdos647Sieve.Endpoint.endpoint_primeMass_budgetMain_gap_tendsto": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "Erdos647Sieve.Endpoint.eventually_primeMass_gap_of_lt": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "Erdos647Sieve.Endpoint.eventually_primeMass_sub_correctedBudget_ge": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "Erdos647Sieve.Endpoint.eventually_correctedBudget_le_primeMass": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "Erdos647Sieve.Endpoint.log_windowLength_tendsto_atTop": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "Erdos647Sieve.Endpoint.loglog_windowLength_div_logLog_tendsto_zero": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "Erdos647Sieve.Endpoint.endpoint_primeMass_div_window_logLog_tendsto": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "Erdos647Sieve.Endpoint.endpoint_primeMass_nonneg": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "Erdos647Sieve.Endpoint.eventually_primeMass_le_window_mul_logLog": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "Erdos647Sieve.Endpoint.eventually_correctedBudget_le_window_mul_logLog": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "Erdos647Sieve.Endpoint.eventually_endpoint_mass_budget_bounds": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ]
+}

@@ -1,0 +1,331 @@
+$ <REPO>/.tools/elan/toolchains/leanprover--lean4---v4.32.2/bin/lake env lean -DwarningAsError=true Audit/Components.lean
+Erdos647Sieve.Bonferroni.pow_add_linear_le (s a : ℝ) (hs : 0 ≤ s) (ha : 0 ≤ a) (q : ℕ) :
+  s ^ (q + 1) + (↑q + 1) * a * s ^ q ≤ (s + a) ^ (q + 1)
+'Erdos647Sieve.Bonferroni.pow_add_linear_le' depends on axioms: [propext, Classical.choice, Quot.sound]
+Erdos647Sieve.Bonferroni.factorial_mul_elementary_le_pow_sum (xs : List ℝ) :
+  (∀ a ∈ xs, 0 ≤ a) → ∀ (q : ℕ), ↑q.factorial * Erdos647Sieve.Bonferroni.elementary xs q ≤ xs.sum ^ q
+'Erdos647Sieve.Bonferroni.factorial_mul_elementary_le_pow_sum' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+Erdos647Sieve.Bonferroni.elementary_le_pow_sum_div_factorial (xs : List ℝ) (h : ∀ a ∈ xs, 0 ≤ a) (q : ℕ) :
+  Erdos647Sieve.Bonferroni.elementary xs q ≤ xs.sum ^ q / ↑q.factorial
+'Erdos647Sieve.Bonferroni.elementary_le_pow_sum_div_factorial' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+Erdos647Sieve.Bonferroni.avoidProduct_le_exp_neg_sum (xs : List ℝ) :
+  (∀ a ∈ xs, 0 ≤ a ∧ a ≤ 1) → Erdos647Sieve.Bonferroni.avoidProduct xs ≤ Real.exp (-xs.sum)
+'Erdos647Sieve.Bonferroni.avoidProduct_le_exp_neg_sum' depends on axioms: [propext, Classical.choice, Quot.sound]
+Erdos647Sieve.Bonferroni.even_truncation_le_exp_add_tail (xs : List ℝ) (h : ∀ a ∈ xs, 0 ≤ a ∧ a ≤ 1) (J : ℕ)
+  (hJ : Even J) : Erdos647Sieve.Bonferroni.truncation xs J ≤ Real.exp (-xs.sum) + xs.sum ^ (J + 1) / ↑(J + 1).factorial
+'Erdos647Sieve.Bonferroni.even_truncation_le_exp_add_tail' depends on axioms: [propext, Classical.choice, Quot.sound]
+Erdos647Sieve.Bonferroni.even_sum_le_exp_add_tail (xs : List ℝ) (h : ∀ a ∈ xs, 0 ≤ a ∧ a ≤ 1) (J : ℕ) (hJ : Even J) :
+  ∑ j ∈ Finset.range (J + 1), (-1) ^ j * Erdos647Sieve.Bonferroni.elementary xs j ≤
+    Real.exp (-xs.sum) + xs.sum ^ (J + 1) / ↑(J + 1).factorial
+'Erdos647Sieve.Bonferroni.even_sum_le_exp_add_tail' depends on axioms: [propext, Classical.choice, Quot.sound]
+Erdos647Sieve.sum_map_toList_eq_sum (s : Finset ℕ) (w : ℕ → ℝ) : (List.map w s.toList).sum = ∑ p ∈ s, w p
+'Erdos647Sieve.sum_map_toList_eq_sum' depends on axioms: [propext, Classical.choice, Quot.sound]
+Erdos647Sieve.prod_map_toList_eq_prod (s : Finset ℕ) (w : ℕ → ℝ) : (List.map w s.toList).prod = ∏ p ∈ s, w p
+'Erdos647Sieve.prod_map_toList_eq_prod' depends on axioms: [propext, Classical.choice, Quot.sound]
+Erdos647Sieve.avoidProduct_map_toList (s : Finset ℕ) (w : ℕ → ℝ) :
+  Erdos647Sieve.Bonferroni.avoidProduct (List.map w s.toList) = ∏ p ∈ s, (1 - w p)
+'Erdos647Sieve.avoidProduct_map_toList' depends on axioms: [propext, Classical.choice, Quot.sound]
+Erdos647Sieve.prod_ite_eq_pow_card_filter (s : Finset ℕ) (P : ℕ → Prop) [DecidablePred P] (z : ℝ) :
+  (∏ p ∈ s, if P p then z else 1) = z ^ (Finset.filter P s).card
+'Erdos647Sieve.prod_ite_eq_pow_card_filter' depends on axioms: [propext, Classical.choice, Quot.sound]
+Erdos647Sieve.hitWeights_bounds (H : ℕ) (y z : ℝ) (n : ℤ) (hz0 : 0 < z) (hz1 : z < 1) (a : ℝ) :
+  a ∈ Erdos647Sieve.hitWeights H y z n → 0 ≤ a ∧ a ≤ 1
+'Erdos647Sieve.hitWeights_bounds' depends on axioms: [propext, Classical.choice, Quot.sound]
+Erdos647Sieve.avoidProduct_hitWeights (H : ℕ) (y z : ℝ) (n : ℤ) :
+  Erdos647Sieve.Bonferroni.avoidProduct (Erdos647Sieve.hitWeights H y z n) = z ^ Erdos647Sieve.hitCount H y n
+'Erdos647Sieve.avoidProduct_hitWeights' depends on axioms: [propext, Classical.choice, Quot.sound]
+Erdos647Sieve.meanWeights_sum (H : ℕ) (y z : ℝ) :
+  (Erdos647Sieve.meanWeights H y z).sum = (1 - z) * Erdos647Sieve.primeMass H y
+'Erdos647Sieve.meanWeights_sum' depends on axioms: [propext, Classical.choice, Quot.sound]
+Erdos647Sieve.meanWeights_bounds (H : ℕ) (y z : ℝ) (hz0 : 0 < z) (hz1 : z < 1) (a : ℝ) :
+  a ∈ Erdos647Sieve.meanWeights H y z → 0 ≤ a ∧ a ≤ 1
+'Erdos647Sieve.meanWeights_bounds' depends on axioms: [propext, Classical.choice, Quot.sound]
+Erdos647Sieve.hitWeight_pointwise_upper (H : ℕ) (y z : ℝ) (n : ℤ) (hz0 : 0 < z) (hz1 : z < 1) (J : ℕ) (hJ : Even J) :
+  z ^ Erdos647Sieve.hitCount H y n ≤
+    ∑ j ∈ Finset.range (J + 1), (-1) ^ j * Erdos647Sieve.Bonferroni.elementary (Erdos647Sieve.hitWeights H y z n) j
+'Erdos647Sieve.hitWeight_pointwise_upper' depends on axioms: [propext, Classical.choice, Quot.sound]
+Erdos647Sieve.hitWeight_interval_upper (A : ℤ) (X H : ℕ) (y z : ℝ) (hz0 : 0 < z) (hz1 : z < 1) (J : ℕ) (hJ : Even J) :
+  ∑ n ∈ Finset.Icc (A + 1) (A + ↑X), z ^ Erdos647Sieve.hitCount H y n ≤
+    ∑ j ∈ Finset.range (J + 1),
+      (-1) ^ j *
+        ∑ n ∈ Finset.Icc (A + 1) (A + ↑X), Erdos647Sieve.Bonferroni.elementary (Erdos647Sieve.hitWeights H y z n) j
+'Erdos647Sieve.hitWeight_interval_upper' depends on axioms: [propext, Classical.choice, Quot.sound]
+Erdos647Sieve.meanWeight_truncation_upper (H : ℕ) (y z : ℝ) (hz0 : 0 < z) (hz1 : z < 1) (J : ℕ) (hJ : Even J) :
+  ∑ j ∈ Finset.range (J + 1), (-1) ^ j * Erdos647Sieve.Bonferroni.elementary (Erdos647Sieve.meanWeights H y z) j ≤
+    Real.exp (-((1 - z) * Erdos647Sieve.primeMass H y)) +
+      ((1 - z) * Erdos647Sieve.primeMass H y) ^ (J + 1) / ↑(J + 1).factorial
+'Erdos647Sieve.meanWeight_truncation_upper' depends on axioms: [propext, Classical.choice, Quot.sound]
+Erdos647Sieve.card_filter_natCast_image (s : Finset ℕ) (P : ℤ → Prop) [DecidablePred P] :
+  (Finset.filter P (Finset.image (fun p => ↑p) s)).card = {p ∈ s | P ↑p}.card
+'Erdos647Sieve.card_filter_natCast_image' depends on axioms: [propext, Classical.choice, Quot.sound]
+Erdos647Sieve.hitCount_eq_nat_filter_card (H : ℕ) (y : ℝ) (n : ℤ) :
+  Erdos647Sieve.hitCount H y n = {p ∈ Erdos647Sieve.selectedPrimes H y | ↑p ∣ Erdos647Sieve.windowPolynomial H n}.card
+'Erdos647Sieve.hitCount_eq_nat_filter_card' depends on axioms: [propext, Classical.choice, Quot.sound]
+Erdos647Sieve.two_pow_primeFactors_card_le_tau {m : ℕ} (hm : m ≠ 0) : 2 ^ m.primeFactors.card ≤ Erdos647Sieve.tau m
+'Erdos647Sieve.two_pow_primeFactors_card_le_tau' depends on axioms: [propext, Classical.choice, Quot.sound]
+Erdos647Sieve.primeFactors_card_le_log_floor {m k : ℕ} (hm : m ≠ 0) (htau : Erdos647Sieve.tau m ≤ k + 2) :
+  ↑m.primeFactors.card ≤ ⌊Real.log (↑k + 2) / Real.log 2⌋
+'Erdos647Sieve.primeFactors_card_le_log_floor' depends on axioms: [propext, Classical.choice, Quot.sound]
+Erdos647Sieve.prefix_primeFactor_sum_le_logBudget {H n : ℕ} (hprefix : Erdos647Sieve.Prefix H n) :
+  ↑(∑ k ∈ Finset.Icc 1 H, (n - k).primeFactors.card) ≤ Erdos647Sieve.logBudget H
+'Erdos647Sieve.prefix_primeFactor_sum_le_logBudget' depends on axioms: [propext, Classical.choice, Quot.sound]
+Erdos647Sieve.div_le_divisorOccurrences {H n p : ℕ} (hHn : H < n) (hp : 0 < p) :
+  H / p ≤ Erdos647Sieve.divisorOccurrences H n p
+'Erdos647Sieve.div_le_divisorOccurrences' depends on axioms: [propext, Classical.choice, Quot.sound]
+Erdos647Sieve.sum_divisorOccurrences_eq (P : Finset ℕ) (H n : ℕ) :
+  ∑ p ∈ P, Erdos647Sieve.divisorOccurrences H n p = ∑ k ∈ Finset.Icc 1 H, {p ∈ P | p ∣ n - k}.card
+'Erdos647Sieve.sum_divisorOccurrences_eq' depends on axioms: [propext, Classical.choice, Quot.sound]
+Erdos647Sieve.windowPolynomial_eq_nat_product {H n : ℕ} (hHn : H < n) :
+  Erdos647Sieve.windowPolynomial H ↑n = ↑(∏ k ∈ Finset.Icc 1 H, (n - k))
+'Erdos647Sieve.windowPolynomial_eq_nat_product' depends on axioms: [propext, Classical.choice, Quot.sound]
+Erdos647Sieve.prime_dvd_nat_product_iff {p : ℕ} (hp : Nat.Prime p) (S : Finset ℕ) (f : ℕ → ℕ) :
+  p ∣ ∏ k ∈ S, f k ↔ ∃ k ∈ S, p ∣ f k
+'Erdos647Sieve.prime_dvd_nat_product_iff' depends on axioms: [propext, Classical.choice, Quot.sound]
+Erdos647Sieve.prime_dvd_window_iff {H n p : ℕ} (hHn : H < n) (hp : Nat.Prime p) :
+  ↑p ∣ Erdos647Sieve.windowPolynomial H ↑n ↔ ∃ k ∈ Finset.Icc 1 H, p ∣ n - k
+'Erdos647Sieve.prime_dvd_window_iff' depends on axioms: [propext, Classical.choice, Quot.sound]
+Erdos647Sieve.one_le_divisorOccurrences_of_hit {H n p : ℕ} (hHn : H < n) (hp : Nat.Prime p)
+  (hhit : ↑p ∣ Erdos647Sieve.windowPolynomial H ↑n) : 1 ≤ Erdos647Sieve.divisorOccurrences H n p
+'Erdos647Sieve.one_le_divisorOccurrences_of_hit' depends on axioms: [propext, Classical.choice, Quot.sound]
+Erdos647Sieve.smallPrimes_disjoint_selectedPrimes (H : ℕ) (y : ℝ) :
+  Disjoint (Finset.filter Nat.Prime (Finset.Icc 2 H)) (Erdos647Sieve.selectedPrimes H y)
+'Erdos647Sieve.smallPrimes_disjoint_selectedPrimes' depends on axioms: [propext, Classical.choice, Quot.sound]
+Erdos647Sieve.smallPrimeDebit_add_hitCount_le_primeFactor_sum {H n : ℕ} (hHn : H < n) (y : ℝ) :
+  Erdos647Sieve.smallPrimeDebit H + Erdos647Sieve.hitCount H y ↑n ≤ ∑ k ∈ Finset.Icc 1 H, (n - k).primeFactors.card
+'Erdos647Sieve.smallPrimeDebit_add_hitCount_le_primeFactor_sum' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+Erdos647Sieve.no_prefix_of_negative_correctedBudget (n H : ℕ) (y : ℝ) (hH : 1 ≤ H) (hy : ↑H < y)
+  (hneg : Erdos647Sieve.correctedBudget H < 0) : ¬Erdos647Sieve.Prefix H n
+'Erdos647Sieve.no_prefix_of_negative_correctedBudget' depends on axioms: [propext, Classical.choice, Quot.sound]
+Erdos647Sieve.finiteCounting_of_finiteMoment (hMoment : Erdos647Sieve.FiniteMomentClaim) :
+  Erdos647Sieve.FiniteCountingClaim
+'Erdos647Sieve.finiteCounting_of_finiteMoment' depends on axioms: [propext, Classical.choice, Quot.sound]
+Erdos647Sieve.candidateCount_le_window_of_negative_correctedBudget (X H : ℕ) (y : ℝ) (hH : 1 ≤ H) (hy : ↑H < y)
+  (hneg : Erdos647Sieve.correctedBudget H < 0) : Erdos647Sieve.candidateCount X ≤ H
+'Erdos647Sieve.candidateCount_le_window_of_negative_correctedBudget' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+Erdos647Sieve.count_le_exceptions_add_weight.{u_1} {α : Type u_1} (s e : Finset α) (P : α → Prop) [DecidablePred P]
+  (w : α → ℝ) (K : ℝ) (hK : 0 ≤ K) (hw : ∀ a ∈ s, 0 ≤ w a) (hcover : ∀ a ∈ s, P a → a ∉ e → 1 ≤ K * w a) :
+  ↑(Finset.filter P s).card ≤ ↑e.card + K * ∑ a ∈ s, w a
+'Erdos647Sieve.count_le_exceptions_add_weight' depends on axioms: [propext, Classical.choice, Quot.sound]
+Erdos647Sieve.one_le_budget_weight (z : ℝ) (hz : 0 < z) (hz1 : z < 1) (B : ℤ) (k : ℕ) (hk : ↑k ≤ B) :
+  1 ≤ Real.exp (-Real.log z * ↑B) * z ^ k
+'Erdos647Sieve.one_le_budget_weight' depends on axioms: [propext, Classical.choice, Quot.sound]
+Erdos647Sieve.Bonferroni.signedError_nonneg (xs : List ℝ) :
+  (∀ a ∈ xs, 0 ≤ a ∧ a ≤ 1) →
+    ∀ (J : ℕ), 0 ≤ (-1) ^ J * (Erdos647Sieve.Bonferroni.truncation xs J - Erdos647Sieve.Bonferroni.avoidProduct xs)
+'Erdos647Sieve.Bonferroni.signedError_nonneg' depends on axioms: [propext, Classical.choice, Quot.sound]
+Erdos647Sieve.Bonferroni.even_sum_bounds (xs : List ℝ) (h : ∀ a ∈ xs, 0 ≤ a ∧ a ≤ 1) (J : ℕ) (hJ : Even J) :
+  Erdos647Sieve.Bonferroni.avoidProduct xs ≤
+      ∑ j ∈ Finset.range (J + 1), (-1) ^ j * Erdos647Sieve.Bonferroni.elementary xs j ∧
+    ∑ j ∈ Finset.range (J + 1), (-1) ^ j * Erdos647Sieve.Bonferroni.elementary xs j ≤
+      Erdos647Sieve.Bonferroni.avoidProduct xs + Erdos647Sieve.Bonferroni.elementary xs (J + 1)
+'Erdos647Sieve.Bonferroni.even_sum_bounds' depends on axioms: [propext, Classical.choice, Quot.sound]
+Erdos647Sieve.candidate_prefix {n H : ℕ} (hc : Erdos647Sieve.Candidate n) (hH : H < n) : Erdos647Sieve.Prefix H n
+'Erdos647Sieve.candidate_prefix' depends on axioms: [propext, Classical.choice, Quot.sound]
+Erdos647Sieve.candidateCount_eq_filter_Icc (X : ℕ) [DecidablePred Erdos647Sieve.Candidate] :
+  Erdos647Sieve.candidateCount X = (Finset.filter Erdos647Sieve.Candidate (Finset.Icc 1 X)).card
+'Erdos647Sieve.candidateCount_eq_filter_Icc' depends on axioms: [propext, Classical.choice, Quot.sound]
+Erdos647Sieve.sum_nat_Icc_eq_int (X : ℕ) (f : ℤ → ℝ) : ∑ n ∈ Finset.Icc 1 X, f ↑n = ∑ n ∈ Finset.Icc 1 ↑X, f n
+'Erdos647Sieve.sum_nat_Icc_eq_int' depends on axioms: [propext, Classical.choice, Quot.sound]
+Erdos647Sieve.no_prefix_of_negative_budget (hDebit : Erdos647Sieve.BudgetDebitClaim) (n H : ℕ) (y : ℝ) (hH : 1 ≤ H)
+  (hy : ↑H < y) (hneg : Erdos647Sieve.correctedBudget H < 0) : ¬Erdos647Sieve.Prefix H n
+'Erdos647Sieve.no_prefix_of_negative_budget' depends on axioms: [propext, Classical.choice, Quot.sound]
+Erdos647Sieve.finiteCounting_of_budgetDebit_of_finiteMoment (hDebit : Erdos647Sieve.BudgetDebitClaim)
+  (hMoment : Erdos647Sieve.FiniteMomentClaim) : Erdos647Sieve.FiniteCountingClaim
+'Erdos647Sieve.finiteCounting_of_budgetDebit_of_finiteMoment' depends on axioms: [propext, Classical.choice, Quot.sound]
+Erdos647Sieve.candidateCount_le_window_of_negative_budget (hDebit : Erdos647Sieve.BudgetDebitClaim) (X H : ℕ) (y : ℝ)
+  (hH : 1 ≤ H) (hy : ↑H < y) (hneg : Erdos647Sieve.correctedBudget H < 0) : Erdos647Sieve.candidateCount X ≤ H
+'Erdos647Sieve.candidateCount_le_window_of_negative_budget' depends on axioms: [propext, Classical.choice, Quot.sound]
+Erdos647Sieve.sum_powersetCard_succ_insert (s : Finset ℕ) (a : ℕ) (ha : a ∉ s) (w : ℕ → ℝ) (q : ℕ) :
+  ∑ S ∈ Finset.powersetCard (q + 1) (insert a s), ∏ p ∈ S, w p =
+    ∑ S ∈ Finset.powersetCard (q + 1) s, ∏ p ∈ S, w p + w a * ∑ S ∈ Finset.powersetCard q s, ∏ p ∈ S, w p
+'Erdos647Sieve.sum_powersetCard_succ_insert' depends on axioms: [propext, Classical.choice, Quot.sound]
+Erdos647Sieve.elementary_map_eq_sum_powersetCard (l : List ℕ) :
+  l.Nodup →
+    ∀ (w : ℕ → ℝ) (q : ℕ),
+      Erdos647Sieve.Bonferroni.elementary (List.map w l) q = ∑ S ∈ Finset.powersetCard q l.toFinset, ∏ p ∈ S, w p
+'Erdos647Sieve.elementary_map_eq_sum_powersetCard' depends on axioms: [propext, Classical.choice, Quot.sound]
+Erdos647Sieve.elementary_toList_eq_sum_powersetCard (s : Finset ℕ) (w : ℕ → ℝ) (q : ℕ) :
+  Erdos647Sieve.Bonferroni.elementary (List.map w s.toList) q = ∑ S ∈ Finset.powersetCard q s, ∏ p ∈ S, w p
+'Erdos647Sieve.elementary_toList_eq_sum_powersetCard' depends on axioms: [propext, Classical.choice, Quot.sound]
+Erdos647Sieve.elementary_map_eq_of_toFinset_eq (l₁ l₂ : List ℕ) (h₁ : l₁.Nodup) (h₂ : l₂.Nodup)
+  (hset : l₁.toFinset = l₂.toFinset) (w : ℕ → ℝ) (q : ℕ) :
+  Erdos647Sieve.Bonferroni.elementary (List.map w l₁) q = Erdos647Sieve.Bonferroni.elementary (List.map w l₂) q
+'Erdos647Sieve.elementary_map_eq_of_toFinset_eq' depends on axioms: [propext, Classical.choice, Quot.sound]
+Erdos647Sieve.primeSubsetProduct_pos (S : Finset ℕ) (hS : ∀ p ∈ S, Nat.Prime p) : 0 < Erdos647Sieve.primeSubsetProduct S
+'Erdos647Sieve.primeSubsetProduct_pos' depends on axioms: [propext, Quot.sound]
+Erdos647Sieve.selected_subset_product_pos (H : ℕ) (y : ℝ) (S : Finset ℕ) (hS : S ⊆ Erdos647Sieve.selectedPrimes H y) :
+  0 < Erdos647Sieve.primeSubsetProduct S
+'Erdos647Sieve.selected_subset_product_pos' depends on axioms: [propext, Classical.choice, Quot.sound]
+Erdos647Sieve.prime_dvd_primeSubsetProduct_iff_mem (S : Finset ℕ) (hS : ∀ q ∈ S, Nat.Prime q) (p : ℕ)
+  (hp : Nat.Prime p) : p ∣ Erdos647Sieve.primeSubsetProduct S ↔ p ∈ S
+'Erdos647Sieve.prime_dvd_primeSubsetProduct_iff_mem' depends on axioms: [propext, Classical.choice, Quot.sound]
+Erdos647Sieve.primeSubsetProduct_injective (S T : Finset ℕ) (hS : ∀ p ∈ S, Nat.Prime p) (hT : ∀ p ∈ T, Nat.Prime p)
+  (hprod : Erdos647Sieve.primeSubsetProduct S = Erdos647Sieve.primeSubsetProduct T) : S = T
+'Erdos647Sieve.primeSubsetProduct_injective' depends on axioms: [propext, Classical.choice, Quot.sound]
+Erdos647Sieve.primeSubsetProduct_int_dvd_iff (S : Finset ℕ) (hS : ∀ p ∈ S, Nat.Prime p) (m : ℤ) :
+  ↑(Erdos647Sieve.primeSubsetProduct S) ∣ m ↔ ∀ p ∈ S, ↑p ∣ m
+'Erdos647Sieve.primeSubsetProduct_int_dvd_iff' depends on axioms: [propext, Classical.choice, Quot.sound]
+Erdos647Sieve.card_primeSubsetFamily_le (P : Finset ℕ) (hP : ∀ p ∈ P, Nat.Prime p) (F : Finset (Finset ℕ))
+  (hF : ∀ S ∈ F, S ⊆ P) (M : ℕ) (hM : ∀ S ∈ F, Erdos647Sieve.primeSubsetProduct S ≤ M) : F.card ≤ M
+'Erdos647Sieve.card_primeSubsetFamily_le' depends on axioms: [propext, Classical.choice, Quot.sound]
+Erdos647Sieve.prime_dvd_window_iff_int (H p : ℕ) (n : ℤ) (hp : Nat.Prime p) :
+  ↑p ∣ Erdos647Sieve.windowPolynomial H n ↔ ∃ k ∈ Finset.Icc 1 H, ↑p ∣ n - ↑k
+'Erdos647Sieve.prime_dvd_window_iff_int' depends on axioms: [propext, Classical.choice, Quot.sound]
+Erdos647Sieve.prime_dvd_window_iff_mem_residues (H p : ℕ) (n : ℤ) (hp : Nat.Prime p) :
+  ↑p ∣ Erdos647Sieve.windowPolynomial H n ↔ ↑n ∈ Erdos647Sieve.primeWindowResidues H p
+'Erdos647Sieve.prime_dvd_window_iff_mem_residues' depends on axioms: [propext, Classical.choice, Quot.sound]
+Erdos647Sieve.card_primeWindowResidues (H p : ℕ) (hHp : H < p) : (Erdos647Sieve.primeWindowResidues H p).card = H
+'Erdos647Sieve.card_primeWindowResidues' depends on axioms: [propext, Classical.choice, Quot.sound]
+Erdos647Sieve.subsetHitCount_empty (I : Finset ℤ) (H : ℕ) : Erdos647Sieve.subsetHitCount I H ∅ = I.card
+'Erdos647Sieve.subsetHitCount_empty' depends on axioms: [propext, Classical.choice, Quot.sound]
+Erdos647Sieve.subsetHitCount_eq_modulus_count (I : Finset ℤ) (H : ℕ) (S : Finset ℕ) (hS : ∀ p ∈ S, Nat.Prime p) :
+  Erdos647Sieve.subsetHitCount I H S =
+    {n ∈ I | ↑(Erdos647Sieve.primeSubsetProduct S) ∣ Erdos647Sieve.windowPolynomial H n}.card
+'Erdos647Sieve.subsetHitCount_eq_modulus_count' depends on axioms: [propext, Classical.choice, Quot.sound]
+Erdos647Sieve.prod_ite_zero_eq_pow_card (S : Finset ℕ) (P : ℕ → Prop) [DecidablePred P] (t : ℝ) :
+  (∏ p ∈ S, if P p then t else 0) = if ∀ p ∈ S, P p then t ^ S.card else 0
+'Erdos647Sieve.prod_ite_zero_eq_pow_card' depends on axioms: [propext, Classical.choice, Quot.sound]
+Erdos647Sieve.hitWeights_elementary_eq_subset_sum (H : ℕ) (y z : ℝ) (n : ℤ) (q : ℕ) :
+  Erdos647Sieve.Bonferroni.elementary (Erdos647Sieve.hitWeights H y z n) q =
+    (1 - z) ^ q *
+      ∑ S ∈ Finset.powersetCard q (Erdos647Sieve.selectedPrimes H y),
+        if ∀ p ∈ S, ↑p ∣ Erdos647Sieve.windowPolynomial H n then 1 else 0
+'Erdos647Sieve.hitWeights_elementary_eq_subset_sum' depends on axioms: [propext, Classical.choice, Quot.sound]
+Erdos647Sieve.sum_hitWeights_elementary_eq_subset_counts (I : Finset ℤ) (H : ℕ) (y z : ℝ) (q : ℕ) :
+  ∑ n ∈ I, Erdos647Sieve.Bonferroni.elementary (Erdos647Sieve.hitWeights H y z n) q =
+    (1 - z) ^ q * ∑ S ∈ Finset.powersetCard q (Erdos647Sieve.selectedPrimes H y), ↑(Erdos647Sieve.subsetHitCount I H S)
+'Erdos647Sieve.sum_hitWeights_elementary_eq_subset_counts' depends on axioms: [propext, Classical.choice, Quot.sound]
+Erdos647Sieve.interval_hitWeights_elementary_eq_subset_counts (A : ℤ) (X H : ℕ) (y z : ℝ) (q : ℕ) :
+  ∑ n ∈ Finset.Icc (A + 1) (A + ↑X), Erdos647Sieve.Bonferroni.elementary (Erdos647Sieve.hitWeights H y z n) q =
+    (1 - z) ^ q *
+      ∑ S ∈ Finset.powersetCard q (Erdos647Sieve.selectedPrimes H y),
+        ↑(Erdos647Sieve.subsetHitCount (Finset.Icc (A + 1) (A + ↑X)) H S)
+'Erdos647Sieve.interval_hitWeights_elementary_eq_subset_counts' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+Erdos647Sieve.meanWeights_elementary_eq_subset_sum (H : ℕ) (y z : ℝ) (q : ℕ) :
+  Erdos647Sieve.Bonferroni.elementary (Erdos647Sieve.meanWeights H y z) q =
+    (1 - z) ^ q *
+      ∑ S ∈ Finset.powersetCard q (Erdos647Sieve.selectedPrimes H y), ↑H ^ q / ↑(Erdos647Sieve.primeSubsetProduct S)
+'Erdos647Sieve.meanWeights_elementary_eq_subset_sum' depends on axioms: [propext, Classical.choice, Quot.sound]
+Erdos647Sieve.coefficient_discrepancy_eq_subset_errors (I : Finset ℤ) (X H : ℕ) (y z : ℝ) (q : ℕ) :
+  ∑ n ∈ I, Erdos647Sieve.Bonferroni.elementary (Erdos647Sieve.hitWeights H y z n) q -
+      ↑X * Erdos647Sieve.Bonferroni.elementary (Erdos647Sieve.meanWeights H y z) q =
+    (1 - z) ^ q *
+      ∑ S ∈ Finset.powersetCard q (Erdos647Sieve.selectedPrimes H y),
+        (↑(Erdos647Sieve.subsetHitCount I H S) - ↑X * (↑H ^ q / ↑(Erdos647Sieve.primeSubsetProduct S)))
+'Erdos647Sieve.coefficient_discrepancy_eq_subset_errors' depends on axioms: [propext, Classical.choice, Quot.sound]
+Erdos647Sieve.signed_discrepancy_eq_subset_errors (I : Finset ℤ) (X H : ℕ) (y z : ℝ) (J : ℕ) :
+  ∑ j ∈ Finset.range (J + 1),
+      (-1) ^ j *
+        (∑ n ∈ I, Erdos647Sieve.Bonferroni.elementary (Erdos647Sieve.hitWeights H y z n) j -
+          ↑X * Erdos647Sieve.Bonferroni.elementary (Erdos647Sieve.meanWeights H y z) j) =
+    ∑ j ∈ Finset.range (J + 1),
+      (-(1 - z)) ^ j *
+        ∑ S ∈ Finset.powersetCard j (Erdos647Sieve.selectedPrimes H y),
+          (↑(Erdos647Sieve.subsetHitCount I H S) - ↑X * (↑H ^ j / ↑(Erdos647Sieve.primeSubsetProduct S)))
+'Erdos647Sieve.signed_discrepancy_eq_subset_errors' depends on axioms: [propext, Classical.choice, Quot.sound]
+Erdos647Sieve.mul_le_iff_le_euclideanQuotient (u d q : ℤ) (hd : 0 < d) : d * q ≤ u ↔ q ≤ u / d
+'Erdos647Sieve.mul_le_iff_le_euclideanQuotient' depends on axioms: [propext, Classical.choice, Quot.sound]
+Erdos647Sieve.progressionCount_eq_quotient_difference (A : ℤ) (X d : ℕ) (r : ℤ) (hd : 0 < d) :
+  ↑(Erdos647Sieve.progressionCount A X d r) = (A + ↑X - r) / ↑d - (A - r) / ↑d
+'Erdos647Sieve.progressionCount_eq_quotient_difference' depends on axioms: [propext, Classical.choice, Quot.sound]
+Erdos647Sieve.euclideanQuotient_real_bounds (u : ℤ) (d : ℕ) (hd : 0 < d) : ↑(u / ↑d) ≤ ↑u / ↑d ∧ ↑u / ↑d < ↑(u / ↑d) + 1
+'Erdos647Sieve.euclideanQuotient_real_bounds' depends on axioms: [propext, Classical.choice, Quot.sound]
+Erdos647Sieve.progressionCount_error_le_one (A : ℤ) (X d : ℕ) (r : ℤ) (hd : 0 < d) :
+  |↑(Erdos647Sieve.progressionCount A X d r) - ↑X / ↑d| ≤ 1
+'Erdos647Sieve.progressionCount_error_le_one' depends on axioms: [propext, Classical.choice, Quot.sound]
+Erdos647Sieve.residueClassCount_eq_progressionCount (A : ℤ) (X d : ℕ) (r : ZMod d) (hd : 0 < d) :
+  Erdos647Sieve.residueClassCount A X d r = Erdos647Sieve.progressionCount A X d ↑r.val
+'Erdos647Sieve.residueClassCount_eq_progressionCount' depends on axioms: [propext, Classical.choice, Quot.sound]
+Erdos647Sieve.residueClassCount_error_le_one (A : ℤ) (X d : ℕ) (r : ZMod d) (hd : 0 < d) :
+  |↑(Erdos647Sieve.residueClassCount A X d r) - ↑X / ↑d| ≤ 1
+'Erdos647Sieve.residueClassCount_error_le_one' depends on axioms: [propext, Classical.choice, Quot.sound]
+Erdos647Sieve.residueSetCount_error_le_card (A : ℤ) (X d : ℕ) (R : Finset (ZMod d)) (hd : 0 < d) :
+  |↑{n ∈ Finset.Icc (A + 1) (A + ↑X) | ↑n ∈ R}.card - ↑X * (↑R.card / ↑d)| ≤ ↑R.card
+'Erdos647Sieve.residueSetCount_error_le_card' depends on axioms: [propext, Classical.choice, Quot.sound]
+Erdos647Sieve.map_windowEvaluation.{u_1, u_2} {R : Type u_1} {T : Type u_2} [CommRing R] [CommRing T] (f : R →+* T)
+  (H : ℕ) (r : R) : f (Erdos647Sieve.windowEvaluation H r) = Erdos647Sieve.windowEvaluation H (f r)
+'Erdos647Sieve.map_windowEvaluation' depends on axioms: [propext, Classical.choice, Quot.sound]
+Erdos647Sieve.windowEvaluation_intCast (H d : ℕ) (n : ℤ) :
+  ↑(Erdos647Sieve.windowPolynomial H n) = Erdos647Sieve.windowEvaluation H ↑n
+'Erdos647Sieve.windowEvaluation_intCast' depends on axioms: [propext, Classical.choice, Quot.sound]
+Erdos647Sieve.mem_windowRootResidues (H d : ℕ) (hd : 0 < d) (r : ZMod d) :
+  r ∈ Erdos647Sieve.windowRootResidues H d ↔ Erdos647Sieve.windowEvaluation H r = 0
+'Erdos647Sieve.mem_windowRootResidues' depends on axioms: [propext, Classical.choice, Quot.sound]
+Erdos647Sieve.intCast_mem_windowRootResidues_iff (H d : ℕ) (hd : 0 < d) (n : ℤ) :
+  ↑n ∈ Erdos647Sieve.windowRootResidues H d ↔ ↑d ∣ Erdos647Sieve.windowPolynomial H n
+'Erdos647Sieve.intCast_mem_windowRootResidues_iff' depends on axioms: [propext, Classical.choice, Quot.sound]
+Erdos647Sieve.windowRootResidues_eq_primeWindowResidues (H p : ℕ) (hp : Nat.Prime p) :
+  Erdos647Sieve.windowRootResidues H p = Erdos647Sieve.primeWindowResidues H p
+'Erdos647Sieve.windowRootResidues_eq_primeWindowResidues' depends on axioms: [propext, Classical.choice, Quot.sound]
+Erdos647Sieve.card_windowRootResidues_prime (H p : ℕ) (hp : Nat.Prime p) (hHp : H < p) :
+  (Erdos647Sieve.windowRootResidues H p).card = H
+'Erdos647Sieve.card_windowRootResidues_prime' depends on axioms: [propext, Classical.choice, Quot.sound]
+Erdos647Sieve.card_windowRootResidues_one (H : ℕ) : (Erdos647Sieve.windowRootResidues H 1).card = 1
+'Erdos647Sieve.card_windowRootResidues_one' depends on axioms: [propext, Classical.choice, Quot.sound]
+Erdos647Sieve.card_windowRootResidues_mul (H m d : ℕ) (hm : 0 < m) (hd : 0 < d) (hcop : m.Coprime d) :
+  (Erdos647Sieve.windowRootResidues H (m * d)).card =
+    (Erdos647Sieve.windowRootResidues H m).card * (Erdos647Sieve.windowRootResidues H d).card
+'Erdos647Sieve.card_windowRootResidues_mul' depends on axioms: [propext, Classical.choice, Quot.sound]
+Erdos647Sieve.card_windowRootResidues_primeSubsetProduct (H : ℕ) (S : Finset ℕ) (hS : ∀ p ∈ S, Nat.Prime p ∧ H < p) :
+  (Erdos647Sieve.windowRootResidues H (Erdos647Sieve.primeSubsetProduct S)).card = H ^ S.card
+'Erdos647Sieve.card_windowRootResidues_primeSubsetProduct' depends on axioms: [propext, Classical.choice, Quot.sound]
+Erdos647Sieve.subsetHitCount_eq_windowRootResidues_count (I : Finset ℤ) (H : ℕ) (S : Finset ℕ)
+  (hS : ∀ p ∈ S, Nat.Prime p) :
+  Erdos647Sieve.subsetHitCount I H S =
+    {n ∈ I | ↑n ∈ Erdos647Sieve.windowRootResidues H (Erdos647Sieve.primeSubsetProduct S)}.card
+'Erdos647Sieve.subsetHitCount_eq_windowRootResidues_count' depends on axioms: [propext, Classical.choice, Quot.sound]
+Erdos647Sieve.subsetHitCount_error_le (A : ℤ) (X H : ℕ) (S : Finset ℕ) (hS : ∀ p ∈ S, Nat.Prime p ∧ H < p) :
+  |↑(Erdos647Sieve.subsetHitCount (Finset.Icc (A + 1) (A + ↑X)) H S) -
+        ↑X * (↑H ^ S.card / ↑(Erdos647Sieve.primeSubsetProduct S))| ≤
+    ↑H ^ S.card
+'Erdos647Sieve.subsetHitCount_error_le' depends on axioms: [propext, Classical.choice, Quot.sound]
+Erdos647Sieve.selected_subsetHitCount_error_le (A : ℤ) (X H : ℕ) (y : ℝ) (S : Finset ℕ)
+  (hS : S ⊆ Erdos647Sieve.selectedPrimes H y) :
+  |↑(Erdos647Sieve.subsetHitCount (Finset.Icc (A + 1) (A + ↑X)) H S) -
+        ↑X * (↑H ^ S.card / ↑(Erdos647Sieve.primeSubsetProduct S))| ≤
+    ↑H ^ S.card
+'Erdos647Sieve.selected_subsetHitCount_error_le' depends on axioms: [propext, Classical.choice, Quot.sound]
+Erdos647Sieve.mem_retainedSubsets (P S : Finset ℕ) (J : ℕ) : S ∈ Erdos647Sieve.retainedSubsets P J ↔ S ⊆ P ∧ S.card ≤ J
+'Erdos647Sieve.mem_retainedSubsets' depends on axioms: [propext, Classical.choice, Quot.sound]
+Erdos647Sieve.sum_powersetCard_le_eq_retained (P : Finset ℕ) (J : ℕ) (f : Finset ℕ → ℝ) :
+  ∑ j ∈ Finset.range (J + 1), ∑ S ∈ Finset.powersetCard j P, f S = ∑ S ∈ Erdos647Sieve.retainedSubsets P J, f S
+'Erdos647Sieve.sum_powersetCard_le_eq_retained' depends on axioms: [propext, Classical.choice, Quot.sound]
+Erdos647Sieve.real_pow_mono_of_one_le (x : ℝ) (hx : 1 ≤ x) (a b : ℕ) (hab : a ≤ b) : x ^ a ≤ x ^ b
+'Erdos647Sieve.real_pow_mono_of_one_le' depends on axioms: [propext, Classical.choice, Quot.sound]
+Erdos647Sieve.retained_primeSubsetProduct_le (H : ℕ) (y : ℝ) (J : ℕ) (hH : 1 ≤ H) (hy : ↑H < y) (S : Finset ℕ)
+  (hS : S ∈ Erdos647Sieve.retainedSubsets (Erdos647Sieve.selectedPrimes H y) J) :
+  ↑(Erdos647Sieve.primeSubsetProduct S) ≤ y ^ J
+'Erdos647Sieve.retained_primeSubsetProduct_le' depends on axioms: [propext, Classical.choice, Quot.sound]
+Erdos647Sieve.card_retainedSubsets_le_floor (H : ℕ) (y : ℝ) (J : ℕ) (hH : 1 ≤ H) (hy : ↑H < y) :
+  (Erdos647Sieve.retainedSubsets (Erdos647Sieve.selectedPrimes H y) J).card ≤ ⌊y ^ J⌋₊
+'Erdos647Sieve.card_retainedSubsets_le_floor' depends on axioms: [propext, Classical.choice, Quot.sound]
+Erdos647Sieve.card_retainedSubsets_cast_le (H : ℕ) (y : ℝ) (J : ℕ) (hH : 1 ≤ H) (hy : ↑H < y) :
+  ↑(Erdos647Sieve.retainedSubsets (Erdos647Sieve.selectedPrimes H y) J).card ≤ y ^ J
+'Erdos647Sieve.card_retainedSubsets_cast_le' depends on axioms: [propext, Classical.choice, Quot.sound]
+Erdos647Sieve.retained_weighted_subset_error_le (A : ℤ) (X H : ℕ) (y z : ℝ) (J : ℕ) (hH : 1 ≤ H) (hz0 : 0 < z)
+  (hz1 : z < 1) (S : Finset ℕ) (hS : S ∈ Erdos647Sieve.retainedSubsets (Erdos647Sieve.selectedPrimes H y) J) :
+  |(-(1 - z)) ^ S.card *
+        (↑(Erdos647Sieve.subsetHitCount (Finset.Icc (A + 1) (A + ↑X)) H S) -
+          ↑X * (↑H ^ S.card / ↑(Erdos647Sieve.primeSubsetProduct S)))| ≤
+    ↑H ^ J
+'Erdos647Sieve.retained_weighted_subset_error_le' depends on axioms: [propext, Classical.choice, Quot.sound]
+Erdos647Sieve.arithmetic_discrepancy_le (A : ℤ) (X H : ℕ) (y z : ℝ) (J : ℕ) (hH : 1 ≤ H) (hy : ↑H < y) (hz0 : 0 < z)
+  (hz1 : z < 1) :
+  |∑ j ∈ Finset.range (J + 1),
+        (-1) ^ j *
+          (∑ n ∈ Finset.Icc (A + 1) (A + ↑X), Erdos647Sieve.Bonferroni.elementary (Erdos647Sieve.hitWeights H y z n) j -
+            ↑X * Erdos647Sieve.Bonferroni.elementary (Erdos647Sieve.meanWeights H y z) j)| ≤
+    (↑H * y) ^ J
+'Erdos647Sieve.arithmetic_discrepancy_le' depends on axioms: [propext, Classical.choice, Quot.sound]
+
+EXIT_CODE=0

@@ -1,0 +1,28 @@
+{
+  "version": "v43",
+  "kind": "documentation_evidence_closeout",
+  "test_command": "python3 -m unittest discover -s tests -v",
+  "tests_passed": 203,
+  "test_exit_code": 0,
+  "test_scope": "runner, interface and provenance-status tests; not new mathematical results",
+  "supplied_mathematical_acceptance_run": "erdos647_repo_v42_results_20260908T111052Z_81bd3ce5",
+  "mathematical_modules_unchanged": 47,
+  "audit_files_unchanged": 22,
+  "active_changed_existing_paths": [
+    "README.md",
+    "tests/test_endpoint_gap_v42.py",
+    "docs/prime-mass-gap-branch.md",
+    "docs/endpoint-coefficient-status.json",
+    "docs/proof-status.md",
+    "docs/next-prime-mass-gap.md",
+    "docs/pull-requests/prime-mass-gap.md"
+  ],
+  "existing_files_outside_overlay_preserved": 385,
+  "preservation_checks": "SHA256 and nanosecond mtime; includes tool/cache/result and CI sentinels",
+  "runner_gate_registry_pins_lockfiles_unchanged": true,
+  "ci_workflows_unchanged": true,
+  "overlay_has_no_enclosing_folder": true,
+  "proof_source_added_or_changed": false,
+  "coefficient_claimed": null,
+  "note": "One status-regression test now verifies accepted gap evidence instead of requiring permanent pending status."
+}

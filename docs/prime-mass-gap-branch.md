@@ -1,8 +1,9 @@
-# Prime-mass/budget gap: the next mathematical changeset
+# Prime-mass/budget gap: accepted mathematical changeset
 
 Version: v42, 2026-09-08. Baseline: accepted v40 source and v41 evidence update.
-This is new proof-source implementation with two new acceptance gates. The prior
-parameter PR is a separate changeset. No remote PR is created or modified here.
+The newer v42 run `erdos647_repo_v42_results_20260908T111052Z_81bd3ce5` passed all 21 gates.
+Both gap/size gates and all 12 new declarations are accepted on that source snapshot.
+The v43 update records this evidence; the parameter PR remains separate.
 
 ## Purpose
 
@@ -115,9 +116,10 @@ Each theorem has a checked-in expanded type example, `#check`, and `#print axiom
 The constant itself receives an additional expanded-definition check. Existing
 warning, module-ownership, admission, and allowed-axiom checks are unchanged.
 
-There are now 21 registered gates: the accepted 19-gate baseline plus these two
-pending gates. The twelve new theorem targets and thirteen new type/definition
-examples do not inherit acceptance from the old 19/19 run.
+All 21 registered gates passed in the newer v42 run. The twelve new theorem
+targets and thirteen new type/definition examples have their own successful
+reports, rather than inheriting acceptance from the prior 19/19 checkpoint.
+See [accepted evidence](../provenance/accepted/v42/README.md).
 
 Ordinary incremental builds, the Mathlib-only core scope, all existing selective
 gates, tools/caches, previous results, and CI settings remain intact. The only
@@ -144,5 +146,6 @@ for its uniform estimate. All multiplier factors must remain present. Final
 assembly will select and record a comfortable explicit fixed c>0. The historical
 1/1000 endpoint is a corollary only when essentially free.
 
-The local acceptance condition for this new mathematical PR is a warning-free
-21/21 run with the exact statement/axiom reports, not completion of the endpoint.
+The local acceptance condition for this mathematical PR is satisfied: a warning-free
+21/21 run with the exact statement/axiom reports. Completion of the endpoint is
+not a condition for this PR. The next assignment is [amplified errors](next-amplified-errors.md).

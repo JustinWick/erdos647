@@ -1,0 +1,13 @@
+$ <REPO>/.tools/elan/toolchains/leanprover--lean4---v4.32.2/bin/lake env lean -DwarningAsError=true Audit/ReciprocalKernel.lean
+Erdos647Sieve.Analytic.hasDerivAt_reciprocalLog (x : ℝ) (hx : 1 < x) :
+  HasDerivAt Erdos647Sieve.Analytic.reciprocalLog (-Erdos647Sieve.Analytic.reciprocalKernel x) x
+'Erdos647Sieve.Analytic.hasDerivAt_reciprocalLog' depends on axioms: [propext, Classical.choice, Quot.sound]
+Erdos647Sieve.Analytic.deriv_reciprocalLog_integrableOn (b : ℝ) :
+  MeasureTheory.IntegrableOn (deriv Erdos647Sieve.Analytic.reciprocalLog) (Set.Icc 2 b) MeasureTheory.volume
+'Erdos647Sieve.Analytic.deriv_reciprocalLog_integrableOn' depends on axioms: [propext, Classical.choice, Quot.sound]
+Erdos647Sieve.Analytic.mainPrimitive_integral (b : ℝ) (hb : 2 ≤ b) :
+  ∫ (x : ℝ) in 2..b, x * deriv Erdos647Sieve.Analytic.reciprocalLog x =
+    Erdos647Sieve.Analytic.mainPrimitive b - Erdos647Sieve.Analytic.mainPrimitive 2
+'Erdos647Sieve.Analytic.mainPrimitive_integral' depends on axioms: [propext, Classical.choice, Quot.sound]
+
+EXIT_CODE=0

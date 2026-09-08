@@ -1,0 +1,61 @@
+{
+  "review_kind": "returned_source_log_and_axiom_consistency",
+  "run_id": "erdos647_repo_v42_results_20260908T111052Z_81bd3ce5",
+  "received_archive_role": "newest user upload, supersedes earlier diagnostic",
+  "status": "ACCEPTED_AT_RECORDED_BUILD_TYPE_AXIOM_STANDARD",
+  "gates_passed": 21,
+  "gates_total": 21,
+  "manifest_entries_verified": 217,
+  "source_hashes_verified": 128,
+  "commands_verified": 51,
+  "distinct_audited_declarations": 195,
+  "newly_accepted_declarations": 12,
+  "new_declarations": [
+    "Erdos647Sieve.Endpoint.primeMassGapConstant_gt_three_halves",
+    "Erdos647Sieve.Endpoint.endpoint_primeMass_budgetMain_gap_tendsto",
+    "Erdos647Sieve.Endpoint.eventually_primeMass_gap_of_lt",
+    "Erdos647Sieve.Endpoint.eventually_primeMass_sub_correctedBudget_ge",
+    "Erdos647Sieve.Endpoint.eventually_correctedBudget_le_primeMass",
+    "Erdos647Sieve.Endpoint.log_windowLength_tendsto_atTop",
+    "Erdos647Sieve.Endpoint.loglog_windowLength_div_logLog_tendsto_zero",
+    "Erdos647Sieve.Endpoint.endpoint_primeMass_div_window_logLog_tendsto",
+    "Erdos647Sieve.Endpoint.endpoint_primeMass_nonneg",
+    "Erdos647Sieve.Endpoint.eventually_primeMass_le_window_mul_logLog",
+    "Erdos647Sieve.Endpoint.eventually_correctedBudget_le_window_mul_logLog",
+    "Erdos647Sieve.Endpoint.eventually_endpoint_mass_budget_bounds"
+  ],
+  "audit_files": 22,
+  "exact_type_and_definition_examples": 140,
+  "new_type_and_definition_examples": 13,
+  "mathematical_modules": 47,
+  "warnings_in_build_and_audit_logs": 0,
+  "source_changes_during_run": {},
+  "tooling_tests_in_user_run": 203,
+  "toolchain": "leanprover/lean4:v4.32.2",
+  "compiler_version": "Lean (version 4.32.2, x86_64-unknown-linux-gnu, commit f3b06c705e6c85f5314019d5d3baab0fec5b580c, Release)",
+  "cache_actions": {
+    ".": "reuse_existing",
+    "research": "reuse_existing"
+  },
+  "dependency_revisions_verified_by_package": {
+    ".": 9,
+    "research": 14
+  },
+  "retained_pntplus_modules": 14,
+  "allowed_axioms": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "fixed_gap": {
+    "numerator": 3,
+    "denominator": 2,
+    "assumes_nonnegative_budget": false
+  },
+  "endpoint_proved": false,
+  "endpoint_coefficient": null,
+  "pr_readiness": "local acceptance condition satisfied for supplied gap-and-size snapshot; remote diff and CI not assessed",
+  "prior_accepted_mathematical_modules_preserved": 45,
+  "new_modules_match_delivered_v42": 2,
+  "newer_archive_sha256": "0c3ce210099211707e27413d17f8f272a4ec842deabbaa4da6b78d68b864054e"
+}

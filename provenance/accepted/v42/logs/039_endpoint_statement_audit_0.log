@@ -1,0 +1,20 @@
+$ <REPO>/.tools/elan/toolchains/leanprover--lean4---v4.32.2/bin/lake env lean -DwarningAsError=true Audit/EndpointStatement.lean
+Erdos647Sieve.Endpoint.endpointScale_pos (X : ℕ) (hX : 3 ≤ X) : 0 < endpointScale X
+'Erdos647Sieve.Endpoint.endpointScale_pos' depends on axioms: [propext, Classical.choice, Quot.sound]
+Erdos647Sieve.Endpoint.endpointRHSWith_le_of_le (c d : ℝ) (hcd : c ≤ d) (X : ℕ) (hX : 3 ≤ X) :
+  endpointRHSWith d X ≤ endpointRHSWith c X
+'Erdos647Sieve.Endpoint.endpointRHSWith_le_of_le' depends on axioms: [propext, Classical.choice, Quot.sound]
+Erdos647Sieve.Endpoint.endpointBound_iff_eventually (c : ℝ) :
+  EndpointBound c ↔ ∀ᶠ (X : ℕ) in atTop, ↑(candidateCount X) ≤ endpointRHSWith c X
+'Erdos647Sieve.Endpoint.endpointBound_iff_eventually' depends on axioms: [propext, Classical.choice, Quot.sound]
+Erdos647Sieve.Endpoint.endpointBound_mono (c d : ℝ) (hcd : c ≤ d) (hd : EndpointBound d) : EndpointBound c
+'Erdos647Sieve.Endpoint.endpointBound_mono' depends on axioms: [propext, Classical.choice, Quot.sound]
+Erdos647Sieve.Endpoint.endpointRHSWith_one_div_thousand (X : ℕ) : endpointRHSWith (1 / 1000) X = endpointRHS X
+'Erdos647Sieve.Endpoint.endpointRHSWith_one_div_thousand' depends on axioms: [propext, Classical.choice, Quot.sound]
+Erdos647Sieve.Endpoint.legacyEndpointClaim_iff : EndpointClaim ↔ EndpointBound (1 / 1000)
+'Erdos647Sieve.Endpoint.legacyEndpointClaim_iff' depends on axioms: [propext, Classical.choice, Quot.sound]
+Erdos647Sieve.Endpoint.positiveEndpointClaim_of_explicit (c : ℝ) (hc : 0 < c) (h : EndpointBound c) :
+  PositiveEndpointClaim
+'Erdos647Sieve.Endpoint.positiveEndpointClaim_of_explicit' depends on axioms: [propext, Classical.choice, Quot.sound]
+
+EXIT_CODE=0

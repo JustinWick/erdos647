@@ -5,12 +5,13 @@ The repository root is a **Mathlib-only library**. The separate `research/` Lake
 package contains the analytic bridge and unfinished endpoint development.
 
 **This project does not resolve Erdős #647 and does not contain a proof of the
-proposed final asymptotic endpoint.** The accepted v40 snapshot passed **19/19**
-build/type/axiom gates, covering **183 distinct declarations** with no build or
+proposed final asymptotic endpoint.** The accepted v42 snapshot passed **21/21**
+build/type/axiom gates, covering **195 distinct declarations** with no build or
 audit warnings. This includes the finite core, analytic bridge, elementary budget
-estimates and exact endpoint parameter/prime-mass asymptotics—not the final
-endpoint. See [proof status](docs/proof-status.md) and the
-[accepted record](provenance/accepted/v40/README.md).
+estimates, exact parameter asymptotics, and the positive prime-mass/budget gap
+with supporting size bounds—not the final endpoint. See
+[proof status](docs/proof-status.md) and the
+[accepted record](provenance/accepted/v42/README.md).
 
 ## Use the public library
 
@@ -155,10 +156,11 @@ A normal Ctrl+C still packages partial output. A machine crash can leave a parti
 results directory; `--collect-only` prints the last completed archive, not a new
 acceptance claim.
 
-**The 19-gate v40 baseline passed. The two new v42 mass/budget gates are pending.**
-The current full suite contains 21 gates. A failing `all` run is never converted
-to success because the core passed. The endpoint research remains separate from
-the public finite API. See [the new gap changeset](docs/prime-mass-gap-branch.md).
+**All 21 gates passed in the accepted v42 run, including both mass/budget gates.**
+A future failing `all` run is never converted to success because the core passed
+or a historical run was green. The remaining mathematics is
+[amplified-error control and final assembly](docs/next-amplified-errors.md).
+The endpoint research remains separate from the public finite API.
 
 ## Repository layout
 

@@ -1,0 +1,486 @@
+{
+  "core": {
+    "package": ".",
+    "build": [
+      "Erdos647Sieve",
+      "Examples"
+    ],
+    "audits": {
+      "Audit/Finite.lean": [
+        "Erdos647Sieve.finiteMoment",
+        "Erdos647Sieve.budgetDebit",
+        "Erdos647Sieve.finiteCounting"
+      ],
+      "Audit/Components.lean": [
+        "Erdos647Sieve.Bonferroni.pow_add_linear_le",
+        "Erdos647Sieve.Bonferroni.factorial_mul_elementary_le_pow_sum",
+        "Erdos647Sieve.Bonferroni.elementary_le_pow_sum_div_factorial",
+        "Erdos647Sieve.Bonferroni.avoidProduct_le_exp_neg_sum",
+        "Erdos647Sieve.Bonferroni.even_truncation_le_exp_add_tail",
+        "Erdos647Sieve.Bonferroni.even_sum_le_exp_add_tail",
+        "Erdos647Sieve.sum_map_toList_eq_sum",
+        "Erdos647Sieve.prod_map_toList_eq_prod",
+        "Erdos647Sieve.avoidProduct_map_toList",
+        "Erdos647Sieve.prod_ite_eq_pow_card_filter",
+        "Erdos647Sieve.hitWeights_bounds",
+        "Erdos647Sieve.avoidProduct_hitWeights",
+        "Erdos647Sieve.meanWeights_sum",
+        "Erdos647Sieve.meanWeights_bounds",
+        "Erdos647Sieve.hitWeight_pointwise_upper",
+        "Erdos647Sieve.hitWeight_interval_upper",
+        "Erdos647Sieve.meanWeight_truncation_upper",
+        "Erdos647Sieve.card_filter_natCast_image",
+        "Erdos647Sieve.hitCount_eq_nat_filter_card",
+        "Erdos647Sieve.two_pow_primeFactors_card_le_tau",
+        "Erdos647Sieve.primeFactors_card_le_log_floor",
+        "Erdos647Sieve.prefix_primeFactor_sum_le_logBudget",
+        "Erdos647Sieve.div_le_divisorOccurrences",
+        "Erdos647Sieve.sum_divisorOccurrences_eq",
+        "Erdos647Sieve.windowPolynomial_eq_nat_product",
+        "Erdos647Sieve.prime_dvd_nat_product_iff",
+        "Erdos647Sieve.prime_dvd_window_iff",
+        "Erdos647Sieve.one_le_divisorOccurrences_of_hit",
+        "Erdos647Sieve.smallPrimes_disjoint_selectedPrimes",
+        "Erdos647Sieve.smallPrimeDebit_add_hitCount_le_primeFactor_sum",
+        "Erdos647Sieve.no_prefix_of_negative_correctedBudget",
+        "Erdos647Sieve.finiteCounting_of_finiteMoment",
+        "Erdos647Sieve.candidateCount_le_window_of_negative_correctedBudget",
+        "Erdos647Sieve.count_le_exceptions_add_weight",
+        "Erdos647Sieve.one_le_budget_weight",
+        "Erdos647Sieve.Bonferroni.signedError_nonneg",
+        "Erdos647Sieve.Bonferroni.even_sum_bounds",
+        "Erdos647Sieve.candidate_prefix",
+        "Erdos647Sieve.candidateCount_eq_filter_Icc",
+        "Erdos647Sieve.sum_nat_Icc_eq_int",
+        "Erdos647Sieve.no_prefix_of_negative_budget",
+        "Erdos647Sieve.finiteCounting_of_budgetDebit_of_finiteMoment",
+        "Erdos647Sieve.candidateCount_le_window_of_negative_budget",
+        "Erdos647Sieve.sum_powersetCard_succ_insert",
+        "Erdos647Sieve.elementary_map_eq_sum_powersetCard",
+        "Erdos647Sieve.elementary_toList_eq_sum_powersetCard",
+        "Erdos647Sieve.elementary_map_eq_of_toFinset_eq",
+        "Erdos647Sieve.primeSubsetProduct_pos",
+        "Erdos647Sieve.selected_subset_product_pos",
+        "Erdos647Sieve.prime_dvd_primeSubsetProduct_iff_mem",
+        "Erdos647Sieve.primeSubsetProduct_injective",
+        "Erdos647Sieve.primeSubsetProduct_int_dvd_iff",
+        "Erdos647Sieve.card_primeSubsetFamily_le",
+        "Erdos647Sieve.prime_dvd_window_iff_int",
+        "Erdos647Sieve.prime_dvd_window_iff_mem_residues",
+        "Erdos647Sieve.card_primeWindowResidues",
+        "Erdos647Sieve.subsetHitCount_empty",
+        "Erdos647Sieve.subsetHitCount_eq_modulus_count",
+        "Erdos647Sieve.prod_ite_zero_eq_pow_card",
+        "Erdos647Sieve.hitWeights_elementary_eq_subset_sum",
+        "Erdos647Sieve.sum_hitWeights_elementary_eq_subset_counts",
+        "Erdos647Sieve.interval_hitWeights_elementary_eq_subset_counts",
+        "Erdos647Sieve.meanWeights_elementary_eq_subset_sum",
+        "Erdos647Sieve.coefficient_discrepancy_eq_subset_errors",
+        "Erdos647Sieve.signed_discrepancy_eq_subset_errors",
+        "Erdos647Sieve.mul_le_iff_le_euclideanQuotient",
+        "Erdos647Sieve.progressionCount_eq_quotient_difference",
+        "Erdos647Sieve.euclideanQuotient_real_bounds",
+        "Erdos647Sieve.progressionCount_error_le_one",
+        "Erdos647Sieve.residueClassCount_eq_progressionCount",
+        "Erdos647Sieve.residueClassCount_error_le_one",
+        "Erdos647Sieve.residueSetCount_error_le_card",
+        "Erdos647Sieve.map_windowEvaluation",
+        "Erdos647Sieve.windowEvaluation_intCast",
+        "Erdos647Sieve.mem_windowRootResidues",
+        "Erdos647Sieve.intCast_mem_windowRootResidues_iff",
+        "Erdos647Sieve.windowRootResidues_eq_primeWindowResidues",
+        "Erdos647Sieve.card_windowRootResidues_prime",
+        "Erdos647Sieve.card_windowRootResidues_one",
+        "Erdos647Sieve.card_windowRootResidues_mul",
+        "Erdos647Sieve.card_windowRootResidues_primeSubsetProduct",
+        "Erdos647Sieve.subsetHitCount_eq_windowRootResidues_count",
+        "Erdos647Sieve.subsetHitCount_error_le",
+        "Erdos647Sieve.selected_subsetHitCount_error_le",
+        "Erdos647Sieve.mem_retainedSubsets",
+        "Erdos647Sieve.sum_powersetCard_le_eq_retained",
+        "Erdos647Sieve.real_pow_mono_of_one_le",
+        "Erdos647Sieve.retained_primeSubsetProduct_le",
+        "Erdos647Sieve.card_retainedSubsets_le_floor",
+        "Erdos647Sieve.card_retainedSubsets_cast_le",
+        "Erdos647Sieve.retained_weighted_subset_error_le",
+        "Erdos647Sieve.arithmetic_discrepancy_le"
+      ]
+    },
+    "prerequisites": [],
+    "historical_status": "finite source chain accepted; standalone package boundary added in v31"
+  },
+  "reciprocal_kernel": {
+    "package": "research",
+    "build": [
+      "+Erdos647Research.ReciprocalKernel"
+    ],
+    "audits": {
+      "Audit/ReciprocalKernel.lean": [
+        "Erdos647Sieve.Analytic.hasDerivAt_reciprocalLog",
+        "Erdos647Sieve.Analytic.deriv_reciprocalLog_integrableOn",
+        "Erdos647Sieve.Analytic.mainPrimitive_integral"
+      ]
+    },
+    "prerequisites": [],
+    "historical_status": "accepted in earlier research workspace"
+  },
+  "reciprocal_abel": {
+    "package": "research",
+    "build": [
+      "+Erdos647Research.PrimeReciprocalSummation"
+    ],
+    "audits": {
+      "Audit/ReciprocalAbel.lean": [
+        "Erdos647Sieve.Analytic.primeLogCoefficient_partial_sum",
+        "Erdos647Sieve.Analytic.reciprocalPrimeSum_eq_weighted_sum",
+        "Erdos647Sieve.Analytic.reciprocalPrimeSum_abel",
+        "Erdos647Sieve.Analytic.reciprocalPrimeSum_partial_summation",
+        "Erdos647Sieve.Analytic.reciprocalPrimeSum_error_identity"
+      ]
+    },
+    "prerequisites": [
+      "reciprocal_kernel"
+    ],
+    "historical_status": "accepted in earlier research workspace"
+  },
+  "pntplus_inputs": {
+    "package": "research",
+    "build": [
+      "+Erdos647Research.Compat.PNTPlus"
+    ],
+    "audits": {
+      "Audit/PNTPlus.lean": [
+        "MediumPNT",
+        "RS_prime.pntBigO",
+        "RS_prime.pnt",
+        "RS_prime.intervalIntegrable_inv_log_pow",
+        "RS_prime.ioiIntegrable_inv_log_pow",
+        "RS_prime.bound_deriv",
+        "RS_prime.integrableOn_deriv",
+        "RS_prime.integrableOn_deriv_inv_div_log"
+      ]
+    },
+    "prerequisites": [],
+    "historical_status": "new source-restricted PNT+ boundary; separate from prior broad import"
+  },
+  "analytic_inputs": {
+    "package": "research",
+    "build": [
+      "+Erdos647Research.AnalyticInputs"
+    ],
+    "audits": {
+      "Audit/AnalyticInputs.lean": [
+        "RS_prime.pnt",
+        "RS_prime.integrableOn_deriv_inv_div_log",
+        "Erdos647Sieve.Analytic.theta_pnt_bound",
+        "Erdos647Sieve.Analytic.theta_error_deriv_integrable",
+        "Erdos647Sieve.Analytic.theta_error_boundary_tendsto_zero"
+      ]
+    },
+    "prerequisites": [
+      "reciprocal_kernel",
+      "pntplus_inputs"
+    ],
+    "historical_status": "accepted in earlier research workspace"
+  },
+  "clean_mertens": {
+    "package": "research",
+    "build": [
+      "+Erdos647Research.CleanMertens"
+    ],
+    "audits": {
+      "Audit/CleanMertens.lean": [
+        "Erdos647Sieve.Analytic.reciprocalPrimeSum_tendsto",
+        "Erdos647Sieve.Analytic.reciprocalPrimeLimit_exists",
+        "Erdos647Sieve.Analytic.reciprocalPrime_difference_tendsto_zero"
+      ]
+    },
+    "prerequisites": [
+      "reciprocal_abel",
+      "analytic_inputs"
+    ],
+    "historical_status": "accepted in earlier research workspace"
+  },
+  "selected_prime_reciprocals": {
+    "package": "research",
+    "build": [
+      "+Erdos647Research.SelectedPrimeReciprocals"
+    ],
+    "audits": {
+      "Audit/SelectedPrimeReciprocals.lean": [
+        "Erdos647Sieve.Analytic.selectedPrimeSum_eq_difference",
+        "Erdos647Sieve.Analytic.primeMass_eq_reciprocal_difference",
+        "Erdos647Sieve.Analytic.selectedPrimeSum_difference_tendsto_zero"
+      ]
+    },
+    "prerequisites": [
+      "clean_mertens"
+    ],
+    "historical_status": "accepted in earlier research workspace"
+  },
+  "endpoint_log_bounds": {
+    "package": "research",
+    "build": [
+      "+Erdos647Research.EndpointLogBounds"
+    ],
+    "audits": {
+      "Audit/EndpointLogBounds.lean": [
+        "Erdos647Sieve.Elementary.neg_log_one_sub_le_add_sq",
+        "Erdos647Sieve.Elementary.endpoint_log_gap",
+        "Erdos647Sieve.Elementary.endpoint_tail_log_constant"
+      ]
+    },
+    "prerequisites": [],
+    "historical_status": "accepted in earlier research workspace"
+  },
+  "factorial_bounds": {
+    "package": "research",
+    "build": [
+      "+Erdos647Research.FactorialBounds"
+    ],
+    "audits": {
+      "Audit/FactorialBounds.lean": [
+        "Erdos647Sieve.Elementary.log_factorial_upper",
+        "Erdos647Sieve.Elementary.log_factorial_lower",
+        "Erdos647Sieve.Elementary.factorial_pow_lower"
+      ]
+    },
+    "prerequisites": [],
+    "historical_status": "accepted in earlier research workspace"
+  },
+  "factorial_estimate": {
+    "package": "research",
+    "build": [
+      "+Erdos647Research.FactorialEstimate"
+    ],
+    "audits": {
+      "Audit/FactorialEstimate.lean": [
+        "Erdos647Sieve.Elementary.shiftedFactorialLog_eq_expanded",
+        "Erdos647Sieve.Elementary.log_factorial_residual_tendsto_zero",
+        "Erdos647Sieve.Elementary.shiftedFactorialLog_residual_tendsto_zero"
+      ]
+    },
+    "prerequisites": [
+      "factorial_bounds"
+    ],
+    "historical_status": "accepted in earlier research workspace"
+  },
+  "log_budget_factorial": {
+    "package": "research",
+    "build": [
+      "+Erdos647Research.LogBudgetFactorial"
+    ],
+    "audits": {
+      "Audit/LogBudgetFactorial.lean": [
+        "Erdos647Sieve.Elementary.sum_log_shift_eq_factorial",
+        "Erdos647Sieve.Elementary.logBudget_le_factorial"
+      ]
+    },
+    "prerequisites": [
+      "factorial_estimate"
+    ],
+    "historical_status": "accepted in earlier research workspace"
+  },
+  "prime_reciprocal_lower": {
+    "package": "research",
+    "build": [
+      "+Erdos647Research.PrimeReciprocalLower"
+    ],
+    "audits": {
+      "Audit/PrimeReciprocalLower.lean": [
+        "Erdos647Sieve.Elementary.harmonic_sum_le_finitePrimeEuler",
+        "Erdos647Sieve.Elementary.reciprocal_remainder_telescope",
+        "Erdos647Sieve.Elementary.prime_log_factor_le",
+        "Erdos647Sieve.Elementary.log_finitePrimeEuler_le",
+        "Erdos647Sieve.Elementary.prime_reciprocal_lower"
+      ]
+    },
+    "prerequisites": [],
+    "historical_status": "accepted in v34 run 20260908T064235Z_611434a1; v35 lint edits require a new audit"
+  },
+  "small_prime_debit_estimate": {
+    "package": "research",
+    "build": [
+      "+Erdos647Research.SmallPrimeDebitEstimate"
+    ],
+    "audits": {
+      "Audit/SmallPrimeDebitEstimate.lean": [
+        "Erdos647Sieve.Elementary.nat_quotient_cast_lower",
+        "Erdos647Sieve.Elementary.smallPrimeDebit_ge_sum_sub_card",
+        "Erdos647Sieve.Elementary.smallPrimeDebit_lower"
+      ]
+    },
+    "prerequisites": [
+      "prime_reciprocal_lower"
+    ],
+    "historical_status": "pending"
+  },
+  "corrected_budget_estimate": {
+    "package": "research",
+    "build": [
+      "+Erdos647Research.CorrectedBudgetEstimate"
+    ],
+    "audits": {
+      "Audit/CorrectedBudgetEstimate.lean": [
+        "Erdos647Sieve.Elementary.correctedBudget_upper_eventually"
+      ]
+    },
+    "prerequisites": [
+      "log_budget_factorial",
+      "small_prime_debit_estimate"
+    ],
+    "historical_status": "pending"
+  },
+  "endpoint_statement": {
+    "package": "research",
+    "build": [
+      "+Erdos647Research.Endpoint.Statement"
+    ],
+    "audits": {
+      "Audit/EndpointStatement.lean": [
+        "Erdos647Sieve.Endpoint.endpointScale_pos",
+        "Erdos647Sieve.Endpoint.endpointRHSWith_le_of_le",
+        "Erdos647Sieve.Endpoint.endpointBound_iff_eventually",
+        "Erdos647Sieve.Endpoint.endpointBound_mono",
+        "Erdos647Sieve.Endpoint.endpointRHSWith_one_div_thousand",
+        "Erdos647Sieve.Endpoint.legacyEndpointClaim_iff",
+        "Erdos647Sieve.Endpoint.positiveEndpointClaim_of_explicit"
+      ]
+    },
+    "prerequisites": [],
+    "historical_status": "new v38 coefficient interface; not an endpoint proof"
+  },
+  "endpoint_window_parameters": {
+    "package": "research",
+    "build": [
+      "+Erdos647Research.Endpoint.WindowParameters"
+    ],
+    "audits": {
+      "Audit/EndpointWindowParameters.lean": [
+        "Erdos647Sieve.Endpoint.log_div_rpow_eq",
+        "Erdos647Sieve.Endpoint.endpointExponent_pos",
+        "Erdos647Sieve.Endpoint.endpointExponent_lt_one",
+        "Erdos647Sieve.Endpoint.endpointExponent_cancellation",
+        "Erdos647Sieve.Endpoint.logX_tendsto_atTop",
+        "Erdos647Sieve.Endpoint.logLogX_tendsto_atTop",
+        "Erdos647Sieve.Endpoint.windowScale_tendsto_atTop",
+        "Erdos647Sieve.Endpoint.windowLength_tendsto_atTop",
+        "Erdos647Sieve.Endpoint.windowLength_cast_tendsto_atTop",
+        "Erdos647Sieve.Endpoint.windowLength_ratio_tendsto_one",
+        "Erdos647Sieve.Endpoint.eventually_windowLength_pos",
+        "Erdos647Sieve.Endpoint.log_windowLength_sub_tendsto_zero",
+        "Erdos647Sieve.Endpoint.log_windowLength_div_logLog_tendsto"
+      ]
+    },
+    "prerequisites": [],
+    "historical_status": "new v38 parameter proof source; acceptance pending"
+  },
+  "endpoint_truncation_parameters": {
+    "package": "research",
+    "build": [
+      "+Erdos647Research.Endpoint.TruncationParameters"
+    ],
+    "audits": {
+      "Audit/EndpointTruncationParameters.lean": [
+        "Erdos647Sieve.Endpoint.rounded_hundred_eq_ceil",
+        "Erdos647Sieve.Endpoint.truncationOrder_eq_ceil",
+        "Erdos647Sieve.Endpoint.truncationOrder_even",
+        "Erdos647Sieve.Endpoint.truncationOrder_bounds",
+        "Erdos647Sieve.Endpoint.eventually_truncationOrder_pos",
+        "Erdos647Sieve.Endpoint.truncationOrder_div_windowLength_tendsto",
+        "Erdos647Sieve.Endpoint.truncationOrder_scale_ratio_tendsto",
+        "Erdos647Sieve.Endpoint.truncationOrder_cast_tendsto_atTop"
+      ]
+    },
+    "prerequisites": [
+      "endpoint_window_parameters"
+    ],
+    "historical_status": "new v38 parameter proof source; acceptance pending"
+  },
+  "endpoint_cutoff_parameters": {
+    "package": "research",
+    "build": [
+      "+Erdos647Research.Endpoint.CutoffParameters"
+    ],
+    "audits": {
+      "Audit/EndpointCutoffParameters.lean": [
+        "Erdos647Sieve.Endpoint.primeCutoff_pos",
+        "Erdos647Sieve.Endpoint.log_primeCutoff",
+        "Erdos647Sieve.Endpoint.complementaryScale_tendsto_atTop",
+        "Erdos647Sieve.Endpoint.log_primeCutoff_scale_ratio_tendsto",
+        "Erdos647Sieve.Endpoint.log_primeCutoff_tendsto_atTop",
+        "Erdos647Sieve.Endpoint.primeCutoff_tendsto_atTop",
+        "Erdos647Sieve.Endpoint.loglog_primeCutoff_sub_tendsto",
+        "Erdos647Sieve.Endpoint.log_windowLength_div_complementaryScale_tendsto_zero",
+        "Erdos647Sieve.Endpoint.log_windowLength_div_log_primeCutoff_tendsto_zero",
+        "Erdos647Sieve.Endpoint.eventually_windowLength_lt_primeCutoff",
+        "Erdos647Sieve.Endpoint.momentT_tendsto_zero",
+        "Erdos647Sieve.Endpoint.eventually_momentT_bounds",
+        "Erdos647Sieve.Endpoint.endpoint_parameters_admissible"
+      ]
+    },
+    "prerequisites": [
+      "endpoint_truncation_parameters"
+    ],
+    "historical_status": "new v38 parameter proof source; acceptance pending"
+  },
+  "endpoint_prime_mass_parameters": {
+    "package": "research",
+    "build": [
+      "+Erdos647Research.Endpoint.PrimeMassParameters"
+    ],
+    "audits": {
+      "Audit/EndpointPrimeMassParameters.lean": [
+        "Erdos647Sieve.Endpoint.endpoint_selectedPrimeSum_error_tendsto_zero",
+        "Erdos647Sieve.Endpoint.endpoint_primeMass_expansion_tendsto_zero"
+      ]
+    },
+    "prerequisites": [
+      "endpoint_cutoff_parameters",
+      "selected_prime_reciprocals"
+    ],
+    "historical_status": "new v38 parameter proof source; acceptance pending"
+  },
+  "endpoint_prime_mass_gap": {
+    "package": "research",
+    "build": [
+      "+Erdos647Research.Endpoint.PrimeMassGap"
+    ],
+    "audits": {
+      "Audit/EndpointPrimeMassGap.lean": [
+        "Erdos647Sieve.Endpoint.primeMassGapConstant_gt_three_halves",
+        "Erdos647Sieve.Endpoint.endpoint_primeMass_budgetMain_gap_tendsto",
+        "Erdos647Sieve.Endpoint.eventually_primeMass_gap_of_lt",
+        "Erdos647Sieve.Endpoint.eventually_primeMass_sub_correctedBudget_ge",
+        "Erdos647Sieve.Endpoint.eventually_correctedBudget_le_primeMass"
+      ]
+    },
+    "prerequisites": [
+      "endpoint_prime_mass_parameters",
+      "corrected_budget_estimate",
+      "endpoint_log_bounds"
+    ],
+    "historical_status": "new v42 mass-budget proof source; acceptance pending"
+  },
+  "endpoint_mass_budget_bounds": {
+    "package": "research",
+    "build": [
+      "+Erdos647Research.Endpoint.MassBudgetBounds"
+    ],
+    "audits": {
+      "Audit/EndpointMassBudgetBounds.lean": [
+        "Erdos647Sieve.Endpoint.log_windowLength_tendsto_atTop",
+        "Erdos647Sieve.Endpoint.loglog_windowLength_div_logLog_tendsto_zero",
+        "Erdos647Sieve.Endpoint.endpoint_primeMass_div_window_logLog_tendsto",
+        "Erdos647Sieve.Endpoint.endpoint_primeMass_nonneg",
+        "Erdos647Sieve.Endpoint.eventually_primeMass_le_window_mul_logLog",
+        "Erdos647Sieve.Endpoint.eventually_correctedBudget_le_window_mul_logLog",
+        "Erdos647Sieve.Endpoint.eventually_endpoint_mass_budget_bounds"
+      ]
+    },
+    "prerequisites": [
+      "endpoint_prime_mass_gap"
+    ],
+    "historical_status": "new v42 mass-budget proof source; acceptance pending"
+  }
+}

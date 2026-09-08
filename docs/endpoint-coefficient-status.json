@@ -1,5 +1,5 @@
 {
-  "version": "v42",
+  "version": "v43",
   "updated": "2026-09-08",
   "scope": "endpoint research, not the accepted finite core",
   "goal_declaration": "Erdos647Sieve.Endpoint.PositiveEndpointClaim",
@@ -36,7 +36,7 @@
     "gate": "endpoint_statement",
     "declarations": 7,
     "is_endpoint_bound_proof": false,
-    "latest_recheck_run_id": "erdos647_repo_v40_results_20260908T091111Z_0850cec9"
+    "latest_recheck_run_id": "erdos647_repo_v42_results_20260908T111052Z_81bd3ce5"
   },
   "parameter_acceptance": {
     "status": "accepted",
@@ -53,12 +53,13 @@
     "cutoff_gate": "passed in v40",
     "prime_mass_gate": "passed in v40",
     "evidence": "provenance/accepted/v40/README.md",
-    "is_endpoint_bound_proof": false
+    "is_endpoint_bound_proof": false,
+    "latest_recheck_run_id": "erdos647_repo_v42_results_20260908T111052Z_81bd3ce5"
   },
   "next_effort": {
-    "status": "source implemented; acceptance pending",
-    "scope": "fixed positive prime-mass/budget gap and supporting normalized size bounds",
-    "assignment": "docs/prime-mass-gap-branch.md"
+    "status": "not yet implemented",
+    "scope": "all amplified errors, followed by final fixed-positive-coefficient endpoint assembly",
+    "assignment": "docs/next-amplified-errors.md"
   },
   "parameter_pr_local_acceptance": {
     "status": "satisfied",
@@ -68,7 +69,7 @@
     "new_proof_source_in_v41": false
   },
   "mass_budget_branch": {
-    "status": "source_implemented_acceptance_pending",
+    "status": "accepted",
     "fixed_gap_target": {
       "numerator": 3,
       "denominator": 2
@@ -80,7 +81,17 @@
       "endpoint_mass_budget_bounds"
     ],
     "new_theorem_targets": 12,
-    "acceptance_evidence": null,
-    "subsequent_effort": "all amplified error terms, then a fixed-positive-coefficient endpoint"
+    "acceptance_evidence": "provenance/accepted/v42/README.md",
+    "subsequent_effort": "all amplified error terms, then a fixed-positive-coefficient endpoint",
+    "run_id": "erdos647_repo_v42_results_20260908T111052Z_81bd3ce5",
+    "accepted_declarations": 12,
+    "expanded_type_and_definition_checks": 13,
+    "fixed_gap_proved": {
+      "numerator": 3,
+      "denominator": 2
+    },
+    "assumes_nonnegative_budget": false,
+    "accepted_snapshot_mathematical_modules": 47,
+    "local_pr_acceptance": "satisfied on supplied source snapshot"
   }
 }

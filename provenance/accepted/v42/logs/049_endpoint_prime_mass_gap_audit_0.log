@@ -1,0 +1,29 @@
+$ <REPO>/.tools/elan/toolchains/leanprover--lean4---v4.32.2/bin/lake env lean -DwarningAsError=true Audit/EndpointPrimeMassGap.lean
+Erdos647Sieve.Endpoint.primeMassGapConstant_gt_three_halves : 3 / 2 < Endpoint.primeMassGapConstant
+'Erdos647Sieve.Endpoint.primeMassGapConstant_gt_three_halves' depends on axioms: [propext, Classical.choice, Quot.sound]
+Erdos647Sieve.Endpoint.endpoint_primeMass_budgetMain_gap_tendsto :
+  Tendsto
+    (fun X =>
+      primeMass (windowLength X) (primeCutoff X) / ↑(windowLength X) -
+        (Real.log ↑(windowLength X) / Real.log 2 - Real.log (Real.log ↑(windowLength X)) + 2 - 1 / Real.log 2))
+    atTop (𝓝 Endpoint.primeMassGapConstant)
+'Erdos647Sieve.Endpoint.endpoint_primeMass_budgetMain_gap_tendsto' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+Erdos647Sieve.Endpoint.eventually_primeMass_gap_of_lt (δ : ℝ) (hδ : δ < Endpoint.primeMassGapConstant) :
+  ∀ᶠ (X : ℕ) in atTop,
+    δ * ↑(windowLength X) ≤ primeMass (windowLength X) (primeCutoff X) - ↑(correctedBudget (windowLength X))
+'Erdos647Sieve.Endpoint.eventually_primeMass_gap_of_lt' depends on axioms: [propext, Classical.choice, Quot.sound]
+Erdos647Sieve.Endpoint.eventually_primeMass_sub_correctedBudget_ge :
+  ∀ᶠ (X : ℕ) in atTop,
+    3 / 2 * ↑(windowLength X) ≤ primeMass (windowLength X) (primeCutoff X) - ↑(correctedBudget (windowLength X))
+'Erdos647Sieve.Endpoint.eventually_primeMass_sub_correctedBudget_ge' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+Erdos647Sieve.Endpoint.eventually_correctedBudget_le_primeMass :
+  ∀ᶠ (X : ℕ) in atTop, ↑(correctedBudget (windowLength X)) ≤ primeMass (windowLength X) (primeCutoff X)
+'Erdos647Sieve.Endpoint.eventually_correctedBudget_le_primeMass' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+
+EXIT_CODE=0

@@ -1,0 +1,21 @@
+{
+  "kind": "output-label correction",
+  "base_overlay": "v43",
+  "cause": "v43 did not update scripts/check.py; output prefix remained v42",
+  "new_output_prefix": "erdos647_repo_v43_results_",
+  "runner_change": "one literal replacement, no behavioral changes beyond run identifiers",
+  "existing_offline_tests": {
+    "passed": 203,
+    "failed": 0
+  },
+  "real_result_archives_generated_for_metadata_checks": 2,
+  "archive_summary_latest_pointer_consistent": true,
+  "unique_run_ids": true,
+  "previous_result_contents_and_mtime_preserved": true,
+  "lean_source_files_in_overlay": 0,
+  "audit_or_gate_files_in_overlay": 0,
+  "dependency_config_files_in_overlay": 0,
+  "historical_results_relabelled": false,
+  "sha256_before": "af36ea7e68c90b0c89076591ccf588bd694ad179ab023002ede97b5f6cfcad6c",
+  "sha256_after": "ee7c383845826b0f5c560d229555b5f2d18f7a9063543b8b232053388a333c92"
+}

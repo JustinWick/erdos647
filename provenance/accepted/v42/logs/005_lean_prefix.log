@@ -1,0 +1,4 @@
+$ <REPO>/.tools/elan/toolchains/leanprover--lean4---v4.32.2/bin/lean --print-prefix
+<REPO>/.tools/elan/toolchains/leanprover--lean4---v4.32.2
+
+EXIT_CODE=0
