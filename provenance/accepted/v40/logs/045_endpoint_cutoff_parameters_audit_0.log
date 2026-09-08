@@ -1,0 +1,46 @@
+$ <REPO>/.tools/elan/toolchains/leanprover--lean4---v4.32.2/bin/lake env lean -DwarningAsError=true Audit/EndpointCutoffParameters.lean
+Erdos647Sieve.Endpoint.primeCutoff_pos (X : ℕ) (hX : 0 < X) : 0 < primeCutoff X
+'Erdos647Sieve.Endpoint.primeCutoff_pos' depends on axioms: [propext, Classical.choice, Quot.sound]
+Erdos647Sieve.Endpoint.log_primeCutoff (X : ℕ) (hX : 0 < X) :
+  Real.log (primeCutoff X) = Real.log ↑X / (4 * ↑(truncationOrder X))
+'Erdos647Sieve.Endpoint.log_primeCutoff' depends on axioms: [propext, Classical.choice, Quot.sound]
+Erdos647Sieve.Endpoint.complementaryScale_tendsto_atTop :
+  Tendsto (fun X => (Real.log ↑X).rpow (1 - endpointExponent)) atTop atTop
+'Erdos647Sieve.Endpoint.complementaryScale_tendsto_atTop' depends on axioms: [propext, Classical.choice, Quot.sound]
+Erdos647Sieve.Endpoint.log_primeCutoff_scale_ratio_tendsto :
+  Tendsto (fun X => Real.log (primeCutoff X) / (Real.log ↑X).rpow (1 - endpointExponent)) atTop (𝓝 (25 / 2))
+'Erdos647Sieve.Endpoint.log_primeCutoff_scale_ratio_tendsto' depends on axioms: [propext, Classical.choice, Quot.sound]
+Erdos647Sieve.Endpoint.log_primeCutoff_tendsto_atTop : Tendsto (fun X => Real.log (primeCutoff X)) atTop atTop
+'Erdos647Sieve.Endpoint.log_primeCutoff_tendsto_atTop' depends on axioms: [propext, Classical.choice, Quot.sound]
+Erdos647Sieve.Endpoint.primeCutoff_tendsto_atTop : Tendsto primeCutoff atTop atTop
+'Erdos647Sieve.Endpoint.primeCutoff_tendsto_atTop' depends on axioms: [propext, Classical.choice, Quot.sound]
+Erdos647Sieve.Endpoint.loglog_primeCutoff_sub_tendsto :
+  Tendsto (fun X => Real.log (Real.log (primeCutoff X)) - (1 - endpointExponent) * Real.log (Real.log ↑X)) atTop
+    (𝓝 (Real.log (25 / 2)))
+'Erdos647Sieve.Endpoint.loglog_primeCutoff_sub_tendsto' depends on axioms: [propext, Classical.choice, Quot.sound]
+Erdos647Sieve.Endpoint.log_windowLength_div_complementaryScale_tendsto_zero :
+  Tendsto (fun X => Real.log ↑(windowLength X) / (Real.log ↑X).rpow (1 - endpointExponent)) atTop (𝓝 0)
+'Erdos647Sieve.Endpoint.log_windowLength_div_complementaryScale_tendsto_zero' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+Erdos647Sieve.Endpoint.log_windowLength_div_log_primeCutoff_tendsto_zero :
+  Tendsto (fun X => Real.log ↑(windowLength X) / Real.log (primeCutoff X)) atTop (𝓝 0)
+'Erdos647Sieve.Endpoint.log_windowLength_div_log_primeCutoff_tendsto_zero' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+Erdos647Sieve.Endpoint.eventually_windowLength_lt_primeCutoff : ∀ᶠ (X : ℕ) in atTop, ↑(windowLength X) < primeCutoff X
+'Erdos647Sieve.Endpoint.eventually_windowLength_lt_primeCutoff' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+Erdos647Sieve.Endpoint.momentT_tendsto_zero : Tendsto momentT atTop (𝓝 0)
+'Erdos647Sieve.Endpoint.momentT_tendsto_zero' depends on axioms: [propext, Classical.choice, Quot.sound]
+Erdos647Sieve.Endpoint.eventually_momentT_bounds : ∀ᶠ (X : ℕ) in atTop, 0 < momentT X ∧ momentT X ≤ 1 / 2
+'Erdos647Sieve.Endpoint.eventually_momentT_bounds' depends on axioms: [propext, Classical.choice, Quot.sound]
+Erdos647Sieve.Endpoint.endpoint_parameters_admissible :
+  ∀ᶠ (X : ℕ) in atTop,
+    1 ≤ X ∧
+      1 ≤ windowLength X ∧
+        ↑(windowLength X) < primeCutoff X ∧ 0 < 1 - momentT X ∧ 1 - momentT X < 1 ∧ Even (truncationOrder X)
+'Erdos647Sieve.Endpoint.endpoint_parameters_admissible' depends on axioms: [propext, Classical.choice, Quot.sound]
+
+EXIT_CODE=0

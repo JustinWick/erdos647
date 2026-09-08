@@ -330,5 +330,115 @@
       "small_prime_debit_estimate"
     ],
     "historical_status": "pending"
+  },
+  "endpoint_statement": {
+    "package": "research",
+    "build": [
+      "+Erdos647Research.Endpoint.Statement"
+    ],
+    "audits": {
+      "Audit/EndpointStatement.lean": [
+        "Erdos647Sieve.Endpoint.endpointScale_pos",
+        "Erdos647Sieve.Endpoint.endpointRHSWith_le_of_le",
+        "Erdos647Sieve.Endpoint.endpointBound_iff_eventually",
+        "Erdos647Sieve.Endpoint.endpointBound_mono",
+        "Erdos647Sieve.Endpoint.endpointRHSWith_one_div_thousand",
+        "Erdos647Sieve.Endpoint.legacyEndpointClaim_iff",
+        "Erdos647Sieve.Endpoint.positiveEndpointClaim_of_explicit"
+      ]
+    },
+    "prerequisites": [],
+    "historical_status": "new v38 coefficient interface; not an endpoint proof"
+  },
+  "endpoint_window_parameters": {
+    "package": "research",
+    "build": [
+      "+Erdos647Research.Endpoint.WindowParameters"
+    ],
+    "audits": {
+      "Audit/EndpointWindowParameters.lean": [
+        "Erdos647Sieve.Endpoint.log_div_rpow_eq",
+        "Erdos647Sieve.Endpoint.endpointExponent_pos",
+        "Erdos647Sieve.Endpoint.endpointExponent_lt_one",
+        "Erdos647Sieve.Endpoint.endpointExponent_cancellation",
+        "Erdos647Sieve.Endpoint.logX_tendsto_atTop",
+        "Erdos647Sieve.Endpoint.logLogX_tendsto_atTop",
+        "Erdos647Sieve.Endpoint.windowScale_tendsto_atTop",
+        "Erdos647Sieve.Endpoint.windowLength_tendsto_atTop",
+        "Erdos647Sieve.Endpoint.windowLength_cast_tendsto_atTop",
+        "Erdos647Sieve.Endpoint.windowLength_ratio_tendsto_one",
+        "Erdos647Sieve.Endpoint.eventually_windowLength_pos",
+        "Erdos647Sieve.Endpoint.log_windowLength_sub_tendsto_zero",
+        "Erdos647Sieve.Endpoint.log_windowLength_div_logLog_tendsto"
+      ]
+    },
+    "prerequisites": [],
+    "historical_status": "new v38 parameter proof source; acceptance pending"
+  },
+  "endpoint_truncation_parameters": {
+    "package": "research",
+    "build": [
+      "+Erdos647Research.Endpoint.TruncationParameters"
+    ],
+    "audits": {
+      "Audit/EndpointTruncationParameters.lean": [
+        "Erdos647Sieve.Endpoint.rounded_hundred_eq_ceil",
+        "Erdos647Sieve.Endpoint.truncationOrder_eq_ceil",
+        "Erdos647Sieve.Endpoint.truncationOrder_even",
+        "Erdos647Sieve.Endpoint.truncationOrder_bounds",
+        "Erdos647Sieve.Endpoint.eventually_truncationOrder_pos",
+        "Erdos647Sieve.Endpoint.truncationOrder_div_windowLength_tendsto",
+        "Erdos647Sieve.Endpoint.truncationOrder_scale_ratio_tendsto",
+        "Erdos647Sieve.Endpoint.truncationOrder_cast_tendsto_atTop"
+      ]
+    },
+    "prerequisites": [
+      "endpoint_window_parameters"
+    ],
+    "historical_status": "new v38 parameter proof source; acceptance pending"
+  },
+  "endpoint_cutoff_parameters": {
+    "package": "research",
+    "build": [
+      "+Erdos647Research.Endpoint.CutoffParameters"
+    ],
+    "audits": {
+      "Audit/EndpointCutoffParameters.lean": [
+        "Erdos647Sieve.Endpoint.primeCutoff_pos",
+        "Erdos647Sieve.Endpoint.log_primeCutoff",
+        "Erdos647Sieve.Endpoint.complementaryScale_tendsto_atTop",
+        "Erdos647Sieve.Endpoint.log_primeCutoff_scale_ratio_tendsto",
+        "Erdos647Sieve.Endpoint.log_primeCutoff_tendsto_atTop",
+        "Erdos647Sieve.Endpoint.primeCutoff_tendsto_atTop",
+        "Erdos647Sieve.Endpoint.loglog_primeCutoff_sub_tendsto",
+        "Erdos647Sieve.Endpoint.log_windowLength_div_complementaryScale_tendsto_zero",
+        "Erdos647Sieve.Endpoint.log_windowLength_div_log_primeCutoff_tendsto_zero",
+        "Erdos647Sieve.Endpoint.eventually_windowLength_lt_primeCutoff",
+        "Erdos647Sieve.Endpoint.momentT_tendsto_zero",
+        "Erdos647Sieve.Endpoint.eventually_momentT_bounds",
+        "Erdos647Sieve.Endpoint.endpoint_parameters_admissible"
+      ]
+    },
+    "prerequisites": [
+      "endpoint_truncation_parameters"
+    ],
+    "historical_status": "new v38 parameter proof source; acceptance pending"
+  },
+  "endpoint_prime_mass_parameters": {
+    "package": "research",
+    "build": [
+      "+Erdos647Research.Endpoint.PrimeMassParameters"
+    ],
+    "audits": {
+      "Audit/EndpointPrimeMassParameters.lean": [
+        "Erdos647Sieve.Endpoint.endpoint_selectedPrimeSum_error_tendsto_zero",
+        "Erdos647Sieve.Endpoint.endpoint_primeMass_expansion_tendsto_zero"
+      ]
+    },
+    "prerequisites": [
+      "endpoint_cutoff_parameters",
+      "selected_prime_reciprocals"
+    ],
+    "historical_status": "new v38 parameter proof source; acceptance pending"
   }
 }

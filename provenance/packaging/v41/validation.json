@@ -1,0 +1,42 @@
+{
+  "schema": 1,
+  "version": "v41",
+  "status": "PASS",
+  "scope": "Documentation/evidence overlay preservation and unchanged runner tests",
+  "first_application_tests": 178,
+  "extracted_overlay_checks": {
+    "tests": 178,
+    "test_exit_code": 0,
+    "nonoverlay_files_hash_and_mtime_preserved": 294,
+    "mathematical_modules_preserved": 45,
+    "audit_files_preserved": 20,
+    "cache_tool_result_sentinels_preserved": 6,
+    "user_ci_workflow_unchanged": true,
+    "evidence_consistency_replay": {
+      "status": "CONSISTENT_RECORDED_EVIDENCE",
+      "run_id": "erdos647_repo_v40_results_20260908T091111Z_0850cec9",
+      "manifest_entries": 201,
+      "source_snapshot_entries": 118,
+      "passing_gates": 19,
+      "successful_commands": 47,
+      "distinct_audited_declarations": 183,
+      "axiom_report_occurrences": 185,
+      "exact_type_examples": 127,
+      "audit_files": 20,
+      "module_resolution_records": 94,
+      "tooling_tests": 178,
+      "cache_actions": {
+        ".": "reuse_existing",
+        "research": "reuse_existing"
+      },
+      "endpoint_proved": false,
+      "proof_execution_performed_by_this_script": false
+    },
+    "reapplication_preservation_passed": true,
+    "all_live_document_links_resolve": true,
+    "overlay_files": 97
+  },
+  "source_and_audit_changes": 0,
+  "runtime_changes": 0,
+  "positive_endpoint_coefficient_proved": null
+}

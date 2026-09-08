@@ -1,0 +1,4 @@
+$ <REPO>/.tools/elan/toolchains/leanprover--lean4---v4.32.2/bin/lake build +Erdos647Research.LogBudgetFactorial
+Build completed successfully (8659 jobs).
+
+EXIT_CODE=0

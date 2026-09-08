@@ -1,0 +1,49 @@
+{
+  "version": "v38",
+  "created_utc": "2026-09-08T08:26:58.802817+00:00",
+  "overlay_format": "root-relative overwrite overlay, no enclosing folder",
+  "base": "v32 repository plus overlays through documentation/evidence v37",
+  "accepted_baseline": "v36 14/14 retained, not rerun or extended by this report",
+  "new_gate_status": "pending",
+  "registered_gates": 19,
+  "new_gate_count": 5,
+  "new_mathematical_modules": 5,
+  "new_audited_theorems": 42,
+  "new_definition_shape_checks": 3,
+  "new_endpoint_coefficient_proved": null,
+  "working_candidate_c": {
+    "numerator": 1,
+    "denominator": 2000,
+    "proved": false
+  },
+  "legacy_coefficient_required": false,
+  "existing_math_files_preserved": 40,
+  "existing_audit_files_preserved": 15,
+  "existing_gate_entries_unchanged": 14,
+  "locked_config_and_entrypoints_preserved": [
+    "lean-toolchain",
+    "lakefile.lean",
+    "lake-manifest.json",
+    "research/lean-toolchain",
+    "research/lake-manifest.json",
+    ".gitignore",
+    ".gitattributes",
+    "RUN.sh",
+    "TEST_ALL.sh"
+  ],
+  "runner_change": "diagnostic version prefix only",
+  "runner_tests": {
+    "count": 166,
+    "exit_code": 0,
+    "clean_archive_application_retest": {
+      "count": 166,
+      "exit_code": 0
+    }
+  },
+  "tooling_command_exit_code": 0,
+  "new_sources_in_failure_diagnostics": 5,
+  "preserved_non_overlay_files_with_timestamps": 230,
+  "cache_tool_previous_result_and_user_ci_sentinels_preserved": true,
+  "source_runtime_and_cache_directories_bundled": false,
+  "mathematical_acceptance_not_inferred_from_packaging": true
+}

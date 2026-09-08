@@ -1,0 +1,49 @@
+{
+  "version": "v39",
+  "date": "2026-09-08",
+  "package_kind": "overwrite-in-place repository overlay",
+  "runner_tests": {
+    "count": 173,
+    "exit_code": 0,
+    "log": "runner_tests.log"
+  },
+  "tests_after_actual_zip_application": {
+    "count": 173,
+    "exit_code": 0,
+    "log": "extracted_runner_tests.log"
+  },
+  "top_level_tooling": {
+    "scope": "tooling",
+    "status": "PASS_SELECTED_CHECKS",
+    "selected_theorem_gates": [],
+    "run_id": "erdos647_repo_v39_results_20260908T084544Z_3cd9c7ae",
+    "log": "tooling.log",
+    "registered_gates_status": "all NOT_REQUESTED"
+  },
+  "overlay_application": {
+    "unchanged_files_outside_overlay": 241,
+    "contents_and_nanosecond_mtimes_preserved": true,
+    "cache_tool_and_result_sentinels": 4,
+    "user_ci_preserved": true,
+    "zip_members_applied": 23,
+    "mathematical_modules_preserved": 43
+  },
+  "mathematical_source_changes": [
+    "research/Erdos647Research/Endpoint/WindowParameters.lean",
+    "research/Erdos647Research/Endpoint/CutoffParameters.lean"
+  ],
+  "mathematical_modules_unchanged": 43,
+  "accepted_mathematical_modules_unchanged": 41,
+  "existing_theorem_headers_preserved": true,
+  "existing_exact_type_examples_retained": true,
+  "gate_count": 19,
+  "new_shared_adapter_audit_targets": 1,
+  "branch_theorem_target_count": 43,
+  "historical_endpoint_statement_gate": "PASS in supplied v38 run",
+  "parameter_gates_after_this_repair": "pending returned Lean result",
+  "endpoint_theorem_proved": false,
+  "proved_fixed_positive_coefficient": null,
+  "dependency_or_toolchain_changes": false,
+  "warning_or_axiom_policy_relaxed": false,
+  "ci_workflows_changed": false
+}

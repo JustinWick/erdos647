@@ -1,0 +1,50 @@
+{
+  "version": "v41",
+  "scope": "documentation and evidence only",
+  "changed_live_documents": {
+    "README.md": {
+      "old_sha256": "5fc3a4201357cc7080e9a3229927a2b1d6c14d02dbd7e820707356dd359d2251",
+      "new_sha256": "36b2924a92c95867dd37cb13ab6317a97e9f6d37bcff71864d6ccabd7706dca0",
+      "role": "documentation"
+    },
+    "docs/changes/v41.md": {
+      "old_sha256": null,
+      "new_sha256": "97a734e5954dfc38fd01eb7ae9da1024045478d894514d8620b5fb155647dda1",
+      "role": "documentation"
+    },
+    "docs/endpoint-coefficient-status.json": {
+      "old_sha256": "7a03559a238aad8af21d005724378e2b3e79e8b0116fc00b40cc43bb69112fae",
+      "new_sha256": "b53d547ec00cd4c044568952656a65df7acd691bcc84d558ce309a89038347bd",
+      "role": "documentation"
+    },
+    "docs/endpoint-parameter-branch.md": {
+      "old_sha256": "e7f54e4a82d4e1385e993fd8d97f25ce3f379efea2404278fc569c72be3980fe",
+      "new_sha256": "39e7b1c8a69bc94aff528b9c23828924fdb09b0b9c9a487cd14d6ada38525630",
+      "role": "documentation"
+    },
+    "docs/next-prime-mass-gap.md": {
+      "old_sha256": null,
+      "new_sha256": "d23f7fe7c1fbdc80418a7dbd2093ee43a647117aff7a180092e17e4e6d2d10c8",
+      "role": "documentation"
+    },
+    "docs/proof-status.md": {
+      "old_sha256": "5887209768f63e803ae9f3363967ffc9da4bdcb824a740f81a7de2e15cdd267e",
+      "new_sha256": "2df06a39e26dbdbd9d3aa4a59a7d580a6f942243b6cbed36c91f50cc6a9c811f",
+      "role": "documentation"
+    },
+    "docs/pull-requests/endpoint-parameters.md": {
+      "old_sha256": "33733f5d18a3b927a998e86fc1f763c7f1648a3c6ea4cf2a5e31c59abc0b0158",
+      "new_sha256": "42aecfa6c75988462dd95f47b07d9966068faf58a193a56bc32de75da0d7fe08",
+      "role": "documentation"
+    },
+    "research/README.md": {
+      "old_sha256": "84d26f361b3d9c025493b1517f5b4198a4e3ba57945f47d60074dbc5de75a530",
+      "new_sha256": "d3e5a6e6c5187518da9107a503a24a7758ec475e6bad14f7ee1b51c672e25efa",
+      "role": "documentation"
+    }
+  },
+  "proof_source_changes": [],
+  "audit_source_changes": [],
+  "runtime_changes": [],
+  "runner_result_prefix_retained": "erdos647_repo_v40_results_"
+}

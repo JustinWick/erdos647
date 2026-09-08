@@ -1,0 +1,32 @@
+--- a/research/Erdos647Research/Endpoint/CutoffParameters.lean
++++ b/research/Erdos647Research/Endpoint/CutoffParameters.lean
+@@ -39,8 +39,9 @@
+       (4 * ((truncationOrder X : ℝ) /
+         Real.rpow (Real.log (X : ℝ)) endpointExponent))⁻¹)
+       atTop (𝓝 ((25 : ℝ) / 2)) := by
+-    simpa using (truncationOrder_scale_ratio_tendsto.const_mul 4).inv₀
+-      (by norm_num : (4 * ((1 : ℝ) / 50)) ≠ 0)
++    convert! (truncationOrder_scale_ratio_tendsto.const_mul 4).inv₀
++      (by norm_num : (4 * ((1 : ℝ) / 50)) ≠ 0) using 1
++    norm_num
+   apply h.congr'
+   filter_upwards [eventually_ge_atTop (2 : ℕ)] with X hX
+   have hQ : 0 < Real.log (X : ℝ) :=
+@@ -124,13 +125,15 @@
+         Real.rpow (Real.log (X : ℝ)) (1 - endpointExponent)) /
+       (Real.log (primeCutoff X) /
+         Real.rpow (Real.log (X : ℝ)) (1 - endpointExponent))) atTop (𝓝 0) := by
+-    simpa using log_windowLength_div_complementaryScale_tendsto_zero.div
+-      log_primeCutoff_scale_ratio_tendsto (by norm_num : ((25 : ℝ) / 2) ≠ 0)
++    simpa only [Pi.div_def, zero_div] using
++      log_windowLength_div_complementaryScale_tendsto_zero.div
++        log_primeCutoff_scale_ratio_tendsto (by norm_num : ((25 : ℝ) / 2) ≠ 0)
+   apply h.congr'
+   filter_upwards [eventually_ge_atTop (2 : ℕ)] with X hX
+   have hQ : 0 < Real.log (X : ℝ) :=
+     Real.log_pos (by exact_mod_cast (show 1 < X by omega))
+   exact div_div_div_cancel_right₀ (Real.rpow_pos_of_pos hQ (1 - endpointExponent)).ne'
++    (Real.log (windowLength X : ℝ)) (Real.log (primeCutoff X))
+ 
+ /-- The ordering required by the finite sieve is eventually valid. -/
+ theorem eventually_windowLength_lt_primeCutoff :

@@ -1,0 +1,9 @@
+[
+  {
+    "module": "Erdos647Research.EndpointLogBounds",
+    "expected": "<REPO>/research/.lake/build/lib/lean/Erdos647Research/EndpointLogBounds.olean",
+    "resolved": "<REPO>/research/.lake/build/lib/lean/Erdos647Research/EndpointLogBounds.olean",
+    "correct_owner": true,
+    "object_exists": true
+  }
+]

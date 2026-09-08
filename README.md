@@ -5,11 +5,12 @@ The repository root is a **Mathlib-only library**. The separate `research/` Lake
 package contains the analytic bridge and unfinished endpoint development.
 
 **This project does not resolve Erdős #647 and does not contain a proof of the
-proposed final asymptotic endpoint.** The current implemented suite has a recorded **14/14** build/type/axiom pass
-in the v36 local run, covering **140 distinct audited declarations** with no
-build or audit warnings. This includes the finite core, analytic bridge and
-elementary budget estimates—not the final endpoint. See
-[proof status](docs/proof-status.md) and the [accepted record](provenance/accepted/v36/README.md).
+proposed final asymptotic endpoint.** The accepted v40 snapshot passed **19/19**
+build/type/axiom gates, covering **183 distinct declarations** with no build or
+audit warnings. This includes the finite core, analytic bridge, elementary budget
+estimates and exact endpoint parameter/prime-mass asymptotics—not the final
+endpoint. See [proof status](docs/proof-status.md) and the
+[accepted record](provenance/accepted/v40/README.md).
 
 ## Use the public library
 
@@ -154,7 +155,7 @@ A normal Ctrl+C still packages partial output. A machine crash can leave a parti
 results directory; `--collect-only` prints the last completed archive, not a new
 acceptance claim.
 
-**All 14 currently registered gates have passed in the v36 record.** Future
+**All 19 currently registered gates have passed in the v40 record.** Future
 changes must still pass their selected checks: a failing `all` run is never
 converted to success because the core passed. The remaining endpoint work is
 outside this completed gate inventory and remains separate from the public core.
@@ -209,3 +210,17 @@ not contain a `.git` directory or perform any GitHub write operation.
 [Proof status](docs/proof-status.md) distinguishes historical theorem evidence from
 current package results. [Contributing](CONTRIBUTING.md) explains the package
 boundaries and gate registry. The source is distributed with `LICENSE` and `NOTICE`.
+
+## Accepted endpoint parameter layer (v40)
+
+The finite library remains unchanged. Five research gates now accept the actual
+window, truncation and cutoff asymptotics, a fixed-coefficient statement interface,
+and the constant-sensitive prime-mass expansion. All 19 current gates passed in
+the v40 record; that is separate evidence from the earlier v36 fixes checkpoint.
+
+The remaining goal is an explicit fixed c>0 at the same critical exponent and scale.
+The historical 1/1000 coefficient is optional, and no positive-coefficient endpoint
+bound is yet claimed. The next proof obligation is the positive prime-mass/budget
+gap, followed by all amplified errors and final assembly. See
+[branch scope](docs/endpoint-parameter-branch.md) and
+[next mathematical effort](docs/next-prime-mass-gap.md).

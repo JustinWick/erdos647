@@ -1,0 +1,68 @@
+# Analytic bridge and endpoint research
+
+This is a separate Lake package, not a dependency of the public root library.
+It uses the parent core by a local path dependency and PNT+ at its native locked
+Lean/Mathlib 4.32.2 environment. The existing theorem names and proof bodies are preserved;
+there are no duplicate finite-source copies or upstream proof patches.
+
+## Inventory
+
+Research import paths begin with `Erdos647Research`, while theorem names remain
+in their existing `Erdos647Sieve` namespaces. The core and upstream PNT+ keep their
+own module roots.
+
+The five analytic modules are `ReciprocalKernel`, `PrimeReciprocalSummation`,
+`AnalyticInputs`, `CleanMertens`, and `SelectedPrimeReciprocals`. The PNT+ boundary
+is the `AnalyticInputs` adapter plus `Erdos647Research.Compat.PNTPlus`. The
+compatibility module imports `PrimeNumberTheoremAnd.MediumPNT` and supplies
+seven attributed PNT/integrability routines extracted from the pinned source.
+It does not import the unfinished zeta or Rosser–Schoenfeld catalogues. No
+project module occupies an upstream-owned import root.
+
+The seven elementary modules are `EndpointLogBounds`, `FactorialBounds`,
+`FactorialEstimate`, `LogBudgetFactorial`, `PrimeReciprocalLower`,
+`SmallPrimeDebitEstimate`, and `CorrectedBudgetEstimate`.
+
+All **13 research gates registered at the v36 snapshot** passed alongside the core in the v36
+repository-wide run. This includes the prime-reciprocal lower bound, the exact
+small-prime debit estimate, and `correctedBudget_upper_eventually`. The
+[accepted record](../provenance/accepted/v36/README.md) includes the raw audits.
+
+A new `Endpoint/` directory contains the v38 proof-source layer:
+`Statement`, `WindowParameters`, `TruncationParameters`, `CutoffParameters`, and
+`PrimeMassParameters`. Five new gates check its 42 theorem declarations; their acceptance
+is pending. The exact constant-sensitive mass expansion is the end of this first
+parameter changeset. The mass-versus-budget gap and amplified-error absorption
+remain subsequent targets. No endpoint `Main` proof has been added merely
+to make the module tree appear complete. Those obligations belong in a separate
+mathematical changeset, not in the completed build/dependency fixes PR.
+
+## Endpoint coefficient
+
+The branch seeks `EndpointBound c` for an explicit fixed c>0, preserving the critical
+exponent and (log X)^a/log(log X) scale. The arbitrary historical 1/1000 target is
+not mandatory. The coefficient is outside both the onset and X quantifiers; it
+cannot vary with X. No endpoint coefficient is yet accepted. 1/2000 is a working
+candidate, not a theorem. See the branch charter and coefficient status record.
+
+## Checking
+
+From the repository root, `bash RUN.sh research --setup` prepares this pinned
+workspace and checks all research gates. Later `bash RUN.sh research` reuses it.
+`bash RUN.sh --gate corrected_budget_estimate` selects that target and its explicit
+prerequisites. The root `TEST_ALL.sh` checks core and research together.
+
+With the pinned toolchain on PATH, `lake build` and `lake test` also work from this
+subdirectory. They use this package's own dependency resolution. A research failure
+is not ignored; the core's independent build remains available at the repository root.
+
+The manuscript under `docs/MANUSCRIPT.md` is preserved as a historical proposed
+argument. Its original verification comments describe its creation time. Current
+status is recorded centrally in [proof status](../docs/proof-status.md).
+
+## New mathematical branch
+
+[The v38 branch charter](../docs/endpoint-parameter-branch.md) gives the exact
+parameter formulas, new acceptance targets, reused library interfaces, and the
+remaining route to the final endpoint. The stable finite facade does not import
+any of the new experimental modules.
