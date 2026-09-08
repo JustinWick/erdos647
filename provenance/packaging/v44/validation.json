@@ -1,0 +1,60 @@
+{
+  "schema": 1,
+  "version": "v44",
+  "purpose": "next mathematical overlay, not the accepted gap PR",
+  "prior_accepted_run": "erdos647_repo_v43_results_20260908T120436Z_93d219fb",
+  "prior_passed_gates": 21,
+  "new_gates": 5,
+  "total_gates": 26,
+  "new_theorem_targets": 25,
+  "new_expanded_type_definition_checks": 31,
+  "new_mathematical_modules": 5,
+  "accepted_mathematical_modules_preserved": 47,
+  "accepted_audit_files_preserved": 22,
+  "old_gate_definitions_preserved": 21,
+  "new_proof_acceptance": "pending",
+  "endpoint_proved": false,
+  "proved_endpoint_coefficient": null,
+  "tooling_tests": {
+    "count": 229,
+    "status": "passed"
+  },
+  "existing_test_files_changed": [],
+  "runner_logic_edit": "one output prefix string: v43 -> v44",
+  "pins_lockfiles_core_configuration_CI_run_entrypoints_unchanged": true,
+  "source_changes": [
+    "README.md",
+    "docs/amplified-errors-branch.md",
+    "docs/changes/v44.md",
+    "docs/endpoint-coefficient-status.json",
+    "docs/proof-status.md",
+    "docs/pull-requests/amplified-errors.md",
+    "research/Audit/EndpointAmplification.lean",
+    "research/Audit/EndpointArithmeticRemainder.lean",
+    "research/Audit/EndpointCountingReduction.lean",
+    "research/Audit/EndpointErrorScales.lean",
+    "research/Audit/EndpointMomentTail.lean",
+    "research/Erdos647Research/Endpoint/Amplification.lean",
+    "research/Erdos647Research/Endpoint/ArithmeticRemainder.lean",
+    "research/Erdos647Research/Endpoint/CountingReduction.lean",
+    "research/Erdos647Research/Endpoint/ErrorScales.lean",
+    "research/Erdos647Research/Endpoint/MomentTail.lean",
+    "research/lakefile.lean",
+    "scripts/check.py",
+    "scripts/gates.json",
+    "tests/test_amplified_errors_v44.py"
+  ],
+  "new_gates_have_independent_type_and_axiom_audits": true,
+  "tooling_only_dispatch": {
+    "exit_code": 0,
+    "count": 229,
+    "labels_agree": true,
+    "all_new_Lean_files_collected": true
+  },
+  "final_extraction_test": {
+    "status": "passed",
+    "tests": 229,
+    "unchanged_files_outside_overlay": 618,
+    "cache_tools_previous_results_and_CI_sentinels_preserved": true
+  }
+}

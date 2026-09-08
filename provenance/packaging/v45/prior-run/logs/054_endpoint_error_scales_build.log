@@ -1,0 +1,5 @@
+$ <REPO>/.tools/elan/toolchains/leanprover--lean4---v4.32.2/bin/lake build +Erdos647Research.Endpoint.ErrorScales
+✔ [8660/8660] Built Erdos647Research.Endpoint.ErrorScales (3.4s)
+Build completed successfully (8660 jobs).
+
+EXIT_CODE=0

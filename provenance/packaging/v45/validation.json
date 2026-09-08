@@ -1,0 +1,68 @@
+{
+  "schema": 1,
+  "version": "v45",
+  "purpose": "audit-binder repair; no mathematical proof source changes",
+  "prior_run": "erdos647_repo_v44_results_20260908T123705Z_9d028f71",
+  "prior_gate_results": {
+    "passed": 21,
+    "failed": 2,
+    "blocked": 3
+  },
+  "unchanged_mathematical_modules": 52,
+  "unchanged_audit_files": 23,
+  "changed_audit_files": [
+    "research/Audit/EndpointAmplification.lean",
+    "research/Audit/EndpointArithmeticRemainder.lean",
+    "research/Audit/EndpointMomentTail.lean",
+    "research/Audit/EndpointErrorScales.lean"
+  ],
+  "observed_unused_name_errors": 10,
+  "unused_proof_names_anonymized": 22,
+  "affected_exact_type_examples": 7,
+  "new_layer_exact_type_definition_examples_preserved": 31,
+  "new_layer_axiom_targets_preserved": 25,
+  "all_26_gate_definitions_unchanged": true,
+  "pins_lockfiles_CI_entrypoints_unchanged": true,
+  "runner_change": "v44 -> v45 diagnostic prefix only",
+  "tooling_tests": {
+    "count": 244,
+    "status": "passed"
+  },
+  "new_tests": 15,
+  "existing_test_change": "Replace one obsolete fixed version assertion with a current-record consistency check",
+  "new_Lean_gate_acceptance": "pending",
+  "endpoint_proved": false,
+  "proved_endpoint_coefficient": null,
+  "source_changes": [
+    "docs/amplified-errors-branch.md",
+    "docs/changes/v45.md",
+    "docs/endpoint-coefficient-status.json",
+    "docs/proof-status.md",
+    "research/Audit/EndpointAmplification.lean",
+    "research/Audit/EndpointArithmeticRemainder.lean",
+    "research/Audit/EndpointErrorScales.lean",
+    "research/Audit/EndpointMomentTail.lean",
+    "scripts/check.py",
+    "tests/fixtures/v44_error_audit_interfaces.json",
+    "tests/test_amplified_errors_v44.py",
+    "tests/test_audit_binders_v45.py"
+  ],
+  "validation_boundary": "Runner/source regression tests and uploaded-log review; current proof status uses actual uploaded gate exits.",
+  "extraction_and_top_level_dispatch": {
+    "tests": 244,
+    "exit_code": 0,
+    "unchanged_files_outside_overlay": 653,
+    "all_52_mathematical_modules_preserved": true,
+    "cache_tools_previous_results_CI_sentinels_preserved": true,
+    "zip_crc_passed": true,
+    "overlay_file_count": 22,
+    "top_level_tooling_dispatch": {
+      "exit_code": 0,
+      "role": "TOOLING_ONLY",
+      "no_Lean_gates_claimed": true,
+      "run_id": "erdos647_repo_v45_results_20260908T124749Z_6e4b6adf",
+      "archive_internal_paths_and_latest_pointer_agree": true,
+      "patched_audits_collected": true
+    }
+  }
+}

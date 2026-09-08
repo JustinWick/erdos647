@@ -1,0 +1,22 @@
+{
+  "review_kind": "uploaded source-and-log verification",
+  "run_id": "erdos647_repo_v43_results_20260908T120436Z_93d219fb",
+  "archive_sha256": "7217d520262b6b3bac52ac8379bd639c33bf7f9f1523b786f9d6b702d9c4bc22",
+  "status": "PASS_SELECTED_CHECKS",
+  "gates_passed": 21,
+  "gates_total": 21,
+  "all_recorded_commands_succeeded": true,
+  "recorded_commands": 51,
+  "unique_audited_declarations": 195,
+  "audit_files": 22,
+  "expanded_type_definition_examples": 140,
+  "runner_tests": 203,
+  "manifest_entries_verified": 220,
+  "source_hashes_verified": 131,
+  "source_stable": true,
+  "warnings_in_build_and_audit_logs": 0,
+  "unexpected_axioms": [],
+  "scope": "local source snapshot; not remote PR diff or CI",
+  "endpoint_proved": false,
+  "proved_endpoint_coefficient": null
+}

@@ -1,6 +1,6 @@
 # Proof status
 
-## Current accepted repository checkpoint: v42
+## Current accepted repository checkpoint: v42, confirmed by v43
 
 The newer run `erdos647_repo_v42_results_20260908T111052Z_81bd3ce5` passed **21/21 gates** on September 8, 2026,
 using the pinned **Lean/Mathlib 4.32.2** environment. No gates failed or were blocked.
@@ -29,6 +29,20 @@ source snapshot supplies the successful evidence here.
 | Fixed positive prime-mass/budget gap | **Newly passed in v42** |
 | Normalized prime mass and signed budget size bounds | **Newly passed in v42** |
 | Amplified-error bounds and final fixed-positive-coefficient endpoint | Not yet proved |
+
+## New v44 source: amplified errors (acceptance pending)
+
+The latest v43 confirmation passed the same 21 accepted gates, with all 47
+mathematical modules and 22 audits unchanged. It also confirmed the output-label
+correction. No new endpoint coefficient was proved by that rerun.
+
+The separate v44 branch adds five error-control modules and five audits: principal
+amplification, the growing-numerator factorial tail, elementary growth scales,
+the amplified arithmetic remainder and exceptional window, and an all-sign
+candidate-count reduction. Its 25 new theorem targets and 31 expanded checks
+are pending acceptance; the full suite now has 26 gates. The final absorption
+into `EndpointBound c` remains outside this overlay. See
+[the amplified-error branch](amplified-errors-branch.md).
 
 ## The accepted parameter result
 
@@ -91,8 +105,8 @@ Keep t=1/(1000 log(log X)) and the other current parameters. The final coefficie
 need not be 1/1000; derive the historical `EndpointClaim` only when essentially
 free. No replacement rigid coefficient target is imposed.
 
-The next mathematical changeset is [every amplified error term](next-amplified-errors.md),
-followed by final assembly and the separate negative-budget case. Do not reopen
+The current new mathematical changeset implements [every amplified error term](amplified-errors-branch.md)
+and the separate negative-budget case; final same-scale absorption follows its acceptance. Do not reopen
 the accepted finite, PNT+, Mertens, factorial, debit or parameter proofs.
 
 ## PR boundary
@@ -122,3 +136,13 @@ Acceptance records the returned build, expanded-type and transitive-axiom result
 Hash comparison establishes file consistency, not source authenticity, independent
 proof replay or novelty. No final endpoint, finiteness result or resolution of
 Erdős #647 is claimed.
+
+
+### v44 result / v45 repair
+
+The latest full run `erdos647_repo_v44_results_20260908T123705Z_9d028f71` passed
+21/26 gates. Two new proof modules built, but their exact-type audit commands
+failed for unused hypothesis names; three downstream gates were blocked. The
+accepted baseline remains 195 declarations. v45 changes four audit files only
+among the Lean sources and preserves all 52 mathematical modules. The
+amplified-error PR is not yet at its all-gates acceptance checkpoint.
