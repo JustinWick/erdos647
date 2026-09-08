@@ -1,0 +1,58 @@
+{
+  "version": "v39",
+  "base": "v38",
+  "changes": {
+    "AGENTS.md": {
+      "before_sha256": "bbf203728d76a75cc09e067821048f6b64f00f2e012642a6ab1b4d9600c474f1",
+      "after_sha256": "7ef03c98134909f2c2441d48601a1b021419e8412a6e7f38daae2b5b1e9af8e0"
+    },
+    "docs/changes/v39.md": {
+      "before_sha256": null,
+      "after_sha256": "0f1f393bbb4abcd7dfb75c151f08ed1951056028e232674389dda35d3bc43c85"
+    },
+    "docs/endpoint-coefficient-status.json": {
+      "before_sha256": "56fef4cbbe5f1eab73b9a12b808b8db06ff3b6297aeaaebedaa525d64b427bbd",
+      "after_sha256": "e50e1e6cdcf25659d77b65fa5f54bc807a2b87a15b11a1bd88586964b0888e29"
+    },
+    "docs/endpoint-parameter-branch.md": {
+      "before_sha256": "751e560941d46c3002f11a8e288c34a1734538fb59aa10b11349b9864d94168a",
+      "after_sha256": "d62754534c2bf29ce68d3d584a596248a4c7de2836aea38eb3db592715ded129"
+    },
+    "docs/proof-status.md": {
+      "before_sha256": "bc6730165d3c72dc7b3cdfa6908fca2706031a794ca77da6a2c9349e468bb38b",
+      "after_sha256": "d9e4b550e7f17126bdaaa6faa8dcd36cc04547141a72887d19b8381eea4c2704"
+    },
+    "docs/pull-requests/endpoint-parameters.md": {
+      "before_sha256": "9fa1523fbcbc94cfc53e49bf5330aab75b2390909e2386ad4e0a91667d02751b",
+      "after_sha256": "a5c95563f2cab0870190f25a50f7e982ecd24be3ec2d498e17beef4da6eb8b02"
+    },
+    "research/Audit/EndpointWindowParameters.lean": {
+      "before_sha256": "c4cc3b65a508a6ec6688c10945f2640fa14ecb1637a5b93db7153f83648113d5",
+      "after_sha256": "adee11b7e1b628b470ef6f21d577020ffa2e2e53348b593a7001ab6d3c966991"
+    },
+    "research/Erdos647Research/Endpoint/CutoffParameters.lean": {
+      "before_sha256": "5349d78aabc53451e584b5196c9264ced02e4633b4e6213a38af8b7f51aa39cb",
+      "after_sha256": "a4b1b61b9ef42ccde6a47827a928fffb3869546aeb7b76aecc02c34097ad27c0"
+    },
+    "research/Erdos647Research/Endpoint/WindowParameters.lean": {
+      "before_sha256": "4eee028bcd00764af7903974d278f3621ca191fa649e4b333cfbc5ec440ce8a1",
+      "after_sha256": "430d0a002c4ff8b6524c7720e0cd3bec4a70064861d571fffa2be834ee11a410"
+    },
+    "scripts/check.py": {
+      "before_sha256": "0412114b7c20b7f7832f62f25b8173128d90450ca76b19a171640c7b3a1dbd51",
+      "after_sha256": "cdea2559e590c7166ec40de99ca9af17b196390a4a32cafe147a797635889c16"
+    },
+    "scripts/gates.json": {
+      "before_sha256": "c5520f83fa232c573c0aad46c5e12769f7ac0bb180e281f28bd672d321d94142",
+      "after_sha256": "0f229cabfb3cb6a0ad1638a559e9ebac2e9af9ea37fbd590709adc64d8600df2"
+    },
+    "tests/test_endpoint_parameters_v38.py": {
+      "before_sha256": "91c36bdb7ed715b5dffda9208c2ef6c412de003b50e244ac17d5ded801831e0f",
+      "after_sha256": "2a3d03fe7ed9021f7c9c2b96c96994f7b7e71205d6681812d3842fac24cd1fd6"
+    },
+    "tests/test_endpoint_power_adapter.py": {
+      "before_sha256": null,
+      "after_sha256": "1d1c5bb8e3dda76b41c962b505c34bd44aa8eeeb28996909d1a0695068c4c821"
+    }
+  }
+}

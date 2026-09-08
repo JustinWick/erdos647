@@ -1,0 +1,12 @@
+{
+  "test_count": 178,
+  "exit_code": 0,
+  "applied_zip_members": 18,
+  "unchanged_files_outside_overlay": 275,
+  "contents_and_nanosecond_mtimes_preserved": true,
+  "math_modules_preserved": 44,
+  "audit_files_preserved": 20,
+  "tool_cache_prior_result_sentinels": 4,
+  "ci_unchanged": true,
+  "repeat_application_content_idempotent": true
+}

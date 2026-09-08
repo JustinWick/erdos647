@@ -1,0 +1,23 @@
+[
+  {
+    "module": "Erdos647Research.Endpoint.TruncationParameters",
+    "expected": "<REPO>/research/.lake/build/lib/lean/Erdos647Research/Endpoint/TruncationParameters.olean",
+    "resolved": "<REPO>/research/.lake/build/lib/lean/Erdos647Research/Endpoint/TruncationParameters.olean",
+    "correct_owner": true,
+    "object_exists": true
+  },
+  {
+    "module": "Erdos647Research.Endpoint.WindowParameters",
+    "expected": "<REPO>/research/.lake/build/lib/lean/Erdos647Research/Endpoint/WindowParameters.olean",
+    "resolved": "<REPO>/research/.lake/build/lib/lean/Erdos647Research/Endpoint/WindowParameters.olean",
+    "correct_owner": true,
+    "object_exists": true
+  },
+  {
+    "module": "Erdos647Sieve.Specification",
+    "expected": "<REPO>/.lake/build/lib/lean/Erdos647Sieve/Specification.olean",
+    "resolved": "<REPO>/.lake/build/lib/lean/Erdos647Sieve/Specification.olean",
+    "correct_owner": true,
+    "object_exists": true
+  }
+]

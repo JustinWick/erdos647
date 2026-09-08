@@ -1,107 +1,121 @@
 # Proof status
 
-## Current accepted repository checkpoint: v36
+## Current accepted repository checkpoint: v40
 
-The local run `erdos647_repo_v36_results_20260908T073909Z_c7bbf1b5`, completed on
-September 8, 2026, passed **all 14 registered gates** under **Lean/Mathlib 4.32.2**.
-All **37 recorded commands** exited successfully. The 29 build/audit logs contain
-**zero warning or error diagnostics**; the tooling run passed **144 tests**.
+The user-returned run `erdos647_repo_v40_results_20260908T091111Z_0850cec9`,
+completed on September 8, 2026, passed **all 19 registered gates** on the pinned
+**Lean/Mathlib 4.32.2** environment. There were no failed or blocked gates.
 
-The exact-type and transitive-axiom checks cover **140 distinct declarations**
-(142 report occurrences where a declaration is audited in more than one gate).
-Every reported axiom set is contained in:
+All **47 recorded commands** exited successfully. The 39 build/audit logs contain
+no warning or error diagnostics. The tooling run passed **178 tests**, and the
+source hashes did not change during the run. Both packages reused their caches.
+
+The checked-in audits contain **127 exact-type/definition examples** across
+**20 audit files**. The raw axiom reports cover **183 distinct declarations**
+(185 occurrences across overlapping gates), each using only:
 
 ```text
 propext, Classical.choice, Quot.sound
 ```
 
-[Accepted evidence](../provenance/accepted/v36/README.md) includes the original
-results archive, raw logs, source hashes, and a read-only consistency review.
-The report records no source changes during the run and cache reuse in both packages.
+[Accepted v40 evidence](../provenance/accepted/v40/README.md) preserves the original
+results ZIP, raw logs, audit and source hashes, and the source/log consistency
+review. It supersedes the pending parameter statuses; it does not retroactively
+turn earlier failed runs into successes.
 
-| Layer | Current recorded result |
+| Layer | Recorded result |
 |---|---|
-| Mathlib-only finite core, public facades and both examples | Passed |
-| Complete `finiteMoment`, `budgetDebit`, and `finiteCounting` | Passed |
-| Reciprocal-log calculus and exact Abel-summation identity | Passed |
+| Mathlib-only finite library, public facades and both examples | Passed |
+| Complete finite moment, corrected debit, and finite counting | Passed |
 | Restricted PNT+ inputs and improper-integrability adapters | Passed |
-| Replacement Mertens convergence and selected-prime cutoff cancellation | Passed |
-| Factorial bounds, shifted residual limit, and exact `logBudget` connection | Passed |
-| All three endpoint logarithm/constant inequalities | Passed |
-| Prime-reciprocal lower bound and fixed-constant small-prime debit | Passed |
-| `correctedBudget_upper_eventually` | **Newly passed in v36** |
-| Exact growing-parameter limits and eventual prime-mass/budget gap | Not yet proved |
-| Amplified-error absorption and final `EndpointClaim` | Not yet proved |
+| Replacement Mertens and selected-prime cutoff cancellation | Passed |
+| Factorial, logarithm and fixed-constant small-prime estimates | Passed |
+| Eventual corrected-budget upper estimate | Passed |
+| Fixed-coefficient endpoint statement interface | Passed; not an endpoint proof |
+| Exact window and truncation asymptotics | Passed |
+| Cutoff growth, ordering and parameter admissibility | **Newly passed in v40** |
+| Actual selected-prime error and prime-mass expansion | **Newly passed in v40** |
+| Eventual positive gap between prime mass and corrected budget | Not yet proved as a project declaration |
+| Amplified-error bounds and final positive-coefficient endpoint | Not yet proved |
 
-## The new mathematical milestone
+## The accepted parameter result
 
-For every real `ε > 0`, eventually over natural `H`, the accepted declaration
-`Erdos647Sieve.Elementary.correctedBudget_upper_eventually` proves
-
+For the protected definitions, put
 \[
-\frac{B_H}{H}\le
-\frac{\log H}{\log2}-\log\log H+2-\frac1{\log2}+\varepsilon,
-\qquad B_H=\operatorname{correctedBudget}(H).
+Q=\log X,\quad L=\log\log X,\quad
+ a=\frac{\log2}{1+\log2},\quad H=\lfloor Q^a\rfloor,
+\]
+\[
+J=2\lceil H/100\rceil,\qquad y=X^{1/(4J)},\qquad
+ t=1/(1000L),\qquad\lambda=\operatorname{primeMass}(H,y).
 \]
 
-The budget is the exact signed integer budget, cast to the reals. There is no
-assumed debit, factorial asymptotic, or budget estimate among this declaration's
-premises. The explicit `ε > 0` and eventual quantifier remain part of its statement.
+The parameter branch now has **43 accepted declarations** in five modules,
+including the fixed-coefficient statement adapters. Fifteen cutoff/prime-mass
+results passed for the first time in v40. Its main analytic conclusion is
+\[
+\boxed{\frac\lambda H-
+ \bigl((1-a)L-\log\log H+\log(25/2)\bigr)\longrightarrow0.}
+\]
 
-Its checked type and axioms are in the
-[raw corrected-budget audit](../provenance/accepted/v36/logs/037_corrected_budget_estimate_audit_0.log).
-It completes the elementary-budget estimate, not the final endpoint deduction.
+The exact declaration is
+`Erdos647Sieve.Endpoint.endpoint_primeMass_expansion_tendsto_zero`.
+It has no free cutoff function, assumed growth condition, budget-gap premise,
+or unproved prime-distribution estimate. The accepted result
+`endpoint_parameters_admissible` supplies the actual finite-moment numerical
+hypotheses eventually. It does not include nonnegativity of the signed budget;
+the finite counting argument already has a separate negative-budget case.
 
-## PNT+ scope
+The \(\log(25/2)\) constant has been retained, not replaced by an unspecified
+bounded error. The endpoint exponent and scale are unchanged.
 
-The retained PNT+ source import subtree rooted at `MediumPNT` contains **14
-modules** in the recorded scan and has no detected admissions or forbidden
-shortcuts. `MediumPNT` and all seven extracted adapters also passed their separate
-axiom audits. Only the retained PNT+ subtree is covered by that lexical scan;
-Mathlib and tactic/compiler implementation source are outside its scope.
+## Coefficient policy and remaining mathematics
 
-This does not prove or import the unfinished upstream `ZetaSummary` catalogue.
-The restricted compatibility layer leaves the upstream checkout untouched. See
-[PNT+ trust boundary](pntplus-trust-boundary.md).
+The final goal is `EndpointBound c` for an **explicit fixed** real `c > 0`, and
+then `PositiveEndpointClaim`. The coefficient is chosen before the onset and
+before `X`. It is not allowed to vary with `X`.
+
+**No endpoint coefficient is proved by v40.** The internal parameter
+`t=1/(1000 log(log X))` is unchanged, but the final coefficient need not be
+`1/1000`. The historical `EndpointClaim` is an optional corollary when available
+without substantial extra effort. No alternative rigid numerical target is set.
+
+The next mathematical changeset is the fixed positive mass-budget gap and
+supporting size bounds. Every amplified error must then be bounded before final
+assembly. See [the next implementation assignment](next-prime-mass-gap.md).
 
 ## PR boundary
 
-**The accumulated core/research fixes are ready for a normal reviewable PR.**
-The previously outstanding local acceptance criterion—14/14 with no warnings and
-acceptable exact-type/axiom reports—is satisfied. Parameter asymptotics and the
-endpoint are separate future mathematical work; they should not keep this fixes
-PR open or expand its scope.
+**The parameter-asymptotics changeset is ready for a normal PR on the supplied
+source snapshot.** Its local acceptance criterion is satisfied: 19/19, warning-free,
+with exact-type checks, permitted axioms and unchanged sources during the run.
+The earlier v36 core/research fixes remain a separate accepted changeset.
 
-v37 updates documentation and preserves the v36 evidence. It changes **no Lean
-source, audit source, runner, test, Lake configuration, lockfile, toolchain or CI
-workflow**. The checking implementation and generated-results version label stay
-at v36 deliberately, so the passing code is not churned just for a documentation
-version number. Future runner invocations continue to produce unique result names.
+[The parameter PR description](pull-requests/endpoint-parameters.md) records this
+result. Review of an actual GitHub head/base diff, repository CI policy and external
+mathematical review are separate; no remote PR or CI result was inspected here.
 
-The submitted archive identifies a source snapshot, not a remotely inspected PR
-head/base pair. This readiness judgment is based on that snapshot; it is not a
-claim that GitHub CI or maintainer review has already passed. Existing manual CI
-settings are preserved.
+The v41 overlay updates documentation and evidence only. It changes no mathematical
+source, audit, runner, test, Lake configuration, lockfile, toolchain or CI workflow.
+The runner intentionally retains its v40 results label; changing a documentation
+version does not justify modifying the accepted checking code.
 
-## Historical record
+## PNT+ scope and historical evidence
 
-Prior source and audit records remain under `provenance/accepted/`,
-`provenance/pending/`, and `provenance/rejected/`. Earlier failures and rejected
-experiments are not deleted or retroactively marked successful. The previous
-version of this status page is preserved as
-[the pre-v37 status record](../provenance/packaging/v37/prior-docs/docs/proof-status.md).
-The original source map documents origin; it is not a requirement that future
-maintained proofs remain byte-identical forever.
+The recorded source scan covers the **14-module retained PNT+ subtree** rooted at
+`MediumPNT`. It reports no admissions or forbidden proof shortcuts in that subtree;
+`MediumPNT` and all seven extracted routines also passed their separate axiom audits.
+The unfinished `ZetaSummary` catalogue is not imported. The scan is not a statement
+that the full upstream repository or all Mathlib source is complete.
 
-## Acceptance standard and limits
+The [v36 checkpoint](../provenance/accepted/v36/README.md), earlier toolchain records,
+rejected probe and previous failures remain preserved outside the current build
+path. See [PNT+ trust boundary](pntplus-trust-boundary.md).
 
-A proof gate builds its relevant modules, checks the checked-in type examples,
-and reads fresh `#print axioms` output. Missing output, duplicate reports within
-an audit, extra axioms, warnings, failed commands and blocked prerequisites cannot
-produce an accepted gate. The core audits include the named claim types, expanded
-statements and the candidate predicate; signed subtraction and unrestricted integer
-interval translation remain protected.
+## Acceptance standard
 
-Compilation/type/axiom acceptance and the source/log consistency review do not
-establish mathematical novelty, independent-kernel replay, an explicit asymptotic
-onset, or a solution to Erdős #647. The final endpoint theorem remains absent.
+The claimed acceptance is based on the returned build, exact-type and transitive-
+axiom logs. Hash matching establishes source/log consistency, not independent
+proof replay, source authenticity, novelty, or an explicit asymptotic onset.
+No final positive-coefficient endpoint, finiteness result or resolution of #647
+is claimed. The stable public library does not depend on the endpoint modules.

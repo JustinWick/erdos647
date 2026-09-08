@@ -23,15 +23,31 @@ The seven elementary modules are `EndpointLogBounds`, `FactorialBounds`,
 `FactorialEstimate`, `LogBudgetFactorial`, `PrimeReciprocalLower`,
 `SmallPrimeDebitEstimate`, and `CorrectedBudgetEstimate`.
 
-All **13 registered research gates** passed alongside the core in the v36
+All **13 research gates registered at the v36 snapshot** passed alongside the core in the v36
 repository-wide run. This includes the prime-reciprocal lower bound, the exact
 small-prime debit estimate, and `correctedBudget_upper_eventually`. The
 [accepted record](../provenance/accepted/v36/README.md) includes the raw audits.
 
-The final parameter asymptotics, mass-versus-budget gap, and amplified-error
-absorption remain to be proved. No endpoint `Main` proof has been added merely
-to make the module tree appear complete. Those obligations belong in a separate
-mathematical changeset, not in the completed build/dependency fixes PR.
+The `Endpoint/` directory contains `Statement`, `WindowParameters`,
+`TruncationParameters`, `CutoffParameters`, and `PrimeMassParameters`. All five
+parameter-branch gates and their **43 declarations** passed in the v40 run,
+alongside all established gates: **19/19 total**. The exact constant-sensitive
+prime-mass expansion completes the first parameter changeset. See the
+[accepted v40 record](../provenance/accepted/v40/README.md).
+
+The mass-versus-budget gap and amplified-error absorption remain subsequent
+targets. No endpoint `Main` proof has been added merely to make the module tree
+appear complete. The next changeset is specified in
+[the positive-gap assignment](../docs/next-prime-mass-gap.md), separate from both
+the completed build/dependency fixes and the accepted parameter layer.
+
+## Endpoint coefficient
+
+The branch seeks `EndpointBound c` for an explicit fixed c>0, preserving the critical
+exponent and (log X)^a/log(log X) scale. The arbitrary historical 1/1000 target is
+not mandatory. The coefficient is outside both the onset and X quantifiers; it
+cannot vary with X. No endpoint coefficient is yet accepted, and no replacement working
+coefficient is fixed. See the branch charter and coefficient status record.
 
 ## Checking
 
@@ -47,3 +63,10 @@ is not ignored; the core's independent build remains available at the repository
 The manuscript under `docs/MANUSCRIPT.md` is preserved as a historical proposed
 argument. Its original verification comments describe its creation time. Current
 status is recorded centrally in [proof status](../docs/proof-status.md).
+
+## Mathematical branch boundary
+
+[The parameter branch charter](../docs/endpoint-parameter-branch.md) gives the exact
+parameter formulas, new acceptance targets, reused library interfaces, and the
+remaining route to the final endpoint. The stable finite facade does not import
+any of the new experimental modules.

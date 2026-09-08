@@ -1,0 +1,476 @@
+--- a/AGENTS.md
++++ b/AGENTS.md
+@@ -17,6 +17,12 @@
+   EndpointClaim at c=1/1000 is retained unchanged but is not mandatory. Do not
+   optimize arbitrary constants at the expense of the proof. Record the actual
+   coefficient and final theorem audit; a candidate coefficient is not proved.
++- Keep the current parameter definitions, including t=1/(1000 log(log X)), unless
++  they obstruct the mathematics. Prioritize exact asymptotics, a fixed positive
++  gap, every amplified error, then final assembly with a comfortable fixed c>0.
++  Prove the legacy EndpointClaim as a corollary only when the available coefficient
++  reaches 1/1000 without substantial extra work. Do not impose a replacement rigid
++  coefficient such as 1/2000. Reuse accepted finite/PNT/Mertens/factorial/debit proofs.
+ - Keep the new parameter/endpoint work in its own mathematical changeset, separate
+   from the accepted v36/v37 fixes. Do not add new proof code to that closed scope.
+ - Search existing library lemmas before reimplementing standard analysis.
+--- /dev/null
++++ b/docs/changes/v39.md
+@@ -0,0 +1,60 @@
++# v39 — parameter power/log repair and endpoint-strategy record
++
++## Current run evidence
++
++The v38 results passed 15/19 gates: the accepted 14-gate baseline and the new
++fixed-coefficient statement interface. One window-parameter build failed; three
++parameter descendants were blocked. The 147 distinct passing theorem audits use
++only propext, Classical.choice and Quot.sound. The seven newly accepted interface
++results are not a candidate-count bound at any positive coefficient.
++
++## Source changes
++
++Only the pending `Endpoint/WindowParameters.lean` and `Endpoint/CutoffParameters.lean`
++mathematical modules change. No existing theorem statement, hypothesis, parameter
++definition or numerical constant changes.
++
++The reported rewrite expected power notation while the target used `Real.rpow`.
++Mathlib already supplies `Real.rpow_eq_pow`, whose proof is reflexivity. The shared
++`log_div_rpow_eq` adapter normalizes that representation and proves
++
++    log(u / Real.rpow v r) = log u - r * log v,  u != 0, v > 0.
++
++The window logarithmic-difference proof and corresponding cutoff proof now use
++that single adapter. Two other pending cutoff sites explicitly normalize real
++power notation before the existing logarithm and power-addition rules. These
++cutoff changes are proactive; the uploaded run did not reach those declarations.
++
++The adapter gets an expanded exact-type example and transitive axiom target.
++All existing audit targets and examples are retained. There are still 19 gates;
++the branch theorem inventory grows from 42 to 43. The runner changes only its
++unique results prefix to `erdos647_repo_v39_results_`.
++
++## Endpoint strategy
++
++Preserve the exponent a=log 2/(1+log 2), the scale (log X)^a/log(log X), all current
++internal parameters and t=1/(1000 log(log X)). The output coefficient is any
++explicit fixed c>0 justified by the complete argument. No replacement constant
++is made mandatory; the provisional 1/2000 candidate is removed from the status
++record. The statement interface is accepted but `proved_coefficient` remains null.
++
++Work order:
++
++1. Exact parameter asymptotics.
++2. An eventual fixed positive gap lambda-B_H >= delta H.
++3. Every amplified error term, including the factorial tail and CRT remainder.
++4. Final assembly with a comfortable explicit fixed c>0.
++
++Derive the old EndpointClaim only if the resulting proved coefficient is at least
++1/1000 at essentially no extra effort. Do not optimize an arbitrary coefficient
++or weaken the exponent/scale. The accepted finite, PNT, Mertens, factorial and
++debit proofs are not reopened.
++
++## Preservation and PR scope
++
++All 41 currently accepted mathematical modules are unchanged (the accepted
++40-module baseline plus the statement interface), as are the two other pending
++parameter modules. Lean/Mathlib 4.32.2, lockfiles, upstream source, warning policy,
++axiom allowlist, CI files, core API and existing build/cache directories stay
++unchanged. The old fixes PR remains complete; the new parameter PR still awaits
++its four limit gates. No remote write or PR operation is included.
+--- a/docs/endpoint-coefficient-status.json
++++ b/docs/endpoint-coefficient-status.json
+@@ -1,5 +1,5 @@
+ {
+-  "version": "v38",
++  "version": "v39",
+   "updated": "2026-09-08",
+   "scope": "endpoint research, not the accepted finite core",
+   "goal_declaration": "Erdos647Sieve.Endpoint.PositiveEndpointClaim",
+@@ -13,13 +13,28 @@
+     "denominator": 1000,
+     "required": false
+   },
+-  "working_candidate": {
+-    "numerator": 1,
+-    "denominator": 2000,
+-    "status": "not an endpoint theorem; may change without reducing exponent or scale"
+-  },
++  "working_candidate": null,
+   "proved_coefficient": null,
+   "proved_endpoint_theorem": null,
+   "endpoint_acceptance_evidence": null,
+-  "optimization_policy": "Retain stronger coefficients when essentially free; do not optimize arbitrary constants. No fixed positive endpoint bound is established by this overlay."
++  "optimization_policy": "Preserve the critical exponent and scale; select an explicit fixed c > 0 from a proved comfortable decay margin. No coefficient optimization project and no new rigid target.",
++  "parameter_policy": {
++    "keep_existing_definitions": true,
++    "momentT": "1 / (1000 * log(log X))",
++    "change_only_if_mathematically_obstructive": true
++  },
++  "proof_priorities": [
++    "exact parameter asymptotics",
++    "eventual positive fixed gap lambda - B_H >= delta * H",
++    "every amplified error term",
++    "fixed positive explicit coefficient endpoint assembly"
++  ],
++  "legacy_corollary_policy": "Derive the historical EndpointClaim if the final proved coefficient is at least 1/1000 at essentially no extra effort; otherwise record the coefficient actually proved.",
++  "statement_interface": {
++    "status": "accepted",
++    "run_id": "erdos647_repo_v38_results_20260908T083224Z_ed5d26ea",
++    "gate": "endpoint_statement",
++    "declarations": 7,
++    "is_endpoint_bound_proof": false
++  }
+ }
+--- a/docs/endpoint-parameter-branch.md
++++ b/docs/endpoint-parameter-branch.md
+@@ -13,11 +13,15 @@
+ **Why this is necessary:** the finite theorem permits any admissible parameters;
+ the Mertens bridge requires two cutoffs to diverge and be ordered. Neither result
+ by itself proves those properties for the particular parameters in `Specification`.
+-The new source discharges that missing connection, including the constant term.
++The new source targets that missing connection, including the constant term.
+ 
+-The accepted baseline remains the recorded 14/14 v36 result. The five new gates
+-are pending; code presence and packaging tests do not establish their acceptance.
+-The 40 previously accepted mathematical modules and their audit files are unchanged.
++The v38 returned run passed all 14 established gates and the new statement
++interface: 15/19 gates passed, with one window-parameter rewrite failure and three
++blocked descendants. Its 147 distinct audited declarations use only the permitted
++axioms. The window, truncation, cutoff and prime-mass limits remain pending.
++The v39 repair changes only the two pending window/cutoff modules, adds one shared
++power/log adapter and its exact-type/axiom target, and preserves every accepted
++mathematical module. No statement-interface theorem asserts an endpoint bound.
+ 
+ ## Endpoint coefficient policy (user revision, 2026-09-08)
+ 
+@@ -41,15 +45,17 @@
+ 
+ The historical `EndpointClaim` remains unchanged and is identified with
+ `EndpointBound (1/1000)`. Attaining that specialization is not an acceptance
+-requirement for this branch. A convenient working witness is **1/2000**, subject
+-to the later proof; it is not a reported proved coefficient. Carry an available
+-positive decay margin symbolically, and retain stronger smaller-than-margin
++requirement for this branch. There is **no replacement mandatory coefficient**.
++Carry a proved positive decay margin symbolically, then choose and explicitly
++record a comfortable fixed rational coefficient. Retain stronger smaller-than-margin
+ coefficients when the general absorption lemma gives them at essentially no cost.
+-Do not spend a separate optimization effort chasing 1/1000 or another number.
++If the final coefficient is at least 1/1000 without substantial additional effort,
++derive the historical EndpointClaim as a corollary. Otherwise report the actual
++proved coefficient and move on. Do not optimize a numerical constant separately.
+ 
+ **Currently proved endpoint coefficient: none.** The machine-readable
+-[coefficient status](endpoint-coefficient-status.json) distinguishes the working
+-choice from an actual proved result. A final acceptance must record the explicit
++[coefficient status](endpoint-coefficient-status.json) leaves both the working
++choice and proved coefficient unset until the error estimates justify a choice. A final acceptance must record the explicit
+ witness, theorem name, source revision and exact-type/axiom evidence together.
+ 
+ ## Exact internal parameters — no replacement definitions
+@@ -103,7 +109,8 @@
+ to logarithmic differences to retain log(25/2); replacing them by a generic O(1)
+ error would be insufficient for the next constant-gap theorem.
+ 
+-Every one of the 42 new theorem declarations has a checked-in type example and transitive
++Every one of the 43 branch theorem declarations (42 from v38 plus the shared v39
++power/log adapter) has a checked-in type example and transitive
+ axiom report target. Expanded definition checks also pin the coefficient quantifier
+ order, exponent and scale. Separate gates are `endpoint_statement`, `endpoint_window_parameters`,
+ `endpoint_truncation_parameters`, `endpoint_cutoff_parameters`, and
+@@ -122,11 +129,15 @@
+ \]
+ 
+ The strict numerical inequality is already accepted. Its application to the
+-actual signed budget is **not** supplied by v38; the next quantitative target is
++actual signed budget is **not yet proved**. The next quantitative target is a
++fixed positive gap. The already-established constant margin can support
+ 
+ \[
+ \lambda-B_H\ge\tfrac32 H\quad\text{eventually}.
+ \]
++
++The value 3/2 is a sufficient available margin, not an optimization target;
++a smaller comfortable fixed delta > 0 is acceptable if it simplifies the assembly.
+ 
+ Further obligations remain B_H <= HL, lambda <= HL, the amplified principal
+ and factorial-tail estimates, the arithmetic-error comparison, and absorption of
+@@ -152,7 +163,7 @@
+ admission and warning checks apply. No allowed axiom, warning suppression, setup
+ policy, dependency pin, cache path, Git ignore rule, or CI workflow is changed.
+ 
+-Results use the unique `erdos647_repo_v38_results_` prefix. The prior fixes PR is
++Results use the unique `erdos647_repo_v39_results_` prefix. The prior fixes PR is
+ still bounded by its v36 accepted source snapshot; its description is not edited
+ by this new mathematical work. No remote branch, PR, or publication is created by
+ this source overlay.
+@@ -164,6 +175,8 @@
+ 
+ - `Analysis/SpecificLimits/Basic.lean`: `tendsto_nat_floor_atTop`,
+   `tendsto_nat_floor_div_atTop`, and `Filter.Tendsto.num`.
++- `Analysis/SpecialFunctions/Pow/Real.lean`: `Real.rpow_eq_pow`, the existing
++  normalization identity used in the v39 repair.
+ - `Algebra/Order/Floor/Semiring.lean`: `Nat.le_ceil` and `Nat.ceil_le`.
+ - `Analysis/SpecialFunctions/Pow/Asymptotics.lean`: `tendsto_rpow_atTop` and
+   `isLittleO_log_rpow_atTop`.
+--- a/docs/proof-status.md
++++ b/docs/proof-status.md
+@@ -33,25 +33,33 @@
+ | Exact growing-parameter limits and eventual prime-mass/budget gap | Not yet proved |
+ | Amplified-error absorption and fixed-positive-coefficient endpoint | Not yet proved |
+ 
+-## New parameter branch (v38): acceptance pending
++## Parameter branch: v38 results and v39 repair
+ 
+-Five new research modules now contain proof-source implementations for the
+-coefficient-parametrized statement adapters, protected window/truncation/cutoff
+-limits and their exact prime-mass specialization. Their 42 theorem declarations have independent checked-in type/axiom targets. The full
+-suite now contains 19 gates; the five new gates are not covered by the historical
+-v36 result above. No previously accepted mathematical source is changed.
++The returned run `erdos647_repo_v38_results_20260908T083224Z_ed5d26ea` passed
++**15/19 gates**: all 14 established gates plus `endpoint_statement`. The passing
++reports cover **147 distinct declarations** with permitted axioms. Only
++`endpoint_window_parameters` failed; the truncation, cutoff and prime-mass gates
++were blocked, not accepted. The error is a rewrite mismatch between the explicit
++`Real.rpow` function and power notation, not a failure of the asymptotic strategy.
+ 
+-The principal new target is
+-`Erdos647Sieve.Endpoint.endpoint_primeMass_expansion_tendsto_zero`.
+-It keeps the constant `log (25/2)` and supplies the actual growth and ordering
+-hypotheses of the existing analytic interface. The eventual budget gap and
+-weighted-error absorption remain later proof obligations.
++Seven statement-interface results are newly accepted, including fixed-coefficient
++monotonicity and the exact equivalence with the historical 1/1000 specialization.
++**None asserts EndpointBound c for any fixed positive c.** The interface's
++existential quantifier chooses c before the onset and interval length.
+ 
+-The revised endpoint goal is `EndpointBound c` for an **explicit fixed c>0**,
+-with the same exponent and scale. `PositiveEndpointClaim` puts c outside the onset
+-and X quantifiers. The old 1/1000 target is optional. **No endpoint coefficient
+-has yet been proved**; 1/2000 is only a working candidate, not an accepted result.
+-A successful statement-interface gate does not change that status.
++v39 adds a shared power/log adapter to the pending window module, reuses it at the
++window and cutoff logarithmic-difference proofs, and normalizes the same explicit
++power representation at two other pending cutoff proof sites. Existing theorem
++statements, accepted sources and parameter definitions stay unchanged. The suite
++still has 19 gates, now with 43 branch theorem targets. Acceptance of the repaired
++parameter layer remains outstanding.
++
++The proof order is exact parameter asymptotics, a fixed positive prime-mass/budget
++gap, every amplified error term, and final endpoint assembly. Retain the present
++internal parameter t=1/(1000 log(log X)); it does not prescribe the final c.
++**No endpoint coefficient has been proved and no replacement coefficient is fixed.**
++The old EndpointClaim is only an optional corollary if an adequate coefficient is
++available without substantial extra effort. Preserve the exponent and scale.
+ 
+ [Branch scope and next mathematical steps](endpoint-parameter-branch.md).
+ 
+--- a/docs/pull-requests/endpoint-parameters.md
++++ b/docs/pull-requests/endpoint-parameters.md
+@@ -24,12 +24,14 @@
+ - [ ] All 19 registered gates pass on the PR source revision.
+ - [ ] New exact types match the protected parameter definitions.
+ - [ ] The new endpoint definition keeps c>0 fixed outside onset and X quantifiers.
+-- [ ] All 42 new theorem axiom reports use only the existing permitted foundations.
++- [ ] All 43 branch theorem axiom reports use only the existing permitted foundations.
+ - [ ] No warnings, admission-scan failures, blocked gates or mid-run source changes.
+ - [ ] Review verifies the variable-exponent calculation and retained constant.
+ 
+-The new limit declarations have proof-source implementations; the checkboxes are
+-pending, not inferred from packaging tests. The v36 14-gate evidence continues to
++The v38 run accepted the statement-interface gate and all 14 established gates.
++One window rewrite failed and blocked the remaining parameter gates. v39 repairs
++that notation mismatch, adds one audited shared adapter, and covers matching
++cutoff rewrite sites proactively. The full-branch checklist remains pending. The v36 14-gate evidence continues to
+ support the previous source snapshot, not an automatic pass of these additions.
+ 
+ ## Not included
+@@ -37,3 +39,10 @@
+ The eventual lambda-minus-budget gap, normalized upper bounds, weighted-error
+ absorption, an actual positive-coefficient endpoint bound, explicit onset, and a resolution of Erdős #647
+ are not claimed by this PR. See the branch charter for the remaining sequence.
++
++## Coefficient policy
++
++Retain t=1/(1000 log(log X)) and all protected parameter definitions. The final
++coefficient is any explicitly proved fixed c>0 at the same exponent and scale.
++There is no obligation to attain 1/1000 or 1/2000. Derive the historical claim as
++a corollary only if the established coefficient supports it at essentially no cost.
+--- a/research/Audit/EndpointWindowParameters.lean
++++ b/research/Audit/EndpointWindowParameters.lean
+@@ -4,6 +4,12 @@
+ set_option warningAsError true
+ open scoped BigOperators Topology
+ open Filter Erdos647Sieve
++
++example : (∀ u v r : ℝ, u ≠ 0 → 0 < v →
++    Real.log (u / Real.rpow v r) = Real.log u - r * Real.log v) :=
++  Erdos647Sieve.Endpoint.log_div_rpow_eq
++#check Erdos647Sieve.Endpoint.log_div_rpow_eq
++#print axioms Erdos647Sieve.Endpoint.log_div_rpow_eq
+ 
+ example : (0 < endpointExponent) := Erdos647Sieve.Endpoint.endpointExponent_pos
+ #check Erdos647Sieve.Endpoint.endpointExponent_pos
+--- a/research/Erdos647Research/Endpoint/CutoffParameters.lean
++++ b/research/Erdos647Research/Endpoint/CutoffParameters.lean
+@@ -21,7 +21,7 @@
+ theorem log_primeCutoff (X : ℕ) (hX : 0 < X) :
+     Real.log (primeCutoff X) = Real.log (X : ℝ) / (4 * (truncationOrder X : ℝ)) := by
+   unfold primeCutoff
+-  rw [Real.log_rpow (by exact_mod_cast hX : 0 < (X : ℝ))]
++  rw [Real.rpow_eq_pow, Real.log_rpow (by exact_mod_cast hX : 0 < (X : ℝ))]
+   ring
+ 
+ /-- The complementary logarithmic-power scale tends to infinity. -/
+@@ -50,6 +50,7 @@
+   have hp : Real.log (X : ℝ) =
+       Real.rpow (Real.log (X : ℝ)) endpointExponent *
+         Real.rpow (Real.log (X : ℝ)) (1 - endpointExponent) := by
++    simp only [Real.rpow_eq_pow]
+     rw [← Real.rpow_add hQ]
+     simp
+   symm
+@@ -93,7 +94,8 @@
+     log_primeCutoff_tendsto_atTop.eventually (eventually_gt_atTop (0 : ℝ))] with X hX hy
+   have hQ : 0 < Real.log (X : ℝ) :=
+     Real.log_pos (by exact_mod_cast (show 1 < X by omega))
+-  rw [Real.log_div hy.ne' (Real.rpow_pos_of_pos hQ _).ne', Real.log_rpow hQ]
++  exact log_div_rpow_eq (Real.log (primeCutoff X)) (Real.log (X : ℝ))
++    (1 - endpointExponent) hy.ne' hQ
+ 
+ /-- A logarithm is negligible relative to the complementary positive power. -/
+ theorem log_windowLength_div_complementaryScale_tendsto_zero :
+--- a/research/Erdos647Research/Endpoint/WindowParameters.lean
++++ b/research/Erdos647Research/Endpoint/WindowParameters.lean
+@@ -10,6 +10,13 @@
+ 
+ noncomputable section
+ namespace Erdos647Sieve.Endpoint
++
++/-- Normalize the explicit real-power function before applying logarithm rules.
++This shared adapter retains the exact exponent, including negative exponents. -/
++theorem log_div_rpow_eq (u v r : ℝ) (hu : u ≠ 0) (hv : 0 < v) :
++    Real.log (u / Real.rpow v r) = Real.log u - r * Real.log v := by
++  rw [Real.rpow_eq_pow, Real.log_div hu (Real.rpow_pos_of_pos hv r).ne',
++    Real.log_rpow hv]
+ 
+ /-- The critical exponent is strictly positive. -/
+ theorem endpointExponent_pos : 0 < endpointExponent := by
+@@ -87,8 +94,8 @@
+   have hQ : 0 < Real.log (X : ℝ) :=
+     Real.log_pos (by exact_mod_cast (show 1 < X by omega))
+   have hHR : 0 < (windowLength X : ℝ) := by exact_mod_cast (show 0 < windowLength X by omega)
+-  rw [Real.log_div hHR.ne' (Real.rpow_pos_of_pos hQ endpointExponent).ne',
+-    Real.log_rpow hQ]
++  exact log_div_rpow_eq (windowLength X : ℝ) (Real.log (X : ℝ))
++    endpointExponent hHR.ne' hQ
+ 
+ /-- Normalized logarithmic window growth. -/
+ theorem log_windowLength_div_logLog_tendsto :
+--- a/scripts/check.py
++++ b/scripts/check.py
+@@ -356,7 +356,7 @@
+     def __init__(self, root: Path, args: argparse.Namespace):
+         self.root=root; self.args=args; self.env=clean_env(); self.commands=0
+         if args.jobs: self.env['LEAN_NUM_THREADS']=str(args.jobs)
+-        self.id='erdos647_repo_v38_results_'+datetime.now(timezone.utc).strftime('%Y%m%dT%H%M%SZ')+'_'+uuid.uuid4().hex[:8]
++        self.id='erdos647_repo_v39_results_'+datetime.now(timezone.utc).strftime('%Y%m%dT%H%M%SZ')+'_'+uuid.uuid4().hex[:8]
+         self.dest=root/'results'/self.id
+         if (root/'results').is_symlink(): raise ValueError('Refusing symlinked results directory')
+         self.dest.mkdir(parents=True,exist_ok=False)
+--- a/scripts/gates.json
++++ b/scripts/gates.json
+@@ -357,6 +357,7 @@
+     ],
+     "audits": {
+       "Audit/EndpointWindowParameters.lean": [
++        "Erdos647Sieve.Endpoint.log_div_rpow_eq",
+         "Erdos647Sieve.Endpoint.endpointExponent_pos",
+         "Erdos647Sieve.Endpoint.endpointExponent_lt_one",
+         "Erdos647Sieve.Endpoint.endpointExponent_cancellation",
+--- a/tests/test_endpoint_parameters_v38.py
++++ b/tests/test_endpoint_parameters_v38.py
+@@ -52,7 +52,7 @@
+                 if module=='Statement':self.assertEqual(len(re.findall(r'^example \(c : ℝ\)',text,re.M)),1)
+                 self.assertIn('set_option warningAsError true',text)
+                 total += len(names)
+-        self.assertEqual(total,42)
++        self.assertEqual(total,43)
+ 
+     def test_source_boundaries_include_the_nested_modules(self):
+         check.source_boundary(ROOT)
+--- /dev/null
++++ b/tests/test_endpoint_power_adapter.py
+@@ -0,0 +1,74 @@
++"""Regression checks for the explicit-power adapter and unchanged endpoint policy.
++
++These check source interfaces and audit registration, not the analytic limit proofs.
++"""
++from pathlib import Path
++import json
++import unittest
++
++ROOT = Path(__file__).resolve().parents[1]
++ENDPOINT = ROOT / 'research/Erdos647Research/Endpoint'
++
++
++def declaration_body(module: str, name: str) -> str:
++    text = (ENDPOINT / (module + '.lean')).read_text()
++    return text.split('theorem ' + name, 1)[1].split('\n/--', 1)[0]
++
++
++class ExplicitPowerAdapter(unittest.TestCase):
++    def test_adapter_normalizes_before_applying_log_rules(self):
++        body = declaration_body('WindowParameters', 'log_div_rpow_eq')
++        self.assertIn('Real.log (u / Real.rpow v r) = Real.log u - r * Real.log v', body)
++        self.assertIn('(hu : u ≠ 0) (hv : 0 < v)', body)
++        self.assertLess(body.index('Real.rpow_eq_pow'), body.index('Real.log_div'))
++        self.assertLess(body.index('Real.log_div'), body.index('Real.log_rpow'))
++
++    def test_both_logarithmic_difference_proofs_reuse_adapter(self):
++        for module, theorem in [
++            ('WindowParameters', 'log_windowLength_sub_tendsto_zero'),
++            ('CutoffParameters', 'loglog_primeCutoff_sub_tendsto'),
++        ]:
++            with self.subTest(module=module):
++                body = declaration_body(module, theorem)
++                self.assertIn('exact log_div_rpow_eq ', body)
++                self.assertNotIn('rw [Real.log_div', body)
++
++    def test_direct_cutoff_log_normalizes_explicit_power(self):
++        body = declaration_body('CutoffParameters', 'log_primeCutoff (')
++        self.assertIn('rw [Real.rpow_eq_pow, Real.log_rpow', body)
++
++    def test_complementary_product_normalizes_before_addition_rule(self):
++        body = declaration_body('CutoffParameters', 'log_primeCutoff_scale_ratio_tendsto')
++        self.assertIn('simp only [Real.rpow_eq_pow]\n    rw [← Real.rpow_add hQ]', body)
++
++    def test_shared_adapter_has_expanded_type_and_axiom_target(self):
++        name = 'Erdos647Sieve.Endpoint.log_div_rpow_eq'
++        gates = json.loads((ROOT / 'scripts/gates.json').read_text())
++        target = gates['endpoint_window_parameters']['audits']['Audit/EndpointWindowParameters.lean']
++        self.assertEqual(target.count(name), 1)
++        audit = (ROOT / 'research/Audit/EndpointWindowParameters.lean').read_text()
++        self.assertIn('∀ u v r : ℝ, u ≠ 0 → 0 < v →', audit)
++        self.assertIn('Real.log (u / Real.rpow v r) = Real.log u - r * Real.log v', audit)
++        self.assertEqual(audit.count('#print axioms ' + name), 1)
++
++    def test_statement_acceptance_is_not_endpoint_acceptance(self):
++        status = json.loads((ROOT / 'docs/endpoint-coefficient-status.json').read_text())
++        self.assertEqual(status['statement_interface']['status'], 'accepted')
++        self.assertFalse(status['statement_interface']['is_endpoint_bound_proof'])
++        self.assertIsNone(status['proved_coefficient'])
++        self.assertIsNone(status['proved_endpoint_theorem'])
++        self.assertIsNone(status['endpoint_acceptance_evidence'])
++
++    def test_no_new_mandatory_output_coefficient(self):
++        status = json.loads((ROOT / 'docs/endpoint-coefficient-status.json').read_text())
++        self.assertIsNone(status['working_candidate'])
++        self.assertFalse(status['historical_coefficient']['required'])
++        self.assertFalse(status['coefficient_may_depend_on_X'])
++        self.assertTrue(status['parameter_policy']['keep_existing_definitions'])
++        self.assertIn('1000', status['parameter_policy']['momentT'])
++        self.assertEqual(len(status['proof_priorities']), 4)
++        self.assertIn('1/1000', status['legacy_corollary_policy'])
++
++
++if __name__ == '__main__':
++    unittest.main()

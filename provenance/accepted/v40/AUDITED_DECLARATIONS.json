@@ -1,0 +1,2384 @@
+{
+  "Erdos647Sieve.finiteMoment": {
+    "axioms": [
+      "Classical.choice",
+      "Quot.sound",
+      "propext"
+    ],
+    "gates": [
+      "core"
+    ],
+    "logs": [
+      "logs/010_core_audit_0.log"
+    ]
+  },
+  "Erdos647Sieve.budgetDebit": {
+    "axioms": [
+      "Classical.choice",
+      "Quot.sound",
+      "propext"
+    ],
+    "gates": [
+      "core"
+    ],
+    "logs": [
+      "logs/010_core_audit_0.log"
+    ]
+  },
+  "Erdos647Sieve.finiteCounting": {
+    "axioms": [
+      "Classical.choice",
+      "Quot.sound",
+      "propext"
+    ],
+    "gates": [
+      "core"
+    ],
+    "logs": [
+      "logs/010_core_audit_0.log"
+    ]
+  },
+  "Erdos647Sieve.Bonferroni.pow_add_linear_le": {
+    "axioms": [
+      "Classical.choice",
+      "Quot.sound",
+      "propext"
+    ],
+    "gates": [
+      "core"
+    ],
+    "logs": [
+      "logs/011_core_audit_1.log"
+    ]
+  },
+  "Erdos647Sieve.Bonferroni.factorial_mul_elementary_le_pow_sum": {
+    "axioms": [
+      "Classical.choice",
+      "Quot.sound",
+      "propext"
+    ],
+    "gates": [
+      "core"
+    ],
+    "logs": [
+      "logs/011_core_audit_1.log"
+    ]
+  },
+  "Erdos647Sieve.Bonferroni.elementary_le_pow_sum_div_factorial": {
+    "axioms": [
+      "Classical.choice",
+      "Quot.sound",
+      "propext"
+    ],
+    "gates": [
+      "core"
+    ],
+    "logs": [
+      "logs/011_core_audit_1.log"
+    ]
+  },
+  "Erdos647Sieve.Bonferroni.avoidProduct_le_exp_neg_sum": {
+    "axioms": [
+      "Classical.choice",
+      "Quot.sound",
+      "propext"
+    ],
+    "gates": [
+      "core"
+    ],
+    "logs": [
+      "logs/011_core_audit_1.log"
+    ]
+  },
+  "Erdos647Sieve.Bonferroni.even_truncation_le_exp_add_tail": {
+    "axioms": [
+      "Classical.choice",
+      "Quot.sound",
+      "propext"
+    ],
+    "gates": [
+      "core"
+    ],
+    "logs": [
+      "logs/011_core_audit_1.log"
+    ]
+  },
+  "Erdos647Sieve.Bonferroni.even_sum_le_exp_add_tail": {
+    "axioms": [
+      "Classical.choice",
+      "Quot.sound",
+      "propext"
+    ],
+    "gates": [
+      "core"
+    ],
+    "logs": [
+      "logs/011_core_audit_1.log"
+    ]
+  },
+  "Erdos647Sieve.sum_map_toList_eq_sum": {
+    "axioms": [
+      "Classical.choice",
+      "Quot.sound",
+      "propext"
+    ],
+    "gates": [
+      "core"
+    ],
+    "logs": [
+      "logs/011_core_audit_1.log"
+    ]
+  },
+  "Erdos647Sieve.prod_map_toList_eq_prod": {
+    "axioms": [
+      "Classical.choice",
+      "Quot.sound",
+      "propext"
+    ],
+    "gates": [
+      "core"
+    ],
+    "logs": [
+      "logs/011_core_audit_1.log"
+    ]
+  },
+  "Erdos647Sieve.avoidProduct_map_toList": {
+    "axioms": [
+      "Classical.choice",
+      "Quot.sound",
+      "propext"
+    ],
+    "gates": [
+      "core"
+    ],
+    "logs": [
+      "logs/011_core_audit_1.log"
+    ]
+  },
+  "Erdos647Sieve.prod_ite_eq_pow_card_filter": {
+    "axioms": [
+      "Classical.choice",
+      "Quot.sound",
+      "propext"
+    ],
+    "gates": [
+      "core"
+    ],
+    "logs": [
+      "logs/011_core_audit_1.log"
+    ]
+  },
+  "Erdos647Sieve.hitWeights_bounds": {
+    "axioms": [
+      "Classical.choice",
+      "Quot.sound",
+      "propext"
+    ],
+    "gates": [
+      "core"
+    ],
+    "logs": [
+      "logs/011_core_audit_1.log"
+    ]
+  },
+  "Erdos647Sieve.avoidProduct_hitWeights": {
+    "axioms": [
+      "Classical.choice",
+      "Quot.sound",
+      "propext"
+    ],
+    "gates": [
+      "core"
+    ],
+    "logs": [
+      "logs/011_core_audit_1.log"
+    ]
+  },
+  "Erdos647Sieve.meanWeights_sum": {
+    "axioms": [
+      "Classical.choice",
+      "Quot.sound",
+      "propext"
+    ],
+    "gates": [
+      "core"
+    ],
+    "logs": [
+      "logs/011_core_audit_1.log"
+    ]
+  },
+  "Erdos647Sieve.meanWeights_bounds": {
+    "axioms": [
+      "Classical.choice",
+      "Quot.sound",
+      "propext"
+    ],
+    "gates": [
+      "core"
+    ],
+    "logs": [
+      "logs/011_core_audit_1.log"
+    ]
+  },
+  "Erdos647Sieve.hitWeight_pointwise_upper": {
+    "axioms": [
+      "Classical.choice",
+      "Quot.sound",
+      "propext"
+    ],
+    "gates": [
+      "core"
+    ],
+    "logs": [
+      "logs/011_core_audit_1.log"
+    ]
+  },
+  "Erdos647Sieve.hitWeight_interval_upper": {
+    "axioms": [
+      "Classical.choice",
+      "Quot.sound",
+      "propext"
+    ],
+    "gates": [
+      "core"
+    ],
+    "logs": [
+      "logs/011_core_audit_1.log"
+    ]
+  },
+  "Erdos647Sieve.meanWeight_truncation_upper": {
+    "axioms": [
+      "Classical.choice",
+      "Quot.sound",
+      "propext"
+    ],
+    "gates": [
+      "core"
+    ],
+    "logs": [
+      "logs/011_core_audit_1.log"
+    ]
+  },
+  "Erdos647Sieve.card_filter_natCast_image": {
+    "axioms": [
+      "Classical.choice",
+      "Quot.sound",
+      "propext"
+    ],
+    "gates": [
+      "core"
+    ],
+    "logs": [
+      "logs/011_core_audit_1.log"
+    ]
+  },
+  "Erdos647Sieve.hitCount_eq_nat_filter_card": {
+    "axioms": [
+      "Classical.choice",
+      "Quot.sound",
+      "propext"
+    ],
+    "gates": [
+      "core"
+    ],
+    "logs": [
+      "logs/011_core_audit_1.log"
+    ]
+  },
+  "Erdos647Sieve.two_pow_primeFactors_card_le_tau": {
+    "axioms": [
+      "Classical.choice",
+      "Quot.sound",
+      "propext"
+    ],
+    "gates": [
+      "core"
+    ],
+    "logs": [
+      "logs/011_core_audit_1.log"
+    ]
+  },
+  "Erdos647Sieve.primeFactors_card_le_log_floor": {
+    "axioms": [
+      "Classical.choice",
+      "Quot.sound",
+      "propext"
+    ],
+    "gates": [
+      "core"
+    ],
+    "logs": [
+      "logs/011_core_audit_1.log"
+    ]
+  },
+  "Erdos647Sieve.prefix_primeFactor_sum_le_logBudget": {
+    "axioms": [
+      "Classical.choice",
+      "Quot.sound",
+      "propext"
+    ],
+    "gates": [
+      "core"
+    ],
+    "logs": [
+      "logs/011_core_audit_1.log"
+    ]
+  },
+  "Erdos647Sieve.div_le_divisorOccurrences": {
+    "axioms": [
+      "Classical.choice",
+      "Quot.sound",
+      "propext"
+    ],
+    "gates": [
+      "core"
+    ],
+    "logs": [
+      "logs/011_core_audit_1.log"
+    ]
+  },
+  "Erdos647Sieve.sum_divisorOccurrences_eq": {
+    "axioms": [
+      "Classical.choice",
+      "Quot.sound",
+      "propext"
+    ],
+    "gates": [
+      "core"
+    ],
+    "logs": [
+      "logs/011_core_audit_1.log"
+    ]
+  },
+  "Erdos647Sieve.windowPolynomial_eq_nat_product": {
+    "axioms": [
+      "Classical.choice",
+      "Quot.sound",
+      "propext"
+    ],
+    "gates": [
+      "core"
+    ],
+    "logs": [
+      "logs/011_core_audit_1.log"
+    ]
+  },
+  "Erdos647Sieve.prime_dvd_nat_product_iff": {
+    "axioms": [
+      "Classical.choice",
+      "Quot.sound",
+      "propext"
+    ],
+    "gates": [
+      "core"
+    ],
+    "logs": [
+      "logs/011_core_audit_1.log"
+    ]
+  },
+  "Erdos647Sieve.prime_dvd_window_iff": {
+    "axioms": [
+      "Classical.choice",
+      "Quot.sound",
+      "propext"
+    ],
+    "gates": [
+      "core"
+    ],
+    "logs": [
+      "logs/011_core_audit_1.log"
+    ]
+  },
+  "Erdos647Sieve.one_le_divisorOccurrences_of_hit": {
+    "axioms": [
+      "Classical.choice",
+      "Quot.sound",
+      "propext"
+    ],
+    "gates": [
+      "core"
+    ],
+    "logs": [
+      "logs/011_core_audit_1.log"
+    ]
+  },
+  "Erdos647Sieve.smallPrimes_disjoint_selectedPrimes": {
+    "axioms": [
+      "Classical.choice",
+      "Quot.sound",
+      "propext"
+    ],
+    "gates": [
+      "core"
+    ],
+    "logs": [
+      "logs/011_core_audit_1.log"
+    ]
+  },
+  "Erdos647Sieve.smallPrimeDebit_add_hitCount_le_primeFactor_sum": {
+    "axioms": [
+      "Classical.choice",
+      "Quot.sound",
+      "propext"
+    ],
+    "gates": [
+      "core"
+    ],
+    "logs": [
+      "logs/011_core_audit_1.log"
+    ]
+  },
+  "Erdos647Sieve.no_prefix_of_negative_correctedBudget": {
+    "axioms": [
+      "Classical.choice",
+      "Quot.sound",
+      "propext"
+    ],
+    "gates": [
+      "core"
+    ],
+    "logs": [
+      "logs/011_core_audit_1.log"
+    ]
+  },
+  "Erdos647Sieve.finiteCounting_of_finiteMoment": {
+    "axioms": [
+      "Classical.choice",
+      "Quot.sound",
+      "propext"
+    ],
+    "gates": [
+      "core"
+    ],
+    "logs": [
+      "logs/011_core_audit_1.log"
+    ]
+  },
+  "Erdos647Sieve.candidateCount_le_window_of_negative_correctedBudget": {
+    "axioms": [
+      "Classical.choice",
+      "Quot.sound",
+      "propext"
+    ],
+    "gates": [
+      "core"
+    ],
+    "logs": [
+      "logs/011_core_audit_1.log"
+    ]
+  },
+  "Erdos647Sieve.count_le_exceptions_add_weight": {
+    "axioms": [
+      "Classical.choice",
+      "Quot.sound",
+      "propext"
+    ],
+    "gates": [
+      "core"
+    ],
+    "logs": [
+      "logs/011_core_audit_1.log"
+    ]
+  },
+  "Erdos647Sieve.one_le_budget_weight": {
+    "axioms": [
+      "Classical.choice",
+      "Quot.sound",
+      "propext"
+    ],
+    "gates": [
+      "core"
+    ],
+    "logs": [
+      "logs/011_core_audit_1.log"
+    ]
+  },
+  "Erdos647Sieve.Bonferroni.signedError_nonneg": {
+    "axioms": [
+      "Classical.choice",
+      "Quot.sound",
+      "propext"
+    ],
+    "gates": [
+      "core"
+    ],
+    "logs": [
+      "logs/011_core_audit_1.log"
+    ]
+  },
+  "Erdos647Sieve.Bonferroni.even_sum_bounds": {
+    "axioms": [
+      "Classical.choice",
+      "Quot.sound",
+      "propext"
+    ],
+    "gates": [
+      "core"
+    ],
+    "logs": [
+      "logs/011_core_audit_1.log"
+    ]
+  },
+  "Erdos647Sieve.candidate_prefix": {
+    "axioms": [
+      "Classical.choice",
+      "Quot.sound",
+      "propext"
+    ],
+    "gates": [
+      "core"
+    ],
+    "logs": [
+      "logs/011_core_audit_1.log"
+    ]
+  },
+  "Erdos647Sieve.candidateCount_eq_filter_Icc": {
+    "axioms": [
+      "Classical.choice",
+      "Quot.sound",
+      "propext"
+    ],
+    "gates": [
+      "core"
+    ],
+    "logs": [
+      "logs/011_core_audit_1.log"
+    ]
+  },
+  "Erdos647Sieve.sum_nat_Icc_eq_int": {
+    "axioms": [
+      "Classical.choice",
+      "Quot.sound",
+      "propext"
+    ],
+    "gates": [
+      "core"
+    ],
+    "logs": [
+      "logs/011_core_audit_1.log"
+    ]
+  },
+  "Erdos647Sieve.no_prefix_of_negative_budget": {
+    "axioms": [
+      "Classical.choice",
+      "Quot.sound",
+      "propext"
+    ],
+    "gates": [
+      "core"
+    ],
+    "logs": [
+      "logs/011_core_audit_1.log"
+    ]
+  },
+  "Erdos647Sieve.finiteCounting_of_budgetDebit_of_finiteMoment": {
+    "axioms": [
+      "Classical.choice",
+      "Quot.sound",
+      "propext"
+    ],
+    "gates": [
+      "core"
+    ],
+    "logs": [
+      "logs/011_core_audit_1.log"
+    ]
+  },
+  "Erdos647Sieve.candidateCount_le_window_of_negative_budget": {
+    "axioms": [
+      "Classical.choice",
+      "Quot.sound",
+      "propext"
+    ],
+    "gates": [
+      "core"
+    ],
+    "logs": [
+      "logs/011_core_audit_1.log"
+    ]
+  },
+  "Erdos647Sieve.sum_powersetCard_succ_insert": {
+    "axioms": [
+      "Classical.choice",
+      "Quot.sound",
+      "propext"
+    ],
+    "gates": [
+      "core"
+    ],
+    "logs": [
+      "logs/011_core_audit_1.log"
+    ]
+  },
+  "Erdos647Sieve.elementary_map_eq_sum_powersetCard": {
+    "axioms": [
+      "Classical.choice",
+      "Quot.sound",
+      "propext"
+    ],
+    "gates": [
+      "core"
+    ],
+    "logs": [
+      "logs/011_core_audit_1.log"
+    ]
+  },
+  "Erdos647Sieve.elementary_toList_eq_sum_powersetCard": {
+    "axioms": [
+      "Classical.choice",
+      "Quot.sound",
+      "propext"
+    ],
+    "gates": [
+      "core"
+    ],
+    "logs": [
+      "logs/011_core_audit_1.log"
+    ]
+  },
+  "Erdos647Sieve.elementary_map_eq_of_toFinset_eq": {
+    "axioms": [
+      "Classical.choice",
+      "Quot.sound",
+      "propext"
+    ],
+    "gates": [
+      "core"
+    ],
+    "logs": [
+      "logs/011_core_audit_1.log"
+    ]
+  },
+  "Erdos647Sieve.primeSubsetProduct_pos": {
+    "axioms": [
+      "Quot.sound",
+      "propext"
+    ],
+    "gates": [
+      "core"
+    ],
+    "logs": [
+      "logs/011_core_audit_1.log"
+    ]
+  },
+  "Erdos647Sieve.selected_subset_product_pos": {
+    "axioms": [
+      "Classical.choice",
+      "Quot.sound",
+      "propext"
+    ],
+    "gates": [
+      "core"
+    ],
+    "logs": [
+      "logs/011_core_audit_1.log"
+    ]
+  },
+  "Erdos647Sieve.prime_dvd_primeSubsetProduct_iff_mem": {
+    "axioms": [
+      "Classical.choice",
+      "Quot.sound",
+      "propext"
+    ],
+    "gates": [
+      "core"
+    ],
+    "logs": [
+      "logs/011_core_audit_1.log"
+    ]
+  },
+  "Erdos647Sieve.primeSubsetProduct_injective": {
+    "axioms": [
+      "Classical.choice",
+      "Quot.sound",
+      "propext"
+    ],
+    "gates": [
+      "core"
+    ],
+    "logs": [
+      "logs/011_core_audit_1.log"
+    ]
+  },
+  "Erdos647Sieve.primeSubsetProduct_int_dvd_iff": {
+    "axioms": [
+      "Classical.choice",
+      "Quot.sound",
+      "propext"
+    ],
+    "gates": [
+      "core"
+    ],
+    "logs": [
+      "logs/011_core_audit_1.log"
+    ]
+  },
+  "Erdos647Sieve.card_primeSubsetFamily_le": {
+    "axioms": [
+      "Classical.choice",
+      "Quot.sound",
+      "propext"
+    ],
+    "gates": [
+      "core"
+    ],
+    "logs": [
+      "logs/011_core_audit_1.log"
+    ]
+  },
+  "Erdos647Sieve.prime_dvd_window_iff_int": {
+    "axioms": [
+      "Classical.choice",
+      "Quot.sound",
+      "propext"
+    ],
+    "gates": [
+      "core"
+    ],
+    "logs": [
+      "logs/011_core_audit_1.log"
+    ]
+  },
+  "Erdos647Sieve.prime_dvd_window_iff_mem_residues": {
+    "axioms": [
+      "Classical.choice",
+      "Quot.sound",
+      "propext"
+    ],
+    "gates": [
+      "core"
+    ],
+    "logs": [
+      "logs/011_core_audit_1.log"
+    ]
+  },
+  "Erdos647Sieve.card_primeWindowResidues": {
+    "axioms": [
+      "Classical.choice",
+      "Quot.sound",
+      "propext"
+    ],
+    "gates": [
+      "core"
+    ],
+    "logs": [
+      "logs/011_core_audit_1.log"
+    ]
+  },
+  "Erdos647Sieve.subsetHitCount_empty": {
+    "axioms": [
+      "Classical.choice",
+      "Quot.sound",
+      "propext"
+    ],
+    "gates": [
+      "core"
+    ],
+    "logs": [
+      "logs/011_core_audit_1.log"
+    ]
+  },
+  "Erdos647Sieve.subsetHitCount_eq_modulus_count": {
+    "axioms": [
+      "Classical.choice",
+      "Quot.sound",
+      "propext"
+    ],
+    "gates": [
+      "core"
+    ],
+    "logs": [
+      "logs/011_core_audit_1.log"
+    ]
+  },
+  "Erdos647Sieve.prod_ite_zero_eq_pow_card": {
+    "axioms": [
+      "Classical.choice",
+      "Quot.sound",
+      "propext"
+    ],
+    "gates": [
+      "core"
+    ],
+    "logs": [
+      "logs/011_core_audit_1.log"
+    ]
+  },
+  "Erdos647Sieve.hitWeights_elementary_eq_subset_sum": {
+    "axioms": [
+      "Classical.choice",
+      "Quot.sound",
+      "propext"
+    ],
+    "gates": [
+      "core"
+    ],
+    "logs": [
+      "logs/011_core_audit_1.log"
+    ]
+  },
+  "Erdos647Sieve.sum_hitWeights_elementary_eq_subset_counts": {
+    "axioms": [
+      "Classical.choice",
+      "Quot.sound",
+      "propext"
+    ],
+    "gates": [
+      "core"
+    ],
+    "logs": [
+      "logs/011_core_audit_1.log"
+    ]
+  },
+  "Erdos647Sieve.interval_hitWeights_elementary_eq_subset_counts": {
+    "axioms": [
+      "Classical.choice",
+      "Quot.sound",
+      "propext"
+    ],
+    "gates": [
+      "core"
+    ],
+    "logs": [
+      "logs/011_core_audit_1.log"
+    ]
+  },
+  "Erdos647Sieve.meanWeights_elementary_eq_subset_sum": {
+    "axioms": [
+      "Classical.choice",
+      "Quot.sound",
+      "propext"
+    ],
+    "gates": [
+      "core"
+    ],
+    "logs": [
+      "logs/011_core_audit_1.log"
+    ]
+  },
+  "Erdos647Sieve.coefficient_discrepancy_eq_subset_errors": {
+    "axioms": [
+      "Classical.choice",
+      "Quot.sound",
+      "propext"
+    ],
+    "gates": [
+      "core"
+    ],
+    "logs": [
+      "logs/011_core_audit_1.log"
+    ]
+  },
+  "Erdos647Sieve.signed_discrepancy_eq_subset_errors": {
+    "axioms": [
+      "Classical.choice",
+      "Quot.sound",
+      "propext"
+    ],
+    "gates": [
+      "core"
+    ],
+    "logs": [
+      "logs/011_core_audit_1.log"
+    ]
+  },
+  "Erdos647Sieve.mul_le_iff_le_euclideanQuotient": {
+    "axioms": [
+      "Classical.choice",
+      "Quot.sound",
+      "propext"
+    ],
+    "gates": [
+      "core"
+    ],
+    "logs": [
+      "logs/011_core_audit_1.log"
+    ]
+  },
+  "Erdos647Sieve.progressionCount_eq_quotient_difference": {
+    "axioms": [
+      "Classical.choice",
+      "Quot.sound",
+      "propext"
+    ],
+    "gates": [
+      "core"
+    ],
+    "logs": [
+      "logs/011_core_audit_1.log"
+    ]
+  },
+  "Erdos647Sieve.euclideanQuotient_real_bounds": {
+    "axioms": [
+      "Classical.choice",
+      "Quot.sound",
+      "propext"
+    ],
+    "gates": [
+      "core"
+    ],
+    "logs": [
+      "logs/011_core_audit_1.log"
+    ]
+  },
+  "Erdos647Sieve.progressionCount_error_le_one": {
+    "axioms": [
+      "Classical.choice",
+      "Quot.sound",
+      "propext"
+    ],
+    "gates": [
+      "core"
+    ],
+    "logs": [
+      "logs/011_core_audit_1.log"
+    ]
+  },
+  "Erdos647Sieve.residueClassCount_eq_progressionCount": {
+    "axioms": [
+      "Classical.choice",
+      "Quot.sound",
+      "propext"
+    ],
+    "gates": [
+      "core"
+    ],
+    "logs": [
+      "logs/011_core_audit_1.log"
+    ]
+  },
+  "Erdos647Sieve.residueClassCount_error_le_one": {
+    "axioms": [
+      "Classical.choice",
+      "Quot.sound",
+      "propext"
+    ],
+    "gates": [
+      "core"
+    ],
+    "logs": [
+      "logs/011_core_audit_1.log"
+    ]
+  },
+  "Erdos647Sieve.residueSetCount_error_le_card": {
+    "axioms": [
+      "Classical.choice",
+      "Quot.sound",
+      "propext"
+    ],
+    "gates": [
+      "core"
+    ],
+    "logs": [
+      "logs/011_core_audit_1.log"
+    ]
+  },
+  "Erdos647Sieve.map_windowEvaluation": {
+    "axioms": [
+      "Classical.choice",
+      "Quot.sound",
+      "propext"
+    ],
+    "gates": [
+      "core"
+    ],
+    "logs": [
+      "logs/011_core_audit_1.log"
+    ]
+  },
+  "Erdos647Sieve.windowEvaluation_intCast": {
+    "axioms": [
+      "Classical.choice",
+      "Quot.sound",
+      "propext"
+    ],
+    "gates": [
+      "core"
+    ],
+    "logs": [
+      "logs/011_core_audit_1.log"
+    ]
+  },
+  "Erdos647Sieve.mem_windowRootResidues": {
+    "axioms": [
+      "Classical.choice",
+      "Quot.sound",
+      "propext"
+    ],
+    "gates": [
+      "core"
+    ],
+    "logs": [
+      "logs/011_core_audit_1.log"
+    ]
+  },
+  "Erdos647Sieve.intCast_mem_windowRootResidues_iff": {
+    "axioms": [
+      "Classical.choice",
+      "Quot.sound",
+      "propext"
+    ],
+    "gates": [
+      "core"
+    ],
+    "logs": [
+      "logs/011_core_audit_1.log"
+    ]
+  },
+  "Erdos647Sieve.windowRootResidues_eq_primeWindowResidues": {
+    "axioms": [
+      "Classical.choice",
+      "Quot.sound",
+      "propext"
+    ],
+    "gates": [
+      "core"
+    ],
+    "logs": [
+      "logs/011_core_audit_1.log"
+    ]
+  },
+  "Erdos647Sieve.card_windowRootResidues_prime": {
+    "axioms": [
+      "Classical.choice",
+      "Quot.sound",
+      "propext"
+    ],
+    "gates": [
+      "core"
+    ],
+    "logs": [
+      "logs/011_core_audit_1.log"
+    ]
+  },
+  "Erdos647Sieve.card_windowRootResidues_one": {
+    "axioms": [
+      "Classical.choice",
+      "Quot.sound",
+      "propext"
+    ],
+    "gates": [
+      "core"
+    ],
+    "logs": [
+      "logs/011_core_audit_1.log"
+    ]
+  },
+  "Erdos647Sieve.card_windowRootResidues_mul": {
+    "axioms": [
+      "Classical.choice",
+      "Quot.sound",
+      "propext"
+    ],
+    "gates": [
+      "core"
+    ],
+    "logs": [
+      "logs/011_core_audit_1.log"
+    ]
+  },
+  "Erdos647Sieve.card_windowRootResidues_primeSubsetProduct": {
+    "axioms": [
+      "Classical.choice",
+      "Quot.sound",
+      "propext"
+    ],
+    "gates": [
+      "core"
+    ],
+    "logs": [
+      "logs/011_core_audit_1.log"
+    ]
+  },
+  "Erdos647Sieve.subsetHitCount_eq_windowRootResidues_count": {
+    "axioms": [
+      "Classical.choice",
+      "Quot.sound",
+      "propext"
+    ],
+    "gates": [
+      "core"
+    ],
+    "logs": [
+      "logs/011_core_audit_1.log"
+    ]
+  },
+  "Erdos647Sieve.subsetHitCount_error_le": {
+    "axioms": [
+      "Classical.choice",
+      "Quot.sound",
+      "propext"
+    ],
+    "gates": [
+      "core"
+    ],
+    "logs": [
+      "logs/011_core_audit_1.log"
+    ]
+  },
+  "Erdos647Sieve.selected_subsetHitCount_error_le": {
+    "axioms": [
+      "Classical.choice",
+      "Quot.sound",
+      "propext"
+    ],
+    "gates": [
+      "core"
+    ],
+    "logs": [
+      "logs/011_core_audit_1.log"
+    ]
+  },
+  "Erdos647Sieve.mem_retainedSubsets": {
+    "axioms": [
+      "Classical.choice",
+      "Quot.sound",
+      "propext"
+    ],
+    "gates": [
+      "core"
+    ],
+    "logs": [
+      "logs/011_core_audit_1.log"
+    ]
+  },
+  "Erdos647Sieve.sum_powersetCard_le_eq_retained": {
+    "axioms": [
+      "Classical.choice",
+      "Quot.sound",
+      "propext"
+    ],
+    "gates": [
+      "core"
+    ],
+    "logs": [
+      "logs/011_core_audit_1.log"
+    ]
+  },
+  "Erdos647Sieve.real_pow_mono_of_one_le": {
+    "axioms": [
+      "Classical.choice",
+      "Quot.sound",
+      "propext"
+    ],
+    "gates": [
+      "core"
+    ],
+    "logs": [
+      "logs/011_core_audit_1.log"
+    ]
+  },
+  "Erdos647Sieve.retained_primeSubsetProduct_le": {
+    "axioms": [
+      "Classical.choice",
+      "Quot.sound",
+      "propext"
+    ],
+    "gates": [
+      "core"
+    ],
+    "logs": [
+      "logs/011_core_audit_1.log"
+    ]
+  },
+  "Erdos647Sieve.card_retainedSubsets_le_floor": {
+    "axioms": [
+      "Classical.choice",
+      "Quot.sound",
+      "propext"
+    ],
+    "gates": [
+      "core"
+    ],
+    "logs": [
+      "logs/011_core_audit_1.log"
+    ]
+  },
+  "Erdos647Sieve.card_retainedSubsets_cast_le": {
+    "axioms": [
+      "Classical.choice",
+      "Quot.sound",
+      "propext"
+    ],
+    "gates": [
+      "core"
+    ],
+    "logs": [
+      "logs/011_core_audit_1.log"
+    ]
+  },
+  "Erdos647Sieve.retained_weighted_subset_error_le": {
+    "axioms": [
+      "Classical.choice",
+      "Quot.sound",
+      "propext"
+    ],
+    "gates": [
+      "core"
+    ],
+    "logs": [
+      "logs/011_core_audit_1.log"
+    ]
+  },
+  "Erdos647Sieve.arithmetic_discrepancy_le": {
+    "axioms": [
+      "Classical.choice",
+      "Quot.sound",
+      "propext"
+    ],
+    "gates": [
+      "core"
+    ],
+    "logs": [
+      "logs/011_core_audit_1.log"
+    ]
+  },
+  "Erdos647Sieve.Analytic.hasDerivAt_reciprocalLog": {
+    "axioms": [
+      "Classical.choice",
+      "Quot.sound",
+      "propext"
+    ],
+    "gates": [
+      "reciprocal_kernel"
+    ],
+    "logs": [
+      "logs/013_reciprocal_kernel_audit_0.log"
+    ]
+  },
+  "Erdos647Sieve.Analytic.deriv_reciprocalLog_integrableOn": {
+    "axioms": [
+      "Classical.choice",
+      "Quot.sound",
+      "propext"
+    ],
+    "gates": [
+      "reciprocal_kernel"
+    ],
+    "logs": [
+      "logs/013_reciprocal_kernel_audit_0.log"
+    ]
+  },
+  "Erdos647Sieve.Analytic.mainPrimitive_integral": {
+    "axioms": [
+      "Classical.choice",
+      "Quot.sound",
+      "propext"
+    ],
+    "gates": [
+      "reciprocal_kernel"
+    ],
+    "logs": [
+      "logs/013_reciprocal_kernel_audit_0.log"
+    ]
+  },
+  "Erdos647Sieve.Analytic.primeLogCoefficient_partial_sum": {
+    "axioms": [
+      "Classical.choice",
+      "Quot.sound",
+      "propext"
+    ],
+    "gates": [
+      "reciprocal_abel"
+    ],
+    "logs": [
+      "logs/015_reciprocal_abel_audit_0.log"
+    ]
+  },
+  "Erdos647Sieve.Analytic.reciprocalPrimeSum_eq_weighted_sum": {
+    "axioms": [
+      "Classical.choice",
+      "Quot.sound",
+      "propext"
+    ],
+    "gates": [
+      "reciprocal_abel"
+    ],
+    "logs": [
+      "logs/015_reciprocal_abel_audit_0.log"
+    ]
+  },
+  "Erdos647Sieve.Analytic.reciprocalPrimeSum_abel": {
+    "axioms": [
+      "Classical.choice",
+      "Quot.sound",
+      "propext"
+    ],
+    "gates": [
+      "reciprocal_abel"
+    ],
+    "logs": [
+      "logs/015_reciprocal_abel_audit_0.log"
+    ]
+  },
+  "Erdos647Sieve.Analytic.reciprocalPrimeSum_partial_summation": {
+    "axioms": [
+      "Classical.choice",
+      "Quot.sound",
+      "propext"
+    ],
+    "gates": [
+      "reciprocal_abel"
+    ],
+    "logs": [
+      "logs/015_reciprocal_abel_audit_0.log"
+    ]
+  },
+  "Erdos647Sieve.Analytic.reciprocalPrimeSum_error_identity": {
+    "axioms": [
+      "Classical.choice",
+      "Quot.sound",
+      "propext"
+    ],
+    "gates": [
+      "reciprocal_abel"
+    ],
+    "logs": [
+      "logs/015_reciprocal_abel_audit_0.log"
+    ]
+  },
+  "MediumPNT": {
+    "axioms": [
+      "Classical.choice",
+      "Quot.sound",
+      "propext"
+    ],
+    "gates": [
+      "pntplus_inputs"
+    ],
+    "logs": [
+      "logs/017_pntplus_inputs_audit_0.log"
+    ]
+  },
+  "RS_prime.pntBigO": {
+    "axioms": [
+      "Classical.choice",
+      "Quot.sound",
+      "propext"
+    ],
+    "gates": [
+      "pntplus_inputs"
+    ],
+    "logs": [
+      "logs/017_pntplus_inputs_audit_0.log"
+    ]
+  },
+  "RS_prime.pnt": {
+    "axioms": [
+      "Classical.choice",
+      "Quot.sound",
+      "propext"
+    ],
+    "gates": [
+      "pntplus_inputs",
+      "analytic_inputs"
+    ],
+    "logs": [
+      "logs/017_pntplus_inputs_audit_0.log",
+      "logs/019_analytic_inputs_audit_0.log"
+    ]
+  },
+  "RS_prime.intervalIntegrable_inv_log_pow": {
+    "axioms": [
+      "Classical.choice",
+      "Quot.sound",
+      "propext"
+    ],
+    "gates": [
+      "pntplus_inputs"
+    ],
+    "logs": [
+      "logs/017_pntplus_inputs_audit_0.log"
+    ]
+  },
+  "RS_prime.ioiIntegrable_inv_log_pow": {
+    "axioms": [
+      "Classical.choice",
+      "Quot.sound",
+      "propext"
+    ],
+    "gates": [
+      "pntplus_inputs"
+    ],
+    "logs": [
+      "logs/017_pntplus_inputs_audit_0.log"
+    ]
+  },
+  "RS_prime.bound_deriv": {
+    "axioms": [
+      "Classical.choice",
+      "Quot.sound",
+      "propext"
+    ],
+    "gates": [
+      "pntplus_inputs"
+    ],
+    "logs": [
+      "logs/017_pntplus_inputs_audit_0.log"
+    ]
+  },
+  "RS_prime.integrableOn_deriv": {
+    "axioms": [
+      "Classical.choice",
+      "Quot.sound",
+      "propext"
+    ],
+    "gates": [
+      "pntplus_inputs"
+    ],
+    "logs": [
+      "logs/017_pntplus_inputs_audit_0.log"
+    ]
+  },
+  "RS_prime.integrableOn_deriv_inv_div_log": {
+    "axioms": [
+      "Classical.choice",
+      "Quot.sound",
+      "propext"
+    ],
+    "gates": [
+      "pntplus_inputs",
+      "analytic_inputs"
+    ],
+    "logs": [
+      "logs/017_pntplus_inputs_audit_0.log",
+      "logs/019_analytic_inputs_audit_0.log"
+    ]
+  },
+  "Erdos647Sieve.Analytic.theta_pnt_bound": {
+    "axioms": [
+      "Classical.choice",
+      "Quot.sound",
+      "propext"
+    ],
+    "gates": [
+      "analytic_inputs"
+    ],
+    "logs": [
+      "logs/019_analytic_inputs_audit_0.log"
+    ]
+  },
+  "Erdos647Sieve.Analytic.theta_error_deriv_integrable": {
+    "axioms": [
+      "Classical.choice",
+      "Quot.sound",
+      "propext"
+    ],
+    "gates": [
+      "analytic_inputs"
+    ],
+    "logs": [
+      "logs/019_analytic_inputs_audit_0.log"
+    ]
+  },
+  "Erdos647Sieve.Analytic.theta_error_boundary_tendsto_zero": {
+    "axioms": [
+      "Classical.choice",
+      "Quot.sound",
+      "propext"
+    ],
+    "gates": [
+      "analytic_inputs"
+    ],
+    "logs": [
+      "logs/019_analytic_inputs_audit_0.log"
+    ]
+  },
+  "Erdos647Sieve.Analytic.reciprocalPrimeSum_tendsto": {
+    "axioms": [
+      "Classical.choice",
+      "Quot.sound",
+      "propext"
+    ],
+    "gates": [
+      "clean_mertens"
+    ],
+    "logs": [
+      "logs/021_clean_mertens_audit_0.log"
+    ]
+  },
+  "Erdos647Sieve.Analytic.reciprocalPrimeLimit_exists": {
+    "axioms": [
+      "Classical.choice",
+      "Quot.sound",
+      "propext"
+    ],
+    "gates": [
+      "clean_mertens"
+    ],
+    "logs": [
+      "logs/021_clean_mertens_audit_0.log"
+    ]
+  },
+  "Erdos647Sieve.Analytic.reciprocalPrime_difference_tendsto_zero": {
+    "axioms": [
+      "Classical.choice",
+      "Quot.sound",
+      "propext"
+    ],
+    "gates": [
+      "clean_mertens"
+    ],
+    "logs": [
+      "logs/021_clean_mertens_audit_0.log"
+    ]
+  },
+  "Erdos647Sieve.Analytic.selectedPrimeSum_eq_difference": {
+    "axioms": [
+      "Classical.choice",
+      "Quot.sound",
+      "propext"
+    ],
+    "gates": [
+      "selected_prime_reciprocals"
+    ],
+    "logs": [
+      "logs/023_selected_prime_reciprocals_audit_0.log"
+    ]
+  },
+  "Erdos647Sieve.Analytic.primeMass_eq_reciprocal_difference": {
+    "axioms": [
+      "Classical.choice",
+      "Quot.sound",
+      "propext"
+    ],
+    "gates": [
+      "selected_prime_reciprocals"
+    ],
+    "logs": [
+      "logs/023_selected_prime_reciprocals_audit_0.log"
+    ]
+  },
+  "Erdos647Sieve.Analytic.selectedPrimeSum_difference_tendsto_zero": {
+    "axioms": [
+      "Classical.choice",
+      "Quot.sound",
+      "propext"
+    ],
+    "gates": [
+      "selected_prime_reciprocals"
+    ],
+    "logs": [
+      "logs/023_selected_prime_reciprocals_audit_0.log"
+    ]
+  },
+  "Erdos647Sieve.Elementary.neg_log_one_sub_le_add_sq": {
+    "axioms": [
+      "Classical.choice",
+      "Quot.sound",
+      "propext"
+    ],
+    "gates": [
+      "endpoint_log_bounds"
+    ],
+    "logs": [
+      "logs/025_endpoint_log_bounds_audit_0.log"
+    ]
+  },
+  "Erdos647Sieve.Elementary.endpoint_log_gap": {
+    "axioms": [
+      "Classical.choice",
+      "Quot.sound",
+      "propext"
+    ],
+    "gates": [
+      "endpoint_log_bounds"
+    ],
+    "logs": [
+      "logs/025_endpoint_log_bounds_audit_0.log"
+    ]
+  },
+  "Erdos647Sieve.Elementary.endpoint_tail_log_constant": {
+    "axioms": [
+      "Classical.choice",
+      "Quot.sound",
+      "propext"
+    ],
+    "gates": [
+      "endpoint_log_bounds"
+    ],
+    "logs": [
+      "logs/025_endpoint_log_bounds_audit_0.log"
+    ]
+  },
+  "Erdos647Sieve.Elementary.log_factorial_upper": {
+    "axioms": [
+      "Classical.choice",
+      "Quot.sound",
+      "propext"
+    ],
+    "gates": [
+      "factorial_bounds"
+    ],
+    "logs": [
+      "logs/027_factorial_bounds_audit_0.log"
+    ]
+  },
+  "Erdos647Sieve.Elementary.log_factorial_lower": {
+    "axioms": [
+      "Classical.choice",
+      "Quot.sound",
+      "propext"
+    ],
+    "gates": [
+      "factorial_bounds"
+    ],
+    "logs": [
+      "logs/027_factorial_bounds_audit_0.log"
+    ]
+  },
+  "Erdos647Sieve.Elementary.factorial_pow_lower": {
+    "axioms": [
+      "Classical.choice",
+      "Quot.sound",
+      "propext"
+    ],
+    "gates": [
+      "factorial_bounds"
+    ],
+    "logs": [
+      "logs/027_factorial_bounds_audit_0.log"
+    ]
+  },
+  "Erdos647Sieve.Elementary.shiftedFactorialLog_eq_expanded": {
+    "axioms": [
+      "Classical.choice",
+      "Quot.sound",
+      "propext"
+    ],
+    "gates": [
+      "factorial_estimate"
+    ],
+    "logs": [
+      "logs/029_factorial_estimate_audit_0.log"
+    ]
+  },
+  "Erdos647Sieve.Elementary.log_factorial_residual_tendsto_zero": {
+    "axioms": [
+      "Classical.choice",
+      "Quot.sound",
+      "propext"
+    ],
+    "gates": [
+      "factorial_estimate"
+    ],
+    "logs": [
+      "logs/029_factorial_estimate_audit_0.log"
+    ]
+  },
+  "Erdos647Sieve.Elementary.shiftedFactorialLog_residual_tendsto_zero": {
+    "axioms": [
+      "Classical.choice",
+      "Quot.sound",
+      "propext"
+    ],
+    "gates": [
+      "factorial_estimate"
+    ],
+    "logs": [
+      "logs/029_factorial_estimate_audit_0.log"
+    ]
+  },
+  "Erdos647Sieve.Elementary.sum_log_shift_eq_factorial": {
+    "axioms": [
+      "Classical.choice",
+      "Quot.sound",
+      "propext"
+    ],
+    "gates": [
+      "log_budget_factorial"
+    ],
+    "logs": [
+      "logs/031_log_budget_factorial_audit_0.log"
+    ]
+  },
+  "Erdos647Sieve.Elementary.logBudget_le_factorial": {
+    "axioms": [
+      "Classical.choice",
+      "Quot.sound",
+      "propext"
+    ],
+    "gates": [
+      "log_budget_factorial"
+    ],
+    "logs": [
+      "logs/031_log_budget_factorial_audit_0.log"
+    ]
+  },
+  "Erdos647Sieve.Elementary.harmonic_sum_le_finitePrimeEuler": {
+    "axioms": [
+      "Classical.choice",
+      "Quot.sound",
+      "propext"
+    ],
+    "gates": [
+      "prime_reciprocal_lower"
+    ],
+    "logs": [
+      "logs/033_prime_reciprocal_lower_audit_0.log"
+    ]
+  },
+  "Erdos647Sieve.Elementary.reciprocal_remainder_telescope": {
+    "axioms": [
+      "Classical.choice",
+      "Quot.sound",
+      "propext"
+    ],
+    "gates": [
+      "prime_reciprocal_lower"
+    ],
+    "logs": [
+      "logs/033_prime_reciprocal_lower_audit_0.log"
+    ]
+  },
+  "Erdos647Sieve.Elementary.prime_log_factor_le": {
+    "axioms": [
+      "Classical.choice",
+      "Quot.sound",
+      "propext"
+    ],
+    "gates": [
+      "prime_reciprocal_lower"
+    ],
+    "logs": [
+      "logs/033_prime_reciprocal_lower_audit_0.log"
+    ]
+  },
+  "Erdos647Sieve.Elementary.log_finitePrimeEuler_le": {
+    "axioms": [
+      "Classical.choice",
+      "Quot.sound",
+      "propext"
+    ],
+    "gates": [
+      "prime_reciprocal_lower"
+    ],
+    "logs": [
+      "logs/033_prime_reciprocal_lower_audit_0.log"
+    ]
+  },
+  "Erdos647Sieve.Elementary.prime_reciprocal_lower": {
+    "axioms": [
+      "Classical.choice",
+      "Quot.sound",
+      "propext"
+    ],
+    "gates": [
+      "prime_reciprocal_lower"
+    ],
+    "logs": [
+      "logs/033_prime_reciprocal_lower_audit_0.log"
+    ]
+  },
+  "Erdos647Sieve.Elementary.nat_quotient_cast_lower": {
+    "axioms": [
+      "Classical.choice",
+      "Quot.sound",
+      "propext"
+    ],
+    "gates": [
+      "small_prime_debit_estimate"
+    ],
+    "logs": [
+      "logs/035_small_prime_debit_estimate_audit_0.log"
+    ]
+  },
+  "Erdos647Sieve.Elementary.smallPrimeDebit_ge_sum_sub_card": {
+    "axioms": [
+      "Classical.choice",
+      "Quot.sound",
+      "propext"
+    ],
+    "gates": [
+      "small_prime_debit_estimate"
+    ],
+    "logs": [
+      "logs/035_small_prime_debit_estimate_audit_0.log"
+    ]
+  },
+  "Erdos647Sieve.Elementary.smallPrimeDebit_lower": {
+    "axioms": [
+      "Classical.choice",
+      "Quot.sound",
+      "propext"
+    ],
+    "gates": [
+      "small_prime_debit_estimate"
+    ],
+    "logs": [
+      "logs/035_small_prime_debit_estimate_audit_0.log"
+    ]
+  },
+  "Erdos647Sieve.Elementary.correctedBudget_upper_eventually": {
+    "axioms": [
+      "Classical.choice",
+      "Quot.sound",
+      "propext"
+    ],
+    "gates": [
+      "corrected_budget_estimate"
+    ],
+    "logs": [
+      "logs/037_corrected_budget_estimate_audit_0.log"
+    ]
+  },
+  "Erdos647Sieve.Endpoint.endpointScale_pos": {
+    "axioms": [
+      "Classical.choice",
+      "Quot.sound",
+      "propext"
+    ],
+    "gates": [
+      "endpoint_statement"
+    ],
+    "logs": [
+      "logs/039_endpoint_statement_audit_0.log"
+    ]
+  },
+  "Erdos647Sieve.Endpoint.endpointRHSWith_le_of_le": {
+    "axioms": [
+      "Classical.choice",
+      "Quot.sound",
+      "propext"
+    ],
+    "gates": [
+      "endpoint_statement"
+    ],
+    "logs": [
+      "logs/039_endpoint_statement_audit_0.log"
+    ]
+  },
+  "Erdos647Sieve.Endpoint.endpointBound_iff_eventually": {
+    "axioms": [
+      "Classical.choice",
+      "Quot.sound",
+      "propext"
+    ],
+    "gates": [
+      "endpoint_statement"
+    ],
+    "logs": [
+      "logs/039_endpoint_statement_audit_0.log"
+    ]
+  },
+  "Erdos647Sieve.Endpoint.endpointBound_mono": {
+    "axioms": [
+      "Classical.choice",
+      "Quot.sound",
+      "propext"
+    ],
+    "gates": [
+      "endpoint_statement"
+    ],
+    "logs": [
+      "logs/039_endpoint_statement_audit_0.log"
+    ]
+  },
+  "Erdos647Sieve.Endpoint.endpointRHSWith_one_div_thousand": {
+    "axioms": [
+      "Classical.choice",
+      "Quot.sound",
+      "propext"
+    ],
+    "gates": [
+      "endpoint_statement"
+    ],
+    "logs": [
+      "logs/039_endpoint_statement_audit_0.log"
+    ]
+  },
+  "Erdos647Sieve.Endpoint.legacyEndpointClaim_iff": {
+    "axioms": [
+      "Classical.choice",
+      "Quot.sound",
+      "propext"
+    ],
+    "gates": [
+      "endpoint_statement"
+    ],
+    "logs": [
+      "logs/039_endpoint_statement_audit_0.log"
+    ]
+  },
+  "Erdos647Sieve.Endpoint.positiveEndpointClaim_of_explicit": {
+    "axioms": [
+      "Classical.choice",
+      "Quot.sound",
+      "propext"
+    ],
+    "gates": [
+      "endpoint_statement"
+    ],
+    "logs": [
+      "logs/039_endpoint_statement_audit_0.log"
+    ]
+  },
+  "Erdos647Sieve.Endpoint.log_div_rpow_eq": {
+    "axioms": [
+      "Classical.choice",
+      "Quot.sound",
+      "propext"
+    ],
+    "gates": [
+      "endpoint_window_parameters"
+    ],
+    "logs": [
+      "logs/041_endpoint_window_parameters_audit_0.log"
+    ]
+  },
+  "Erdos647Sieve.Endpoint.endpointExponent_pos": {
+    "axioms": [
+      "Classical.choice",
+      "Quot.sound",
+      "propext"
+    ],
+    "gates": [
+      "endpoint_window_parameters"
+    ],
+    "logs": [
+      "logs/041_endpoint_window_parameters_audit_0.log"
+    ]
+  },
+  "Erdos647Sieve.Endpoint.endpointExponent_lt_one": {
+    "axioms": [
+      "Classical.choice",
+      "Quot.sound",
+      "propext"
+    ],
+    "gates": [
+      "endpoint_window_parameters"
+    ],
+    "logs": [
+      "logs/041_endpoint_window_parameters_audit_0.log"
+    ]
+  },
+  "Erdos647Sieve.Endpoint.endpointExponent_cancellation": {
+    "axioms": [
+      "Classical.choice",
+      "Quot.sound",
+      "propext"
+    ],
+    "gates": [
+      "endpoint_window_parameters"
+    ],
+    "logs": [
+      "logs/041_endpoint_window_parameters_audit_0.log"
+    ]
+  },
+  "Erdos647Sieve.Endpoint.logX_tendsto_atTop": {
+    "axioms": [
+      "Classical.choice",
+      "Quot.sound",
+      "propext"
+    ],
+    "gates": [
+      "endpoint_window_parameters"
+    ],
+    "logs": [
+      "logs/041_endpoint_window_parameters_audit_0.log"
+    ]
+  },
+  "Erdos647Sieve.Endpoint.logLogX_tendsto_atTop": {
+    "axioms": [
+      "Classical.choice",
+      "Quot.sound",
+      "propext"
+    ],
+    "gates": [
+      "endpoint_window_parameters"
+    ],
+    "logs": [
+      "logs/041_endpoint_window_parameters_audit_0.log"
+    ]
+  },
+  "Erdos647Sieve.Endpoint.windowScale_tendsto_atTop": {
+    "axioms": [
+      "Classical.choice",
+      "Quot.sound",
+      "propext"
+    ],
+    "gates": [
+      "endpoint_window_parameters"
+    ],
+    "logs": [
+      "logs/041_endpoint_window_parameters_audit_0.log"
+    ]
+  },
+  "Erdos647Sieve.Endpoint.windowLength_tendsto_atTop": {
+    "axioms": [
+      "Classical.choice",
+      "Quot.sound",
+      "propext"
+    ],
+    "gates": [
+      "endpoint_window_parameters"
+    ],
+    "logs": [
+      "logs/041_endpoint_window_parameters_audit_0.log"
+    ]
+  },
+  "Erdos647Sieve.Endpoint.windowLength_cast_tendsto_atTop": {
+    "axioms": [
+      "Classical.choice",
+      "Quot.sound",
+      "propext"
+    ],
+    "gates": [
+      "endpoint_window_parameters"
+    ],
+    "logs": [
+      "logs/041_endpoint_window_parameters_audit_0.log"
+    ]
+  },
+  "Erdos647Sieve.Endpoint.windowLength_ratio_tendsto_one": {
+    "axioms": [
+      "Classical.choice",
+      "Quot.sound",
+      "propext"
+    ],
+    "gates": [
+      "endpoint_window_parameters"
+    ],
+    "logs": [
+      "logs/041_endpoint_window_parameters_audit_0.log"
+    ]
+  },
+  "Erdos647Sieve.Endpoint.eventually_windowLength_pos": {
+    "axioms": [
+      "Classical.choice",
+      "Quot.sound",
+      "propext"
+    ],
+    "gates": [
+      "endpoint_window_parameters"
+    ],
+    "logs": [
+      "logs/041_endpoint_window_parameters_audit_0.log"
+    ]
+  },
+  "Erdos647Sieve.Endpoint.log_windowLength_sub_tendsto_zero": {
+    "axioms": [
+      "Classical.choice",
+      "Quot.sound",
+      "propext"
+    ],
+    "gates": [
+      "endpoint_window_parameters"
+    ],
+    "logs": [
+      "logs/041_endpoint_window_parameters_audit_0.log"
+    ]
+  },
+  "Erdos647Sieve.Endpoint.log_windowLength_div_logLog_tendsto": {
+    "axioms": [
+      "Classical.choice",
+      "Quot.sound",
+      "propext"
+    ],
+    "gates": [
+      "endpoint_window_parameters"
+    ],
+    "logs": [
+      "logs/041_endpoint_window_parameters_audit_0.log"
+    ]
+  },
+  "Erdos647Sieve.Endpoint.rounded_hundred_eq_ceil": {
+    "axioms": [
+      "Classical.choice",
+      "Quot.sound",
+      "propext"
+    ],
+    "gates": [
+      "endpoint_truncation_parameters"
+    ],
+    "logs": [
+      "logs/043_endpoint_truncation_parameters_audit_0.log"
+    ]
+  },
+  "Erdos647Sieve.Endpoint.truncationOrder_eq_ceil": {
+    "axioms": [
+      "Classical.choice",
+      "Quot.sound",
+      "propext"
+    ],
+    "gates": [
+      "endpoint_truncation_parameters"
+    ],
+    "logs": [
+      "logs/043_endpoint_truncation_parameters_audit_0.log"
+    ]
+  },
+  "Erdos647Sieve.Endpoint.truncationOrder_even": {
+    "axioms": [
+      "Classical.choice",
+      "Quot.sound",
+      "propext"
+    ],
+    "gates": [
+      "endpoint_truncation_parameters"
+    ],
+    "logs": [
+      "logs/043_endpoint_truncation_parameters_audit_0.log"
+    ]
+  },
+  "Erdos647Sieve.Endpoint.truncationOrder_bounds": {
+    "axioms": [
+      "Classical.choice",
+      "Quot.sound",
+      "propext"
+    ],
+    "gates": [
+      "endpoint_truncation_parameters"
+    ],
+    "logs": [
+      "logs/043_endpoint_truncation_parameters_audit_0.log"
+    ]
+  },
+  "Erdos647Sieve.Endpoint.eventually_truncationOrder_pos": {
+    "axioms": [
+      "Classical.choice",
+      "Quot.sound",
+      "propext"
+    ],
+    "gates": [
+      "endpoint_truncation_parameters"
+    ],
+    "logs": [
+      "logs/043_endpoint_truncation_parameters_audit_0.log"
+    ]
+  },
+  "Erdos647Sieve.Endpoint.truncationOrder_div_windowLength_tendsto": {
+    "axioms": [
+      "Classical.choice",
+      "Quot.sound",
+      "propext"
+    ],
+    "gates": [
+      "endpoint_truncation_parameters"
+    ],
+    "logs": [
+      "logs/043_endpoint_truncation_parameters_audit_0.log"
+    ]
+  },
+  "Erdos647Sieve.Endpoint.truncationOrder_scale_ratio_tendsto": {
+    "axioms": [
+      "Classical.choice",
+      "Quot.sound",
+      "propext"
+    ],
+    "gates": [
+      "endpoint_truncation_parameters"
+    ],
+    "logs": [
+      "logs/043_endpoint_truncation_parameters_audit_0.log"
+    ]
+  },
+  "Erdos647Sieve.Endpoint.truncationOrder_cast_tendsto_atTop": {
+    "axioms": [
+      "Classical.choice",
+      "Quot.sound",
+      "propext"
+    ],
+    "gates": [
+      "endpoint_truncation_parameters"
+    ],
+    "logs": [
+      "logs/043_endpoint_truncation_parameters_audit_0.log"
+    ]
+  },
+  "Erdos647Sieve.Endpoint.primeCutoff_pos": {
+    "axioms": [
+      "Classical.choice",
+      "Quot.sound",
+      "propext"
+    ],
+    "gates": [
+      "endpoint_cutoff_parameters"
+    ],
+    "logs": [
+      "logs/045_endpoint_cutoff_parameters_audit_0.log"
+    ]
+  },
+  "Erdos647Sieve.Endpoint.log_primeCutoff": {
+    "axioms": [
+      "Classical.choice",
+      "Quot.sound",
+      "propext"
+    ],
+    "gates": [
+      "endpoint_cutoff_parameters"
+    ],
+    "logs": [
+      "logs/045_endpoint_cutoff_parameters_audit_0.log"
+    ]
+  },
+  "Erdos647Sieve.Endpoint.complementaryScale_tendsto_atTop": {
+    "axioms": [
+      "Classical.choice",
+      "Quot.sound",
+      "propext"
+    ],
+    "gates": [
+      "endpoint_cutoff_parameters"
+    ],
+    "logs": [
+      "logs/045_endpoint_cutoff_parameters_audit_0.log"
+    ]
+  },
+  "Erdos647Sieve.Endpoint.log_primeCutoff_scale_ratio_tendsto": {
+    "axioms": [
+      "Classical.choice",
+      "Quot.sound",
+      "propext"
+    ],
+    "gates": [
+      "endpoint_cutoff_parameters"
+    ],
+    "logs": [
+      "logs/045_endpoint_cutoff_parameters_audit_0.log"
+    ]
+  },
+  "Erdos647Sieve.Endpoint.log_primeCutoff_tendsto_atTop": {
+    "axioms": [
+      "Classical.choice",
+      "Quot.sound",
+      "propext"
+    ],
+    "gates": [
+      "endpoint_cutoff_parameters"
+    ],
+    "logs": [
+      "logs/045_endpoint_cutoff_parameters_audit_0.log"
+    ]
+  },
+  "Erdos647Sieve.Endpoint.primeCutoff_tendsto_atTop": {
+    "axioms": [
+      "Classical.choice",
+      "Quot.sound",
+      "propext"
+    ],
+    "gates": [
+      "endpoint_cutoff_parameters"
+    ],
+    "logs": [
+      "logs/045_endpoint_cutoff_parameters_audit_0.log"
+    ]
+  },
+  "Erdos647Sieve.Endpoint.loglog_primeCutoff_sub_tendsto": {
+    "axioms": [
+      "Classical.choice",
+      "Quot.sound",
+      "propext"
+    ],
+    "gates": [
+      "endpoint_cutoff_parameters"
+    ],
+    "logs": [
+      "logs/045_endpoint_cutoff_parameters_audit_0.log"
+    ]
+  },
+  "Erdos647Sieve.Endpoint.log_windowLength_div_complementaryScale_tendsto_zero": {
+    "axioms": [
+      "Classical.choice",
+      "Quot.sound",
+      "propext"
+    ],
+    "gates": [
+      "endpoint_cutoff_parameters"
+    ],
+    "logs": [
+      "logs/045_endpoint_cutoff_parameters_audit_0.log"
+    ]
+  },
+  "Erdos647Sieve.Endpoint.log_windowLength_div_log_primeCutoff_tendsto_zero": {
+    "axioms": [
+      "Classical.choice",
+      "Quot.sound",
+      "propext"
+    ],
+    "gates": [
+      "endpoint_cutoff_parameters"
+    ],
+    "logs": [
+      "logs/045_endpoint_cutoff_parameters_audit_0.log"
+    ]
+  },
+  "Erdos647Sieve.Endpoint.eventually_windowLength_lt_primeCutoff": {
+    "axioms": [
+      "Classical.choice",
+      "Quot.sound",
+      "propext"
+    ],
+    "gates": [
+      "endpoint_cutoff_parameters"
+    ],
+    "logs": [
+      "logs/045_endpoint_cutoff_parameters_audit_0.log"
+    ]
+  },
+  "Erdos647Sieve.Endpoint.momentT_tendsto_zero": {
+    "axioms": [
+      "Classical.choice",
+      "Quot.sound",
+      "propext"
+    ],
+    "gates": [
+      "endpoint_cutoff_parameters"
+    ],
+    "logs": [
+      "logs/045_endpoint_cutoff_parameters_audit_0.log"
+    ]
+  },
+  "Erdos647Sieve.Endpoint.eventually_momentT_bounds": {
+    "axioms": [
+      "Classical.choice",
+      "Quot.sound",
+      "propext"
+    ],
+    "gates": [
+      "endpoint_cutoff_parameters"
+    ],
+    "logs": [
+      "logs/045_endpoint_cutoff_parameters_audit_0.log"
+    ]
+  },
+  "Erdos647Sieve.Endpoint.endpoint_parameters_admissible": {
+    "axioms": [
+      "Classical.choice",
+      "Quot.sound",
+      "propext"
+    ],
+    "gates": [
+      "endpoint_cutoff_parameters"
+    ],
+    "logs": [
+      "logs/045_endpoint_cutoff_parameters_audit_0.log"
+    ]
+  },
+  "Erdos647Sieve.Endpoint.endpoint_selectedPrimeSum_error_tendsto_zero": {
+    "axioms": [
+      "Classical.choice",
+      "Quot.sound",
+      "propext"
+    ],
+    "gates": [
+      "endpoint_prime_mass_parameters"
+    ],
+    "logs": [
+      "logs/047_endpoint_prime_mass_parameters_audit_0.log"
+    ]
+  },
+  "Erdos647Sieve.Endpoint.endpoint_primeMass_expansion_tendsto_zero": {
+    "axioms": [
+      "Classical.choice",
+      "Quot.sound",
+      "propext"
+    ],
+    "gates": [
+      "endpoint_prime_mass_parameters"
+    ],
+    "logs": [
+      "logs/047_endpoint_prime_mass_parameters_audit_0.log"
+    ]
+  }
+}

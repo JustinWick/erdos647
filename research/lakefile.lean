@@ -23,7 +23,16 @@ lean_lib Erdos647Elementary where
   moreLeanArgs := #["-DwarningAsError=true"]
   roots := #[`Erdos647Research.CorrectedBudgetEstimate, `Erdos647Research.EndpointLogBounds, `Erdos647Research.FactorialBounds, `Erdos647Research.FactorialEstimate, `Erdos647Research.LogBudgetFactorial, `Erdos647Research.PrimeReciprocalLower, `Erdos647Research.SmallPrimeDebitEstimate]
 
-/-- All current research proof gates, including pending elementary estimates. -/
+@[default_target]
+lean_lib Erdos647Endpoint where
+  moreLeanArgs := #["-DwarningAsError=true"]
+  roots := #[`Erdos647Research.Endpoint.Statement,
+    `Erdos647Research.Endpoint.WindowParameters,
+    `Erdos647Research.Endpoint.TruncationParameters,
+    `Erdos647Research.Endpoint.CutoffParameters,
+    `Erdos647Research.Endpoint.PrimeMassParameters]
+
+/-- All registered research proof gates, including the endpoint parameter layer. -/
 script audit (args) do
   let child ← IO.Process.spawn {
     cmd := "python3"

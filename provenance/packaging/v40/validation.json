@@ -1,0 +1,61 @@
+{
+  "version": "v40",
+  "date": "2026-09-08",
+  "package_kind": "overwrite-in-place repository overlay",
+  "runner_tests": {
+    "count": 178,
+    "exit_code": 0,
+    "log": "runner_tests.log"
+  },
+  "tests_after_actual_zip_application": {
+    "count": 178,
+    "exit_code": 0,
+    "log": "extracted_tests.log"
+  },
+  "top_level_tooling": {
+    "status": "PASS_SELECTED_CHECKS",
+    "scope": "tooling",
+    "selected_theorem_gates": [],
+    "run_id": "erdos647_repo_v40_results_20260908T090653Z_243a89a4",
+    "theorem_gates": "all NOT_REQUESTED",
+    "log": "top_level_tooling.log"
+  },
+  "overlay_application": {
+    "test_count": 178,
+    "exit_code": 0,
+    "applied_zip_members": 18,
+    "unchanged_files_outside_overlay": 275,
+    "contents_and_nanosecond_mtimes_preserved": true,
+    "math_modules_preserved": 44,
+    "audit_files_preserved": 20,
+    "tool_cache_prior_result_sentinels": 4,
+    "ci_unchanged": true,
+    "repeat_application_content_idempotent": true
+  },
+  "mathematical_source_changes": [
+    "research/Erdos647Research/Endpoint/CutoffParameters.lean"
+  ],
+  "existing_theorem_headers_preserved": true,
+  "existing_audit_files_unchanged": true,
+  "mathematical_modules_unchanged": 44,
+  "accepted_mathematical_modules_unchanged": 43,
+  "gate_count": 19,
+  "branch_theorem_target_count": 43,
+  "returned_v39_acceptance": {
+    "passing": 17,
+    "failed": 1,
+    "blocked": 1,
+    "distinct_audited_declarations": 168,
+    "newly_accepted_declarations": 21
+  },
+  "remaining_parameter_gates": [
+    "endpoint_cutoff_parameters",
+    "endpoint_prime_mass_parameters"
+  ],
+  "cutoff_repair_acceptance": "pending next build/type/axiom result",
+  "endpoint_bound_proved": false,
+  "proved_fixed_positive_coefficient": null,
+  "dependency_or_toolchain_changes": false,
+  "warning_or_axiom_policy_relaxed": false,
+  "ci_workflows_changed": false
+}

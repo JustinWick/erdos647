@@ -1,0 +1,21 @@
+$ <REPO>/.tools/elan/toolchains/leanprover--lean4---v4.32.2/bin/lake env lean -DwarningAsError=true Audit/EndpointPrimeMassParameters.lean
+Erdos647Sieve.Endpoint.endpoint_selectedPrimeSum_error_tendsto_zero :
+  Tendsto
+    (fun X =>
+      ∑ p ∈ selectedPrimes (windowLength X) (primeCutoff X), 1 / ↑p -
+        (Real.log (Real.log (primeCutoff X)) - Real.log (Real.log ↑(windowLength X))))
+    atTop (𝓝 0)
+'Erdos647Sieve.Endpoint.endpoint_selectedPrimeSum_error_tendsto_zero' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+Erdos647Sieve.Endpoint.endpoint_primeMass_expansion_tendsto_zero :
+  Tendsto
+    (fun X =>
+      primeMass (windowLength X) (primeCutoff X) / ↑(windowLength X) -
+        ((1 - endpointExponent) * Real.log (Real.log ↑X) - Real.log (Real.log ↑(windowLength X)) + Real.log (25 / 2)))
+    atTop (𝓝 0)
+'Erdos647Sieve.Endpoint.endpoint_primeMass_expansion_tendsto_zero' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+
+EXIT_CODE=0

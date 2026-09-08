@@ -1,0 +1,54 @@
+$ <REPO>/.tools/elan/toolchains/leanprover--lean4---v4.32.2/bin/lake build +Erdos647Research.Endpoint.CutoffParameters
+✖ [8659/8659] Building Erdos647Research.Endpoint.CutoffParameters (3.0s)
+trace: .> LEAN_PATH=<REPO>/.lake/packages/Cli/.lake/build/lib/lean:<REPO>/.lake/packages/batteries/.lake/build/lib/lean:<REPO>/.lake/packages/Qq/.lake/build/lib/lean:<REPO>/.lake/packages/aesop/.lake/build/lib/lean:<REPO>/.lake/packages/proofwidgets/.lake/build/lib/lean:<REPO>/.lake/packages/importGraph/.lake/build/lib/lean:<REPO>/.lake/packages/LeanSearchClient/.lake/build/lib/lean:<REPO>/.lake/packages/plausible/.lake/build/lib/lean:<REPO>/research/.lake/packages/LeanArchitect/.lake/build/lib/lean:<REPO>/research/.lake/packages/checkdecls/.lake/build/lib/lean:<REPO>/research/.lake/packages/leancert/.lake/build/lib/lean:<REPO>/research/.lake/packages/PrimeCert/.lake/build/lib/lean:<REPO>/.lake/packages/mathlib/.lake/build/lib/lean:<REPO>/.lake/build/lib/lean:<REPO>/research/.lake/packages/PrimeNumberTheoremAnd/.lake/build/lib/lean:<REPO>/research/.lake/build/lib/lean <REPO>/.tools/elan/toolchains/leanprover--lean4---v4.32.2/bin/lean -DwarningAsError=true <REPO>/research/Erdos647Research/Endpoint/CutoffParameters.lean -o <REPO>/research/.lake/build/lib/lean/Erdos647Research/Endpoint/CutoffParameters.olean -i <REPO>/research/.lake/build/lib/lean/Erdos647Research/Endpoint/CutoffParameters.ilean -c <REPO>/research/.lake/build/ir/Erdos647Research/Endpoint/CutoffParameters.c --setup <REPO>/research/.lake/build/ir/Erdos647Research/Endpoint/CutoffParameters.setup.json --json
+error: Erdos647Research/Endpoint/CutoffParameters.lean:42:4: Type mismatch: After simplification, term
+  Tendsto.inv₀ (Tendsto.const_mul 4 truncationOrder_scale_ratio_tendsto)
+    (Mathlib.Meta.NormNum.isNNRat_eq_false
+      (Mathlib.Meta.NormNum.isNNRat_mul (Eq.refl HMul.hMul)
+        (Mathlib.Meta.NormNum.IsNat.to_isNNRat (Mathlib.Meta.NormNum.isNat_ofNat ℝ (Eq.refl 4)))
+        (Mathlib.Meta.NormNum.isNNRat_div
+          (Mathlib.Meta.NormNum.isNNRat_mul (Eq.refl HMul.hMul)
+            (Mathlib.Meta.NormNum.IsNat.to_isNNRat (Mathlib.Meta.NormNum.isNat_ofNat ℝ Nat.cast_one))
+            (Mathlib.Meta.NormNum.isNNRat_inv_pos
+              (Mathlib.Meta.NormNum.IsNat.to_isNNRat (Mathlib.Meta.NormNum.isNat_ofNat ℝ (Eq.refl 50))))
+            (Eq.refl (Nat.mul 1 1)) (Eq.refl 50)))
+        (Eq.refl (Nat.mul 4 1)) (Eq.refl 50))
+      (Mathlib.Meta.NormNum.IsNat.to_isNNRat (Mathlib.Meta.NormNum.isNat_ofNat ℝ Nat.cast_zero)) (Eq.refl false))
+ has type
+  Tendsto (fun x => log ↑x ^ endpointExponent / ↑(truncationOrder x) * 4⁻¹) atTop (𝓝 (50 * 4⁻¹))
+but is expected to have type
+  Tendsto (fun X => log ↑X ^ endpointExponent / ↑(truncationOrder X) * 4⁻¹) atTop (𝓝 (25 / 2))
+error: Erdos647Research/Endpoint/CutoffParameters.lean:127:4: Type mismatch: After simplification, term
+  Tendsto.div log_windowLength_div_complementaryScale_tendsto_zero log_primeCutoff_scale_ratio_tendsto
+    (Mathlib.Meta.NormNum.isNNRat_eq_false
+      (Mathlib.Meta.NormNum.isNNRat_div
+        (Mathlib.Meta.NormNum.isNNRat_mul (Eq.refl HMul.hMul)
+          (Mathlib.Meta.NormNum.IsNat.to_isNNRat (Mathlib.Meta.NormNum.isNat_ofNat ℝ (Eq.refl 25)))
+          (Mathlib.Meta.NormNum.isNNRat_inv_pos
+            (Mathlib.Meta.NormNum.IsNat.to_isNNRat (Mathlib.Meta.NormNum.isNat_ofNat ℝ (Eq.refl 2))))
+          (Eq.refl (Nat.mul 25 1)) (Eq.refl 2)))
+      (Mathlib.Meta.NormNum.IsNat.to_isNNRat (Mathlib.Meta.NormNum.isNat_ofNat ℝ Nat.cast_zero)) (Eq.refl false))
+ has type
+  @Tendsto ℕ ℝ
+    ((fun X => log ↑(windowLength X) / log ↑X ^ (1 - endpointExponent)) / fun X =>
+      log (primeCutoff X) / log ↑X ^ (1 - endpointExponent))
+    atTop (𝓝 0)
+but is expected to have type
+  @Tendsto ℕ ℝ
+    (fun X =>
+      log ↑(windowLength X) / log ↑X ^ (1 - endpointExponent) / (log (primeCutoff X) / log ↑X ^ (1 - endpointExponent)))
+    atTop (𝓝 0)
+error: Erdos647Research/Endpoint/CutoffParameters.lean:133:2: Type mismatch
+  div_div_div_cancel_right₀ (LT.lt.ne' (rpow_pos_of_pos hQ (1 - endpointExponent)))
+has type
+  ∀ (a b : ℝ), a / log ↑X ^ (1 - endpointExponent) / (b / log ↑X ^ (1 - endpointExponent)) = a / b
+but is expected to have type
+  log ↑(windowLength X) / (log ↑X).rpow (1 - endpointExponent) /
+      (log (primeCutoff X) / (log ↑X).rpow (1 - endpointExponent)) =
+    log ↑(windowLength X) / log (primeCutoff X)
+error: Lean exited with code 1
+Some required targets logged failures:
+- Erdos647Research.Endpoint.CutoffParameters
+error: build failed
+
+EXIT_CODE=1

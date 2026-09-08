@@ -1,0 +1,1541 @@
+--- a/AGENTS.md
++++ b/AGENTS.md
+@@ -10,8 +10,15 @@
+   `LEAN_PATH` to compensate.
+ - Edit visible source directly. There are no managed-source copies, overlays,
+   immutable runner inventories, or automatic upstream proof patches.
+-- Preserve the signed `Int` corrected budget, arbitrary integer translations, exact
+-  hypotheses, and protected endpoint target. Do not weaken a statement to compile it.
++- Preserve the signed `Int` corrected budget, arbitrary integer translations and
++  accepted hypotheses. Do not weaken an accepted statement to compile it.
++- The endpoint must preserve a=log 2/(1+log 2) and the scale (log X)^a/log(log X).
++  Its coefficient may be any explicit FIXED c>0. Use EndpointBound c; the historical
++  EndpointClaim at c=1/1000 is retained unchanged but is not mandatory. Do not
++  optimize arbitrary constants at the expense of the proof. Record the actual
++  coefficient and final theorem audit; a candidate coefficient is not proved.
++- Keep the new parameter/endpoint work in its own mathematical changeset, separate
++  from the accepted v36/v37 fixes. Do not add new proof code to that closed scope.
+ - Search existing library lemmas before reimplementing standard analysis.
+ - Use `RUN.sh --gate NAME` for targeted incremental feedback; `RUN.sh` tests all
+   registered current gates. Source edits invalidate Lake traces normally.
+--- a/README.md
++++ b/README.md
+@@ -5,7 +5,7 @@
+ package contains the analytic bridge and unfinished endpoint development.
+ 
+ **This project does not resolve Erdős #647 and does not contain a proof of the
+-proposed final asymptotic endpoint.** The current implemented suite has a recorded **14/14** build/type/axiom pass
++proposed final asymptotic endpoint.** The accepted v36 source snapshot has a recorded **14/14** build/type/axiom pass
+ in the v36 local run, covering **140 distinct audited declarations** with no
+ build or audit warnings. This includes the finite core, analytic bridge and
+ elementary budget estimates—not the final endpoint. See
+@@ -209,3 +209,12 @@
+ [Proof status](docs/proof-status.md) distinguishes historical theorem evidence from
+ current package results. [Contributing](CONTRIBUTING.md) explains the package
+ boundaries and gate registry. The source is distributed with `LICENSE` and `NOTICE`.
++
++## New endpoint-parameter branch (v38)
++
++The accepted finite library is unchanged. Five new research gates develop the
++actual growing parameters and a coefficient-parametrized endpoint interface. The
++full suite now has 19 gates; the new five are not covered by the historical v36
++pass. The final goal keeps the critical exponent and scale with an explicit fixed
++c>0; the historical 1/1000 coefficient is optional. No positive-coefficient endpoint
++bound is yet claimed. See [branch scope](docs/endpoint-parameter-branch.md).
+--- a/docs/proof-status.md
++++ b/docs/proof-status.md
+@@ -3,7 +3,7 @@
+ ## Current accepted repository checkpoint: v36
+ 
+ The local run `erdos647_repo_v36_results_20260908T073909Z_c7bbf1b5`, completed on
+-September 8, 2026, passed **all 14 registered gates** under **Lean/Mathlib 4.32.2**.
++September 8, 2026, passed **all 14 gates registered at that snapshot** under **Lean/Mathlib 4.32.2**.
+ All **37 recorded commands** exited successfully. The 29 build/audit logs contain
+ **zero warning or error diagnostics**; the tooling run passed **144 tests**.
+ 
+@@ -31,7 +31,29 @@
+ | Prime-reciprocal lower bound and fixed-constant small-prime debit | Passed |
+ | `correctedBudget_upper_eventually` | **Newly passed in v36** |
+ | Exact growing-parameter limits and eventual prime-mass/budget gap | Not yet proved |
+-| Amplified-error absorption and final `EndpointClaim` | Not yet proved |
++| Amplified-error absorption and fixed-positive-coefficient endpoint | Not yet proved |
++
++## New parameter branch (v38): acceptance pending
++
++Five new research modules now contain proof-source implementations for the
++coefficient-parametrized statement adapters, protected window/truncation/cutoff
++limits and their exact prime-mass specialization. Their 42 theorem declarations have independent checked-in type/axiom targets. The full
++suite now contains 19 gates; the five new gates are not covered by the historical
++v36 result above. No previously accepted mathematical source is changed.
++
++The principal new target is
++`Erdos647Sieve.Endpoint.endpoint_primeMass_expansion_tendsto_zero`.
++It keeps the constant `log (25/2)` and supplies the actual growth and ordering
++hypotheses of the existing analytic interface. The eventual budget gap and
++weighted-error absorption remain later proof obligations.
++
++The revised endpoint goal is `EndpointBound c` for an **explicit fixed c>0**,
++with the same exponent and scale. `PositiveEndpointClaim` puts c outside the onset
++and X quantifiers. The old 1/1000 target is optional. **No endpoint coefficient
++has yet been proved**; 1/2000 is only a working candidate, not an accepted result.
++A successful statement-interface gate does not change that status.
++
++[Branch scope and next mathematical steps](endpoint-parameter-branch.md).
+ 
+ ## The new mathematical milestone
+ 
+--- a/research/README.md
++++ b/research/README.md
+@@ -23,15 +23,27 @@
+ `FactorialEstimate`, `LogBudgetFactorial`, `PrimeReciprocalLower`,
+ `SmallPrimeDebitEstimate`, and `CorrectedBudgetEstimate`.
+ 
+-All **13 registered research gates** passed alongside the core in the v36
++All **13 research gates registered at the v36 snapshot** passed alongside the core in the v36
+ repository-wide run. This includes the prime-reciprocal lower bound, the exact
+ small-prime debit estimate, and `correctedBudget_upper_eventually`. The
+ [accepted record](../provenance/accepted/v36/README.md) includes the raw audits.
+ 
+-The final parameter asymptotics, mass-versus-budget gap, and amplified-error
+-absorption remain to be proved. No endpoint `Main` proof has been added merely
++A new `Endpoint/` directory contains the v38 proof-source layer:
++`Statement`, `WindowParameters`, `TruncationParameters`, `CutoffParameters`, and
++`PrimeMassParameters`. Five new gates check its 42 theorem declarations; their acceptance
++is pending. The exact constant-sensitive mass expansion is the end of this first
++parameter changeset. The mass-versus-budget gap and amplified-error absorption
++remain subsequent targets. No endpoint `Main` proof has been added merely
+ to make the module tree appear complete. Those obligations belong in a separate
+ mathematical changeset, not in the completed build/dependency fixes PR.
++
++## Endpoint coefficient
++
++The branch seeks `EndpointBound c` for an explicit fixed c>0, preserving the critical
++exponent and (log X)^a/log(log X) scale. The arbitrary historical 1/1000 target is
++not mandatory. The coefficient is outside both the onset and X quantifiers; it
++cannot vary with X. No endpoint coefficient is yet accepted. 1/2000 is a working
++candidate, not a theorem. See the branch charter and coefficient status record.
+ 
+ ## Checking
+ 
+@@ -47,3 +59,10 @@
+ The manuscript under `docs/MANUSCRIPT.md` is preserved as a historical proposed
+ argument. Its original verification comments describe its creation time. Current
+ status is recorded centrally in [proof status](../docs/proof-status.md).
++
++## New mathematical branch
++
++[The v38 branch charter](../docs/endpoint-parameter-branch.md) gives the exact
++parameter formulas, new acceptance targets, reused library interfaces, and the
++remaining route to the final endpoint. The stable finite facade does not import
++any of the new experimental modules.
+--- a/research/lakefile.lean
++++ b/research/lakefile.lean
+@@ -23,7 +23,16 @@
+   moreLeanArgs := #["-DwarningAsError=true"]
+   roots := #[`Erdos647Research.CorrectedBudgetEstimate, `Erdos647Research.EndpointLogBounds, `Erdos647Research.FactorialBounds, `Erdos647Research.FactorialEstimate, `Erdos647Research.LogBudgetFactorial, `Erdos647Research.PrimeReciprocalLower, `Erdos647Research.SmallPrimeDebitEstimate]
+ 
+-/-- All current research proof gates, including pending elementary estimates. -/
++@[default_target]
++lean_lib Erdos647Endpoint where
++  moreLeanArgs := #["-DwarningAsError=true"]
++  roots := #[`Erdos647Research.Endpoint.Statement,
++    `Erdos647Research.Endpoint.WindowParameters,
++    `Erdos647Research.Endpoint.TruncationParameters,
++    `Erdos647Research.Endpoint.CutoffParameters,
++    `Erdos647Research.Endpoint.PrimeMassParameters]
++
++/-- All registered research proof gates, including the endpoint parameter layer. -/
+ script audit (args) do
+   let child ← IO.Process.spawn {
+     cmd := "python3"
+--- a/scripts/check.py
++++ b/scripts/check.py
+@@ -356,7 +356,7 @@
+     def __init__(self, root: Path, args: argparse.Namespace):
+         self.root=root; self.args=args; self.env=clean_env(); self.commands=0
+         if args.jobs: self.env['LEAN_NUM_THREADS']=str(args.jobs)
+-        self.id='erdos647_repo_v36_results_'+datetime.now(timezone.utc).strftime('%Y%m%dT%H%M%SZ')+'_'+uuid.uuid4().hex[:8]
++        self.id='erdos647_repo_v38_results_'+datetime.now(timezone.utc).strftime('%Y%m%dT%H%M%SZ')+'_'+uuid.uuid4().hex[:8]
+         self.dest=root/'results'/self.id
+         if (root/'results').is_symlink(): raise ValueError('Refusing symlinked results directory')
+         self.dest.mkdir(parents=True,exist_ok=False)
+--- a/scripts/gates.json
++++ b/scripts/gates.json
+@@ -330,5 +330,114 @@
+       "small_prime_debit_estimate"
+     ],
+     "historical_status": "pending"
++  },
++  "endpoint_statement": {
++    "package": "research",
++    "build": [
++      "+Erdos647Research.Endpoint.Statement"
++    ],
++    "audits": {
++      "Audit/EndpointStatement.lean": [
++        "Erdos647Sieve.Endpoint.endpointScale_pos",
++        "Erdos647Sieve.Endpoint.endpointRHSWith_le_of_le",
++        "Erdos647Sieve.Endpoint.endpointBound_iff_eventually",
++        "Erdos647Sieve.Endpoint.endpointBound_mono",
++        "Erdos647Sieve.Endpoint.endpointRHSWith_one_div_thousand",
++        "Erdos647Sieve.Endpoint.legacyEndpointClaim_iff",
++        "Erdos647Sieve.Endpoint.positiveEndpointClaim_of_explicit"
++      ]
++    },
++    "prerequisites": [],
++    "historical_status": "new v38 coefficient interface; not an endpoint proof"
++  },
++  "endpoint_window_parameters": {
++    "package": "research",
++    "build": [
++      "+Erdos647Research.Endpoint.WindowParameters"
++    ],
++    "audits": {
++      "Audit/EndpointWindowParameters.lean": [
++        "Erdos647Sieve.Endpoint.endpointExponent_pos",
++        "Erdos647Sieve.Endpoint.endpointExponent_lt_one",
++        "Erdos647Sieve.Endpoint.endpointExponent_cancellation",
++        "Erdos647Sieve.Endpoint.logX_tendsto_atTop",
++        "Erdos647Sieve.Endpoint.logLogX_tendsto_atTop",
++        "Erdos647Sieve.Endpoint.windowScale_tendsto_atTop",
++        "Erdos647Sieve.Endpoint.windowLength_tendsto_atTop",
++        "Erdos647Sieve.Endpoint.windowLength_cast_tendsto_atTop",
++        "Erdos647Sieve.Endpoint.windowLength_ratio_tendsto_one",
++        "Erdos647Sieve.Endpoint.eventually_windowLength_pos",
++        "Erdos647Sieve.Endpoint.log_windowLength_sub_tendsto_zero",
++        "Erdos647Sieve.Endpoint.log_windowLength_div_logLog_tendsto"
++      ]
++    },
++    "prerequisites": [],
++    "historical_status": "new v38 parameter proof source; acceptance pending"
++  },
++  "endpoint_truncation_parameters": {
++    "package": "research",
++    "build": [
++      "+Erdos647Research.Endpoint.TruncationParameters"
++    ],
++    "audits": {
++      "Audit/EndpointTruncationParameters.lean": [
++        "Erdos647Sieve.Endpoint.rounded_hundred_eq_ceil",
++        "Erdos647Sieve.Endpoint.truncationOrder_eq_ceil",
++        "Erdos647Sieve.Endpoint.truncationOrder_even",
++        "Erdos647Sieve.Endpoint.truncationOrder_bounds",
++        "Erdos647Sieve.Endpoint.eventually_truncationOrder_pos",
++        "Erdos647Sieve.Endpoint.truncationOrder_div_windowLength_tendsto",
++        "Erdos647Sieve.Endpoint.truncationOrder_scale_ratio_tendsto",
++        "Erdos647Sieve.Endpoint.truncationOrder_cast_tendsto_atTop"
++      ]
++    },
++    "prerequisites": [
++      "endpoint_window_parameters"
++    ],
++    "historical_status": "new v38 parameter proof source; acceptance pending"
++  },
++  "endpoint_cutoff_parameters": {
++    "package": "research",
++    "build": [
++      "+Erdos647Research.Endpoint.CutoffParameters"
++    ],
++    "audits": {
++      "Audit/EndpointCutoffParameters.lean": [
++        "Erdos647Sieve.Endpoint.primeCutoff_pos",
++        "Erdos647Sieve.Endpoint.log_primeCutoff",
++        "Erdos647Sieve.Endpoint.complementaryScale_tendsto_atTop",
++        "Erdos647Sieve.Endpoint.log_primeCutoff_scale_ratio_tendsto",
++        "Erdos647Sieve.Endpoint.log_primeCutoff_tendsto_atTop",
++        "Erdos647Sieve.Endpoint.primeCutoff_tendsto_atTop",
++        "Erdos647Sieve.Endpoint.loglog_primeCutoff_sub_tendsto",
++        "Erdos647Sieve.Endpoint.log_windowLength_div_complementaryScale_tendsto_zero",
++        "Erdos647Sieve.Endpoint.log_windowLength_div_log_primeCutoff_tendsto_zero",
++        "Erdos647Sieve.Endpoint.eventually_windowLength_lt_primeCutoff",
++        "Erdos647Sieve.Endpoint.momentT_tendsto_zero",
++        "Erdos647Sieve.Endpoint.eventually_momentT_bounds",
++        "Erdos647Sieve.Endpoint.endpoint_parameters_admissible"
++      ]
++    },
++    "prerequisites": [
++      "endpoint_truncation_parameters"
++    ],
++    "historical_status": "new v38 parameter proof source; acceptance pending"
++  },
++  "endpoint_prime_mass_parameters": {
++    "package": "research",
++    "build": [
++      "+Erdos647Research.Endpoint.PrimeMassParameters"
++    ],
++    "audits": {
++      "Audit/EndpointPrimeMassParameters.lean": [
++        "Erdos647Sieve.Endpoint.endpoint_selectedPrimeSum_error_tendsto_zero",
++        "Erdos647Sieve.Endpoint.endpoint_primeMass_expansion_tendsto_zero"
++      ]
++    },
++    "prerequisites": [
++      "endpoint_cutoff_parameters",
++      "selected_prime_reciprocals"
++    ],
++    "historical_status": "new v38 parameter proof source; acceptance pending"
+   }
+ }
+--- a/tests/test_module_paths_v34.py
++++ b/tests/test_module_paths_v34.py
+@@ -222,7 +222,7 @@
+ 
+     def test_numerical_and_theorem_audits_not_demoted(self):
+         check.source_boundary(ROOT)
+-        self.assertEqual(len(check.GATES), 14)
++        self.assertEqual(len([name for name in check.GATES if not name.startswith('endpoint_') or name == 'endpoint_log_bounds']), 14)
+         self.assertEqual(set(check.ALLOW), {'propext','Classical.choice','Quot.sound'})
+ 
+ 
+--- /dev/null
++++ b/docs/changes/v38.md
+@@ -0,0 +1,32 @@
++# v38 — first endpoint-parameter branch overlay
++
++New mathematical effort: prove the exact protected parameter asymptotics and
++specialize the accepted selected-prime Mertens limit. Scope and formulas are in
++[the branch charter](../endpoint-parameter-branch.md).
++
++Adds five research modules and five exact-type/axiom audits (42 theorem declarations),
++one experimental research Lake library, five gate registrations, and regression
++coverage for the new boundary and exact integer rounding.
++
++All 40 accepted mathematical modules and all previous audits remain byte-identical.
++No protected definition, dependency pin, allowed axiom, warning policy, core build
++configuration, CI workflow, or Git ignore rule changes. The existing full mode
++still runs all registered gates; Lake controls incremental rebuilding. The only
++runner implementation change is the diagnostic version prefix.
++
++The v34 registry-size regression is extended to allow the new endpoint statement gate and four parameter gates
++while retaining its check for all 14 baseline gates. New tests check the exact
++19-gate union, independent parameter prerequisites, and the specialized analytic
++boundary. No proof-verification check is removed.
++
++The previous fixes PR remains ready on its accepted snapshot. The new parameter
++PR has its own pending build/type/axiom acceptance; it is not an extension of that
++fixes PR. The budget-gap and final endpoint are not declared proved here.
++
++## Revised coefficient requirement
++
++Adds EndpointBound c and PositiveEndpointClaim in research only. They preserve the
++critical exponent and asymptotic scale. The historical hardcoded 1/1000 target is
++unchanged but optional. The coefficient is fixed independently of X, and no
++endpoint bound for any positive coefficient is claimed yet. The working candidate
++1/2000 is explicitly labeled provisional in the coefficient-status record.
+--- /dev/null
++++ b/docs/endpoint-coefficient-status.json
+@@ -0,0 +1,25 @@
++{
++  "version": "v38",
++  "updated": "2026-09-08",
++  "scope": "endpoint research, not the accepted finite core",
++  "goal_declaration": "Erdos647Sieve.Endpoint.PositiveEndpointClaim",
++  "explicit_bound_declaration": "Erdos647Sieve.Endpoint.EndpointBound",
++  "critical_exponent": "Real.log 2 / (1 + Real.log 2)",
++  "saving_scale": "Real.rpow (Real.log (X : Real)) endpointExponent / Real.log (Real.log (X : Real))",
++  "quantifier_order": "exists c : Real, 0 < c and exists X0 : Nat, 3 <= X0 and forall X >= X0, bound(c, X)",
++  "coefficient_may_depend_on_X": false,
++  "historical_coefficient": {
++    "numerator": 1,
++    "denominator": 1000,
++    "required": false
++  },
++  "working_candidate": {
++    "numerator": 1,
++    "denominator": 2000,
++    "status": "not an endpoint theorem; may change without reducing exponent or scale"
++  },
++  "proved_coefficient": null,
++  "proved_endpoint_theorem": null,
++  "endpoint_acceptance_evidence": null,
++  "optimization_policy": "Retain stronger coefficients when essentially free; do not optimize arbitrary constants. No fixed positive endpoint bound is established by this overlay."
++}
+--- /dev/null
++++ b/docs/endpoint-parameter-branch.md
+@@ -0,0 +1,173 @@
++# New mathematical branch: endpoint parameter asymptotics
++
++Date: 2026-09-08. First source delivery: v38.
++
++## Goal and PR boundary
++
++This is a **new mathematical changeset**, separate from the accepted v36 fixes
++and v37 evidence update. The first PR on this branch should establish the actual
++parameter asymptotics and their specialization of the already accepted Mertens
++interface. It should not include another toolchain migration, upstream port, or
++rewrite of the finite library.
++
++**Why this is necessary:** the finite theorem permits any admissible parameters;
++the Mertens bridge requires two cutoffs to diverge and be ordered. Neither result
++by itself proves those properties for the particular parameters in `Specification`.
++The new source discharges that missing connection, including the constant term.
++
++The accepted baseline remains the recorded 14/14 v36 result. The five new gates
++are pending; code presence and packaging tests do not establish their acceptance.
++The 40 previously accepted mathematical modules and their audit files are unchanged.
++
++## Endpoint coefficient policy (user revision, 2026-09-08)
++
++The final goal preserves the **critical exponent and exact asymptotic scale** but
++no longer requires the arbitrary coefficient 1/1000:
++
++\[
++ C(X) \le X\exp\!\left(-c\,\frac{(\log X)^a}{\log\log X}\right),\qquad
++ a=\frac{\log2}{1+\log2},\quad c>0.
++\]
++
++Here c is one explicit fixed real number, chosen **before** the onset X0 and
++before X. It is not c(X), and it cannot tend to zero. The eventual onset may depend
++on the chosen fixed coefficient. The final theorem must have no unproved analytic,
++cutoff, budget-gap, or absorption premise.
++
++`Endpoint/Statement.lean` introduces `EndpointBound c`, `endpointRHSWith c X`, and
++`PositiveEndpointClaim` without modifying `Specification.lean`. It proves the
++coefficient-order and legacy-statement adapters. An audited implication whose
++premise is `EndpointBound d` is **not** itself a proof of an endpoint bound.
++
++The historical `EndpointClaim` remains unchanged and is identified with
++`EndpointBound (1/1000)`. Attaining that specialization is not an acceptance
++requirement for this branch. A convenient working witness is **1/2000**, subject
++to the later proof; it is not a reported proved coefficient. Carry an available
++positive decay margin symbolically, and retain stronger smaller-than-margin
++coefficients when the general absorption lemma gives them at essentially no cost.
++Do not spend a separate optimization effort chasing 1/1000 or another number.
++
++**Currently proved endpoint coefficient: none.** The machine-readable
++[coefficient status](endpoint-coefficient-status.json) distinguishes the working
++choice from an actual proved result. A final acceptance must record the explicit
++witness, theorem name, source revision and exact-type/axiom evidence together.
++
++## Exact internal parameters — no replacement definitions
++
++All limits below are along natural X tending to infinity. Put
++
++\[
++Q=\log X,\quad L=\log\log X,\quad
++ a=\frac{\log2}{1+\log2},\quad H=\lfloor Q^a\rfloor,
++\]
++\[
++J=2\left\lceil H/100\right\rceil
++ =2((H+99)\mathbin{\mathrm{div}}100),\quad
++ y=X^{1/(4J)},\quad t=1/(1000L),\quad z=1-t.
++\]
++
++The internal choice t=1/(1000L) is retained because it already has useful proved
++logarithm bounds. That internal tuning number does **not** force the output
++coefficient c to equal 1/1000. Changing it is unnecessary for this first milestone.
++
++These are the existing `endpointExponent`, `windowLength`, `truncationOrder`,
++`primeCutoff`, and `momentT`. The new files do not redeclare them. Small X is not
++silently excluded from total definitions: positivity claims have explicit finite
++hypotheses or are eventual statements. The ceiling identity and the strict rounding
++bound include H=0 and exact multiples of 100.
++
++## v38 proof-source interfaces and acceptance targets
++
++| Module (under `research/Erdos647Research/Endpoint/`) | Main targets |
++|---|---|
++| `Statement.lean` | Fixed-positive-coefficient goal; coefficient monotonicity; eventual formulation; exact correspondence with the legacy 1/1000 statement. |
++| `WindowParameters.lean` | 0<a<1; a/log 2=1-a; H tends to infinity; H/Q^a tends to 1; log H-aL tends to 0; log H/L tends to a. |
++| `TruncationParameters.lean` | Exact ceiling correspondence; even J; H/50 <= J < H/50+2; eventual positivity; J/H and J/Q^a tend to 1/50. |
++| `CutoffParameters.lean` | Exact log y; log y/Q^(1-a) tends to 25/2; y tends to infinity; log log y-(1-a)L tends to log(25/2); H<y eventually; t tends to zero and eventually lies in (0,1/2]; all finite-moment parameter hypotheses. |
++| `PrimeMassParameters.lean` | Applies the existing project Mertens interface with those proved cutoff hypotheses; produces the exact prime-mass expansion below. |
++
++For the exact `primeMass`, write lambda=primeMass H y. The final source target is
++
++\[
++\boxed{\frac\lambda H-
++ \left((1-a)L-\log\log H+\log(25/2)\right)\longrightarrow0.}
++\]
++
++Its declaration is
++`Erdos647Sieve.Endpoint.endpoint_primeMass_expansion_tendsto_zero`.
++There is no free cutoff function, growth hypothesis, assumed prime-distribution
++estimate, or numerical approximation in its statement.
++
++The source uses the exact identity `log y=Q/(4J)`, not a limit theorem for a fixed
++exponent applied incorrectly to a variable exponent. Relative limits are converted
++to logarithmic differences to retain log(25/2); replacing them by a generic O(1)
++error would be insufficient for the next constant-gap theorem.
++
++Every one of the 42 new theorem declarations has a checked-in type example and transitive
++axiom report target. Expanded definition checks also pin the coefficient quantifier
++order, exponent and scale. Separate gates are `endpoint_statement`, `endpoint_window_parameters`,
++`endpoint_truncation_parameters`, `endpoint_cutoff_parameters`, and
++`endpoint_prime_mass_parameters`. The statement and first three parameter modules use only Mathlib and project
++parameter lemmas. Only the last imports the project-level selected-prime interface;
++none directly imports upstream PNT+.
++
++## What comes after these gates
++
++The next proof combines the displayed prime-mass expansion with the accepted
++`correctedBudget_upper_eventually`. Both expressions contain -log log H, and
++`a/log 2=1-a` cancels the leading L term. The intended surviving gap is
++
++\[
++\log(25/2)+\frac1{\log2}-2>\frac32.
++\]
++
++The strict numerical inequality is already accepted. Its application to the
++actual signed budget is **not** supplied by v38; the next quantitative target is
++
++\[
++\lambda-B_H\ge\tfrac32 H\quad\text{eventually}.
++\]
++
++Further obligations remain B_H <= HL, lambda <= HL, the amplified principal
++and factorial-tail estimates, the arithmetic-error comparison, and absorption of
++all terms into `endpointRHSWith c` for an explicit fixed c>0. Negative B_H
++retains its existing separate
++candidate-count case. No `endpoint : EndpointClaim` or `Endpoint/Main.lean` is
++introduced by this overlay.
++
++The eventual overall target is `EndpointBound c` for an explicit positive
++coefficient, followed by the existential consequence `PositiveEndpointClaim`.
++The preserved legacy `EndpointClaim` is optional, not a blocker.
++
++This is a sparsity conclusion, not a proof that no candidate above 24 exists.
++No explicit numerical onset is asserted by these eventual parameter limits.
++
++## Engineering boundary
++
++The root finite package remains untouched. One new experimental Lake library is
++registered in the existing research package. The default full runner now selects
++19 gates: the existing 14 plus the four parameter gates and the statement gate.
++Selective checking and Lake's ordinary
++incremental invalidation remain unchanged. The same source/type/axiom, module-owner,
++admission and warning checks apply. No allowed axiom, warning suppression, setup
++policy, dependency pin, cache path, Git ignore rule, or CI workflow is changed.
++
++Results use the unique `erdos647_repo_v38_results_` prefix. The prior fixes PR is
++still bounded by its v36 accepted source snapshot; its description is not edited
++by this new mathematical work. No remote branch, PR, or publication is created by
++this source overlay.
++
++## Reused library interfaces
++
++The following were inspected at the actual locked Mathlib commit
++`905b95818eb32af7874a58b427f50c1711a5e96c`, not at a newer default branch:
++
++- `Analysis/SpecificLimits/Basic.lean`: `tendsto_nat_floor_atTop`,
++  `tendsto_nat_floor_div_atTop`, and `Filter.Tendsto.num`.
++- `Algebra/Order/Floor/Semiring.lean`: `Nat.le_ceil` and `Nat.ceil_le`.
++- `Analysis/SpecialFunctions/Pow/Asymptotics.lean`: `tendsto_rpow_atTop` and
++  `isLittleO_log_rpow_atTop`.
++
++The integer ceiling bridge and the parameter specialization are project adapters.
++The handoff's older compiler recommendation is not used: the working Lean/Mathlib
++4.32.2 pins remain unchanged.
+--- /dev/null
++++ b/docs/pull-requests/endpoint-parameters.md
+@@ -0,0 +1,39 @@
++# Proposed PR: Add fixed-coefficient endpoint interface and parameter asymptotics
++
++## Purpose
++
++Start the mathematical branch after the accepted core/research fixes. Connect the
++actual protected endpoint parameters to the finite sieve and Mertens interfaces,
++retaining the constant log(25/2) needed by the critical budget-gap argument.
++
++## Changes
++
++Adds a fixed-coefficient endpoint statement interface and separate window,
++truncation, cutoff and prime-mass parameter modules under
++`Erdos647Research.Endpoint`. Their theorem namespace is `Erdos647Sieve.Endpoint`.
++The existing 40 mathematical modules, exported finite API and previous audits are
++unchanged. There is no toolchain migration or direct PNT+ import in endpoint code.
++
++The final endpoint may use any explicit fixed c>0 at the preserved exponent and
++scale. The old 1/1000 statement remains for reference, not as a completion barrier.
++The source includes coefficient weakening and legacy equivalence adapters; neither
++is an endpoint proof. No fixed coefficient is claimed by this changeset.
++
++## Acceptance checklist
++
++- [ ] All 19 registered gates pass on the PR source revision.
++- [ ] New exact types match the protected parameter definitions.
++- [ ] The new endpoint definition keeps c>0 fixed outside onset and X quantifiers.
++- [ ] All 42 new theorem axiom reports use only the existing permitted foundations.
++- [ ] No warnings, admission-scan failures, blocked gates or mid-run source changes.
++- [ ] Review verifies the variable-exponent calculation and retained constant.
++
++The new limit declarations have proof-source implementations; the checkboxes are
++pending, not inferred from packaging tests. The v36 14-gate evidence continues to
++support the previous source snapshot, not an automatic pass of these additions.
++
++## Not included
++
++The eventual lambda-minus-budget gap, normalized upper bounds, weighted-error
++absorption, an actual positive-coefficient endpoint bound, explicit onset, and a resolution of Erdős #647
++are not claimed by this PR. See the branch charter for the remaining sequence.
+--- /dev/null
++++ b/research/Audit/EndpointCutoffParameters.lean
+@@ -0,0 +1,59 @@
++import Erdos647Research.Endpoint.CutoffParameters
++
++set_option autoImplicit false
++set_option warningAsError true
++open scoped BigOperators Topology
++open Filter Erdos647Sieve
++
++example : (∀ X : ℕ, 0 < X → 0 < primeCutoff X) := Erdos647Sieve.Endpoint.primeCutoff_pos
++#check Erdos647Sieve.Endpoint.primeCutoff_pos
++#print axioms Erdos647Sieve.Endpoint.primeCutoff_pos
++
++example : (∀ X : ℕ, 0 < X → Real.log (primeCutoff X) = Real.log (X : ℝ) / (4 * (truncationOrder X : ℝ))) := Erdos647Sieve.Endpoint.log_primeCutoff
++#check Erdos647Sieve.Endpoint.log_primeCutoff
++#print axioms Erdos647Sieve.Endpoint.log_primeCutoff
++
++example : (Tendsto (fun X : ℕ => Real.rpow (Real.log (X : ℝ)) (1 - endpointExponent)) atTop atTop) := Erdos647Sieve.Endpoint.complementaryScale_tendsto_atTop
++#check Erdos647Sieve.Endpoint.complementaryScale_tendsto_atTop
++#print axioms Erdos647Sieve.Endpoint.complementaryScale_tendsto_atTop
++
++example : (Tendsto (fun X : ℕ => Real.log (primeCutoff X) / Real.rpow (Real.log (X : ℝ)) (1 - endpointExponent)) atTop (𝓝 ((25 : ℝ) / 2))) := Erdos647Sieve.Endpoint.log_primeCutoff_scale_ratio_tendsto
++#check Erdos647Sieve.Endpoint.log_primeCutoff_scale_ratio_tendsto
++#print axioms Erdos647Sieve.Endpoint.log_primeCutoff_scale_ratio_tendsto
++
++example : (Tendsto (fun X : ℕ => Real.log (primeCutoff X)) atTop atTop) := Erdos647Sieve.Endpoint.log_primeCutoff_tendsto_atTop
++#check Erdos647Sieve.Endpoint.log_primeCutoff_tendsto_atTop
++#print axioms Erdos647Sieve.Endpoint.log_primeCutoff_tendsto_atTop
++
++example : (Tendsto primeCutoff atTop atTop) := Erdos647Sieve.Endpoint.primeCutoff_tendsto_atTop
++#check Erdos647Sieve.Endpoint.primeCutoff_tendsto_atTop
++#print axioms Erdos647Sieve.Endpoint.primeCutoff_tendsto_atTop
++
++example : (Tendsto (fun X : ℕ => Real.log (Real.log (primeCutoff X)) - (1 - endpointExponent) * Real.log (Real.log (X : ℝ))) atTop (𝓝 (Real.log ((25 : ℝ) / 2)))) := Erdos647Sieve.Endpoint.loglog_primeCutoff_sub_tendsto
++#check Erdos647Sieve.Endpoint.loglog_primeCutoff_sub_tendsto
++#print axioms Erdos647Sieve.Endpoint.loglog_primeCutoff_sub_tendsto
++
++example : (Tendsto (fun X : ℕ => Real.log (windowLength X : ℝ) / Real.rpow (Real.log (X : ℝ)) (1 - endpointExponent)) atTop (𝓝 0)) := Erdos647Sieve.Endpoint.log_windowLength_div_complementaryScale_tendsto_zero
++#check Erdos647Sieve.Endpoint.log_windowLength_div_complementaryScale_tendsto_zero
++#print axioms Erdos647Sieve.Endpoint.log_windowLength_div_complementaryScale_tendsto_zero
++
++example : (Tendsto (fun X : ℕ => Real.log (windowLength X : ℝ) / Real.log (primeCutoff X)) atTop (𝓝 0)) := Erdos647Sieve.Endpoint.log_windowLength_div_log_primeCutoff_tendsto_zero
++#check Erdos647Sieve.Endpoint.log_windowLength_div_log_primeCutoff_tendsto_zero
++#print axioms Erdos647Sieve.Endpoint.log_windowLength_div_log_primeCutoff_tendsto_zero
++
++example : (∀ᶠ X : ℕ in atTop, (windowLength X : ℝ) < primeCutoff X) := Erdos647Sieve.Endpoint.eventually_windowLength_lt_primeCutoff
++#check Erdos647Sieve.Endpoint.eventually_windowLength_lt_primeCutoff
++#print axioms Erdos647Sieve.Endpoint.eventually_windowLength_lt_primeCutoff
++
++example : (Tendsto momentT atTop (𝓝 0)) := Erdos647Sieve.Endpoint.momentT_tendsto_zero
++#check Erdos647Sieve.Endpoint.momentT_tendsto_zero
++#print axioms Erdos647Sieve.Endpoint.momentT_tendsto_zero
++
++example : (∀ᶠ X : ℕ in atTop, 0 < momentT X ∧ momentT X ≤ (1 : ℝ) / 2) := Erdos647Sieve.Endpoint.eventually_momentT_bounds
++#check Erdos647Sieve.Endpoint.eventually_momentT_bounds
++#print axioms Erdos647Sieve.Endpoint.eventually_momentT_bounds
++
++example : (∀ᶠ X : ℕ in atTop, 1 ≤ X ∧ 1 ≤ windowLength X ∧ (windowLength X : ℝ) < primeCutoff X ∧ 0 < 1 - momentT X ∧ 1 - momentT X < 1 ∧ Even (truncationOrder X)) := Erdos647Sieve.Endpoint.endpoint_parameters_admissible
++#check Erdos647Sieve.Endpoint.endpoint_parameters_admissible
++#print axioms Erdos647Sieve.Endpoint.endpoint_parameters_admissible
++
+--- /dev/null
++++ b/research/Audit/EndpointPrimeMassParameters.lean
+@@ -0,0 +1,15 @@
++import Erdos647Research.Endpoint.PrimeMassParameters
++
++set_option autoImplicit false
++set_option warningAsError true
++open scoped BigOperators Topology
++open Filter Erdos647Sieve
++
++example : (Tendsto (fun X : ℕ => (∑ p ∈ selectedPrimes (windowLength X) (primeCutoff X), (1 : ℝ) / (p : ℝ)) - (Real.log (Real.log (primeCutoff X)) - Real.log (Real.log (windowLength X : ℝ)))) atTop (𝓝 0)) := Erdos647Sieve.Endpoint.endpoint_selectedPrimeSum_error_tendsto_zero
++#check Erdos647Sieve.Endpoint.endpoint_selectedPrimeSum_error_tendsto_zero
++#print axioms Erdos647Sieve.Endpoint.endpoint_selectedPrimeSum_error_tendsto_zero
++
++example : (Tendsto (fun X : ℕ => primeMass (windowLength X) (primeCutoff X) / (windowLength X : ℝ) - ((1 - endpointExponent) * Real.log (Real.log (X : ℝ)) - Real.log (Real.log (windowLength X : ℝ)) + Real.log ((25 : ℝ) / 2))) atTop (𝓝 0)) := Erdos647Sieve.Endpoint.endpoint_primeMass_expansion_tendsto_zero
++#check Erdos647Sieve.Endpoint.endpoint_primeMass_expansion_tendsto_zero
++#print axioms Erdos647Sieve.Endpoint.endpoint_primeMass_expansion_tendsto_zero
++
+--- /dev/null
++++ b/research/Audit/EndpointStatement.lean
+@@ -0,0 +1,48 @@
++import Erdos647Research.Endpoint.Statement
++
++set_option autoImplicit false
++set_option warningAsError true
++open scoped Topology
++open Filter Erdos647Sieve Erdos647Sieve.Endpoint
++
++-- Expanded definition checks fix the exponent, scale and quantifier order.
++example : endpointExponent = Real.log 2 / (1 + Real.log 2) := rfl
++example (c : ℝ) : EndpointBound c =
++    (∃ X0 : ℕ, 3 ≤ X0 ∧ ∀ X : ℕ, X0 ≤ X →
++      (candidateCount X : ℝ) ≤ (X : ℝ) * Real.exp
++        (-(c * (Real.rpow (Real.log (X : ℝ))
++          (Real.log 2 / (1 + Real.log 2)) / Real.log (Real.log (X : ℝ)))))) := rfl
++example : PositiveEndpointClaim =
++    (∃ c : ℝ, 0 < c ∧ ∃ X0 : ℕ, 3 ≤ X0 ∧ ∀ X : ℕ, X0 ≤ X →
++      (candidateCount X : ℝ) ≤ (X : ℝ) * Real.exp
++        (-(c * (Real.rpow (Real.log (X : ℝ))
++          (Real.log 2 / (1 + Real.log 2)) / Real.log (Real.log (X : ℝ)))))) := rfl
++
++example : (∀ X : ℕ, 3 ≤ X → 0 < endpointScale X) := Erdos647Sieve.Endpoint.endpointScale_pos
++#check Erdos647Sieve.Endpoint.endpointScale_pos
++#print axioms Erdos647Sieve.Endpoint.endpointScale_pos
++
++example : (∀ c d : ℝ, c ≤ d → ∀ X : ℕ, 3 ≤ X → endpointRHSWith d X ≤ endpointRHSWith c X) := Erdos647Sieve.Endpoint.endpointRHSWith_le_of_le
++#check Erdos647Sieve.Endpoint.endpointRHSWith_le_of_le
++#print axioms Erdos647Sieve.Endpoint.endpointRHSWith_le_of_le
++
++example : (∀ c : ℝ, EndpointBound c ↔ ∀ᶠ X : ℕ in atTop, (candidateCount X : ℝ) ≤ endpointRHSWith c X) := Erdos647Sieve.Endpoint.endpointBound_iff_eventually
++#check Erdos647Sieve.Endpoint.endpointBound_iff_eventually
++#print axioms Erdos647Sieve.Endpoint.endpointBound_iff_eventually
++
++example : (∀ c d : ℝ, c ≤ d → EndpointBound d → EndpointBound c) := Erdos647Sieve.Endpoint.endpointBound_mono
++#check Erdos647Sieve.Endpoint.endpointBound_mono
++#print axioms Erdos647Sieve.Endpoint.endpointBound_mono
++
++example : (∀ X : ℕ, endpointRHSWith ((1 : ℝ) / 1000) X = endpointRHS X) := Erdos647Sieve.Endpoint.endpointRHSWith_one_div_thousand
++#check Erdos647Sieve.Endpoint.endpointRHSWith_one_div_thousand
++#print axioms Erdos647Sieve.Endpoint.endpointRHSWith_one_div_thousand
++
++example : (EndpointClaim ↔ EndpointBound ((1 : ℝ) / 1000)) := Erdos647Sieve.Endpoint.legacyEndpointClaim_iff
++#check Erdos647Sieve.Endpoint.legacyEndpointClaim_iff
++#print axioms Erdos647Sieve.Endpoint.legacyEndpointClaim_iff
++
++example : (∀ c : ℝ, 0 < c → EndpointBound c → PositiveEndpointClaim) := Erdos647Sieve.Endpoint.positiveEndpointClaim_of_explicit
++#check Erdos647Sieve.Endpoint.positiveEndpointClaim_of_explicit
++#print axioms Erdos647Sieve.Endpoint.positiveEndpointClaim_of_explicit
++
+--- /dev/null
++++ b/research/Audit/EndpointTruncationParameters.lean
+@@ -0,0 +1,39 @@
++import Erdos647Research.Endpoint.TruncationParameters
++
++set_option autoImplicit false
++set_option warningAsError true
++open scoped BigOperators Topology
++open Filter Erdos647Sieve
++
++example : (∀ H : ℕ, (H + 99) / 100 = Nat.ceil ((H : ℝ) / 100)) := Erdos647Sieve.Endpoint.rounded_hundred_eq_ceil
++#check Erdos647Sieve.Endpoint.rounded_hundred_eq_ceil
++#print axioms Erdos647Sieve.Endpoint.rounded_hundred_eq_ceil
++
++example : (∀ X : ℕ, truncationOrder X = 2 * Nat.ceil ((windowLength X : ℝ) / 100)) := Erdos647Sieve.Endpoint.truncationOrder_eq_ceil
++#check Erdos647Sieve.Endpoint.truncationOrder_eq_ceil
++#print axioms Erdos647Sieve.Endpoint.truncationOrder_eq_ceil
++
++example : (∀ X : ℕ, Even (truncationOrder X)) := Erdos647Sieve.Endpoint.truncationOrder_even
++#check Erdos647Sieve.Endpoint.truncationOrder_even
++#print axioms Erdos647Sieve.Endpoint.truncationOrder_even
++
++example : (∀ X : ℕ, (windowLength X : ℝ) / 50 ≤ (truncationOrder X : ℝ) ∧ (truncationOrder X : ℝ) < (windowLength X : ℝ) / 50 + 2) := Erdos647Sieve.Endpoint.truncationOrder_bounds
++#check Erdos647Sieve.Endpoint.truncationOrder_bounds
++#print axioms Erdos647Sieve.Endpoint.truncationOrder_bounds
++
++example : (∀ᶠ X : ℕ in atTop, 1 ≤ truncationOrder X) := Erdos647Sieve.Endpoint.eventually_truncationOrder_pos
++#check Erdos647Sieve.Endpoint.eventually_truncationOrder_pos
++#print axioms Erdos647Sieve.Endpoint.eventually_truncationOrder_pos
++
++example : (Tendsto (fun X : ℕ => (truncationOrder X : ℝ) / (windowLength X : ℝ)) atTop (𝓝 ((1 : ℝ) / 50))) := Erdos647Sieve.Endpoint.truncationOrder_div_windowLength_tendsto
++#check Erdos647Sieve.Endpoint.truncationOrder_div_windowLength_tendsto
++#print axioms Erdos647Sieve.Endpoint.truncationOrder_div_windowLength_tendsto
++
++example : (Tendsto (fun X : ℕ => (truncationOrder X : ℝ) / Real.rpow (Real.log (X : ℝ)) endpointExponent) atTop (𝓝 ((1 : ℝ) / 50))) := Erdos647Sieve.Endpoint.truncationOrder_scale_ratio_tendsto
++#check Erdos647Sieve.Endpoint.truncationOrder_scale_ratio_tendsto
++#print axioms Erdos647Sieve.Endpoint.truncationOrder_scale_ratio_tendsto
++
++example : (Tendsto (fun X : ℕ => (truncationOrder X : ℝ)) atTop atTop) := Erdos647Sieve.Endpoint.truncationOrder_cast_tendsto_atTop
++#check Erdos647Sieve.Endpoint.truncationOrder_cast_tendsto_atTop
++#print axioms Erdos647Sieve.Endpoint.truncationOrder_cast_tendsto_atTop
++
+--- /dev/null
++++ b/research/Audit/EndpointWindowParameters.lean
+@@ -0,0 +1,55 @@
++import Erdos647Research.Endpoint.WindowParameters
++
++set_option autoImplicit false
++set_option warningAsError true
++open scoped BigOperators Topology
++open Filter Erdos647Sieve
++
++example : (0 < endpointExponent) := Erdos647Sieve.Endpoint.endpointExponent_pos
++#check Erdos647Sieve.Endpoint.endpointExponent_pos
++#print axioms Erdos647Sieve.Endpoint.endpointExponent_pos
++
++example : (endpointExponent < 1) := Erdos647Sieve.Endpoint.endpointExponent_lt_one
++#check Erdos647Sieve.Endpoint.endpointExponent_lt_one
++#print axioms Erdos647Sieve.Endpoint.endpointExponent_lt_one
++
++example : (endpointExponent / Real.log 2 = 1 - endpointExponent) := Erdos647Sieve.Endpoint.endpointExponent_cancellation
++#check Erdos647Sieve.Endpoint.endpointExponent_cancellation
++#print axioms Erdos647Sieve.Endpoint.endpointExponent_cancellation
++
++example : (Tendsto (fun X : ℕ => Real.log (X : ℝ)) atTop atTop) := Erdos647Sieve.Endpoint.logX_tendsto_atTop
++#check Erdos647Sieve.Endpoint.logX_tendsto_atTop
++#print axioms Erdos647Sieve.Endpoint.logX_tendsto_atTop
++
++example : (Tendsto (fun X : ℕ => Real.log (Real.log (X : ℝ))) atTop atTop) := Erdos647Sieve.Endpoint.logLogX_tendsto_atTop
++#check Erdos647Sieve.Endpoint.logLogX_tendsto_atTop
++#print axioms Erdos647Sieve.Endpoint.logLogX_tendsto_atTop
++
++example : (Tendsto (fun X : ℕ => Real.rpow (Real.log (X : ℝ)) endpointExponent) atTop atTop) := Erdos647Sieve.Endpoint.windowScale_tendsto_atTop
++#check Erdos647Sieve.Endpoint.windowScale_tendsto_atTop
++#print axioms Erdos647Sieve.Endpoint.windowScale_tendsto_atTop
++
++example : (Tendsto windowLength atTop atTop) := Erdos647Sieve.Endpoint.windowLength_tendsto_atTop
++#check Erdos647Sieve.Endpoint.windowLength_tendsto_atTop
++#print axioms Erdos647Sieve.Endpoint.windowLength_tendsto_atTop
++
++example : (Tendsto (fun X : ℕ => (windowLength X : ℝ)) atTop atTop) := Erdos647Sieve.Endpoint.windowLength_cast_tendsto_atTop
++#check Erdos647Sieve.Endpoint.windowLength_cast_tendsto_atTop
++#print axioms Erdos647Sieve.Endpoint.windowLength_cast_tendsto_atTop
++
++example : (Tendsto (fun X : ℕ => (windowLength X : ℝ) / Real.rpow (Real.log (X : ℝ)) endpointExponent) atTop (𝓝 1)) := Erdos647Sieve.Endpoint.windowLength_ratio_tendsto_one
++#check Erdos647Sieve.Endpoint.windowLength_ratio_tendsto_one
++#print axioms Erdos647Sieve.Endpoint.windowLength_ratio_tendsto_one
++
++example : (∀ᶠ X : ℕ in atTop, 1 ≤ windowLength X) := Erdos647Sieve.Endpoint.eventually_windowLength_pos
++#check Erdos647Sieve.Endpoint.eventually_windowLength_pos
++#print axioms Erdos647Sieve.Endpoint.eventually_windowLength_pos
++
++example : (Tendsto (fun X : ℕ => Real.log (windowLength X : ℝ) - endpointExponent * Real.log (Real.log (X : ℝ))) atTop (𝓝 0)) := Erdos647Sieve.Endpoint.log_windowLength_sub_tendsto_zero
++#check Erdos647Sieve.Endpoint.log_windowLength_sub_tendsto_zero
++#print axioms Erdos647Sieve.Endpoint.log_windowLength_sub_tendsto_zero
++
++example : (Tendsto (fun X : ℕ => Real.log (windowLength X : ℝ) / Real.log (Real.log (X : ℝ))) atTop (𝓝 endpointExponent)) := Erdos647Sieve.Endpoint.log_windowLength_div_logLog_tendsto
++#check Erdos647Sieve.Endpoint.log_windowLength_div_logLog_tendsto
++#print axioms Erdos647Sieve.Endpoint.log_windowLength_div_logLog_tendsto
++
+--- /dev/null
++++ b/research/Erdos647Research/Endpoint/CutoffParameters.lean
+@@ -0,0 +1,176 @@
++/-
++The protected prime cutoff and moment weight at natural interval lengths.
++The variable exponent is handled through its exact logarithm; no fixed-exponent
++limit is applied to the cutoff itself.
++-/
++import Erdos647Research.Endpoint.TruncationParameters
++
++set_option autoImplicit false
++open scoped Topology
++open Filter Real
++
++noncomputable section
++namespace Erdos647Sieve.Endpoint
++
++/-- Positive bases give a positive prime cutoff even when J=0. -/
++theorem primeCutoff_pos (X : ℕ) (hX : 0 < X) : 0 < primeCutoff X := by
++  unfold primeCutoff
++  exact Real.rpow_pos_of_pos (by exact_mod_cast hX) _
++
++/-- Exact logarithm of the variable-exponent prime cutoff. -/
++theorem log_primeCutoff (X : ℕ) (hX : 0 < X) :
++    Real.log (primeCutoff X) = Real.log (X : ℝ) / (4 * (truncationOrder X : ℝ)) := by
++  unfold primeCutoff
++  rw [Real.log_rpow (by exact_mod_cast hX : 0 < (X : ℝ))]
++  ring
++
++/-- The complementary logarithmic-power scale tends to infinity. -/
++theorem complementaryScale_tendsto_atTop :
++    Tendsto (fun X : ℕ => Real.rpow (Real.log (X : ℝ)) (1 - endpointExponent))
++      atTop atTop :=
++  (tendsto_rpow_atTop (sub_pos.mpr endpointExponent_lt_one)).comp logX_tendsto_atTop
++
++/-- The explicit coefficient 25/2 comes from J/H tending to 1/50. -/
++theorem log_primeCutoff_scale_ratio_tendsto :
++    Tendsto (fun X : ℕ => Real.log (primeCutoff X) /
++      Real.rpow (Real.log (X : ℝ)) (1 - endpointExponent))
++      atTop (𝓝 ((25 : ℝ) / 2)) := by
++  have h : Tendsto (fun X : ℕ =>
++      (4 * ((truncationOrder X : ℝ) /
++        Real.rpow (Real.log (X : ℝ)) endpointExponent))⁻¹)
++      atTop (𝓝 ((25 : ℝ) / 2)) := by
++    simpa using (truncationOrder_scale_ratio_tendsto.const_mul 4).inv₀
++      (by norm_num : (4 * ((1 : ℝ) / 50)) ≠ 0)
++  apply h.congr'
++  filter_upwards [eventually_ge_atTop (2 : ℕ)] with X hX
++  have hQ : 0 < Real.log (X : ℝ) :=
++    Real.log_pos (by exact_mod_cast (show 1 < X by omega))
++  have hc : Real.rpow (Real.log (X : ℝ)) (1 - endpointExponent) ≠ 0 :=
++    (Real.rpow_pos_of_pos hQ _).ne'
++  have hp : Real.log (X : ℝ) =
++      Real.rpow (Real.log (X : ℝ)) endpointExponent *
++        Real.rpow (Real.log (X : ℝ)) (1 - endpointExponent) := by
++    rw [← Real.rpow_add hQ]
++    simp
++  symm
++  rw [log_primeCutoff X (by omega)]
++  calc
++    Real.log (X : ℝ) / (4 * (truncationOrder X : ℝ)) /
++        Real.rpow (Real.log (X : ℝ)) (1 - endpointExponent) =
++      (Real.log (X : ℝ) / Real.rpow (Real.log (X : ℝ)) (1 - endpointExponent)) /
++        (4 * (truncationOrder X : ℝ)) := by ring
++    _ = Real.rpow (Real.log (X : ℝ)) endpointExponent /
++        (4 * (truncationOrder X : ℝ)) := by rw [(div_eq_iff hc).mpr hp]
++    _ = (4 * ((truncationOrder X : ℝ) /
++        Real.rpow (Real.log (X : ℝ)) endpointExponent))⁻¹ := by
++      rw [← mul_div_assoc, inv_div]
++
++/-- In particular, log y tends to infinity. -/
++theorem log_primeCutoff_tendsto_atTop :
++    Tendsto (fun X : ℕ => Real.log (primeCutoff X)) atTop atTop :=
++  complementaryScale_tendsto_atTop.num (by norm_num : (0 : ℝ) < 25 / 2)
++    log_primeCutoff_scale_ratio_tendsto
++
++/-- The actual cutoff, not just a comparison scale, diverges. -/
++theorem primeCutoff_tendsto_atTop : Tendsto primeCutoff atTop atTop := by
++  have h := Real.tendsto_exp_atTop.comp log_primeCutoff_tendsto_atTop
++  apply h.congr'
++  filter_upwards [eventually_ge_atTop (1 : ℕ)] with X hX
++  exact Real.exp_log (primeCutoff_pos X (by omega))
++
++/-- Taking another logarithm retains the constant needed for the critical gap. -/
++theorem loglog_primeCutoff_sub_tendsto :
++    Tendsto (fun X : ℕ => Real.log (Real.log (primeCutoff X)) -
++      (1 - endpointExponent) * Real.log (Real.log (X : ℝ)))
++      atTop (𝓝 (Real.log ((25 : ℝ) / 2))) := by
++  have hlog : Tendsto (fun X : ℕ => Real.log (Real.log (primeCutoff X) /
++      Real.rpow (Real.log (X : ℝ)) (1 - endpointExponent)))
++      atTop (𝓝 (Real.log ((25 : ℝ) / 2))) := by
++    exact (Real.continuousAt_log (by norm_num : ((25 : ℝ) / 2) ≠ 0)).tendsto.comp
++      log_primeCutoff_scale_ratio_tendsto
++  apply hlog.congr'
++  filter_upwards [eventually_ge_atTop (2 : ℕ),
++    log_primeCutoff_tendsto_atTop.eventually (eventually_gt_atTop (0 : ℝ))] with X hX hy
++  have hQ : 0 < Real.log (X : ℝ) :=
++    Real.log_pos (by exact_mod_cast (show 1 < X by omega))
++  rw [Real.log_div hy.ne' (Real.rpow_pos_of_pos hQ _).ne', Real.log_rpow hQ]
++
++/-- A logarithm is negligible relative to the complementary positive power. -/
++theorem log_windowLength_div_complementaryScale_tendsto_zero :
++    Tendsto (fun X : ℕ => Real.log (windowLength X : ℝ) /
++      Real.rpow (Real.log (X : ℝ)) (1 - endpointExponent)) atTop (𝓝 0) := by
++  have hsmall : Tendsto (fun X : ℕ => Real.log (Real.log (X : ℝ)) /
++      Real.rpow (Real.log (X : ℝ)) (1 - endpointExponent)) atTop (𝓝 0) :=
++    ((isLittleO_log_rpow_atTop (sub_pos.mpr endpointExponent_lt_one)).tendsto_div_nhds_zero).comp
++      logX_tendsto_atTop
++  have h : Tendsto (fun X : ℕ =>
++      (Real.log (windowLength X : ℝ) -
++        endpointExponent * Real.log (Real.log (X : ℝ))) /
++        Real.rpow (Real.log (X : ℝ)) (1 - endpointExponent) +
++      endpointExponent * (Real.log (Real.log (X : ℝ)) /
++        Real.rpow (Real.log (X : ℝ)) (1 - endpointExponent))) atTop (𝓝 0) := by
++    simpa using (log_windowLength_sub_tendsto_zero.div_atTop
++      complementaryScale_tendsto_atTop).add (hsmall.const_mul endpointExponent)
++  exact h.congr (fun X => by ring)
++
++/-- Logarithmic comparison of the actual window and prime cutoff. -/
++theorem log_windowLength_div_log_primeCutoff_tendsto_zero :
++    Tendsto (fun X : ℕ => Real.log (windowLength X : ℝ) /
++      Real.log (primeCutoff X)) atTop (𝓝 0) := by
++  have h : Tendsto (fun X : ℕ =>
++      (Real.log (windowLength X : ℝ) /
++        Real.rpow (Real.log (X : ℝ)) (1 - endpointExponent)) /
++      (Real.log (primeCutoff X) /
++        Real.rpow (Real.log (X : ℝ)) (1 - endpointExponent))) atTop (𝓝 0) := by
++    simpa using log_windowLength_div_complementaryScale_tendsto_zero.div
++      log_primeCutoff_scale_ratio_tendsto (by norm_num : ((25 : ℝ) / 2) ≠ 0)
++  apply h.congr'
++  filter_upwards [eventually_ge_atTop (2 : ℕ)] with X hX
++  have hQ : 0 < Real.log (X : ℝ) :=
++    Real.log_pos (by exact_mod_cast (show 1 < X by omega))
++  exact div_div_div_cancel_right₀ (Real.rpow_pos_of_pos hQ (1 - endpointExponent)).ne'
++
++/-- The ordering required by the finite sieve is eventually valid. -/
++theorem eventually_windowLength_lt_primeCutoff :
++    ∀ᶠ X : ℕ in atTop, (windowLength X : ℝ) < primeCutoff X := by
++  have hsmall := log_windowLength_div_log_primeCutoff_tendsto_zero.eventually
++    (gt_mem_nhds (by norm_num : (0 : ℝ) < 1))
++  filter_upwards [eventually_ge_atTop (1 : ℕ), hsmall,
++    log_primeCutoff_tendsto_atTop.eventually (eventually_gt_atTop (0 : ℝ))] with X hX hs hy
++  have hlt : Real.log (windowLength X : ℝ) < Real.log (primeCutoff X) :=
++    (div_lt_one hy).mp hs
++  by_contra! hle
++  have hrev := Real.log_le_log (primeCutoff_pos X (by omega)) hle
++  linarith
++
++/-- The protected t(X), including its exact factor 1000, tends to zero. -/
++theorem momentT_tendsto_zero : Tendsto momentT atTop (𝓝 0) := by
++  have h := logLogX_tendsto_atTop.const_div_atTop ((1 : ℝ) / 1000)
++  exact h.congr (fun X => by dsimp only [momentT]; rw [div_div])
++
++/-- A single eventual range sufficient for the logarithm and moment lemmas. -/
++theorem eventually_momentT_bounds :
++    ∀ᶠ X : ℕ in atTop, 0 < momentT X ∧ momentT X ≤ (1 : ℝ) / 2 := by
++  filter_upwards [logLogX_tendsto_atTop.eventually (eventually_ge_atTop (1 : ℝ))] with X hL
++  have hd : 0 < 1000 * Real.log (Real.log (X : ℝ)) := by linarith
++  change 0 < 1 / (1000 * Real.log (Real.log (X : ℝ))) ∧
++    1 / (1000 * Real.log (Real.log (X : ℝ))) ≤ (1 : ℝ) / 2
++  refine ⟨div_pos zero_lt_one hd, ?_⟩
++  apply (div_le_iff₀ hd).mpr
++  linarith
++
++/-- All numerical hypotheses of the finite-moment theorem at the actual parameters.
++The signed-budget branch condition is deliberately not asserted here. -/
++theorem endpoint_parameters_admissible :
++    ∀ᶠ X : ℕ in atTop,
++      1 ≤ X ∧ 1 ≤ windowLength X ∧
++      (windowLength X : ℝ) < primeCutoff X ∧
++      0 < 1 - momentT X ∧ 1 - momentT X < 1 ∧ Even (truncationOrder X) := by
++  filter_upwards [eventually_ge_atTop (1 : ℕ), eventually_windowLength_pos,
++    eventually_windowLength_lt_primeCutoff, eventually_momentT_bounds] with X hX hH hy ht
++  refine ⟨hX, hH, hy, ?_, ?_, truncationOrder_even X⟩
++  · linarith [ht.2]
++  · linarith [ht.1]
++
++end Erdos647Sieve.Endpoint
++end
+--- /dev/null
++++ b/research/Erdos647Research/Endpoint/PrimeMassParameters.lean
+@@ -0,0 +1,50 @@
++/-
++Specialize the accepted two-cutoff Mertens interface to the actual endpoint
++parameters, discharging rather than repeating its cutoff hypotheses.
++-/
++import Erdos647Research.Endpoint.CutoffParameters
++import Erdos647Research.SelectedPrimeReciprocals
++
++set_option autoImplicit false
++open scoped BigOperators Topology
++open Filter Real
++
++noncomputable section
++namespace Erdos647Sieve.Endpoint
++
++/-- The Mertens error vanishes for the protected endpoint cutoffs, with no free
++cutoff-growth or cutoff-ordering hypotheses. -/
++theorem endpoint_selectedPrimeSum_error_tendsto_zero :
++    Tendsto (fun X : ℕ =>
++      (∑ p ∈ selectedPrimes (windowLength X) (primeCutoff X), (1 : ℝ) / (p : ℝ)) -
++      (Real.log (Real.log (primeCutoff X)) -
++        Real.log (Real.log (windowLength X : ℝ)))) atTop (𝓝 0) := by
++  apply Analytic.selectedPrimeSum_difference_tendsto_zero windowLength primeCutoff
++    windowLength_cast_tendsto_atTop primeCutoff_tendsto_atTop
++  exact eventually_windowLength_lt_primeCutoff.mono (fun _ h => h.le)
++
++/-- The constant-sensitive prime-mass expansion used in the next gap argument.
++This is an asymptotic statement for the exact `primeMass`, not a probabilistic model. -/
++theorem endpoint_primeMass_expansion_tendsto_zero :
++    Tendsto (fun X : ℕ =>
++      primeMass (windowLength X) (primeCutoff X) / (windowLength X : ℝ) -
++      ((1 - endpointExponent) * Real.log (Real.log (X : ℝ)) -
++        Real.log (Real.log (windowLength X : ℝ)) + Real.log ((25 : ℝ) / 2)))
++      atTop (𝓝 0) := by
++  have h : Tendsto (fun X : ℕ =>
++      ((∑ p ∈ selectedPrimes (windowLength X) (primeCutoff X), (1 : ℝ) / (p : ℝ)) -
++        (Real.log (Real.log (primeCutoff X)) - Real.log (Real.log (windowLength X : ℝ)))) +
++      ((Real.log (Real.log (primeCutoff X)) -
++        (1 - endpointExponent) * Real.log (Real.log (X : ℝ))) - Real.log ((25 : ℝ) / 2)))
++      atTop (𝓝 0) := by
++    simpa using endpoint_selectedPrimeSum_error_tendsto_zero.add
++      (loglog_primeCutoff_sub_tendsto.sub_const (Real.log ((25 : ℝ) / 2)))
++  apply h.congr'
++  filter_upwards [eventually_windowLength_pos] with X hH
++  have hHR : (windowLength X : ℝ) ≠ 0 := by exact_mod_cast (show windowLength X ≠ 0 by omega)
++  unfold primeMass
++  rw [mul_div_cancel_left₀ _ hHR]
++  ring
++
++end Erdos647Sieve.Endpoint
++end
+--- /dev/null
++++ b/research/Erdos647Research/Endpoint/Statement.lean
+@@ -0,0 +1,92 @@
++/-
++Endpoint statements with a fixed, explicit coefficient.
++The exponent and scale are unchanged. The historical EndpointClaim remains in
++Specification; this interface does not require its coefficient to be attained.
++-/
++import Erdos647Sieve.Specification
++
++set_option autoImplicit false
++open scoped Topology
++open Filter Real
++
++noncomputable section
++namespace Erdos647Sieve.Endpoint
++
++/-- The required asymptotic saving scale. Its exponent is the protected exponent. -/
++def endpointScale (X : ℕ) : ℝ :=
++  Real.rpow (Real.log (X : ℝ)) endpointExponent / Real.log (Real.log (X : ℝ))
++
++/-- A coefficient-parametrized bound; c is a real constant, not a function of X. -/
++def endpointRHSWith (c : ℝ) (X : ℕ) : ℝ :=
++  (X : ℝ) * Real.exp (-(c * endpointScale X))
++
++/-- Eventual candidate-count bound at the explicit fixed coefficient c. -/
++def EndpointBound (c : ℝ) : Prop :=
++  ∃ X0 : ℕ, 3 ≤ X0 ∧
++    ∀ X : ℕ, X0 ≤ X → (candidateCount X : ℝ) ≤ endpointRHSWith c X
++
++/-- The branch goal: one fixed positive coefficient works for all sufficiently
++large X. The coefficient is chosen outside both the onset and X quantifiers. -/
++def PositiveEndpointClaim : Prop :=
++  ∃ c : ℝ, 0 < c ∧ EndpointBound c
++
++/-- Positivity of the required saving scale on the eventual domain. -/
++theorem endpointScale_pos (X : ℕ) (hX : 3 ≤ X) : 0 < endpointScale X := by
++  have hXR : 0 < (X : ℝ) := by exact_mod_cast (show 0 < X by omega)
++  have hlog : 1 < Real.log (X : ℝ) := by
++    apply Real.exp_lt_exp.mp
++    rw [Real.exp_log hXR]
++    exact Real.exp_one_lt_three.trans_le (by exact_mod_cast hX)
++  exact div_pos (Real.rpow_pos_of_pos (lt_trans zero_lt_one hlog) _)
++    (Real.log_pos hlog)
++
++/-- Larger coefficients give stronger bounds; reducing a fixed coefficient
++preserves the exponent and the asymptotic scale. -/
++theorem endpointRHSWith_le_of_le (c d : ℝ) (hcd : c ≤ d) (X : ℕ) (hX : 3 ≤ X) :
++    endpointRHSWith d X ≤ endpointRHSWith c X := by
++  unfold endpointRHSWith
++  apply mul_le_mul_of_nonneg_left _ (Nat.cast_nonneg X)
++  exact Real.exp_le_exp.mpr
++    (neg_le_neg (mul_le_mul_of_nonneg_right hcd (endpointScale_pos X hX).le))
++
++/-- Filter presentation for use in the eventual error-absorption argument. -/
++theorem endpointBound_iff_eventually (c : ℝ) :
++    EndpointBound c ↔
++      ∀ᶠ X : ℕ in atTop, (candidateCount X : ℝ) ≤ endpointRHSWith c X := by
++  constructor
++  · rintro ⟨X0, _, h⟩
++    exact eventually_atTop.mpr ⟨X0, h⟩
++  · intro h
++    obtain ⟨N, hN⟩ := eventually_atTop.mp h
++    exact ⟨max 3 N, le_max_left _ _, fun X hX =>
++      hN X ((le_max_right 3 N).trans hX)⟩
++
++/-- A proved estimate at d entails the same-scale estimate at every c ≤ d.
++This implication supplies no endpoint estimate unless its premise is proved. -/
++theorem endpointBound_mono (c d : ℝ) (hcd : c ≤ d) (hd : EndpointBound d) :
++    EndpointBound c := by
++  rcases hd with ⟨X0, h0, h⟩
++  exact ⟨X0, h0, fun X hX =>
++    (h X hX).trans (endpointRHSWith_le_of_le c d hcd X (h0.trans hX))⟩
++
++/-- The old numerical target is precisely the c=1/1000 specialization. -/
++theorem endpointRHSWith_one_div_thousand (X : ℕ) :
++    endpointRHSWith ((1 : ℝ) / 1000) X = endpointRHS X := by
++  unfold endpointRHSWith endpointScale endpointRHS
++  exact congrArg (fun r : ℝ => (X : ℝ) * Real.exp r) (by ring)
++
++/-- Relates the preserved historical specification to the new interface without
++asserting that either endpoint statement has been proved. -/
++theorem legacyEndpointClaim_iff :
++    EndpointClaim ↔ EndpointBound ((1 : ℝ) / 1000) := by
++  unfold EndpointClaim EndpointBound
++  simp only [endpointRHSWith_one_div_thousand]
++
++/-- Once an explicit coefficient has a proof, it supplies the existential goal.
++The coefficient's positivity alone is not a counting theorem. -/
++theorem positiveEndpointClaim_of_explicit (c : ℝ) (hc : 0 < c) (h : EndpointBound c) :
++    PositiveEndpointClaim :=
++  ⟨c, hc, h⟩
++
++end Erdos647Sieve.Endpoint
++end
+--- /dev/null
++++ b/research/Erdos647Research/Endpoint/TruncationParameters.lean
+@@ -0,0 +1,97 @@
++/-
++Exact integer rounding and asymptotics for the protected truncation order.
++The natural quotient is not replaced by a real quotient or an assumed ceiling.
++-/
++import Erdos647Research.Endpoint.WindowParameters
++
++set_option autoImplicit false
++open scoped Topology
++open Filter Real
++
++noncomputable section
++namespace Erdos647Sieve.Endpoint
++
++/-- The discrete ceiling bridge, valid also at zero and multiples of 100. -/
++theorem rounded_hundred_eq_ceil (H : ℕ) :
++    (H + 99) / 100 = Nat.ceil ((H : ℝ) / 100) := by
++  apply le_antisymm
++  · have hu := Nat.le_ceil ((H : ℝ) / 100)
++    have hmul : (H : ℝ) ≤ (Nat.ceil ((H : ℝ) / 100) : ℝ) * 100 :=
++      (div_le_iff₀ (by norm_num : (0 : ℝ) < 100)).mp hu
++    have hnat : H ≤ Nat.ceil ((H : ℝ) / 100) * 100 := by exact_mod_cast hmul
++    omega
++  · apply Nat.ceil_le.mpr
++    apply (div_le_iff₀ (by norm_num : (0 : ℝ) < 100)).mpr
++    exact_mod_cast (show H ≤ (H + 99) / 100 * 100 by omega)
++
++/-- The protected `truncationOrder` is exactly twice the indicated ceiling. -/
++theorem truncationOrder_eq_ceil (X : ℕ) :
++    truncationOrder X = 2 * Nat.ceil ((windowLength X : ℝ) / 100) := by
++  unfold truncationOrder
++  rw [rounded_hundred_eq_ceil]
++
++/-- Bonferroni parity holds at every X, including small degenerate parameters. -/
++theorem truncationOrder_even (X : ℕ) : Even (truncationOrder X) := by
++  refine ⟨(windowLength X + 99) / 100, ?_⟩
++  simp only [truncationOrder, two_mul]
++
++/-- An explicit uniform rounding error smaller than two. -/
++theorem truncationOrder_bounds (X : ℕ) :
++    (windowLength X : ℝ) / 50 ≤ (truncationOrder X : ℝ) ∧
++      (truncationOrder X : ℝ) < (windowLength X : ℝ) / 50 + 2 := by
++  have hlo : windowLength X ≤ ((windowLength X + 99) / 100) * 100 := by omega
++  have hhi : ((windowLength X + 99) / 100) * 100 < windowLength X + 100 := by omega
++  have hloR : (windowLength X : ℝ) ≤ (((windowLength X + 99) / 100 : ℕ) : ℝ) * 100 :=
++    by exact_mod_cast hlo
++  have hhiR : (((windowLength X + 99) / 100 : ℕ) : ℝ) * 100 < (windowLength X : ℝ) + 100 :=
++    by exact_mod_cast hhi
++  simp only [truncationOrder, Nat.cast_mul, Nat.cast_ofNat]
++  constructor <;> linarith
++
++/-- The discrete truncation order is eventually positive. -/
++theorem eventually_truncationOrder_pos : ∀ᶠ X : ℕ in atTop, 1 ≤ truncationOrder X := by
++  filter_upwards [eventually_windowLength_pos] with X hH
++  dsimp only [truncationOrder]
++  omega
++
++/-- Exact ceiling arithmetic followed by a vanishing rounding error. -/
++theorem truncationOrder_div_windowLength_tendsto :
++    Tendsto (fun X : ℕ => (truncationOrder X : ℝ) / (windowLength X : ℝ))
++      atTop (𝓝 ((1 : ℝ) / 50)) := by
++  have hu : Tendsto (fun X : ℕ => (1 : ℝ) / 50 + 2 / (windowLength X : ℝ))
++      atTop (𝓝 ((1 : ℝ) / 50)) := by
++    simpa using (windowLength_cast_tendsto_atTop.const_div_atTop (2 : ℝ)).const_add
++      ((1 : ℝ) / 50)
++  refine tendsto_of_tendsto_of_tendsto_of_le_of_le' tendsto_const_nhds hu ?_ ?_
++  · filter_upwards [eventually_windowLength_pos] with X hH
++    have hHR : 0 < (windowLength X : ℝ) := by exact_mod_cast (show 0 < windowLength X by omega)
++    apply (le_div_iff₀ hHR).mpr
++    nlinarith [(truncationOrder_bounds X).1]
++  · filter_upwards [eventually_windowLength_pos] with X hH
++    have hHR : 0 < (windowLength X : ℝ) := by exact_mod_cast (show 0 < windowLength X by omega)
++    apply (div_le_iff₀ hHR).mpr
++    rw [add_mul, div_mul_cancel₀ _ hHR.ne']
++    nlinarith [(truncationOrder_bounds X).2]
++
++/-- Truncation growth on the unrounded logarithmic-power scale. -/
++theorem truncationOrder_scale_ratio_tendsto :
++    Tendsto (fun X : ℕ => (truncationOrder X : ℝ) /
++      Real.rpow (Real.log (X : ℝ)) endpointExponent) atTop (𝓝 ((1 : ℝ) / 50)) := by
++  have h : Tendsto (fun X : ℕ =>
++      ((truncationOrder X : ℝ) / (windowLength X : ℝ)) *
++        ((windowLength X : ℝ) / Real.rpow (Real.log (X : ℝ)) endpointExponent))
++      atTop (𝓝 ((1 : ℝ) / 50)) := by
++    simpa using truncationOrder_div_windowLength_tendsto.mul windowLength_ratio_tendsto_one
++  apply h.congr'
++  filter_upwards [eventually_windowLength_pos] with X hH
++  have hHR : (windowLength X : ℝ) ≠ 0 := by exact_mod_cast (show windowLength X ≠ 0 by omega)
++  rw [div_mul_div_cancel₀ hHR]
++
++/-- The real truncation order tends to infinity. -/
++theorem truncationOrder_cast_tendsto_atTop :
++    Tendsto (fun X : ℕ => (truncationOrder X : ℝ)) atTop atTop :=
++  windowLength_cast_tendsto_atTop.num (by norm_num : (0 : ℝ) < 1 / 50)
++    truncationOrder_div_windowLength_tendsto
++
++end Erdos647Sieve.Endpoint
++end
+--- /dev/null
++++ b/research/Erdos647Research/Endpoint/WindowParameters.lean
+@@ -0,0 +1,109 @@
++/-
++Endpoint parameter layer: the protected exponent and rounded window length.
++No analytic estimate or cutoff-growth hypothesis is assumed here.
++-/
++import Erdos647Sieve.Specification
++
++set_option autoImplicit false
++open scoped Topology
++open Filter Real
++
++noncomputable section
++namespace Erdos647Sieve.Endpoint
++
++/-- The critical exponent is strictly positive. -/
++theorem endpointExponent_pos : 0 < endpointExponent := by
++  have hl : 0 < Real.log 2 := Real.log_pos (by norm_num)
++  unfold endpointExponent
++  positivity
++
++/-- The window grows slower than the logarithmic scale. -/
++theorem endpointExponent_lt_one : endpointExponent < 1 := by
++  have hl : 0 < Real.log 2 := Real.log_pos (by norm_num)
++  unfold endpointExponent
++  apply (div_lt_one (by linarith : 0 < 1 + Real.log 2)).mpr
++  linarith
++
++/-- The exact cancellation defining the critical exponent. -/
++theorem endpointExponent_cancellation :
++    endpointExponent / Real.log 2 = 1 - endpointExponent := by
++  have hl : 0 < Real.log 2 := Real.log_pos (by norm_num)
++  have hd : 0 < 1 + Real.log 2 := by linarith
++  unfold endpointExponent
++  calc
++    (Real.log 2 / (1 + Real.log 2)) / Real.log 2 =
++        (Real.log 2 / Real.log 2) / (1 + Real.log 2) := by ring
++    _ = 1 / (1 + Real.log 2) := by rw [div_self hl.ne']
++    _ = 1 - Real.log 2 / (1 + Real.log 2) := by
++      apply (eq_sub_iff_add_eq).mpr
++      rw [← add_div, div_self hd.ne']
++
++/-- The logarithmic scale along natural interval lengths. -/
++theorem logX_tendsto_atTop :
++    Tendsto (fun X : ℕ => Real.log (X : ℝ)) atTop atTop :=
++  Real.tendsto_log_atTop.comp tendsto_natCast_atTop_atTop
++
++/-- The iterated logarithm also diverges. -/
++theorem logLogX_tendsto_atTop :
++    Tendsto (fun X : ℕ => Real.log (Real.log (X : ℝ))) atTop atTop :=
++  Real.tendsto_log_atTop.comp logX_tendsto_atTop
++
++/-- The unrounded window scale tends to infinity. -/
++theorem windowScale_tendsto_atTop :
++    Tendsto (fun X : ℕ => Real.rpow (Real.log (X : ℝ)) endpointExponent)
++      atTop atTop :=
++  (tendsto_rpow_atTop endpointExponent_pos).comp logX_tendsto_atTop
++
++/-- The exact natural floor in `windowLength` tends to infinity. -/
++theorem windowLength_tendsto_atTop : Tendsto windowLength atTop atTop := by
++  exact tendsto_nat_floor_atTop.comp windowScale_tendsto_atTop
++
++/-- Real-cast version used by the analytic cutoff interface. -/
++theorem windowLength_cast_tendsto_atTop :
++    Tendsto (fun X : ℕ => (windowLength X : ℝ)) atTop atTop :=
++  tendsto_natCast_atTop_atTop.comp windowLength_tendsto_atTop
++
++/-- Rounding loses at most a vanishing relative error. -/
++theorem windowLength_ratio_tendsto_one :
++    Tendsto (fun X : ℕ => (windowLength X : ℝ) /
++      Real.rpow (Real.log (X : ℝ)) endpointExponent) atTop (𝓝 1) := by
++  exact tendsto_nat_floor_div_atTop.comp windowScale_tendsto_atTop
++
++/-- Window positivity is a proved consequence, not a new cutoff premise. -/
++theorem eventually_windowLength_pos : ∀ᶠ X : ℕ in atTop, 1 ≤ windowLength X :=
++  windowLength_tendsto_atTop.eventually (eventually_ge_atTop 1)
++
++/-- The logarithmic rounding error tends to zero, retaining the constant term. -/
++theorem log_windowLength_sub_tendsto_zero :
++    Tendsto (fun X : ℕ => Real.log (windowLength X : ℝ) -
++      endpointExponent * Real.log (Real.log (X : ℝ))) atTop (𝓝 0) := by
++  have hlog : Tendsto (fun X : ℕ => Real.log ((windowLength X : ℝ) /
++      Real.rpow (Real.log (X : ℝ)) endpointExponent)) atTop (𝓝 0) := by
++    simpa only [Function.comp_def, Real.log_one] using
++      (Real.continuousAt_log (by norm_num : (1 : ℝ) ≠ 0)).tendsto.comp
++        windowLength_ratio_tendsto_one
++  apply hlog.congr'
++  filter_upwards [eventually_ge_atTop (2 : ℕ), eventually_windowLength_pos] with X hX hH
++  have hQ : 0 < Real.log (X : ℝ) :=
++    Real.log_pos (by exact_mod_cast (show 1 < X by omega))
++  have hHR : 0 < (windowLength X : ℝ) := by exact_mod_cast (show 0 < windowLength X by omega)
++  rw [Real.log_div hHR.ne' (Real.rpow_pos_of_pos hQ endpointExponent).ne',
++    Real.log_rpow hQ]
++
++/-- Normalized logarithmic window growth. -/
++theorem log_windowLength_div_logLog_tendsto :
++    Tendsto (fun X : ℕ => Real.log (windowLength X : ℝ) /
++      Real.log (Real.log (X : ℝ))) atTop (𝓝 endpointExponent) := by
++  have h : Tendsto (fun X : ℕ =>
++      (Real.log (windowLength X : ℝ) -
++        endpointExponent * Real.log (Real.log (X : ℝ))) /
++        Real.log (Real.log (X : ℝ)) + endpointExponent) atTop (𝓝 endpointExponent) := by
++    simpa using (log_windowLength_sub_tendsto_zero.div_atTop
++      logLogX_tendsto_atTop).add_const endpointExponent
++  apply h.congr'
++  filter_upwards [logLogX_tendsto_atTop.eventually (eventually_gt_atTop (0 : ℝ))] with X hL
++  rw [sub_div, mul_div_cancel_right₀ _ hL.ne']
++  ring
++
++end Erdos647Sieve.Endpoint
++end
+--- /dev/null
++++ b/tests/test_endpoint_parameters_v38.py
+@@ -0,0 +1,198 @@
++"""Endpoint branch registration and exact discrete-regression checks.
++
++These tests validate interfaces and integer examples, not the Lean limit proofs.
++"""
++from __future__ import annotations
++
++from fractions import Fraction
++import importlib.util
++import json
++from pathlib import Path
++import re
++import unittest
++
++ROOT = Path(__file__).resolve().parents[1]
++spec = importlib.util.spec_from_file_location('endpoint_check', ROOT/'scripts/check.py')
++check = importlib.util.module_from_spec(spec)
++spec.loader.exec_module(check)
++
++MODULES = {
++    'endpoint_statement': 'Statement',
++    'endpoint_window_parameters': 'WindowParameters',
++    'endpoint_truncation_parameters': 'TruncationParameters',
++    'endpoint_cutoff_parameters': 'CutoffParameters',
++    'endpoint_prime_mass_parameters': 'PrimeMassParameters',
++}
++BASE_GATES = {
++    'core', 'reciprocal_kernel', 'reciprocal_abel', 'pntplus_inputs',
++    'analytic_inputs', 'clean_mertens', 'selected_prime_reciprocals',
++    'endpoint_log_bounds', 'factorial_bounds', 'factorial_estimate',
++    'log_budget_factorial', 'prime_reciprocal_lower',
++    'small_prime_debit_estimate', 'corrected_budget_estimate',
++}
++
++
++class EndpointRegistration(unittest.TestCase):
++    def test_baseline_and_new_gates_are_both_present(self):
++        self.assertEqual(set(check.GATES), BASE_GATES | set(MODULES))
++
++    def test_every_new_theorem_gets_an_exact_type_and_axiom_audit(self):
++        total = 0
++        for gate, module in MODULES.items():
++            with self.subTest(module=module):
++                src=(ROOT/f'research/Erdos647Research/Endpoint/{module}.lean').read_text()
++                names=['Erdos647Sieve.Endpoint.'+name for name in re.findall(r'^theorem (\w+)',src,re.M)]
++                self.assertTrue(names)
++                self.assertEqual(check.GATES[gate]['build'],['+Erdos647Research.Endpoint.'+module])
++                audit, targets = next(iter(check.GATES[gate]['audits'].items()))
++                text=(ROOT/'research'/audit).read_text()
++                self.assertEqual(names, targets)
++                self.assertEqual(re.findall(r'^#print axioms (\S+)$',text,re.M),names)
++                self.assertEqual(len(re.findall(r'^example : ',text,re.M)),len(names)+(2 if module=='Statement' else 0))
++                if module=='Statement':self.assertEqual(len(re.findall(r'^example \(c : ℝ\)',text,re.M)),1)
++                self.assertIn('set_option warningAsError true',text)
++                total += len(names)
++        self.assertEqual(total,42)
++
++    def test_source_boundaries_include_the_nested_modules(self):
++        check.source_boundary(ROOT)
++
++    def test_parameters_do_not_depend_on_pnt(self):
++        for module in ['Statement','WindowParameters','TruncationParameters','CutoffParameters']:
++            paths=check.imports((ROOT/f'research/Erdos647Research/Endpoint/{module}.lean').read_text())
++            self.assertTrue(all(p=='Erdos647Sieve.Specification' or
++                p.startswith('Erdos647Research.Endpoint.') or p.startswith('Mathlib') for p in paths))
++
++    def test_prime_mass_uses_the_project_analytic_interface(self):
++        text=(ROOT/'research/Erdos647Research/Endpoint/PrimeMassParameters.lean').read_text()
++        self.assertEqual(check.imports(text),[
++            'Erdos647Research.Endpoint.CutoffParameters',
++            'Erdos647Research.SelectedPrimeReciprocals'])
++        self.assertNotIn('RS_prime.',text)
++        self.assertIn('Analytic.selectedPrimeSum_difference_tendsto_zero',text)
++
++    def test_window_selection_does_not_rebuild_unrelated_analytic_gates(self):
++        actual=check.selected_gates(check.parser().parse_args(['--gate','endpoint_window_parameters']))
++        self.assertEqual(actual,['endpoint_window_parameters'])
++
++    def test_cutoff_selection_has_only_its_parameter_prerequisites(self):
++        actual=check.selected_gates(check.parser().parse_args(['--gate','endpoint_cutoff_parameters']))
++        self.assertEqual(actual,['endpoint_window_parameters','endpoint_truncation_parameters','endpoint_cutoff_parameters'])
++
++    def test_prime_mass_selection_includes_both_proof_chains(self):
++        actual=check.selected_gates(check.parser().parse_args(['--gate','endpoint_prime_mass_parameters']))
++        self.assertEqual(actual[-1],'endpoint_prime_mass_parameters')
++        for name in ['endpoint_cutoff_parameters','clean_mertens','pntplus_inputs','selected_prime_reciprocals']:
++            self.assertIn(name,actual)
++        self.assertNotIn('corrected_budget_estimate',actual)
++        self.assertNotIn('factorial_bounds',actual)
++
++    def test_all_mode_still_checks_every_gate(self):
++        self.assertEqual(set(check.selected_gates(check.parser().parse_args([]))),set(check.GATES))
++
++    def test_no_parameter_redefinition_or_endpoint_placeholder(self):
++        for p in (ROOT/'research/Erdos647Research/Endpoint').glob('*.lean'):
++            code=check.strip_comments(p.read_text())
++            self.assertFalse(re.search(r'\b(?:def|abbrev)\s+(?:windowLength|truncationOrder|primeCutoff|momentT|endpointExponent)\b',code))
++            self.assertFalse(check.FORBIDDEN.search(code))
++        self.assertNotIn('endpoint',check.GATES)
++        self.assertFalse((ROOT/'research/Erdos647Research/Endpoint/Main.lean').exists())
++
++    def test_new_library_enforces_warnings_as_errors(self):
++        cfg=(ROOT/'research/lakefile.lean').read_text()
++        block=cfg.split('lean_lib Erdos647Endpoint where',1)[1].split('script audit',1)[0]
++        self.assertIn('moreLeanArgs := #["-DwarningAsError=true"]',block)
++        for module in MODULES.values():self.assertIn('`Erdos647Research.Endpoint.'+module,block)
++
++    def test_final_mass_audit_has_no_free_cutoff_assumptions(self):
++        text=(ROOT/'research/Audit/EndpointPrimeMassParameters.lean').read_text()
++        for line in text.splitlines():
++            if line.startswith('example :'):
++                self.assertIn('(Tendsto (fun X : ℕ =>',line)
++                self.assertNotIn(' → ',line)
++        self.assertIn('Real.log ((25 : ℝ) / 2)',text)
++
++    def test_parameter_sources_are_collected_in_diagnostics(self):
++        files={p.relative_to(ROOT).as_posix() for p in check.source_files(ROOT)}
++        for module in MODULES.values():
++            self.assertIn(f'research/Erdos647Research/Endpoint/{module}.lean',files)
++            self.assertIn(f'research/Audit/Endpoint{module}.lean',files)
++
++
++class ExactRounding(unittest.TestCase):
++    def test_all_small_windows(self):
++        for H in range(10001):
++            q=(H+99)//100
++            ceiling=-((-H)//100)
++            self.assertEqual(q,ceiling)
++            J=2*q
++            self.assertEqual(J%2,0)
++            self.assertLessEqual(Fraction(H,50),J)
++            self.assertLess(J,Fraction(H,50)+2)
++            if H:self.assertGreater(J,0)
++
++    def test_zero_multiples_and_both_sides_of_boundaries(self):
++        for power in [0,1,2,8,32,128,512,2048]:
++            for offset in [-1,0,1,99,100,101]:
++                H=max(0,100*(10**power)+offset)
++                q=(H+99)//100
++                self.assertEqual(q,-((-H)//100))
++                self.assertTrue(Fraction(H,50)<=2*q<Fraction(H,50)+2)
++        self.assertEqual((0+99)//100,0)
++
++    def test_unrounded_J_would_fail_the_checks(self):
++        H=1
++        self.assertNotEqual(Fraction(2*((H+99)//100)),Fraction(H,50))
++        self.assertEqual(2*((H+99)//100),2)
++
++
++class FixedCoefficientPolicy(unittest.TestCase):
++    def test_statement_gate_is_independent(self):
++        actual=check.selected_gates(check.parser().parse_args(['--gate','endpoint_statement']))
++        self.assertEqual(actual,['endpoint_statement'])
++
++    def test_positive_coefficient_precedes_onset_and_interval_length(self):
++        audit=(ROOT/'research/Audit/EndpointStatement.lean').read_text()
++        self.assertIn('∃ c : ℝ, 0 < c ∧ ∃ X0 : ℕ, 3 ≤ X0 ∧ ∀ X : ℕ',audit)
++        self.assertNotIn('c : ℕ → ℝ',audit)
++        self.assertIn('Real.log 2 / (1 + Real.log 2)',audit)
++        self.assertIn('/ Real.log (Real.log (X : ℝ))',audit)
++
++    def test_legacy_goal_is_preserved_not_required(self):
++        source=(ROOT/'research/Erdos647Research/Endpoint/Statement.lean').read_text()
++        self.assertIn('EndpointClaim ↔ EndpointBound ((1 : ℝ) / 1000)',source)
++        self.assertIn('c ≤ d',source)
++        self.assertIn('EndpointBound c',source)
++        self.assertNotRegex(source,r'theorem\s+endpoint\s*:')
++        self.assertNotRegex(source,r'theorem\s+positiveEndpoint\s*:')
++
++    def test_no_unproved_coefficient_is_marked_accepted(self):
++        status=json.loads((ROOT/'docs/endpoint-coefficient-status.json').read_text())
++        self.assertFalse(status['historical_coefficient']['required'])
++        self.assertFalse(status['coefficient_may_depend_on_X'])
++        if status['proved_coefficient'] is not None:
++            self.assertGreater(status['proved_coefficient']['numerator'],0)
++            self.assertGreater(status['proved_coefficient']['denominator'],0)
++            self.assertTrue(status['proved_endpoint_theorem'])
++            self.assertTrue(status['endpoint_acceptance_evidence'])
++        else:
++            self.assertIsNone(status['proved_endpoint_theorem'])
++            self.assertIsNone(status['endpoint_acceptance_evidence'])
++
++    def test_no_corrupt_math_escapes_in_branch_documents(self):
++        for rel in ['docs/endpoint-parameter-branch.md','docs/changes/v38.md',
++                    'docs/proof-status.md','docs/pull-requests/endpoint-parameters.md']:
++            raw=(ROOT/rel).read_bytes()
++            self.assertFalse(any(b<32 and b not in (9,10) for b in raw),rel)
++
++    def test_weakening_keeps_scale_and_coefficient_order(self):
++        source=check.strip_comments((ROOT/'research/Erdos647Research/Endpoint/Statement.lean').read_text())
++        self.assertIn('endpointRHSWith d X ≤ endpointRHSWith c X',source)
++        self.assertIn('(hcd : c ≤ d)',source)
++        self.assertIn('def endpointScale (X : ℕ)',source)
++        self.assertIn('def EndpointBound (c : ℝ)',source)
++        self.assertNotRegex(source,r'def\s+endpointExponent')
++
++
++if __name__ == '__main__':
++    unittest.main()

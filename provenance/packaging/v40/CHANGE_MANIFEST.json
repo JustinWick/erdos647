@@ -1,0 +1,93 @@
+{
+  "version": "v40",
+  "files": {
+    "docs/endpoint-coefficient-status.json": {
+      "before_sha256": "e50e1e6cdcf25659d77b65fa5f54bc807a2b87a15b11a1bd88586964b0888e29",
+      "after_sha256": "7a03559a238aad8af21d005724378e2b3e79e8b0116fc00b40cc43bb69112fae"
+    },
+    "docs/proof-status.md": {
+      "before_sha256": "d9e4b550e7f17126bdaaa6faa8dcd36cc04547141a72887d19b8381eea4c2704",
+      "after_sha256": "5887209768f63e803ae9f3363967ffc9da4bdcb824a740f81a7de2e15cdd267e"
+    },
+    "docs/endpoint-parameter-branch.md": {
+      "before_sha256": "d62754534c2bf29ce68d3d584a596248a4c7de2836aea38eb3db592715ded129",
+      "after_sha256": "e7f54e4a82d4e1385e993fd8d97f25ce3f379efea2404278fc569c72be3980fe"
+    },
+    "tests/test_endpoint_cutoff_repairs.py": {
+      "before_sha256": null,
+      "after_sha256": "9b35430443f46c8e5616e1bda9187e8d05513659e4ac4f49ab94ae367d30d104"
+    },
+    "scripts/check.py": {
+      "before_sha256": "cdea2559e590c7166ec40de99ca9af17b196390a4a32cafe147a797635889c16",
+      "after_sha256": "df58cf5f1040627fcb89aa9c768a726a3e148fbf510042e6a2a0a236b6600b46"
+    },
+    "research/Erdos647Research/Endpoint/CutoffParameters.lean": {
+      "before_sha256": "a4b1b61b9ef42ccde6a47827a928fffb3869546aeb7b76aecc02c34097ad27c0",
+      "after_sha256": "27d4df6dc2865067536ab8dd2b2eb788ad92f0c286c2ee50a8aff7fe6a7bd0b0"
+    },
+    "provenance/packaging/v40/validation.json": {
+      "before_sha256": null,
+      "after_sha256": "d0454e2172767ebd0ec8d598fa2616755fa973185d0cbba3303777f975c31d72"
+    },
+    "provenance/packaging/v40/PINNED_SOURCE.md": {
+      "before_sha256": null,
+      "after_sha256": "6c1290c3651acc8e54e851e7058f0c2b9fa1120b3c8fe1d40c8f87039deecbaa"
+    },
+    "provenance/packaging/v40/README.md": {
+      "before_sha256": null,
+      "after_sha256": "414f3bd80b47694db1b55d02ef7b1c51c1041239a0bd499bf70c3ae55a127c62"
+    },
+    "provenance/packaging/v40/extracted_tests.log": {
+      "before_sha256": null,
+      "after_sha256": "f81c54f7456b52030f280858595e28b2bb950a20b9b052b18a3eeec4d25f2a0d"
+    },
+    "provenance/packaging/v40/application_check.json": {
+      "before_sha256": null,
+      "after_sha256": "3f7597788e3ef73f93870e69b1bc2493161dc35693cd5b222b796ba056a6338e"
+    },
+    "provenance/packaging/v40/source-preservation.json": {
+      "before_sha256": null,
+      "after_sha256": "9d82a1de244068e54b6670e9a9ee2ae80b8f933e05d6df28112cbe373a25e722"
+    },
+    "provenance/packaging/v40/top_level_tooling.log": {
+      "before_sha256": null,
+      "after_sha256": "0d624a331de066f6fa80e7c8d239e0df512afe8b06b5c5b85a31011730c0c9c8"
+    },
+    "provenance/packaging/v40/runner_tests.log": {
+      "before_sha256": null,
+      "after_sha256": "2d18cdae01692503c31be9cb6e17adda76f28f619933f7aac579c3ea368c3340"
+    },
+    "provenance/packaging/v40/CUTOFF_REPAIR_V40.patch": {
+      "before_sha256": null,
+      "after_sha256": "5c3db88fed8c952d6bc44f3f6c37cf87fc2a07278524252c06aaac5510e0ac5f"
+    },
+    "provenance/packaging/v40/prior-run/REVIEW.json": {
+      "before_sha256": null,
+      "after_sha256": "d91cb6f440894bfad47af4fb438ca2960f5f677ec91ffc9779968b243c3cc24b"
+    },
+    "provenance/packaging/v40/prior-run/SUMMARY.md": {
+      "before_sha256": null,
+      "after_sha256": "02ea66a4d37fd1754ae379516375794b4c49866e755bdc165ce02e62295e78a3"
+    },
+    "provenance/packaging/v40/prior-run/logs/044_endpoint_cutoff_parameters_build.log": {
+      "before_sha256": null,
+      "after_sha256": "3bce5a3d3a8dfd6d24ecd319cda65f0b3e3b1c9969982978f5e0318fca424a37"
+    },
+    "provenance/packaging/v40/prior-run/logs/043_endpoint_truncation_parameters_audit_0.log": {
+      "before_sha256": null,
+      "after_sha256": "66673b1fda76251ecf10e62904f5df92f44d45aaca548472316bb13d6109456a"
+    },
+    "provenance/packaging/v40/prior-run/logs/041_endpoint_window_parameters_audit_0.log": {
+      "before_sha256": null,
+      "after_sha256": "31cf344be2a70763c6045bdaa15fbd52814678a9a9506445fed5479d6b0cd43c"
+    },
+    "docs/pull-requests/endpoint-parameters.md": {
+      "before_sha256": "a5c95563f2cab0870190f25a50f7e982ecd24be3ec2d498e17beef4da6eb8b02",
+      "after_sha256": "33733f5d18a3b927a998e86fc1f763c7f1648a3c6ea4cf2a5e31c59abc0b0158"
+    },
+    "docs/changes/v40.md": {
+      "before_sha256": null,
+      "after_sha256": "fcefaed78133d1c78173cb244fa38b310fd4174aae3a06b9f2b3d31b5aaceb77"
+    }
+  }
+}

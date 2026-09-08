@@ -1,0 +1,5 @@
+$ <REPO>/.tools/elan/toolchains/leanprover--lean4---v4.32.2/bin/lake build +Erdos647Research.Endpoint.CutoffParameters
+✔ [8659/8659] Built Erdos647Research.Endpoint.CutoffParameters (3.2s)
+Build completed successfully (8659 jobs).
+
+EXIT_CODE=0

@@ -1,0 +1,51 @@
+{
+  "version": "v40",
+  "updated": "2026-09-08",
+  "scope": "endpoint research, not the accepted finite core",
+  "goal_declaration": "Erdos647Sieve.Endpoint.PositiveEndpointClaim",
+  "explicit_bound_declaration": "Erdos647Sieve.Endpoint.EndpointBound",
+  "critical_exponent": "Real.log 2 / (1 + Real.log 2)",
+  "saving_scale": "Real.rpow (Real.log (X : Real)) endpointExponent / Real.log (Real.log (X : Real))",
+  "quantifier_order": "exists c : Real, 0 < c and exists X0 : Nat, 3 <= X0 and forall X >= X0, bound(c, X)",
+  "coefficient_may_depend_on_X": false,
+  "historical_coefficient": {
+    "numerator": 1,
+    "denominator": 1000,
+    "required": false
+  },
+  "working_candidate": null,
+  "proved_coefficient": null,
+  "proved_endpoint_theorem": null,
+  "endpoint_acceptance_evidence": null,
+  "optimization_policy": "Preserve the critical exponent and scale; select an explicit fixed c > 0 from a proved comfortable decay margin. No coefficient optimization project and no new rigid target.",
+  "parameter_policy": {
+    "keep_existing_definitions": true,
+    "momentT": "1 / (1000 * log(log X))",
+    "change_only_if_mathematically_obstructive": true
+  },
+  "proof_priorities": [
+    "exact parameter asymptotics",
+    "eventual positive fixed gap lambda - B_H >= delta * H",
+    "every amplified error term",
+    "fixed positive explicit coefficient endpoint assembly"
+  ],
+  "legacy_corollary_policy": "Derive the historical EndpointClaim if the final proved coefficient is at least 1/1000 at essentially no extra effort; otherwise record the coefficient actually proved.",
+  "statement_interface": {
+    "status": "accepted",
+    "run_id": "erdos647_repo_v38_results_20260908T083224Z_ed5d26ea",
+    "gate": "endpoint_statement",
+    "declarations": 7,
+    "is_endpoint_bound_proof": false
+  },
+  "parameter_acceptance": {
+    "run_id": "erdos647_repo_v39_results_20260908T085147Z_14bd13d1",
+    "accepted_gates": [
+      "endpoint_window_parameters",
+      "endpoint_truncation_parameters"
+    ],
+    "newly_accepted_declarations": 21,
+    "cutoff_gate": "v39 failed; v40 source repair awaits next result",
+    "prime_mass_gate": "v39 blocked; awaits cutoff acceptance",
+    "is_endpoint_bound_proof": false
+  }
+}

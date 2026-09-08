@@ -1,0 +1,4 @@
+$ <REPO>/.tools/elan/toolchains/leanprover--lean4---v4.32.2/bin/lake build +Erdos647Research.Endpoint.TruncationParameters
+Build completed successfully (8658 jobs).
+
+EXIT_CODE=0

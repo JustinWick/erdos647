@@ -1,0 +1,24 @@
+$ <REPO>/.tools/elan/toolchains/leanprover--lean4---v4.32.2/bin/lake env lean -DwarningAsError=true Audit/EndpointTruncationParameters.lean
+Erdos647Sieve.Endpoint.rounded_hundred_eq_ceil (H : ℕ) : (H + 99) / 100 = ⌈↑H / 100⌉₊
+'Erdos647Sieve.Endpoint.rounded_hundred_eq_ceil' depends on axioms: [propext, Classical.choice, Quot.sound]
+Erdos647Sieve.Endpoint.truncationOrder_eq_ceil (X : ℕ) : truncationOrder X = 2 * ⌈↑(windowLength X) / 100⌉₊
+'Erdos647Sieve.Endpoint.truncationOrder_eq_ceil' depends on axioms: [propext, Classical.choice, Quot.sound]
+Erdos647Sieve.Endpoint.truncationOrder_even (X : ℕ) : Even (truncationOrder X)
+'Erdos647Sieve.Endpoint.truncationOrder_even' depends on axioms: [propext, Classical.choice, Quot.sound]
+Erdos647Sieve.Endpoint.truncationOrder_bounds (X : ℕ) :
+  ↑(windowLength X) / 50 ≤ ↑(truncationOrder X) ∧ ↑(truncationOrder X) < ↑(windowLength X) / 50 + 2
+'Erdos647Sieve.Endpoint.truncationOrder_bounds' depends on axioms: [propext, Classical.choice, Quot.sound]
+Erdos647Sieve.Endpoint.eventually_truncationOrder_pos : ∀ᶠ (X : ℕ) in atTop, 1 ≤ truncationOrder X
+'Erdos647Sieve.Endpoint.eventually_truncationOrder_pos' depends on axioms: [propext, Classical.choice, Quot.sound]
+Erdos647Sieve.Endpoint.truncationOrder_div_windowLength_tendsto :
+  Tendsto (fun X => ↑(truncationOrder X) / ↑(windowLength X)) atTop (𝓝 (1 / 50))
+'Erdos647Sieve.Endpoint.truncationOrder_div_windowLength_tendsto' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+Erdos647Sieve.Endpoint.truncationOrder_scale_ratio_tendsto :
+  Tendsto (fun X => ↑(truncationOrder X) / (Real.log ↑X).rpow endpointExponent) atTop (𝓝 (1 / 50))
+'Erdos647Sieve.Endpoint.truncationOrder_scale_ratio_tendsto' depends on axioms: [propext, Classical.choice, Quot.sound]
+Erdos647Sieve.Endpoint.truncationOrder_cast_tendsto_atTop : Tendsto (fun X => ↑(truncationOrder X)) atTop atTop
+'Erdos647Sieve.Endpoint.truncationOrder_cast_tendsto_atTop' depends on axioms: [propext, Classical.choice, Quot.sound]
+
+EXIT_CODE=0
