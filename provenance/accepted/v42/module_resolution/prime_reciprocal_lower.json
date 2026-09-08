@@ -1,0 +1,9 @@
+[
+  {
+    "module": "Erdos647Research.PrimeReciprocalLower",
+    "expected": "<REPO>/research/.lake/build/lib/lean/Erdos647Research/PrimeReciprocalLower.olean",
+    "resolved": "<REPO>/research/.lake/build/lib/lean/Erdos647Research/PrimeReciprocalLower.olean",
+    "correct_owner": true,
+    "object_exists": true
+  }
+]

@@ -1,0 +1,20 @@
+$ <REPO>/.tools/elan/toolchains/leanprover--lean4---v4.32.2/bin/lake env lean -DwarningAsError=true Audit/AnalyticInputs.lean
+RS_prime.pnt : ∃ C ≥ 0, ∀ x ≥ 2, |Chebyshev.theta x - x| ≤ C * x / Real.log x ^ 2
+'RS_prime.pnt' depends on axioms: [propext, Classical.choice, Quot.sound]
+RS_prime.integrableOn_deriv_inv_div_log :
+  MeasureTheory.IntegrableOn (fun y => (Chebyshev.theta y - y) * deriv (fun t => 1 / t / Real.log t) y) (Set.Ioi 2)
+      MeasureTheory.volume ∧
+    ∀ x ≥ 2, IntervalIntegrable (fun t => deriv (fun s => 1 / s / Real.log s) t) MeasureTheory.volume 2 x
+'RS_prime.integrableOn_deriv_inv_div_log' depends on axioms: [propext, Classical.choice, Quot.sound]
+Erdos647Sieve.Analytic.theta_pnt_bound :
+  ∃ C, 0 ≤ C ∧ ∀ (x : ℝ), 2 ≤ x → |Chebyshev.theta x - x| ≤ C * x / Real.log x ^ 2
+'Erdos647Sieve.Analytic.theta_pnt_bound' depends on axioms: [propext, Classical.choice, Quot.sound]
+Erdos647Sieve.Analytic.theta_error_deriv_integrable :
+  MeasureTheory.IntegrableOn (fun t => (Chebyshev.theta t - t) * deriv Erdos647Sieve.Analytic.reciprocalLog t)
+    (Set.Ioi 2) MeasureTheory.volume
+'Erdos647Sieve.Analytic.theta_error_deriv_integrable' depends on axioms: [propext, Classical.choice, Quot.sound]
+Erdos647Sieve.Analytic.theta_error_boundary_tendsto_zero :
+  Filter.Tendsto (fun x => (Chebyshev.theta x - x) / (x * Real.log x)) Filter.atTop (𝓝 0)
+'Erdos647Sieve.Analytic.theta_error_boundary_tendsto_zero' depends on axioms: [propext, Classical.choice, Quot.sound]
+
+EXIT_CODE=0

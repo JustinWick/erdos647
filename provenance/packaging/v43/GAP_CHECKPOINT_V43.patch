@@ -1,0 +1,644 @@
+--- a/README.md
++++ b/README.md
+@@ -5,12 +5,13 @@
+ package contains the analytic bridge and unfinished endpoint development.
+ 
+ **This project does not resolve Erdős #647 and does not contain a proof of the
+-proposed final asymptotic endpoint.** The accepted v40 snapshot passed **19/19**
+-build/type/axiom gates, covering **183 distinct declarations** with no build or
++proposed final asymptotic endpoint.** The accepted v42 snapshot passed **21/21**
++build/type/axiom gates, covering **195 distinct declarations** with no build or
+ audit warnings. This includes the finite core, analytic bridge, elementary budget
+-estimates and exact endpoint parameter/prime-mass asymptotics—not the final
+-endpoint. See [proof status](docs/proof-status.md) and the
+-[accepted record](provenance/accepted/v40/README.md).
++estimates, exact parameter asymptotics, and the positive prime-mass/budget gap
++with supporting size bounds—not the final endpoint. See
++[proof status](docs/proof-status.md) and the
++[accepted record](provenance/accepted/v42/README.md).
+ 
+ ## Use the public library
+ 
+@@ -155,10 +156,11 @@
+ results directory; `--collect-only` prints the last completed archive, not a new
+ acceptance claim.
+ 
+-**The 19-gate v40 baseline passed. The two new v42 mass/budget gates are pending.**
+-The current full suite contains 21 gates. A failing `all` run is never converted
+-to success because the core passed. The endpoint research remains separate from
+-the public finite API. See [the new gap changeset](docs/prime-mass-gap-branch.md).
++**All 21 gates passed in the accepted v42 run, including both mass/budget gates.**
++A future failing `all` run is never converted to success because the core passed
++or a historical run was green. The remaining mathematics is
++[amplified-error control and final assembly](docs/next-amplified-errors.md).
++The endpoint research remains separate from the public finite API.
+ 
+ ## Repository layout
+ 
+--- a/docs/changes/v43.md
++++ b/docs/changes/v43.md
+@@ -0,0 +1,25 @@
++# v43 — accepted gap checkpoint and PR closeout
++
++The newer returned run `erdos647_repo_v42_results_20260908T111052Z_81bd3ce5` passed **21/21 gates**, including both new
++gap-and-size audits. It supersedes the earlier source-incomplete diagnostic for
++current acceptance. No proof error remains to repair.
++
++Newly accepted: lambda-B>=3H/2 eventually, the general fixed-delta gap,
++lambda/(HL)->1-a, and the signed size bounds. Twelve new declarations and
++thirteen expanded checks passed. All 195 distinct audited declarations have
++only the permitted axioms. The endpoint coefficient is still unproved.
++
++This overlay updates the PR description, proof-status and coefficient records,
++preserves the full returned evidence, and adds the next amplified-error assignment.
++One status test is adjusted to require supporting successful audit evidence when
++a formerly pending checkpoint becomes accepted. No linter, axiom or proof check
++is relaxed.
++
++All 47 mathematical modules, all 22 audits, the runner, gate registry, Lake files,
++lockfiles, toolchain pin, CI configuration, tools and caches remain unchanged.
++The runner retains its v42 prefix; the closeout does not manufacture a new Lean
++run or require a no-op proof rerun. Every actual run remains uniquely named.
++
++The gap-and-size PR's local acceptance condition is satisfied. The next mathematical
++changeset is amplified-error control and final fixed-positive-coefficient assembly,
++not another version migration or architecture refactor.
+--- a/docs/endpoint-coefficient-status.json
++++ b/docs/endpoint-coefficient-status.json
+@@ -1,5 +1,5 @@
+ {
+-  "version": "v42",
++  "version": "v43",
+   "updated": "2026-09-08",
+   "scope": "endpoint research, not the accepted finite core",
+   "goal_declaration": "Erdos647Sieve.Endpoint.PositiveEndpointClaim",
+@@ -36,7 +36,7 @@
+     "gate": "endpoint_statement",
+     "declarations": 7,
+     "is_endpoint_bound_proof": false,
+-    "latest_recheck_run_id": "erdos647_repo_v40_results_20260908T091111Z_0850cec9"
++    "latest_recheck_run_id": "erdos647_repo_v42_results_20260908T111052Z_81bd3ce5"
+   },
+   "parameter_acceptance": {
+     "status": "accepted",
+@@ -53,12 +53,13 @@
+     "cutoff_gate": "passed in v40",
+     "prime_mass_gate": "passed in v40",
+     "evidence": "provenance/accepted/v40/README.md",
+-    "is_endpoint_bound_proof": false
++    "is_endpoint_bound_proof": false,
++    "latest_recheck_run_id": "erdos647_repo_v42_results_20260908T111052Z_81bd3ce5"
+   },
+   "next_effort": {
+-    "status": "source implemented; acceptance pending",
+-    "scope": "fixed positive prime-mass/budget gap and supporting normalized size bounds",
+-    "assignment": "docs/prime-mass-gap-branch.md"
++    "status": "not yet implemented",
++    "scope": "all amplified errors, followed by final fixed-positive-coefficient endpoint assembly",
++    "assignment": "docs/next-amplified-errors.md"
+   },
+   "parameter_pr_local_acceptance": {
+     "status": "satisfied",
+@@ -68,7 +69,7 @@
+     "new_proof_source_in_v41": false
+   },
+   "mass_budget_branch": {
+-    "status": "source_implemented_acceptance_pending",
++    "status": "accepted",
+     "fixed_gap_target": {
+       "numerator": 3,
+       "denominator": 2
+@@ -80,7 +81,17 @@
+       "endpoint_mass_budget_bounds"
+     ],
+     "new_theorem_targets": 12,
+-    "acceptance_evidence": null,
+-    "subsequent_effort": "all amplified error terms, then a fixed-positive-coefficient endpoint"
++    "acceptance_evidence": "provenance/accepted/v42/README.md",
++    "subsequent_effort": "all amplified error terms, then a fixed-positive-coefficient endpoint",
++    "run_id": "erdos647_repo_v42_results_20260908T111052Z_81bd3ce5",
++    "accepted_declarations": 12,
++    "expanded_type_and_definition_checks": 13,
++    "fixed_gap_proved": {
++      "numerator": 3,
++      "denominator": 2
++    },
++    "assumes_nonnegative_budget": false,
++    "accepted_snapshot_mathematical_modules": 47,
++    "local_pr_acceptance": "satisfied on supplied source snapshot"
+   }
+ }
+--- a/docs/next-amplified-errors.md
++++ b/docs/next-amplified-errors.md
+@@ -0,0 +1,151 @@
++# Next mathematical target: amplified errors and final endpoint
++
++Date: September 8, 2026. Baseline: the newer accepted v42 run, 21/21 gates.
++This is a proposed implementation assignment, not new accepted Lean source.
++The gap-and-size PR is a separate, locally validated changeset.
++
++## Goal and fixed parameters
++
++Prove a same-scale endpoint with an explicit fixed coefficient c>0:
++
++\[
++ C(X)\le X\exp\left(-c\frac{(\log X)^a}{\log\log X}\right),
++ \qquad a=\frac{\log2}{1+\log2},
++\]
++
++for all sufficiently large natural X. Keep the current exact definitions:
++Q=log X, L=log(log X), H=windowLength(X), J=truncationOrder(X),
++y=primeCutoff(X), t=momentT(X)=1/(1000L), z=1-t,
++lambda=primeMass(H,y), B=correctedBudget(H), eta=-log z, mu=t*lambda.
++
++Do not change a or the saving scale. Do not optimize arbitrary coefficients.
++Neither 1/1000 nor another final coefficient is mandatory. Record the explicit
++c actually proved, and prove the historical EndpointClaim only if essentially free.
++
++## Accepted interfaces to consume
++
++All names below refer to existing declarations, not new assumptions.
++
++In `Erdos647Sieve.Endpoint`:
++
++- `eventually_endpoint_mass_budget_bounds`: H>=1, L>0, 0<=lambda<=HL,
++  B<=HL, and lambda-B>=3H/2, eventually, without assuming B>=0.
++- `eventually_primeMass_gap_of_lt`: every fixed delta<K is available,
++  K=log(25/2)+1/log 2-2. The fixed 3/2 corollary is sufficient.
++- `endpoint_parameters_admissible`, `eventually_momentT_bounds`,
++  `truncationOrder_bounds`, `eventually_truncationOrder_pos`.
++- `windowLength_ratio_tendsto_one`, `log_windowLength_div_logLog_tendsto`,
++  `truncationOrder_div_windowLength_tendsto`, `log_primeCutoff` and the
++  established growth results.
++- `EndpointBound`, `endpointBound_iff_eventually`, `endpointBound_mono`,
++  `positiveEndpointClaim_of_explicit` from `Endpoint/Statement.lean`.
++
++In `Erdos647Sieve.Elementary`:
++`neg_log_one_sub_le_add_sq`, `endpoint_tail_log_constant`, and
++`factorial_pow_lower`.
++
++For counting: `Erdos647Sieve.finiteCounting` and
++`candidateCount_le_window_of_negative_correctedBudget`.
++Read the exact types and casts before applying them. Do not assume the existing
++parameter lemmas already include every product-scale limit needed below.
++
++## First bounded milestone: principal term and amplification
++
++Introduce only small named definitions/adapters when they eliminate repeated
++presentation mismatches. Prove the eta estimates on 0<=t<=1/2, using the existing
++quadratic logarithm bound. Under B>=0, combine the accepted gap and size bounds:
++
++\[
++ \eta B-\mu
++ \le -t(\lambda-B)+t^2B
++ \le-\frac{1499}{10^6}\frac H L.
++\]
++
++This rational coefficient falls out by algebra; there is no numerical optimization
++problem here. A coarser fixed positive principal coefficient is fine when useful.
++Also obtain the convenient upper estimate eta*B<=H/500.
++
++State explicitly when B>=0 is needed. Multiplying an upper bound on eta by a
++negative B reverses the inequality. Do not assume eventual B>=0 to evade that issue.
++The final negative-budget branch is handled by the existing counting theorem.
++
++Prove the bound for the actual principal contribution X*exp(eta*B-mu), not only
++an unrelated exponent expression. A separate general real-variable lemma may be
++useful, but it does not replace the specialization to the actual parameters.
++
++## Second milestone: the growing-numerator factorial tail
++
++Put q=J+1. From accepted bounds derive mu<=H/1000, q>=H/50, and q>=1.
++Use the accepted factorial lower bound, with the factorial cast to real first:
++
++\[
++ e^{\eta B}\frac{\mu^q}{q!}
++ \le e^{H/500}(e/20)^q
++ \le e^{-H/30}.
++\]
++
++The final numerical comparison is already provided by `endpoint_tail_log_constant`.
++A different comfortable fixed positive decay rate is acceptable, but cannot be
++assumed. Do not apply a fixed-numerator c^n/n! limit to mu(X).
++All denominator positivity and real/natural exponent conversions stay explicit.
++
++## Third milestone: arithmetic remainder and exceptional window
++
++Derive the exact identity y^J=X^(1/4) eventually, using J>0 and X>0.
++The amplified remainder is
++
++\[
++ e^{\eta B}(Hy)^J=X^{1/4}\exp(J\log H+\eta B).
++\]
++
++Prove actual limits/eventual inequalities, for example
++(J log H + eta B)/Q -> 0 under the nonnegative-budget conditions, or a
++sufficient unconditional upper comparison for the applicable counting branch.
++Show H*L/Q -> 0 from a<1 and the established parameter ratios, using library
++logarithm/power comparisons. Do not insert it as an unproved estimate.
++
++A coarse bound by X^(1/2) eventually is enough to make this term negligible at
++the target scale. Similarly handle the initial H contribution explicitly.
++Do not drop the multiplier exp(eta*B).
++
++## Final assembly and the sign split
++
++For B>=0, apply the accepted finiteCounting inequality with the actual parameters
++and combine the four contributions:
++
++\[
++ H + X e^{\eta B-\mu}
++ + X e^{\eta B}\frac{\mu^{J+1}}{(J+1)!}
++ + e^{\eta B}(Hy)^J.
++\]
++
++For B<0, the existing theorem gives candidateCount(X)<=H. Absorb that using the
++same eventual scale comparison, with no unsupported assumption that B is eventually
++nonnegative. The final theorem must cover both signs for every sufficiently large X.
++
++Use H/Q^a -> 1 and a strict coefficient margin to absorb floors, sums and numerical
++prefactors. Work with normalized ratios tending to zero, then a single eventual
++upper bound, rather than optimizing separate prefactors. A choice such as c=1/2000
++would be sufficient if it falls comfortably out of the proved inequalities; it is
++not a prescribed target or a currently proved coefficient.
++
++Export an actual `EndpointBound c` at a named explicit c>0 and derive
++`PositiveEndpointClaim`. Keep c fixed before X0 and X. No assumed gap, growth,
++error estimate, or endpoint proposition may remain in the unconditional statement.
++Only then update `proved_coefficient`, `proved_endpoint_theorem` and endpoint
++acceptance evidence. The gap constant 3/2 must never be recorded as c.
++
++## Packaging and audit boundary
++
++Add new modules and audits; preserve the 47 accepted mathematical modules and
++22 audits unless a necessary adapter issue is specifically identified. Keep
++Lean/Mathlib 4.32.2, the restricted PNT+ interface, independent Mathlib-only core,
++warning policy and axiom allowlist unchanged. Keep incremental builds.
++
++Each substantive new module needs expanded type checks, transitive axiom reports,
++registered prerequisites and warning-free acceptance. Stage this work so a failure
++in one error source does not prevent useful independent feedback from another.
++The final assembly must not be described as complete because only a helper passes.
++
++No solution to the existence question in Erdős #647 is implied by this density
++bound; its right-hand side still grows. Novelty and external review are separate.
+--- a/docs/next-prime-mass-gap.md
++++ b/docs/next-prime-mass-gap.md
+@@ -1,3 +1,8 @@
++> **Completed in the newer v42 run (21/21 passed).** This is the preserved original
++> assignment, not the current pending task. Its proposed interfaces were implemented
++> in `PrimeMassGap.lean` and `MassBudgetBounds.lean`. The next task is
++> [amplified-error control and final assembly](next-amplified-errors.md).
++
+ # Next mathematical changeset: the fixed positive prime-mass/budget gap
+ 
+ Date: 2026-09-08. Starting evidence: v40, 19/19 gates passed.
+--- a/docs/prime-mass-gap-branch.md
++++ b/docs/prime-mass-gap-branch.md
+@@ -1,8 +1,9 @@
+-# Prime-mass/budget gap: the next mathematical changeset
++# Prime-mass/budget gap: accepted mathematical changeset
+ 
+ Version: v42, 2026-09-08. Baseline: accepted v40 source and v41 evidence update.
+-This is new proof-source implementation with two new acceptance gates. The prior
+-parameter PR is a separate changeset. No remote PR is created or modified here.
++The newer v42 run `erdos647_repo_v42_results_20260908T111052Z_81bd3ce5` passed all 21 gates.
++Both gap/size gates and all 12 new declarations are accepted on that source snapshot.
++The v43 update records this evidence; the parameter PR remains separate.
+ 
+ ## Purpose
+ 
+@@ -115,9 +116,10 @@
+ The constant itself receives an additional expanded-definition check. Existing
+ warning, module-ownership, admission, and allowed-axiom checks are unchanged.
+ 
+-There are now 21 registered gates: the accepted 19-gate baseline plus these two
+-pending gates. The twelve new theorem targets and thirteen new type/definition
+-examples do not inherit acceptance from the old 19/19 run.
++All 21 registered gates passed in the newer v42 run. The twelve new theorem
++targets and thirteen new type/definition examples have their own successful
++reports, rather than inheriting acceptance from the prior 19/19 checkpoint.
++See [accepted evidence](../provenance/accepted/v42/README.md).
+ 
+ Ordinary incremental builds, the Mathlib-only core scope, all existing selective
+ gates, tools/caches, previous results, and CI settings remain intact. The only
+@@ -144,5 +146,6 @@
+ assembly will select and record a comfortable explicit fixed c>0. The historical
+ 1/1000 endpoint is a corollary only when essentially free.
+ 
+-The local acceptance condition for this new mathematical PR is a warning-free
+-21/21 run with the exact statement/axiom reports, not completion of the endpoint.
++The local acceptance condition for this mathematical PR is satisfied: a warning-free
++21/21 run with the exact statement/axiom reports. Completion of the endpoint is
++not a condition for this PR. The next assignment is [amplified errors](next-amplified-errors.md).
+--- a/docs/proof-status.md
++++ b/docs/proof-status.md
+@@ -1,43 +1,34 @@
+ # Proof status
+ 
+-## Current accepted repository checkpoint: v40
++## Current accepted repository checkpoint: v42
+ 
+-The user-returned run `erdos647_repo_v40_results_20260908T091111Z_0850cec9`,
+-completed on September 8, 2026, passed **all 19 registered gates** on the pinned
+-**Lean/Mathlib 4.32.2** environment. There were no failed or blocked gates.
++The newer run `erdos647_repo_v42_results_20260908T111052Z_81bd3ce5` passed **21/21 gates** on September 8, 2026,
++using the pinned **Lean/Mathlib 4.32.2** environment. No gates failed or were blocked.
++All **51 commands** exited successfully. The build/audit logs contain zero warning
++or error diagnostics, and all **203 runner tests** passed. Checked sources were
++stable during the run, and both packages reused their caches.
+ 
+-All **47 recorded commands** exited successfully. The 39 build/audit logs contain
+-no warning or error diagnostics. The tooling run passed **178 tests**, and the
+-source hashes did not change during the run. Both packages reused their caches.
++The audits cover **195 distinct declarations** and **140 expanded type/definition
++examples** across **22 audit files**. All reported transitive axioms are within
++`{propext, Classical.choice, Quot.sound}`.
++[Accepted evidence](../provenance/accepted/v42/README.md) preserves the source,
++raw reports, original results ZIP and consistency review.
+ 
+-The checked-in audits contain **127 exact-type/definition examples** across
+-**20 audit files**. The raw axiom reports cover **183 distinct declarations**
+-(185 occurrences across overlapping gates), each using only:
+-
+-```text
+-propext, Classical.choice, Quot.sound
+-```
+-
+-[Accepted v40 evidence](../provenance/accepted/v40/README.md) preserves the original
+-results ZIP, raw logs, audit and source hashes, and the source/log consistency
+-review. It supersedes the pending parameter statuses; it does not retroactively
+-turn earlier failed runs into successes.
++The earlier v42 diagnostic lacked the prerequisite parameter modules and stopped
++before any Lean command. It remains a historical failure; the newer complete
++source snapshot supplies the successful evidence here.
+ 
+ | Layer | Recorded result |
+ |---|---|
+-| Mathlib-only finite library, public facades and both examples | Passed |
+-| Complete finite moment, corrected debit, and finite counting | Passed |
+-| Restricted PNT+ inputs and improper-integrability adapters | Passed |
+-| Replacement Mertens and selected-prime cutoff cancellation | Passed |
+-| Factorial, logarithm and fixed-constant small-prime estimates | Passed |
+-| Eventual corrected-budget upper estimate | Passed |
++| Mathlib-only finite library, facades and examples | Passed |
++| Complete finite moment, debit and counting | Passed |
++| Restricted PNT+, integrability, clean Mertens and cutoff cancellation | Passed |
++| Factorial, logarithm, small-prime and corrected-budget estimates | Passed |
+ | Fixed-coefficient endpoint statement interface | Passed; not an endpoint proof |
+-| Exact window and truncation asymptotics | Passed |
+-| Cutoff growth, ordering and parameter admissibility | **Newly passed in v40** |
+-| Actual selected-prime error and prime-mass expansion | **Newly passed in v40** |
+-| Eventual positive gap between prime mass and corrected budget | v42 source implemented; two new gates pending |
+-| Normalized mass growth and signed mass/budget size bounds | v42 source implemented; pending |
+-| Amplified-error bounds and final positive-coefficient endpoint | Not yet proved |
++| Exact parameter asymptotics and prime-mass expansion | Passed |
++| Fixed positive prime-mass/budget gap | **Newly passed in v42** |
++| Normalized prime mass and signed budget size bounds | **Newly passed in v42** |
++| Amplified-error bounds and final fixed-positive-coefficient endpoint | Not yet proved |
+ 
+ ## The accepted parameter result
+ 
+@@ -70,57 +61,64 @@
+ The \(\log(25/2)\) constant has been retained, not replaced by an unspecified
+ bounded error. The endpoint exponent and scale are unchanged.
+ 
+-## Coefficient policy and remaining mathematics
++## The newly accepted gap and size results
+ 
+-The final goal is `EndpointBound c` for an **explicit fixed** real `c > 0`, and
+-then `PositiveEndpointClaim`. The coefficient is chosen before the onset and
+-before `X`. It is not allowed to vary with `X`.
++With B=correctedBudget(H) kept signed, the new results are
+ 
+-**No endpoint coefficient is proved by v40.** The internal parameter
+-`t=1/(1000 log(log X))` is unchanged, but the final coefficient need not be
+-`1/1000`. The historical `EndpointClaim` is an optional corollary when available
+-without substantial extra effort. No alternative rigid numerical target is set.
++\[
++\lambda-B\ge\frac32 H\quad\text{eventually},\qquad
++\frac{\lambda}{HL}\longrightarrow1-a,
++\]
+ 
+-The v42 changeset implements the fixed positive mass-budget gap and supporting
+-size bounds in two new modules. Their exact-type and axiom gates are pending;
+-the accepted 19-gate v40 baseline remains unchanged. There are now **21 registered
+-gates**, not 21 accepted gates. See [the current mathematical scope](prime-mass-gap-branch.md).
+-Every amplified error must then be bounded before final assembly.
++and eventually 0<=lambda<=HL and B<=HL. The fixed gap declaration is
++`Erdos647Sieve.Endpoint.eventually_primeMass_sub_correctedBudget_ge`.
++The combined interface is
++`Erdos647Sieve.Endpoint.eventually_endpoint_mass_budget_bounds`.
++It includes H>=1 and L>0 but deliberately does not assume B>=0.
++
++There are **12 new accepted declarations** in two modules. The more general gap
++theorem supplies every fixed delta<K, with K=log(25/2)+1/log 2-2.
++It does not assert (lambda-B)/H converges to K; the budget estimate is one-sided.
++
++## Endpoint coefficient and next effort
++
++**No endpoint coefficient has yet been proved.** The constant 3/2 is a gap per
++window shift, not the saving coefficient c. The goal remains `EndpointBound c`
++for a named explicit fixed c>0, then `PositiveEndpointClaim`, with c independent
++of X and the critical exponent and scale unchanged.
++
++Keep t=1/(1000 log(log X)) and the other current parameters. The final coefficient
++need not be 1/1000; derive the historical `EndpointClaim` only when essentially
++free. No replacement rigid coefficient target is imposed.
++
++The next mathematical changeset is [every amplified error term](next-amplified-errors.md),
++followed by final assembly and the separate negative-budget case. Do not reopen
++the accepted finite, PNT+, Mertens, factorial, debit or parameter proofs.
+ 
+ ## PR boundary
+ 
+-**The parameter-asymptotics changeset is ready for a normal PR on the supplied
+-source snapshot.** Its local acceptance criterion is satisfied: 19/19, warning-free,
+-with exact-type checks, permitted axioms and unchanged sources during the run.
+-The earlier v36 core/research fixes remain a separate accepted changeset.
++**The gap-and-size changeset meets its local PR acceptance condition.**
++[The prepared PR description](pull-requests/prime-mass-gap.md) records the 21/21
++source snapshot. The previous parameter PR remains separate. Remote head/base
++diffs and required CI are not assessed by these uploaded local results.
+ 
+-[The parameter PR description](pull-requests/endpoint-parameters.md) records this
+-result. Review of an actual GitHub head/base diff, repository CI policy and external
+-mathematical review are separate; no remote PR or CI result was inspected here.
++The v43 closeout modifies only documentation, provenance, and one evidence-status
++regression test. All **47 mathematical modules**, **22 audits**, the runner,
++gate registry, pins, lockfiles and CI workflows remain unchanged.
+ 
+-The v41 evidence update changed no checking or mathematical source. The subsequent
+-v42 gap changeset adds two proof modules and two audits, without modifying any of
+-the 45 existing mathematical modules or 20 existing audits. Its runner changes only
+-the diagnostic prefix to `erdos647_repo_v42_results_`. Dependency pins, cache and
+-checking behavior, and CI settings remain unchanged. The new proof source is not
+-part of the completed parameter PR's acceptance record.
++## PNT+ scope and historical records
+ 
+-## PNT+ scope and historical evidence
++The retained **14-module PNT+ source subtree** passed the admission scan;
++`MediumPNT` and the seven extracted routines also passed their audits.
++The excluded `ZetaSummary` catalogue is not imported. This does not claim that
++the entire upstream repository is free of admissions.
+ 
+-The recorded source scan covers the **14-module retained PNT+ subtree** rooted at
+-`MediumPNT`. It reports no admissions or forbidden proof shortcuts in that subtree;
+-`MediumPNT` and all seven extracted routines also passed their separate axiom audits.
+-The unfinished `ZetaSummary` catalogue is not imported. The scan is not a statement
+-that the full upstream repository or all Mathlib source is complete.
++Earlier accepted checkpoints, rejected experiments and source history remain
++preserved outside the active build graph. The root library remains Mathlib-only.
+ 
+-The [v36 checkpoint](../provenance/accepted/v36/README.md), earlier toolchain records,
+-rejected probe and previous failures remain preserved outside the current build
+-path. See [PNT+ trust boundary](pntplus-trust-boundary.md).
++## Evidence scope
+ 
+-## Acceptance standard
+-
+-The claimed acceptance is based on the returned build, exact-type and transitive-
+-axiom logs. Hash matching establishes source/log consistency, not independent
+-proof replay, source authenticity, novelty, or an explicit asymptotic onset.
+-No final positive-coefficient endpoint, finiteness result or resolution of #647
+-is claimed. The stable public library does not depend on the endpoint modules.
++Acceptance records the returned build, expanded-type and transitive-axiom results.
++Hash comparison establishes file consistency, not source authenticity, independent
++proof replay or novelty. No final endpoint, finiteness result or resolution of
++Erdős #647 is claimed.
+--- a/docs/pull-requests/prime-mass-gap.md
++++ b/docs/pull-requests/prime-mass-gap.md
+@@ -1,38 +1,68 @@
+-# Proposed title
++# PR title
+ 
+-Prove the fixed prime-mass/budget gap and supporting size bounds
++Prove the prime-mass/budget gap and supporting size bounds
+ 
+ ## Summary
+ 
+-Implement the next endpoint comparison using the accepted parameter asymptotics,
+-corrected-budget upper estimate, and numerical logarithm gap. Preserve all existing
+-mathematical modules, audits, dependency pins, and the Mathlib-only public core.
++Connect the accepted parameter asymptotics and corrected-budget estimate to a
++fixed positive gap for the actual sieve parameters. Add two research modules and
++their exact-type/transitive-axiom audits. Preserve the existing finite, PNT+,
++Mertens, factorial, debit and parameter proof bodies, the public finite API, and
++the pinned Lean/Mathlib 4.32.2 environment.
+ 
+-For the actual protected H(X), y(X), lambda=primeMass(H,y), B=correctedBudget(H),
+-and L=log log X, the new targets are
++## Mathematical results
++
++For H=windowLength(X), y=primeCutoff(X), lambda=primeMass(H,y),
++B=correctedBudget(H), L=log(log X), and a=log 2/(1+log 2), prove
+ 
+ $$
+-\lambda-B\ge\tfrac32 H\quad\text{eventually},\qquad
+-\lambda/(HL)\to1-a,\qquad 0\le\lambda\le HL,\quad B\le HL.
++\lambda-B\ge\frac32 H\quad\text{eventually},\qquad
++\frac{\lambda}{HL}\longrightarrow 1-a,
+ $$
+ 
+-The gap implementation also supplies every fixed delta<K, where
+-K=log(25/2)+1/log 2-2. No budget-positivity, cutoff-growth, prime-distribution, or
+-unproved gap premise remains in the fixed 3/2 declaration. The budget remains signed.
++and the supporting eventual bounds
+ 
+-## Validation status
++$$
++0\le\lambda\le HL,\qquad B\le HL.
++$$
+ 
+-- Baseline: v40 passed 19/19 gates. Its existing proof and audit source is unchanged.
+-- New checks: `endpoint_prime_mass_gap` and `endpoint_mass_budget_bounds` are pending.
+-- Twelve new theorem targets receive expanded type checks and transitive axiom audits;
+-  the gap constant has an additional definition check.
+-- Local acceptance requires a warning-free **21/21** result for this changeset.
++The general gap theorem supplies every fixed delta<K, where
++K=log(25/2)+1/log 2-2. Delta is fixed before X; the onset may depend on delta.
++The fixed 3/2 theorem has no assumed distribution, cutoff-growth or budget gap.
++The signed budget is neither truncated nor assumed nonnegative.
+ 
+-Do not relabel the old 19/19 result as acceptance of these new proofs.
++Do not infer an asymptotic equality for the budget: the proof uses its one-sided
++upper estimate. The 3/2 gap margin is not the final endpoint coefficient c.
++
++## Validation
++
++- The newer v42 run passed **21/21** gates, with no failed or blocked checks.
++- **195 distinct declarations** passed transitive-axiom checks using only
++  `propext`, `Classical.choice`, and `Quot.sound`.
++- **140 expanded type/definition checks** across 22 audit files, including
++  13 checks for the two new modules and their 12 theorem targets.
++- **Zero build/audit warnings or errors**; **203 runner tests passed**.
++- All 51 recorded commands exited successfully; checked input hashes were stable,
++  and both package caches were reused.
++- Evidence: `provenance/accepted/v42/`, run `erdos647_repo_v42_results_20260908T111052Z_81bd3ce5`.
++
++The earlier v42 diagnostic stopped on missing parameter source files. The newer
++complete source snapshot supersedes that diagnostic for current acceptance.
++
++## Evidence closeout
++
++The v43 overlay records the passing evidence and updates documentation. It changes
++no mathematical module, theorem statement, audit, runner, gate registry, toolchain
++pin, lockfile or CI workflow. One status-regression test now accepts a recorded
++successful gap checkpoint only when its evidence backs that status, instead of
++requiring the gap to remain pending forever.
+ 
+ ## Scope
+ 
+-This is not the final endpoint theorem. The amplified principal, factorial-tail,
+-arithmetic, and exceptional-window contributions remain for the next changeset.
+-No endpoint coefficient c is claimed. The goal still preserves the critical exponent
+-and scale, with any explicit fixed positive c that the full argument comfortably gives.
++The local acceptance condition for this PR is satisfied. Review of the actual PR
++diff and repository CI remain normal separate requirements. This PR does not
++prove the final asymptotic endpoint or claim a saving coefficient.
++
++The next mathematical changeset bounds every amplified contribution and then
++assembles `EndpointBound c` for an explicit fixed c>0 at the unchanged exponent
++and scale. The old 1/1000 coefficient remains optional, not a completion condition.
+--- a/tests/test_endpoint_gap_v42.py
++++ b/tests/test_endpoint_gap_v42.py
+@@ -178,9 +178,37 @@
+     def test_gap_is_not_confused_with_final_saving_coefficient(self):
+         record = json.loads((ROOT/'docs/endpoint-coefficient-status.json').read_text())
+         target = record['mass_budget_branch']
+-        self.assertEqual(target['status'], 'source_implemented_acceptance_pending')
++        self.assertIn(target['status'], {'source_implemented_acceptance_pending', 'accepted'})
+         self.assertEqual(target['fixed_gap_target'], {'numerator': 3, 'denominator': 2})
+-        self.assertIsNone(target['acceptance_evidence'])
++        if target['status'] == 'accepted':
++            evidence = ROOT / target['acceptance_evidence']
++            self.assertTrue(evidence.is_file())
++            summary = json.loads((evidence.parent / 'summary.json').read_text())
++            self.assertEqual(summary['run_id'], target['run_id'])
++            self.assertEqual(summary['status'], 'PASS_SELECTED_CHECKS')
++            self.assertEqual(summary['source_sha256_before'], summary['source_sha256_after'])
++            commands = {entry['label']: entry for entry in summary['commands']}
++            for gate, mod in MODULES.items():
++                self.assertIn(gate, summary['selected_gates'])
++                self.assertEqual(summary['gates'][gate]['status'], 'PASS')
++                build = commands[gate + '_build']
++                report = commands[gate + '_audit_0']
++                self.assertEqual(build['exit_code'], 0)
++                self.assertEqual(report['exit_code'], 0)
++                text = (evidence.parent / report['log']).read_text()
++                self.assertFalse(check.lean_warnings(text))
++                self.assertRegex(text, r'EXIT_CODE=0\s*$')
++                targets = check.GATES[gate]['audits'][f'Audit/Endpoint{mod}.lean']
++                for name in targets:
++                    self.assertEqual(check.parse_axioms(text, name),
++                                     summary['gates'][gate]['axioms'][name])
++                rel = f'research/Erdos647Research/Endpoint/{mod}.lean'
++                self.assertEqual(check.sha(evidence.parent / 'source' / rel),
++                                 summary['source_sha256_after'][rel])
++            self.assertIsNone(record['proved_endpoint_theorem'])
++            self.assertIsNone(record['endpoint_acceptance_evidence'])
++        else:
++            self.assertIsNone(target['acceptance_evidence'])
+         self.assertIsNone(record['proved_coefficient'])
+ 
+ 

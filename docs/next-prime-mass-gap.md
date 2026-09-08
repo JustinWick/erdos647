@@ -1,3 +1,8 @@
+> **Completed in the newer v42 run (21/21 passed).** This is the preserved original
+> assignment, not the current pending task. Its proposed interfaces were implemented
+> in `PrimeMassGap.lean` and `MassBudgetBounds.lean`. The next task is
+> [amplified-error control and final assembly](next-amplified-errors.md).
+
 # Next mathematical changeset: the fixed positive prime-mass/budget gap
 
 Date: 2026-09-08. Starting evidence: v40, 19/19 gates passed.

@@ -1,0 +1,25 @@
+$ <REPO>/.tools/elan/toolchains/leanprover--lean4---v4.32.2/bin/lake env lean -DwarningAsError=true Audit/ReciprocalAbel.lean
+Erdos647Sieve.Analytic.primeLogCoefficient_partial_sum (x : ℝ) :
+  ∑ n ∈ Finset.Icc 0 ⌊x⌋₊, Erdos647Sieve.Analytic.primeLogCoefficient n = Chebyshev.theta x
+'Erdos647Sieve.Analytic.primeLogCoefficient_partial_sum' depends on axioms: [propext, Classical.choice, Quot.sound]
+Erdos647Sieve.Analytic.reciprocalPrimeSum_eq_weighted_sum (x : ℝ) :
+  Erdos647Sieve.Analytic.reciprocalPrimeSum x =
+    ∑ n ∈ Finset.Icc 0 ⌊x⌋₊, Erdos647Sieve.Analytic.reciprocalLog ↑n * Erdos647Sieve.Analytic.primeLogCoefficient n
+'Erdos647Sieve.Analytic.reciprocalPrimeSum_eq_weighted_sum' depends on axioms: [propext, Classical.choice, Quot.sound]
+Erdos647Sieve.Analytic.reciprocalPrimeSum_abel {x : ℝ} (hx : 2 ≤ x) :
+  Erdos647Sieve.Analytic.reciprocalPrimeSum x =
+    Erdos647Sieve.Analytic.reciprocalLog x * Chebyshev.theta x -
+      ∫ (t : ℝ) in 2..x, deriv Erdos647Sieve.Analytic.reciprocalLog t * Chebyshev.theta t
+'Erdos647Sieve.Analytic.reciprocalPrimeSum_abel' depends on axioms: [propext, Classical.choice, Quot.sound]
+Erdos647Sieve.Analytic.reciprocalPrimeSum_partial_summation (x : ℝ) (hx : 2 ≤ x) :
+  Erdos647Sieve.Analytic.reciprocalPrimeSum x =
+    Chebyshev.theta x / (x * Real.log x) +
+      ∫ (t : ℝ) in 2..x, Chebyshev.theta t * (1 + Real.log t) / (t ^ 2 * Real.log t ^ 2)
+'Erdos647Sieve.Analytic.reciprocalPrimeSum_partial_summation' depends on axioms: [propext, Classical.choice, Quot.sound]
+Erdos647Sieve.Analytic.reciprocalPrimeSum_error_identity (x : ℝ) (hx : 2 ≤ x) :
+  Erdos647Sieve.Analytic.reciprocalPrimeSum x - Real.log (Real.log x) =
+    Erdos647Sieve.Analytic.mainPrimitive 2 + (Chebyshev.theta x - x) / (x * Real.log x) -
+      ∫ (t : ℝ) in 2..x, (Chebyshev.theta t - t) * deriv Erdos647Sieve.Analytic.reciprocalLog t
+'Erdos647Sieve.Analytic.reciprocalPrimeSum_error_identity' depends on axioms: [propext, Classical.choice, Quot.sound]
+
+EXIT_CODE=0

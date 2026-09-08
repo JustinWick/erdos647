@@ -178,9 +178,37 @@ class GapGateWorkflow(unittest.TestCase):
     def test_gap_is_not_confused_with_final_saving_coefficient(self):
         record = json.loads((ROOT/'docs/endpoint-coefficient-status.json').read_text())
         target = record['mass_budget_branch']
-        self.assertEqual(target['status'], 'source_implemented_acceptance_pending')
+        self.assertIn(target['status'], {'source_implemented_acceptance_pending', 'accepted'})
         self.assertEqual(target['fixed_gap_target'], {'numerator': 3, 'denominator': 2})
-        self.assertIsNone(target['acceptance_evidence'])
+        if target['status'] == 'accepted':
+            evidence = ROOT / target['acceptance_evidence']
+            self.assertTrue(evidence.is_file())
+            summary = json.loads((evidence.parent / 'summary.json').read_text())
+            self.assertEqual(summary['run_id'], target['run_id'])
+            self.assertEqual(summary['status'], 'PASS_SELECTED_CHECKS')
+            self.assertEqual(summary['source_sha256_before'], summary['source_sha256_after'])
+            commands = {entry['label']: entry for entry in summary['commands']}
+            for gate, mod in MODULES.items():
+                self.assertIn(gate, summary['selected_gates'])
+                self.assertEqual(summary['gates'][gate]['status'], 'PASS')
+                build = commands[gate + '_build']
+                report = commands[gate + '_audit_0']
+                self.assertEqual(build['exit_code'], 0)
+                self.assertEqual(report['exit_code'], 0)
+                text = (evidence.parent / report['log']).read_text()
+                self.assertFalse(check.lean_warnings(text))
+                self.assertRegex(text, r'EXIT_CODE=0\s*$')
+                targets = check.GATES[gate]['audits'][f'Audit/Endpoint{mod}.lean']
+                for name in targets:
+                    self.assertEqual(check.parse_axioms(text, name),
+                                     summary['gates'][gate]['axioms'][name])
+                rel = f'research/Erdos647Research/Endpoint/{mod}.lean'
+                self.assertEqual(check.sha(evidence.parent / 'source' / rel),
+                                 summary['source_sha256_after'][rel])
+            self.assertIsNone(record['proved_endpoint_theorem'])
+            self.assertIsNone(record['endpoint_acceptance_evidence'])
+        else:
+            self.assertIsNone(target['acceptance_evidence'])
         self.assertIsNone(record['proved_coefficient'])
 
 
