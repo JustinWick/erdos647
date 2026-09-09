@@ -14,26 +14,26 @@ boundary; it does not mean that the endpoint is still unproved.
 
 ## The problem
 
-Let $\tau(m)$ be the number of positive divisors of the positive integer $m$.
+Let $`\tau(m)`$ be the number of positive divisors of the positive integer $`m`$.
 [Erdős problem #647](https://www.erdosproblems.com/647), posed by Erdős and
-Selfridge, asks whether there is an integer $n>24$ such that
+Selfridge, asks whether there is an integer $`n\gt 24`$ such that
 
-$$
-\max_{1\le m<n}\bigl(m+\tau(m)\bigr)\le n+2.
-$$
+```math
+\max_{1\le m\lt n}\bigl(m+\tau(m)\bigr)\le n+2.
+```
 
-The condition holds at $n=24$; the question asks for another example beyond it.
-Writing $m=n-k$ gives the equivalent condition used in this library:
+The condition holds at $`n=24`$; the question asks for another example beyond it.
+Writing $`m=n-k`$ gives the equivalent condition used in this library:
+an integer $`n\gt 24`$ is a **candidate** precisely when
 
-$$
-\operatorname{Candidate}(n)
-\quad\Longleftrightarrow\quad
-n>24\ \text{ and }\ \tau(n-k)\le k+2
-\ \text{ for every integer }1\le k<n.
-$$
+```math
+\tau(n-k)\le k+2
+```
+
+for every integer $`k`$ with $`1\le k\lt n`$.
 
 Thus a candidate must satisfy a whole sequence of divisor restrictions:
-$\tau(n-1)\le3$, $\tau(n-2)\le4$, $\tau(n-3)\le5$, and so on.
+$`\tau(n-1)\le3`$, $`\tau(n-2)\le4`$, $`\tau(n-3)\le5`$, and so on.
 Here **candidate means an integer satisfying the full condition**, rather than
 an integer that has only passed a preliminary computational test.
 
@@ -41,48 +41,50 @@ an integer that has only passed a preliminary computational test.
 
 Define the candidate counting function and exponent by
 
-$$
-C(X)=\#\{n\in\mathbb N:24<n\le X,\ \operatorname{Candidate}(n)\},
-\qquad
+```math
+C(X)=\#\{n\in\mathbb N:24\lt n\le X,\ \mathrm{Candidate}(n)\},
+```
+
+```math
 a=\frac{\log 2}{1+\log 2}\approx0.4094.
-$$
+```
 
 All logarithms below are natural logarithms.
 
 **Theorem (fixed-coefficient sparsity bound).** For every fixed real constant
 
-$$
-0<c<\frac{1499}{10^6}=0.001499,
-$$
+```math
+0\lt c\lt \frac{1499}{10^6}=0.001499,
+```
 
-there exists $X_0=X_0(c)$ such that, for every natural number $X\ge X_0$,
+there exists $`X_0=X_0(c)`$ such that, for every natural number $`X\ge X_0`$,
 
-$$
+```math
 \boxed{
 C(X)\le X\exp\!\left(
 -c\,\frac{(\log X)^a}{\log\log X}
 \right).
 }
-$$
+```
 
-In particular, the formalization includes the explicit specialization
+In particular, the formalization includes the explicit specialization,
+valid for all sufficiently large $`X`$:
 
-$$
+```math
 C(X)\le X\exp\!\left(
 -\frac{(\log X)^a}{1000\log\log X}
-\right)
-\qquad\text{for all sufficiently large }X.
-$$
+\right).
+```
 
-The coefficient range is **strict**: $1499/10^6$ is the upper threshold of the
+The coefficient range is **strict**: $`1499/10^6`$ is the upper threshold of the
 proved range, not an attained coefficient in the final theorem. The theorem
-does not provide a numerical value for $X_0$, and the threshold may depend on
-the chosen $c$.
+does not provide a numerical value for $`X_0`$, and the threshold may depend on
+the chosen $`c`$.
 
-The saving scale $(\log X)^a/\log\log X$ tends to infinity. Consequently, the
-proportion $C(X)/X$ tends to zero at the displayed rate. As an asymptotic
-consequence, the bound is eventually smaller than $X/(\log X)^M$ for every fixed
-$M>0$. However, the displayed upper bound itself still tends to infinity:
+The saving scale $`(\log X)^a/\log\log X`$ tends to infinity. Consequently, the
+proportion $`C(X)/X`$ tends to zero at the displayed rate. As an asymptotic
+consequence, the bound is eventually smaller than $`X/(\log X)^M`$ for every fixed
+$`M\gt 0`$. However, the displayed upper bound itself still tends to infinity:
 **this proves neither finiteness nor the nonexistence of candidates**, and it
 does not construct an example. It is a sparsity result toward #647.
 
@@ -90,57 +92,56 @@ does not construct an example. It is a sparsity result toward #647.
 
 Put
 
-$$
+```math
 Q=\log X,\qquad L=\log\log X,\qquad H=\lfloor Q^a\rfloor.
-$$
+```
 
-For the project's selected prime cutoff $y$, define the prime mass and corrected
+For the project's selected prime cutoff $`y`$, define the prime mass and corrected
 budget by
 
-$$
-\lambda=H\sum_{\substack{H<p\le y\\p\ \mathrm{prime}}}\frac1p,
-$$
+```math
+\lambda=H\sum_{\substack{H\lt p\le y\\p\ \mathrm{prime}}}\frac1p,
+```
 
-$$
+```math
 B_H=
 \sum_{k=1}^{H}\left\lfloor\frac{\log(k+2)}{\log2}\right\rfloor
 -\sum_{\substack{p\le H\\p\ \mathrm{prime}}}
 \left\lfloor\frac Hp\right\rfloor.
-$$
+```
 
-The subtraction defining $B_H$ is in the **signed integers**, not truncated
-natural-number subtraction. The accepted estimates give
+The subtraction defining $`B_H`$ is in the **signed integers**, not truncated
+natural-number subtraction. For all sufficiently large $`X`$, the accepted estimates give
 
-$$
+```math
 \lambda-B_H\ge\frac32H,\qquad
-0\le\lambda\le HL,\qquad B_H\le HL
-\qquad\text{eventually},
-$$
+0\le\lambda\le HL,\qquad B_H\le HL,
+```
 
 and
 
-$$
+```math
 \frac{\lambda}{HL}\longrightarrow1-a.
-$$
+```
 
-More generally, every fixed margin $0<\delta<K$ is available in
-$\lambda-B_H\ge\delta H$ eventually, where
+More generally, every fixed margin $`0\lt \delta\lt K`$ is available in
+$`\lambda-B_H\ge\delta H`$ eventually, where
 
-$$
-K=\log(25/2)+\frac1{\log2}-2>\frac32.
-$$
+```math
+K=\log(25/2)+\frac1{\log2}-2\gt \frac32.
+```
 
 After controlling all amplified error terms, the proof obtains the following
-bound for the full candidate count, **without a sign assumption on $B_H$**:
+bound for the full candidate count, **without a sign assumption on $`B_H`$**,
+for all sufficiently large $`X`$:
 
-$$
+```math
 \boxed{
 C(X)\le
 X\exp\!\left(-\frac{1499}{10^6}\frac HL\right)
-+X\exp(-H/30)+2\sqrt X
-\quad\text{eventually}.
++X\exp(-H/30)+2\sqrt X.
 }
-$$
+```
 
 The last two contributions include the factorial truncation error, the amplified
 arithmetic remainder, and the exceptional initial window. The final theorem
@@ -150,33 +151,36 @@ absorbs all of them into one exponential bound.
 
 ### 1. Turn divisor restrictions into a budget for prime factors
 
-Let $\omega(m)$ count the distinct prime divisors of a positive integer $m$.
-The elementary inequality $2^{\omega(m)}\le\tau(m)$ means that a candidate with
-$n>H$ has a bounded total number of prime-factor occurrences in the window
-$n-1,\ldots,n-H$.
+Let $`\omega(m)`$ count the distinct prime divisors of a positive integer $`m`$.
+The elementary inequality $`2^{\omega(m)}\le\tau(m)`$ means that a candidate with
+$`n\gt H`$ has a bounded total number of prime-factor occurrences in the window
+$`n-1,\ldots,n-H`$.
 
-Every prime $p\le H$ already divides at least $\lfloor H/p\rfloor$ numbers in
+Every prime $`p\le H`$ already divides at least $`\lfloor H/p\rfloor`$ numbers in
 this window. Subtracting these unavoidable small-prime occurrences gives the
-corrected budget $B_H$ above. If
+corrected budget $`B_H`$ above. If
 
-$$
-F_H(n)=\prod_{k=1}^{H}(n-k),\qquad
-T(n)=\#\{p\text{ prime}:H<p\le y,\ p\mid F_H(n)\},
-$$
+```math
+F_H(n)=\prod_{k=1}^{H}(n-k),
+```
 
-then every such candidate satisfies $T(n)\le B_H$. A prime larger than $H$
+```math
+T(n)=\#\{p\text{ prime}:H\lt p\le y,\ p\mid F_H(n)\},
+```
+
+then every such candidate satisfies $`T(n)\le B_H`$. A prime larger than $`H`$
 cannot divide two different entries of the window, so these selected primes
-are counted without duplicating their occurrences. If $B_H<0$, no candidate
-with $n>H$ is possible, and the separate exclusion theorem gives $C(X)\le H$.
+are counted without duplicating their occurrences. If $`B_H\lt 0`$, no candidate
+with $`n\gt H`$ is possible, and the separate exclusion theorem gives $`C(X)\le H`$.
 
 ### 2. Bound a weighted count using congruences
 
-Choose $0<z<1$. A candidate with $T(n)\le B_H$ has
-$z^{T(n)}\ge z^{B_H}$, so an upper bound on the sum of $z^{T(n)}$ controls
+Choose $`0\lt z\lt 1`$. A candidate with $`T(n)\le B_H`$ has
+$`z^{T(n)}\ge z^{B_H}`$, so an upper bound on the sum of $`z^{T(n)}`$ controls
 the number of candidates.
 
-For each selected prime $p>H$, the condition $p\mid F_H(n)$ occupies exactly
-$H$ residue classes modulo $p$. The Chinese remainder theorem combines these
+For each selected prime $`p\gt H`$, the condition $`p\mid F_H(n)`$ occupies exactly
+$`H`$ residue classes modulo $`p`$. The Chinese remainder theorem combines these
 conditions for distinct primes. Counting the resulting residue classes in an
 interval gives a main term and an explicit discrepancy. An even truncation of
 the inclusion-exclusion expansion then produces a finite moment bound with a
@@ -185,16 +189,16 @@ that divisibility events are independent.
 
 ### 3. Choose the window and cutoff so prime mass exceeds the budget
 
-The analytic layer estimates the reciprocal-prime sum defining $\lambda$ and
+The analytic layer estimates the reciprocal-prime sum defining $`\lambda`$ and
 combines it with elementary budget estimates. The exponent is chosen so that
 
-$$
+```math
 \frac a{\log2}=1-a.
-$$
+```
 
 This balances the leading terms in the budget and prime-mass estimates.
 Keeping the lower-order terms and constants yields the positive gap
-$\lambda-B_H\ge3H/2$. That gap is what makes candidates rare: they must have
+$`\lambda-B_H\ge3H/2`$. That gap is what makes candidates rare: they must have
 substantially fewer selected prime factors than the prime mass suggests.
 
 The reciprocal-prime estimates come from the project's formalized analytic
@@ -205,79 +209,79 @@ prime-distribution assumptions.
 
 Set
 
-$$
+```math
 t=\frac1{1000L},\qquad z=1-t,\qquad
 \eta=-\log(1-t),\qquad \mu=t\lambda.
-$$
+```
 
 In the nonnegative-budget case, the principal counting contribution is
-$X\exp(\eta B_H-\mu)$. Using $\eta\le t+t^2$ for the eventual parameter range,
+$`X\exp(\eta B_H-\mu)`$. Using $`\eta\le t+t^2`$ for the eventual parameter range,
 the gap and size bounds give
 
-$$
+```math
 \begin{aligned}
 \eta B_H-\mu
 &\le-t(\lambda-B_H)+t^2B_H\\
 &\le-\frac32tH+t^2HL\\
 &=-\frac{1499}{10^6}\frac HL.
 \end{aligned}
-$$
+```
 
-This explains the coefficient: $1500/10^6$ comes from the gap, and $1/10^6$
+This explains the coefficient: $`1500/10^6`$ comes from the gap, and $`1/10^6`$
 pays for the quadratic logarithm correction. It is a constant produced by
 these estimates, not a claimed optimal constant for #647.
 
 The proof also bounds the **entire amplified** factorial tail and arithmetic
-remainder, as well as the first $H$ integers. Combining those estimates with
+remainder, as well as the first $`H`$ integers. Combining those estimates with
 the negative-budget exclusion gives the three-term bound above.
 
 ### 5. Absorb the remaining terms at the same scale
 
-Write $S=Q^a/L$ and $\alpha=1499/10^6$. The scale lemmas prove
+Write $`S=Q^a/L`$ and $`\alpha=1499/10^6`$. The scale lemmas prove
 
-$$
+```math
 \frac H{Q^a}\longrightarrow1,\qquad
 S\longrightarrow\infty,\qquad
 \frac SH\longrightarrow0,\qquad
 \frac SQ\longrightarrow0.
-$$
+```
 
-For any fixed $0<c<\alpha$, divide the three-term bound by $Xe^{-cS}$.
+For any fixed $`0\lt c\lt \alpha`$, divide the three-term bound by $`Xe^{-cS}`$.
 Each of its three normalized contributions tends to zero, so their sum is
 eventually at most one. This proves the final bound with no extra multiplicative
-constant. The strict slack $c<\alpha$ handles rounding $Q^a$ down to $H$ and
-absorbs the remaining errors; the argument does not establish $c=\alpha$.
+constant. The strict slack $`c\lt \alpha`$ handles rounding $`Q^a`$ down to $`H`$ and
+absorbs the remaining errors; the argument does not establish $`c=\alpha`$.
 
 ## Reusable finite theorem
 
 The finite library is useful independently of the asymptotic endpoint. For
-natural numbers $X,H\ge1$, real $y>H$, $0<z<1$, even natural $J$, and **any
-integer translation $A$**, let $T$ be as above and set
+natural numbers $`X,H\ge1`$, real $`y\gt H`$, $`0\lt z\lt 1`$, even natural $`J`$, and **any
+integer translation $`A`$**, let $`T`$ be as above and set
 
-$$
-\mu=(1-z)H\sum_{\substack{H<p\le y\\p\ \mathrm{prime}}}\frac1p.
-$$
+```math
+\mu=(1-z)H\sum_{\substack{H\lt p\le y\\p\ \mathrm{prime}}}\frac1p.
+```
 
 The proved moment inequality is
 
-$$
-\sum_{\substack{n\in\mathbb Z\\A<n\le A+X}}z^{T(n)}
+```math
+\sum_{\substack{n\in\mathbb Z\\A\lt n\le A+X}}z^{T(n)}
 \le
 X\left(e^{-\mu}+\frac{\mu^{J+1}}{(J+1)!}\right)+(Hy)^J.
-$$
+```
 
-For $B_H\ge0$, the candidate counting theorem therefore gives
+For $`B_H\ge0`$, the candidate counting theorem therefore gives
 
-$$
+```math
 C(X)\le H+
 e^{(-\log z)B_H}
 \left[
 X\left(e^{-\mu}+\frac{\mu^{J+1}}{(J+1)!}\right)+(Hy)^J
 \right].
-$$
+```
 
 The multiplier applies to the **whole** moment bound, including both errors.
-For $B_H<0$, the separate proved bound is $C(X)\le H$.
+For $`B_H\lt 0`$, the separate proved bound is $`C(X)\le H`$.
 See [theorem statements](docs/theorems.md) for the library interfaces.
 
 ## Lean verification and acceptance
@@ -291,7 +295,7 @@ The accepted **v47 mathematical checkpoint** records:
 | Expanded type/definition checks | **194** |
 | Build and audit diagnostics | **Zero warnings or errors** |
 | Reported axioms | Only `propext`, `Classical.choice`, and `Quot.sound` |
-| Final endpoint | General strict coefficient range and explicit $c=1/1000$ corollary |
+| Final endpoint | General strict coefficient range and explicit $`c=1/1000`$ corollary |
 
 This checkpoint completes the mathematical chain through final absorption.
 It supersedes the earlier v45 amplified-error milestone and the pending status
