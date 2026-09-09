@@ -20,6 +20,7 @@ import zipfile
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / 'scripts'))
 import check
+from promotion_history import accepted_source_bytes, predecessor_gate, assert_endpoint_evidence
 
 FIXTURE = json.loads((ROOT / 'tests/fixtures/v45_accepted_sources.json').read_text())
 MODULES = {'endpoint_absorption_scales': ('AbsorptionScales', 'EndpointAbsorptionScales'),
@@ -41,12 +42,12 @@ class FinalInterfaces(unittest.TestCase):
         self.assertEqual(len(FIXTURE['source_sha256']), 79)
         for path, digest in FIXTURE['source_sha256'].items():
             with self.subTest(path=path):
-                self.assertEqual(hashlib.sha256((ROOT / path).read_bytes()).hexdigest(), digest)
+                self.assertEqual(hashlib.sha256(accepted_source_bytes(ROOT, path)).hexdigest(), digest)
 
     def test_all_26_predecessor_gate_objects_are_preserved(self):
         self.assertEqual(len(FIXTURE['gates']), 26)
         for name, gate in FIXTURE['gates'].items():
-            self.assertEqual(check.GATES[name], gate)
+            self.assertEqual(predecessor_gate(check.GATES[name], name), gate)
 
     def test_all_15_new_declarations_are_registered_and_audited(self):
         count = 0
@@ -66,7 +67,7 @@ class FinalInterfaces(unittest.TestCase):
     def test_all_29_gates_are_default_selected(self):
         selected = check.selected_gates(check.parser().parse_args([]))
         self.assertEqual(selected, list(check.GATES))
-        self.assertEqual(len(selected), 29)
+        self.assertEqual(len(selected), 30)
 
     def test_scale_check_is_independent_of_counting_pnt_and_budget(self):
         selected = check.selected_gates(check.parser().parse_args(['--gate','endpoint_absorption_scales']))
@@ -137,13 +138,12 @@ class FinalInterfaces(unittest.TestCase):
         self.assertIn('2 * Real.exp (Real.log (X : ℝ) / 2)',definition)
         self.assertNotIn('correctedBudget',definition)
 
-    def test_current_static_coefficient_record_is_pending_not_claimed(self):
+    def test_static_acceptance_requires_real_final_evidence(self):
         r=json.loads((ROOT/'docs/endpoint-coefficient-status.json').read_text())
         self.assertRegex(r['version'], r'^v[0-9]+$')
-        self.assertIsNone(r['proved_coefficient'])
-        self.assertIsNone(r['proved_endpoint_theorem'])
+        assert_endpoint_evidence(self, ROOT, r)
         self.assertEqual(r['amplified_error_branch']['status'],'accepted')
-        self.assertEqual(r['final_absorption_branch']['status'],'source_implemented_acceptance_pending')
+        self.assertEqual(r['final_absorption_branch']['status'],'accepted')
         self.assertEqual(r['final_absorption_branch']['implemented_explicit_coefficient'],{'numerator':1,'denominator':1000})
         self.assertFalse(r['historical_coefficient']['required'])
 

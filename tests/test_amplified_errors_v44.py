@@ -13,6 +13,7 @@ import unittest
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / 'scripts'))
 import check
+from promotion_history import assert_endpoint_evidence
 
 NS = 'Erdos647Sieve.Endpoint.'
 MODULES = {
@@ -110,8 +111,8 @@ class ErrorInterfaces(unittest.TestCase):
         self.assertIn('(1499 / 1000000 : ℝ)', text)
         self.assertIn('(windowLength X : ℝ) / Real.log (Real.log (X : ℝ))', text)
         record = json.loads((ROOT / 'docs/endpoint-coefficient-status.json').read_text())
-        self.assertIsNone(record['proved_coefficient'])
-        self.assertIsNone(record['proved_endpoint_theorem'])
+        assert_endpoint_evidence(self, ROOT, record)
+        self.assertEqual(record['final_absorption_branch']['status'], 'accepted')
         self.assertFalse(record['historical_coefficient']['required'])
         self.assertFalse(record['coefficient_may_depend_on_X'])
 

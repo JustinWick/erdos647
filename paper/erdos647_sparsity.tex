@@ -1,0 +1,1432 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage[margin=27mm,headheight=14pt]{geometry}
+\usepackage{amsmath,amssymb,amsthm,mathtools}
+\usepackage{newtxtext,newtxmath}
+\usepackage{microtype}
+\usepackage{booktabs,longtable,tabularx,array}
+\usepackage{xcolor}
+\usepackage[numbers,sort&compress]{natbib}
+\usepackage{xurl}
+\usepackage{fancyhdr}
+\usepackage{enumitem}
+\usepackage{hyperref}
+\definecolor{linkblue}{RGB}{27,62,93}
+\hypersetup{colorlinks=true,linkcolor=linkblue,citecolor=linkblue,urlcolor=linkblue,
+ pdftitle={A logarithmic-budget sieve for Erdos problem 647},
+ pdfauthor={GPT 6 Astra; Justin V. Wick (operator)},
+ pdfsubject={Explicit sparsity bounds and Lean formalization},pdfkeywords={Erdos 647, sieve, divisor function, Lean, formal verification}}
+\urlstyle{tt}
+\setlength{\emergencystretch}{2em}
+\setlength{\parskip}{3pt}
+\setlength{\parindent}{1.25em}
+\setcounter{tocdepth}{1}
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{\small A logarithmic-budget sieve for Erd\H{o}s \#647}
+\fancyhead[R]{\small Astra / Wick}
+\fancyfoot[C]{\thepage}
+\renewcommand{\headrulewidth}{0.3pt}
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{corollary}[theorem]{Corollary}
+\theoremstyle{definition}
+\newtheorem{definition}[theorem]{Definition}
+\theoremstyle{remark}
+\newtheorem{remark}[theorem]{Remark}
+\numberwithin{equation}{section}
+\newcommand{\N}{\mathbb N}
+\newcommand{\Z}{\mathbb Z}
+\newcommand{\R}{\mathbb R}
+\newcommand{\Pset}{\mathcal P}
+\newcommand{\Cand}{\mathcal C}
+\newcommand{\ind}{\mathbf 1}
+\newcommand{\rate}{\kappa}
+\newcommand{\smallcode}[1]{{\small\texttt{#1}}}
+\newcommand{\leanname}[1]{{\small\nolinkurl{#1}}}
+\newcommand{\floor}[1]{\left\lfloor #1\right\rfloor}
+\newcommand{\ceil}[1]{\left\lceil #1\right\rceil}
+\DeclareMathOperator{\eprod}{E}
+\title{\vspace{-1.2em}\textbf{A logarithmic-budget sieve for Erd\H{o}s problem \#647}\\[0.4em]
+\large An explicit sparsity bound with a Lean formalization}
+\author{\textbf{GPT 6 Astra}\\[-1pt]\small AI author\\[0.5em]
+\textbf{Justin V. Wick}\\[-1pt]\small Operator\\[0.5em]
+\small Independent project; no institutional affiliation}
+\date{September 2026}
+\begin{document}
+\maketitle
+\begin{abstract}
+Erd\H{o}s and Selfridge asked whether any integer $n>24$ satisfies
+$\tau(n-k)\le k+2$ for every $1\le k<n$, where $\tau$ counts positive divisors.
+Let $C(X)$ count integers satisfying this full condition up to $X$.
+We give a proof, accompanied by a Lean formalization, that for every fixed
+$0<c<1499/10^6$ and all sufficiently large natural $X$,
+\[
+ C(X)\le X\exp\!\left(-c\,\frac{(\log X)^{\log 2/(1+\log 2)}}{\log\log X}\right).
+\]
+The argument converts the divisor restrictions into a logarithmic budget for
+distinct prime factors, subtracts unavoidable small-prime occurrences, and uses
+a finite weighted Bonferroni estimate with uniform Chinese-remainder counting
+errors. Mertens convergence, factorial bounds, and explicit parameter asymptotics
+then yield a positive mass--budget gap. All amplified error terms are retained
+through the final absorption. The coefficient $1/1000$ is an immediate corollary,
+not an optimization target. We describe the ChatGPT--operator workflow, the
+formalization's trust boundary, and reusable components, and identify possible
+connections to other Erd\H{o}s problems without claiming new results for them.
+The supplied final verification run passes all 30 configured gates. The theorem
+is a sparsity result: it proves neither finiteness nor the nonexistence of
+candidates beyond $24$.
+\end{abstract}
+\noindent\textbf{Keywords.} Divisor function; consecutive integers; upper-bound sieve;
+Bonferroni inequalities; Chinese remainder theorem; Mertens theorem; Lean.
+
+\newpage
+\tableofcontents
+\newpage
+
+\section{The problem and its arithmetic form}\label{sec:problem}
+For a positive integer $m$, let $\tau(m)$ be the number of positive divisors of
+$m$, let $\omega(m)$ count its distinct prime divisors, and let $\Omega(m)$ count
+its prime factors with multiplicity. All logarithms in this paper are natural.
+Erd\H{o}s's 1979 discussions of unconventional problems in number theory include
+the question now catalogued as problem \#647, posed with Selfridge
+\citep{Erdos1979Magazine,Erdos1979Acta,Bloom647}:
+\begin{quote}
+Is there an integer $n>24$ such that
+$\max_{1\le m<n}\bigl(m+\tau(m)\bigr)\le n+2$?
+\end{quote}
+The value $n=24$ satisfies the inequality; the question asks for an example
+beyond it. Substituting $m=n-k$ makes the same condition a collection of bounds
+on a backward window of consecutive integers.
+
+\begin{definition}\label{def:candidate}
+A \emph{candidate} is a natural number $n>24$ such that
+\begin{equation}\label{eq:candidate}
+ \tau(n-k)\le k+2\qquad(1\le k<n).
+\end{equation}
+Write $\Cand$ for this set, and for $X\in\N$ put
+$C(X)=\#(\Cand\cap[1,X])$.
+\end{definition}
+Here ``candidate'' means an integer satisfying the \emph{entire} condition,
+not merely one surviving a finite computation. The first restrictions are
+$\tau(n-1)\le3$, $\tau(n-2)\le4$, and $\tau(n-3)\le5$; every further shift is
+also constrained. For the proof we may retain only the first $H$ restrictions,
+provided $n>H$. This loses information, but gives an upper bound for the actual
+candidate count.
+
+\subsection{Position relative to existing work}
+Finite exclusion and asymptotic counting address different parts of the problem.
+Mian and Siddique give a Lean exclusion certificate for
+$24<n\le10^9$, with an audited axiom closure and additional replay checks
+reported in their work \citep{MianSiddique2026}. Our argument is not a larger
+exclusion computation and does not subsume that finite assertion: its onset is
+not numerically specified.
+
+Hughes's consolidation manuscript states both a seven-form bound
+$C(X)\ll X/(\log X)^7$ and a growing-window bound
+\begin{equation}\label{eq:hughes}
+ C(X)\le X\exp\!\bigl(- (\log\log X)^{2-o(1)}\bigr),
+\end{equation}
+with proofs of those density statements attributed there to companion
+manuscripts \citep{Hughes2026}. The saving in the present theorem is
+asymptotically larger than the saving displayed in \eqref{eq:hughes}.
+Our arithmetic starting point is the logarithmic bound
+$\omega(m)\le\log\tau(m)/\log2$, together with an explicit debit for small
+primes. This differs from the quadratic-in-$H$ budget obtained by summing the
+weaker implication $\Omega(m)+1\le\tau(m)$ over the window.
+The comparison is with the stated result in that inspected manuscript; it is
+not a claim of an exhaustive priority determination.
+
+Broader work on prime factors of consecutive integers includes the probabilistic
+and sieve arguments of Tao--Ter\"av\"ainen and Lau
+\citep{TaoTeravainen2026,Lau2026}. We return to specific related problems in
+Section~\ref{sec:other}. The classical background is upper-bound sieve theory
+and weighted inclusion--exclusion \citep{FriedlanderIwaniec2010,GalambosSimonelli1996}.
+The components used here are classical in origin. The contribution described
+by this paper is their constant-sensitive assembly for \eqref{eq:candidate},
+the resulting bound, and a checked implementation with explicit dependency
+boundaries. We do not assert optimality of the exponent or of the numerical
+coefficient.
+
+\section{The proved result and its scope}\label{sec:result}
+Set
+\begin{equation}\label{eq:constants}
+ a=\frac{\log2}{1+\log2},\qquad
+ \rate=\frac{1499}{10^6},\qquad
+ S(X)=\frac{(\log X)^a}{\log\log X}\quad(X\ge3).
+\end{equation}
+Thus $0<a<1$ and $a\approx0.4094$.
+
+\begin{theorem}[Fixed-coefficient sparsity]\label{thm:main}
+For every fixed real $c$ satisfying $0<c<\rate$, there is a natural number
+$X_0=X_0(c)\ge3$ such that, for every natural $X\ge X_0$,
+\begin{equation}\label{eq:main}
+ \boxed{C(X)\le X\exp\!\left(-c\,\frac{(\log X)^a}{\log\log X}\right).}
+\end{equation}
+In particular, \eqref{eq:main} holds with $c=1/1000$.
+\end{theorem}
+The main Lean declaration is
+\leanname{Erdos647Sieve.Endpoint.endpointBound_of_lt_principal_rate}.
+It actually permits any real $c<\rate$; the positive range is the useful
+sparsity statement. The explicit corollary is
+\leanname{Erdos647Sieve.Endpoint.endpointBound_one_div_thousand};
+the original fixed-coefficient specification is discharged by
+\leanname{Erdos647Sieve.endpoint} \citep{SieveArtifact}.
+
+The quantifiers are essential: $c$ is selected \emph{before} the onset $X_0$
+and the variable $X$. The theorem does not allow a coefficient $c(X)$ tending
+to zero, does not provide a numerical $X_0$, and does not give one common onset
+for all $c$ approaching $\rate$. Its coefficient range is open at $\rate$.
+Section~\ref{sec:absorption} explains why the present majorant needs strict
+slack.
+
+\begin{corollary}[Consequences, not an existence decision]\label{cor:density}
+The candidate set has natural density zero. For every fixed $M>0$,
+$C(X)\le X/(\log X)^M$ for all sufficiently large natural $X$.
+Nevertheless, the right-hand side of \eqref{eq:main} tends to infinity.
+\end{corollary}
+\begin{proof}
+Put $Q=\log X$ and $L=\log Q$. Then $S=Q^a/L\to\infty$, and
+$S/L=Q^a/L^2\to\infty$. Consequently $e^{-cS}\le e^{-ML}=Q^{-M}$
+eventually. On the other hand, $S/Q=Q^{a-1}/\log Q\to0$, so
+$\log(Xe^{-cS})=Q-cS\to\infty$.
+\end{proof}
+These elementary consequences explain the scope of the theorem; they are not
+advertised as additional exported declarations in the recorded release.
+Even an infinite sufficiently sparse set is compatible with the bound. In
+particular, neither the existence nor the nonexistence of one candidate beyond
+$24$ follows.
+
+The proof has three levels. A \emph{finite}, translation-uniform moment bound
+uses only elementary arithmetic and finite combinatorics. An \emph{analytic}
+layer evaluates the available prime mass as the parameters grow. An
+\emph{absorption} layer keeps all error terms and converts the resulting
+multi-term inequality into \eqref{eq:main}. This separation is reflected in the
+Lean packages, rather than being merely expository.
+
+\section{Methodology: AI-assisted construction and formal checking}\label{sec:method}
+\subsection{Author, operator, and workflow}
+The development was conducted through ChatGPT at \url{https://chatgpt.com}
+\citep{OpenAIChatGPT}. The operator reports using the interface label
+``GPT-6 Pro'', referred to in this project as Astra. We use the requested author
+attribution \emph{GPT 6 Astra}, with \emph{Justin V. Wick} designated as
+\emph{operator}. This is an independent project, with no institutional
+affiliation. The interface label is workflow metadata supplied by the operator,
+not a reproducibly pinned model binary.
+
+The conversational assistant proposed arguments, inspected library interfaces,
+produced Lean source and packaging changes, and revised them in response to
+compiler output. The operator selected the research direction, ran the project
+on a local machine, returned complete diagnostic archives, and managed the
+repository and pull-request boundaries. The workflow was iterative rather than
+an autonomous, single-call proof search. We make no controlled experimental
+claim about model success rates, compute efficiency, or reproducibility of the
+same conversation from a prompt.
+
+The mathematical assurance is not the language model's confidence. Proposed
+identities and inequalities were expressed as Lean declarations, compiled with
+pinned dependencies, and checked against explicit statement and axiom targets.
+The ordinary-language proof below is a reconstruction of those ingredients;
+it should be read together with the theorem-to-source correspondence in
+Appendix~\ref{app:map}. The recorded artifacts, rather than an attempt to replay
+the model's internal generation, are the reproducibility object.
+
+\subsection{Reuse before reconstruction}
+The formalization uses Lean~4 and Mathlib \citep{Lean4,Mathlib2020,MathlibPin}.
+Existing results on factorials, finite Euler products, harmonic sums, floor and
+ceiling limits, real powers, and integration were reused where their exact
+hypotheses fit. Project-specific adapters handle such issues as real casts of
+factorials, integer division versus real division, and equality between a named
+function and the expression appearing beneath a derivative.
+
+The mathematical specification was kept separate from implementation repairs.
+For example, $B_H$ is signed throughout, repeated weight values are not
+identified as indices, and translated intervals may begin at a negative
+integer. Those are statement-level choices. Changing a tactic or a module path
+does not license changing any of them.
+
+A toolchain migration also exposed a practical limit of indiscriminate reuse:
+Lean, Mathlib, and upstream projects must agree on their dependency versions.
+The final artifact uses PNT+'s compatible Lean/Mathlib~4.32.2 environment.
+The finite package has only Mathlib dependencies. The analytic package isolates
+its PNT+ adaptation behind one compatibility module. Thus a consumer of the
+finite theorem does not inherit the analytic dependency.
+
+\subsection{What the verification evidence establishes}\label{sec:trust}
+The supplied v48 record \citep{SieveArtifact} reports 30 successful configured
+gates, 235 distinct declarations with transitive axiom reports, and 220
+exact-type or definition examples in 32 audit files. All audited axiom sets are
+contained in
+\begin{equation}\label{eq:axioms}
+ \{\texttt{propext},\ \texttt{Classical.choice},\ \texttt{Quot.sound}\}.
+\end{equation}
+The successful run has no build or audit warnings, and the recorded source
+snapshots are stable. Appendix~\ref{app:evidence} gives the exact artifact and
+version identifiers.
+
+These checks have distinct jobs. Compilation constructs and checks proof terms;
+expanded-type examples connect the terms to the intended mathematical
+statements; axiom inspection detects an admitted or otherwise unauthorized
+premise in their transitive dependencies. A theorem of the form
+``assuming the moment bound, the conclusion follows'' would not count as a
+proof of the moment bound itself. Ordinary runner tests instead check
+engineering behavior and do not establish universal mathematical assertions.
+
+The PNT+ repository contains unfinished material outside the slice used here.
+The retained 14-module PNT+ import subtree was separately scanned for admitted
+source, and the consumed PNT and integrability declarations were axiom-audited.
+The unfinished \texttt{ZetaSummary} catalogue is not imported. This is a claim
+about the retained dependency, not a declaration that the whole upstream
+repository is admission-free \citep{PNTPlus}.
+
+The evidence is an operator-executed build, exact-type, and transitive-axiom
+audit of the supplied snapshot. An independently implemented kernel replay and
+external mathematical peer review are separate validation levels and are not
+claimed for this project. This qualification applies once to the artifact as
+a whole; it is not an additional hypothesis in any theorem below.
+
+\section{From divisor restrictions to a signed logarithmic budget}\label{sec:budget}
+Fix a natural $H\ge1$ and a real $y>H$. Define
+\begin{align}
+ \Pset(H,y)&=\{p\text{ prime}:H<p\le y\},\label{eq:prime-set}\\
+ F_H(n)&=\prod_{k=1}^H(n-k),\qquad
+ T_{H,y}(n)=\#\{p\in\Pset(H,y):p\mid F_H(n)\},\label{eq:hit}\\
+ Q_H&=\sum_{k=1}^H\floor{\frac{\log(k+2)}{\log2}},\qquad
+ D_H=\sum_{\substack{p\le H\\p\text{ prime}}}\floor{\frac Hp},\qquad
+ B_H=Q_H-D_H.\label{eq:budget-def}
+\end{align}
+We often write $T(n)$ when $H,y$ are fixed. The subtraction defining $B_H$ is
+in $\Z$, not truncated subtraction in $\N$.
+
+\begin{lemma}[The occurrence budget]\label{lem:debit}
+If $n>H$ and $\tau(n-k)\le k+2$ for $1\le k\le H$, then
+\begin{equation}\label{eq:budget}
+ T_{H,y}(n)\le B_H.
+\end{equation}
+More generally, for every integer $n>H$,
+\begin{equation}\label{eq:incidence}
+ D_H+T_{H,y}(n)\le\sum_{k=1}^H\omega(n-k).
+\end{equation}
+\end{lemma}
+\begin{proof}
+Every subset of the distinct prime divisors of a positive integer $m$ gives a
+distinct divisor, so $2^{\omega(m)}\le\tau(m)$. Taking logarithms and using the
+integrality of $\omega(m)$ gives
+\[
+ \omega(n-k)\le\floor{\frac{\log(k+2)}{\log2}}.
+\]
+Thus the total number of prime--shift incidences is at most $Q_H$.
+
+For a prime $p\le H$, every $H$ consecutive integers contain at least
+$\floor{H/p}$ multiples of $p$. These mandatory incidences contribute at least
+$D_H$. Each selected prime counted by $T(n)$ divides at least one factor of
+$F_H(n)$ and contributes a further incidence. The small-prime and selected-prime
+sets are disjoint. Counting all these incidences proves \eqref{eq:incidence};
+combining it with the preceding upper bound proves \eqref{eq:budget}.
+\end{proof}
+Since $T(n)\ge0$, a negative value of $B_H$ rules out every such prefix survivor
+above $H$. In particular,
+\begin{equation}\label{eq:negative-budget}
+ B_H<0\quad\Longrightarrow\quad C(X)\le H.
+\end{equation}
+This simple branch must remain available. Proving eventual nonnegativity of
+the corrected budget is unnecessary for the endpoint.
+
+The key improvement is the size of the available budget. Without the debit,
+$Q_H$ is of order $H\log H$. Small primes consume order $H\log\log H$
+occurrences regardless of where the window lies. Subtracting that forced cost
+is precisely what permits constant-level cancellation at the critical exponent
+chosen later. The proof is counting prime occurrences, not assuming independent
+factorization of neighboring integers.
+
+\section{A finite weighted moment estimate}\label{sec:moment}
+The following theorem is the finite core. It is independent of the prime number
+theorem, Mertens convergence, and the later parameter choices.
+
+\begin{theorem}[Uniform translated finite moment]\label{thm:moment}
+Let $A\in\Z$, let $X,H\ge1$ be natural numbers, let $y>H$, let $0<z<1$, and
+let $J\ge0$ be an even natural number. Put
+\begin{equation}\label{eq:mass}
+ t=1-z,\qquad \lambda=H\sum_{p\in\Pset(H,y)}\frac1p,\qquad \mu=t\lambda.
+\end{equation}
+Then
+\begin{equation}\label{eq:moment}
+ \sum_{A<n\le A+X}z^{T_{H,y}(n)}
+ \le X\left(e^{-\mu}+\frac{\mu^{J+1}}{(J+1)!}\right)+(Hy)^J.
+\end{equation}
+\end{theorem}
+The summation in \eqref{eq:moment} is over integers. In particular, $A$ may be
+negative and the interval may contain a zero of $F_H$. No positive-window
+assumption is used here. The bound includes the empty selected-prime set,
+$J=0$, and truncation orders exceeding the number of selected primes.
+
+\subsection{Weighted Bonferroni algebra}
+For a finite index set $P$ and real weights $(w_p)_{p\in P}$, write
+\[
+ e_j(w)=\sum_{\substack{S\subseteq P\\|S|=j}}\prod_{p\in S}w_p,
+ \qquad e_0(w)=1,
+ \qquad P_J(w)=\sum_{j=0}^J(-1)^j e_j(w).
+\]
+Empty products equal one; coefficients of degree greater than $|P|$ are zero.
+The indices are the elements of $P$. Equal values of $w_p$ are not deduplicated.
+
+\begin{lemma}[Three finite inequalities]\label{lem:bonferroni}
+For $0\le w_p\le1$ and even $J$,
+\begin{equation}\label{eq:bonferroni}
+ \prod_{p\in P}(1-w_p)\le P_J(w)
+ \le\prod_{p\in P}(1-w_p)+e_{J+1}(w).
+\end{equation}
+For nonnegative weights and every natural $j$,
+\begin{equation}\label{eq:coefficient}
+ j!\,e_j(w)\le\left(\sum_{p\in P}w_p\right)^j.
+\end{equation}
+Finally, if $0\le w_p\le1$, then
+\begin{equation}\label{eq:product-exp}
+ \prod_{p\in P}(1-w_p)\le\exp\!\left(-\sum_{p\in P}w_p\right).
+\end{equation}
+\end{lemma}
+\begin{proof}
+The weighted Bonferroni inequality \eqref{eq:bonferroni} follows from finite
+inclusion--exclusion; Appendix~\ref{app:bonferroni} gives the recurrence used in
+the formalization. This is the usual deterministic weighted inequality, not a
+statement of independence for the arithmetic events \citep{GalambosSimonelli1996}.
+For \eqref{eq:coefficient}, expand the power on the right as a sum over ordered
+$j$-tuples. The tuples with distinct indices contribute exactly $j!e_j(w)$,
+and all other terms are nonnegative. The case $j=0$ gives equality.
+For \eqref{eq:product-exp}, multiply $1-u\le e^{-u}$ over the indices, using
+nonnegativity of all factors.
+\end{proof}
+For the arithmetic weights and their model values, set
+\begin{equation}\label{eq:weights}
+ w_p(n)=t\ind_{p\mid F_H(n)},\qquad b_p=\frac{tH}{p}
+ \quad(p\in\Pset(H,y)).
+\end{equation}
+Both sets of weights lie in $[0,1]$, and
+\begin{equation}\label{eq:weight-products}
+ \prod_p(1-w_p(n))=z^{T(n)},\qquad \sum_p b_p=\mu.
+\end{equation}
+Applying the first half of \eqref{eq:bonferroni} pointwise gives
+\begin{equation}\label{eq:pointwise-summed}
+ \sum_{A<n\le A+X}z^{T(n)}
+ \le\sum_{j=0}^J(-1)^j\sum_{A<n\le A+X}e_j(w(n)).
+\end{equation}
+Applying the other half to $b$, together with
+\eqref{eq:coefficient}--\eqref{eq:product-exp}, gives
+\begin{equation}\label{eq:mean-truncation}
+ P_J(b)\le e^{-\mu}+\frac{\mu^{J+1}}{(J+1)!}.
+\end{equation}
+It remains to compare the actual coefficient sums in
+\eqref{eq:pointwise-summed} with $XP_J(b)$. The name ``model value'' does not
+supply this comparison; the next two steps prove it arithmetically.
+
+\subsection{Root counting and arbitrary translated intervals}
+For a subset $S\subseteq\Pset(H,y)$, define
+\[
+ d(S)=\prod_{p\in S}p,\qquad
+ N_S=\#\{A<n\le A+X:d(S)\mid F_H(n)\}.
+\]
+The integer $d(S)$ is positive and squarefree, including $d(\varnothing)=1$.
+For distinct primes, simultaneous divisibility is equivalent to divisibility by
+the product, also when $F_H(n)=0$.
+
+\begin{lemma}[Uniform subset-count discrepancy]\label{lem:crt}
+For every such $S$,
+\begin{equation}\label{eq:subset-error}
+ \left|N_S-\frac{XH^{|S|}}{d(S)}\right|\le H^{|S|}.
+\end{equation}
+\end{lemma}
+\begin{proof}
+For a prime $p>H$, the congruence $F_H(n)\equiv0\pmod p$ holds exactly in the
+$H$ distinct residue classes $1,\ldots,H$. The Chinese remainder theorem
+therefore gives precisely $H^{|S|}$ root classes modulo $d(S)$.
+
+For every positive integer modulus $d$ and integer representative $r$, the
+number of points of that residue class in the translated interval is exactly
+\begin{equation}\label{eq:floor-count}
+ \#\{A<n\le A+X:d\mid n-r\}
+ =\floor{\frac{A+X-r}{d}}-\floor{\frac{A-r}{d}}.
+\end{equation}
+Indeed the points have the form $r+jd$, and their allowed integer indices form
+the half-open interval between the two displayed quotients. Subtracting $X/d$
+from \eqref{eq:floor-count} leaves the difference of two fractional parts,
+whose absolute value is at most one. Summing the error over the distinct root
+classes proves \eqref{eq:subset-error}. For $S=\varnothing$, the modulus is
+one, there is one residue class, and $N_S=X$; the same inequality applies.
+\end{proof}
+The floor formula is valid for negative $A$ and $r$, because its divisions are
+real quotients followed by floors, corresponding to Euclidean integer division
+in Lean. No truncation-toward-zero convention is being used.
+
+\subsection{Summing every retained subset once}
+The subset interpretation of the elementary coefficients gives
+\begin{align}
+ \sum_{A<n\le A+X} e_j(w(n))
+ &=t^j\sum_{\substack{S\subseteq\Pset(H,y)\\|S|=j}}N_S,\label{eq:actual-coeff}\\
+ e_j(b)&=t^j\sum_{\substack{S\subseteq\Pset(H,y)\\|S|=j}}
+                  \frac{H^j}{d(S)}.\label{eq:model-coeff}
+\end{align}
+Consequently their complete signed discrepancy is
+\begin{align}
+ \mathcal E_J
+ &:=\sum_{j=0}^J(-1)^j
+       \left(\sum_{A<n\le A+X}e_j(w(n))-Xe_j(b)\right)\notag\\
+ &=\sum_{\substack{S\subseteq\Pset(H,y)\\|S|\le J}}
+          (-t)^{|S|}\left(N_S-\frac{XH^{|S|}}{d(S)}\right).\label{eq:discrepancy}
+\end{align}
+We take absolute values only after writing this signed identity. Multiplying
+unrelated one-sided estimates by $(-1)^j$ would not be valid.
+
+Unique factorization makes $S\mapsto d(S)$ injective. Since $y>H\ge1$, every
+retained subset satisfies
+\[
+ 1\le d(S)\le y^{|S|}\le y^J.
+\]
+Hence the entire retained family has at most $\floor{y^J}$ members. From
+\eqref{eq:subset-error}, $0<t<1$, and $H\ge1$,
+\begin{equation}\label{eq:aggregate}
+ |\mathcal E_J|
+ \le\sum_{\substack{S\subseteq\Pset(H,y)\\|S|\le J}}t^{|S|}H^{|S|}
+ \le H^J\floor{y^J}\le(Hy)^J.
+\end{equation}
+This counts each subset once across all degrees. It is the reason the error has
+no additional factor $J+1$. For $J=0$ the only subset is empty, and the bound
+remains valid.
+
+\begin{proof}[Completion of Theorem~\ref{thm:moment}]
+Use \eqref{eq:pointwise-summed}, write its right-hand side as $XP_J(b)+\mathcal E_J$,
+and apply \eqref{eq:mean-truncation} and \eqref{eq:aggregate}.
+\end{proof}
+
+\section{Transferring the moment bound to actual candidates}\label{sec:transfer}
+Let $\eta=-\log z>0$. For a candidate $n>H$, Lemma~\ref{lem:debit} gives
+$T(n)\le B_H$. If $B_H\ge0$, monotonicity of $z^u$ for $0<z<1$ implies
+\[
+ 1\le e^{\eta B_H}z^{T(n)}.
+\]
+Counting at most $H$ candidate integers in the initial window, and applying
+Theorem~\ref{thm:moment} with $A=0$, gives the following exact finite transfer.
+
+\begin{theorem}[Finite candidate-counting inequality]\label{thm:finite-count}
+Under the numerical hypotheses of Theorem~\ref{thm:moment}, if $B_H\ge0$ then
+\begin{equation}\label{eq:finite-count}
+ C(X)\le H+e^{\eta B_H}
+ \left\{X\left(e^{-\mu}+\frac{\mu^{J+1}}{(J+1)!}\right)+(Hy)^J\right\}.
+\end{equation}
+If $B_H<0$, the separate bound $C(X)\le H$ holds.
+\end{theorem}
+The proof uses a necessary condition for every actual candidate, so the count
+is not limited to an algorithmic survivor set. Also, the multiplier
+$e^{\eta B_H}$ applies to the \emph{entire} expression inside braces.
+Discarding it from the factorial tail or the arithmetic remainder would change
+the theorem. These amplified contributions will be treated separately rather
+than hidden in an error term.
+
+The two finite main declarations are
+\leanname{Erdos647Sieve.finiteMoment} and
+\leanname{Erdos647Sieve.finiteCounting}. They have no unproved moment, CRT,
+or distribution assertion as a premise. Their displayed numerical hypotheses,
+of course, remain part of their types \citep{SieveArtifact}.
+
+\section{Elementary estimates with the linear term retained}\label{sec:elementary}
+The budget comparison requires more than its leading order. This section keeps
+the constant contribution coming from the linear term in $\log(H!)$.
+
+\subsection{The mandatory small-prime debit}
+\begin{lemma}[An elementary reciprocal-prime lower bound]\label{lem:prime-lower}
+For every natural $H\ge2$,
+\begin{equation}\label{eq:prime-lower}
+ \sum_{p\le H}\frac1p\ge\log\log H-1.
+\end{equation}
+Here and below an index $p$ denotes a prime.
+\end{lemma}
+\begin{proof}
+Expanding the finite-prime-base Euler product gives
+\[
+ E_H:=\prod_{p\le H}(1-1/p)^{-1}
+   =\sum_{\substack{m\ge1\\\text{all prime factors of }m\le H}}\frac1m
+   \ge\sum_{m=1}^H\frac1m\ge\log H.
+\]
+The sum over smooth integers converges because only finitely many prime bases
+are involved and every prime-power geometric series converges. This does not
+assert convergence of the full harmonic series. Positivity permits the
+restriction to $1\le m\le H$.
+For $0\le u<1$, integration of $v/(1-v)$ gives
+\[
+ -\log(1-u)-u\le\frac{u^2}{1-u}.
+\]
+At $u=1/p$, the right-hand side is $1/[p(p-1)]$. The error over primes is bounded
+by the telescoping sum
+\[
+ \sum_{p\le H}\frac1{p(p-1)}
+ \le\sum_{m=2}^H\left(\frac1{m-1}-\frac1m\right)
+ =1-\frac1H\le1.
+\]
+Taking logarithms of the Euler-product comparison and summing the factor bounds
+yields $\log\log H\le\log E_H\le\sum_{p\le H}1/p+1$.
+\end{proof}
+
+\begin{corollary}[Fixed-constant debit]\label{cor:debit-lower}
+For every natural $H\ge2$,
+\begin{equation}\label{eq:debit-lower}
+ D_H\ge H(\log\log H-2).
+\end{equation}
+\end{corollary}
+\begin{proof}
+Use $\floor{H/p}\ge H/p-1$, sum over the primes at most $H$, and bound their
+number by $H$. Lemma~\ref{lem:prime-lower} then proves the claim.
+\end{proof}
+The lower bound can be negative for small $H$; this is harmless. In the
+formalization the quotients in $D_H$ are natural-number quotients cast to
+$\R$ only after division. The comparison with real division is a proved
+rounding lemma.
+
+\subsection{Factorials and the uncorrected budget}
+The proof uses existing Mathlib Stirling machinery, not a new formalization of
+Stirling's formula \citep{MathlibPin}. Its convenient consequences are
+\begin{equation}\label{eq:stirling}
+ n\log n-n\le\log(n!)
+ \le n\log n-n+\frac12\log n+1\qquad(n\ge1),
+\end{equation}
+and
+\begin{equation}\label{eq:factorial-lower}
+ (n/e)^n\le n!\qquad(n\ge1).
+\end{equation}
+For instance, the upper estimate follows from monotonicity of the Stirling
+sequence $n!/[\sqrt{2n}(n/e)^n]$ and its value at $n=1$; its lower bound
+$\sqrt\pi$ implies the lower estimate in \eqref{eq:stirling} after dropping
+nonnegative logarithmic terms. Only these consequences are needed here.
+
+Put
+\[
+ L_{\mathrm{fac}}(H)=\log\left(\frac{(H+2)!}{2}\right).
+\]
+The division is real division after casting the factorial. The exact identity
+\begin{equation}\label{eq:factorial-shift}
+ L_{\mathrm{fac}}(H)=\log(H!)+\log(H+1)+\log(H+2)-\log2
+\end{equation}
+and \eqref{eq:stirling} give
+\begin{equation}\label{eq:factorial-limit}
+ \frac{L_{\mathrm{fac}}(H)-(H\log H-H)}{H}\longrightarrow0
+ \qquad(H\in\N,\ H\to\infty).
+\end{equation}
+On the other hand, bounding each floor by its argument and summing logarithms
+of the positive factors $3,\ldots,H+2$ gives
+\begin{equation}\label{eq:log-budget}
+ Q_H\le\frac1{\log2}\sum_{k=1}^H\log(k+2)
+      =\frac{L_{\mathrm{fac}}(H)}{\log2}.
+\end{equation}
+
+\begin{proposition}[One-sided corrected-budget estimate]\label{prop:budget-upper}
+For every $\varepsilon>0$, eventually over natural $H$,
+\begin{equation}\label{eq:budget-upper}
+ \frac{B_H}{H}\le
+ \frac{\log H}{\log2}-\log\log H+2-\frac1{\log2}+\varepsilon.
+\end{equation}
+\end{proposition}
+\begin{proof}
+Subtract \eqref{eq:debit-lower} from \eqref{eq:log-budget}, divide by $H>0$,
+and use \eqref{eq:factorial-limit}.
+\end{proof}
+The term $-1/\log2$ is the normalized contribution of $-H$ in the factorial
+estimate. Replacing that estimate by $\log(H!)\le H\log H$ would lose this
+constant. We do not assert an asymptotic equality for $B_H/H$: integer floors
+can contribute a linear total error, and the proof only needs the indicated
+one-sided bound.
+
+\section{The analytic input: convergent Mertens error}\label{sec:analytic}
+Write
+\[
+ \vartheta(x)=\sum_{p\le x}\log p,\quad
+ E(x)=\vartheta(x)-x,\quad
+ R(x)=\sum_{p\le x}\frac1p-\log\log x\qquad(x\ge2).
+\]
+The classical reciprocal-prime analysis is closely related to the
+Rosser--Schoenfeld formulas \citep{RosserSchoenfeld1962}. The formal input used
+here is supplied by a restricted, audited portion of PNT+
+\citep{PNTPlus,SieveArtifact}:
+\begin{equation}\label{eq:pnt}
+ \exists C\ge0\quad\forall x\ge2,\qquad
+ |E(x)|\le\frac{Cx}{(\log x)^2}.
+\end{equation}
+The source proves this through its \texttt{MediumPNT} theorem. No numerical
+zero verification or zero-free-region catalogue from \texttt{ZetaSummary} is
+used by the retained route.
+
+\begin{proposition}[Mertens convergence in the required form]\label{prop:mertens}
+There is a real number $M$ such that $R(x)\to M$ as $x\to\infty$.
+Consequently, if $u,v$ are two real-valued cutoffs tending to infinity, then
+\begin{equation}\label{eq:mertens-cancel}
+ \sum_{p\le v}\frac1p-\sum_{p\le u}\frac1p
+ -\bigl(\log\log v-\log\log u\bigr)\longrightarrow0.
+\end{equation}
+\end{proposition}
+\begin{proof}
+For $f(x)=1/(x\log x)$ on $(1,\infty)$,
+\[
+ f'(x)=-\frac{1+\log x}{x^2(\log x)^2}.
+\]
+Specializing Abel summation to the prime weights $\log p$ gives the exact
+identity
+\begin{equation}\label{eq:abel}
+ \sum_{p\le x}\frac1p
+ =\frac{\vartheta(x)}{x\log x}
+   +\int_2^x\frac{\vartheta(u)(1+\log u)}{u^2(\log u)^2}\,du.
+\end{equation}
+For completeness, the lower endpoint is consistent at $x=2$: the boundary
+term is $1/2$ and the integral is zero. There is no omitted endpoint constant.
+Writing $\vartheta(u)=u+E(u)$ and using the antiderivative
+\[
+ G(u)=\frac1{\log u}-\log\log u,\qquad G'(u)=u f'(u),
+\]
+rearranges \eqref{eq:abel} to
+\begin{equation}\label{eq:mertens-error}
+ R(x)=G(2)+\frac{E(x)}{x\log x}-\int_2^x E(u)f'(u)\,du.
+\end{equation}
+By \eqref{eq:pnt}, the boundary term tends to zero and
+\[
+ |E(u)f'(u)|\le C\left(\frac1{u(\log u)^3}
+                         +\frac1{u(\log u)^4}\right).
+\]
+The latter majorant is integrable on $[2,\infty)$. Thus the right-hand side of
+\eqref{eq:mertens-error} converges, proving existence of $M$.
+Composing this convergence with $u$ and $v$ and subtracting proves
+\eqref{eq:mertens-cancel}.
+\end{proof}
+The actual value of $M$ is irrelevant: it cancels. A merely bounded error
+$R(x)=O(1)$ would leave an uncontrolled constant in \eqref{eq:mertens-cancel}
+and would not suffice for the later positive gap.
+
+For real $y\ge H$, the exact selected-prime identity is
+\begin{equation}\label{eq:prime-difference}
+ \sum_{p\in\Pset(H,y)}\frac1p
+ =\sum_{p\le y}\frac1p-\sum_{p\le H}\frac1p.
+\end{equation}
+The formalization proves this finite-set partition and then the corresponding
+limit for the actual selected-prime definition. The PNT+ constants and
+interfaces are hidden behind the analytic compatibility boundary; downstream
+parameter proofs consume \eqref{eq:mertens-cancel}, not upstream internals.
+
+\section{Parameter asymptotics and the positive mass--budget gap}\label{sec:parameters}
+For the remainder of the proof $X$ tends to infinity through natural numbers.
+Use the fixed choices
+\begin{equation}\label{eq:parameters}
+ \begin{gathered}
+ Q=\log X,\qquad L=\log Q,\qquad
+ H=\floor{Q^a},\qquad
+ J=2\ceil{\frac H{100}},\\
+ y=X^{1/(4J)},\qquad t=\frac1{1000L},\qquad z=1-t.
+ \end{gathered}
+\end{equation}
+These are the existing formal parameter definitions. In particular, the natural
+expression for $J$ is $2((H+99)/100)$, with natural division. Its equality to the
+ceiling expression in \eqref{eq:parameters} is proved separately.
+
+\subsection{Why this exponent is selected}
+If a provisional window were $H\asymp Q^b$ and $J\asymp H$, then
+$\log y\asymp Q^{1-b}$. The leading prime mass per shift would have coefficient
+$1-b$ in front of $L$, while the logarithmic budget would have coefficient
+$b/\log2$. The equality
+\begin{equation}\label{eq:critical}
+ \frac a{\log2}=1-a
+\end{equation}
+selects $a=\log2/(1+\log2)$. At this boundary the leading logarithms cancel,
+so the secondary terms and their fixed constants matter. This identifies the
+critical balance of the chosen argument, not an optimality theorem among all
+possible methods.
+
+\begin{lemma}[Actual window, truncation, and cutoff limits]\label{lem:parameters}
+For the parameters in \eqref{eq:parameters},
+\begin{align}
+ &H\to\infty,\qquad H/Q^a\to1,\qquad\log H-aL\to0,\label{eq:window-limits}\\
+ &H/50\le J<H/50+2,\qquad J/H\to1/50,\label{eq:truncation-limits}\\
+ &\frac{\log y}{Q^{1-a}}\to\frac{25}{2},\qquad
+   \log\log y-(1-a)L\to\log(25/2).\label{eq:cutoff-limits}
+\end{align}
+Moreover $y\to\infty$, $H<y$ eventually, $J$ is even, and all numerical
+hypotheses of Theorem~\ref{thm:moment} hold eventually.
+\end{lemma}
+\begin{proof}
+The inequalities $Q^a-1<H\le Q^a$ prove the first two assertions in
+\eqref{eq:window-limits}. For sufficiently large $X$ the quantities are
+positive, and
+$\log H-aL=\log(H/Q^a)\to0$.
+The exact ceiling identity for $J$ proves \eqref{eq:truncation-limits}.
+
+For positive $X$ and $J$, the real-power definition gives
+$\log y=Q/(4J)$. Hence
+\[
+ \frac{\log y}{Q^{1-a}}=\frac{Q^a}{4J}\longrightarrow\frac{25}{2}.
+\]
+Taking logarithms proves the second assertion in \eqref{eq:cutoff-limits}.
+The power $Q^{1-a}$ tends to infinity and dominates $L$. Therefore
+$\log y\to\infty$ and $\log H/\log y\to0$, so $y\to\infty$ and $H<y$
+eventually. Finally, $L\to\infty$ implies $0<t\le1/2$ eventually, and thus
+$0<z<1$. Positivity of $H,J$ and evenness of $J$ have already been established.
+\end{proof}
+These arguments use familiar limits, but their formal application requires the
+floor, ceiling, cast, and nonzero-denominator obligations. They are supplied
+for these specific functions of $X$, rather than left as cutoff hypotheses.
+
+\begin{proposition}[Prime-mass expansion]\label{prop:mass}
+Let $\lambda=\lambda(H,y)$ for \eqref{eq:parameters}. Then
+\begin{equation}\label{eq:mass-expansion}
+ \frac{\lambda}{H}
+ = (1-a)L-\log\log H+\log(25/2)+o(1).
+\end{equation}
+\end{proposition}
+\begin{proof}
+The two cutoffs $H,y$ tend to infinity and satisfy $H\le y$ eventually.
+Apply \eqref{eq:mertens-cancel} and \eqref{eq:prime-difference} to obtain
+$\lambda/H=\log\log y-\log\log H+o(1)$, and then use
+\eqref{eq:cutoff-limits}.
+\end{proof}
+
+\begin{proposition}[Fixed positive gap and size bounds]\label{prop:gap}
+Define
+\begin{equation}\label{eq:K}
+ K=\log(25/2)+\frac1{\log2}-2.
+\end{equation}
+For every fixed real $\delta<K$, eventually
+$\lambda-B_H\ge\delta H$. In particular,
+\begin{equation}\label{eq:gap-and-bounds}
+ \lambda-B_H\ge\frac32H,\qquad
+ 0\le\lambda\le HL,\qquad B_H\le HL
+ \quad\text{eventually}.
+\end{equation}
+Also $\lambda/(HL)\to1-a$.
+\end{proposition}
+\begin{proof}
+Let
+\[
+ F(H)=\frac{\log H}{\log2}-\log\log H+2-\frac1{\log2}.
+\]
+From \eqref{eq:mass-expansion}, \eqref{eq:window-limits}, and
+\eqref{eq:critical},
+\begin{equation}\label{eq:gap-limit}
+ \frac\lambda H-F(H)\longrightarrow K.
+\end{equation}
+By Proposition~\ref{prop:budget-upper}, for every $\varepsilon>0$ one has
+$B_H/H\le F(H)+\varepsilon$ eventually, also after composing with $H(X)$.
+Given $\delta<K$, choose $\varepsilon=(K-\delta)/3$.
+Eventually \eqref{eq:gap-limit} is at least $K-\varepsilon$, so
+$(\lambda-B_H)/H\ge K-2\varepsilon>\delta$.
+The certified elementary logarithm estimate $K>3/2$ is recorded in
+Appendix~\ref{app:constants}.
+
+For the size bound, $\log H/L\to a$, and
+\[
+ \frac{\log\log H}{L}
+ =\frac{\log\log H}{\log H}\,\frac{\log H}{L}\longrightarrow0.
+\]
+Dividing \eqref{eq:mass-expansion} by $L$ gives
+$\lambda/(HL)\to1-a<1$. The mass is nonnegative by definition; hence
+$0\le\lambda\le HL$ eventually. The positive gap gives $B_H\le\lambda$,
+which yields the remaining upper bound.
+\end{proof}
+There is no assertion that $(\lambda-B_H)/H$ converges to $K$: only
+\eqref{eq:gap-limit} has been shown to converge, and the budget estimate is
+one-sided. Nor is any sign hypothesis on $B_H$ part of
+Proposition~\ref{prop:gap}.
+
+\section{Every amplified contribution}\label{sec:errors}
+We now bound the four terms in Theorem~\ref{thm:finite-count}, using
+\eqref{eq:parameters}. Write
+\[
+ \eta=-\log(1-t),\qquad \mu=t\lambda,
+ \qquad A_X=\eta B_H.
+\]
+The symbol $A_X$ in this section is an amplification exponent, not the interval
+translation used earlier. For clarity, all inequalities involving the positive
+multiplier are first proved in the case $B_H\ge0$.
+
+\subsection{Principal saving and the source of 1499}
+For $0\le t\le1/2$, elementary calculus gives
+\begin{equation}\label{eq:log-weight}
+ 0\le-\log(1-t)\le t+t^2\le2t.
+\end{equation}
+For example the derivative of $t+t^2+\log(1-t)$ is
+$t(1-2t)/(1-t)\ge0$ on this interval, and the function vanishes at zero.
+Multiplying \eqref{eq:log-weight} by the nonnegative budget and using
+\eqref{eq:gap-and-bounds} gives
+\begin{equation}\label{eq:amplification}
+ A_X\le2tHL=H/500,
+ \qquad 0\le\mu\le tHL=H/1000.
+\end{equation}
+More importantly,
+\begin{align}
+ A_X-\mu
+ &\le(t+t^2)B_H-t\lambda\notag\\
+ &=-t(\lambda-B_H)+t^2 B_H\notag\\
+ &\le-\frac32tH+t^2HL
+ =-\frac{1499}{10^6}\frac HL.\label{eq:principal}
+\end{align}
+Thus the principal contribution is at most $Xe^{-\rate H/L}$.
+The integer $1499$ is simply $1500-1$: the first part is the gap saving and the
+second pays for the quadratic logarithm correction. It is not an invariant of
+problem \#647 and is not claimed to be optimal.
+
+\subsection{The factorial tail with a growing numerator}
+Put $q=J+1$. By \eqref{eq:truncation-limits}, $q\ge H/50$ and $q\ge1$
+eventually. Equation~\eqref{eq:amplification} gives $\mu/q\le1/20$.
+Consequently \eqref{eq:factorial-lower} yields
+\begin{equation}\label{eq:factorial-tail}
+ \frac{\mu^q}{q!}\le\left(\frac{e\mu}{q}\right)^q
+ \le(e/20)^q.
+\end{equation}
+Since $\log20-1>0$ and $q\ge H/50$,
+\begin{align}
+ e^{A_X}\frac{\mu^q}{q!}
+ &\le\exp\!\left(\frac H{500}-(\log20-1)q\right)\notag\\
+ &\le\exp\!\left[-H\left(\frac{\log20-1}{50}-\frac1{500}\right)\right]
+ \le e^{-H/30}.\label{eq:amplified-tail}
+\end{align}
+The last rational comparison is included in Appendix~\ref{app:constants}.
+This is a bound on the actual growing numerator $\mu(X)$; the elementary limit
+$u^q/q!\to0$ for a \emph{fixed} $u$ would not justify this step.
+
+\subsection{Arithmetic remainder and the exceptional window}
+For the actual positive parameters, the power laws give the exact identity
+\begin{equation}\label{eq:y-power}
+ y^J=X^{1/4}.
+\end{equation}
+Keeping the full multiplier on the discrepancy term,
+\begin{equation}\label{eq:arithmetic-log}
+ e^{A_X}(Hy)^J
+ =\exp\!\left(\frac Q4+J\log H+A_X\right).
+\end{equation}
+Since $J\asymp H\asymp Q^a$ and $a<1$,
+\[
+ \frac{J\log H+H/500}{Q}\longrightarrow0.
+\]
+It follows from \eqref{eq:amplification}--\eqref{eq:arithmetic-log} that
+\begin{equation}\label{eq:arithmetic-bound}
+ e^{A_X}(Hy)^J\le e^{Q/2}=\sqrt X\qquad\text{eventually}.
+\end{equation}
+Independently $H\asymp Q^a\le\sqrt X$ eventually, so the exceptional initial
+window also contributes at most $\sqrt X$.
+
+\begin{theorem}[All-sign intermediate bound]\label{thm:majorant}
+For all sufficiently large natural $X$,
+\begin{equation}\label{eq:majorant}
+ \boxed{C(X)\le Xe^{-\rate H/L}+Xe^{-H/30}+2\sqrt X.}
+\end{equation}
+There is no assumption on the sign of $B_H$ in this statement.
+\end{theorem}
+\begin{proof}
+For $B_H\ge0$, apply Theorem~\ref{thm:finite-count} and the three estimates
+\eqref{eq:principal}, \eqref{eq:amplified-tail}, and
+\eqref{eq:arithmetic-bound}, along with the exceptional-window bound.
+For $B_H<0$, \eqref{eq:negative-budget} gives $C(X)\le H\le\sqrt X$, which is
+smaller than the displayed nonnegative right-hand side. The finitely many
+eventual conditions used in these comparisons can be imposed simultaneously.
+\end{proof}
+The formal declaration is
+\leanname{Erdos647Sieve.Endpoint.eventually_candidateCount_le_amplified_errors}.
+It is the last counting input to the final assembly. Every error source from
+the finite theorem has a named bound before that assembly is attempted.
+
+\section{Final absorption and the strict coefficient range}\label{sec:absorption}
+Let $U=Q^a$ and $S=U/L$. The parameter limits give
+\begin{equation}\label{eq:absorption-scales}
+ S\to\infty,\quad H/U\to1,\quad S/H\to0,\quad S/Q\to0.
+\end{equation}
+For example $S/H=(U/H)/L\to0$, and $S/Q=Q^{a-1}/L\to0$.
+All denominators are positive eventually.
+
+\begin{proof}[Proof of Theorem~\ref{thm:main}]
+Fix $0<c<\rate$. Divide the right-hand side of \eqref{eq:majorant} by the
+positive quantity $Xe^{-cS}$. The exact resulting ratio is
+\begin{equation}\label{eq:normalized-majorant}
+ \exp\!\left[\left(c-\rate\frac HU\right)S\right]
+ +\exp\!\left[\left(c\frac SH-\frac1{30}\right)H\right]
+ +2\exp\!\left[\left(c\frac SQ-\frac12\right)Q\right].
+\end{equation}
+By \eqref{eq:absorption-scales}, the three coefficients in parentheses tend
+respectively to $c-\rate<0$, $-1/30$, and $-1/2$. Each is eventually bounded
+above by a fixed negative number. Their multiplying scales $S,H,Q$ tend to
+infinity. Therefore every term of \eqref{eq:normalized-majorant} tends to
+zero, and the sum is eventually at most one. Combining this with
+Theorem~\ref{thm:majorant} proves \eqref{eq:main}. Finally
+$0<1/1000<1499/10^6$ is rational arithmetic, so the stated specialization
+requires no additional analytic estimate.
+\end{proof}
+This proof absorbs the rounding of $H$, the factor two, and both secondary
+terms without an unspecified multiplicative constant in the conclusion.
+Its limit statements assert the existence of an onset; they do not compute
+that onset.
+
+\subsection{Why the boundary coefficient is not asserted}
+At $c=\rate$, the first ratio in \eqref{eq:normalized-majorant} becomes
+\begin{equation}\label{eq:boundary-ratio}
+ \exp\!\left(\rate\frac{U-\floor U}{L}\right)\ge1.
+\end{equation}
+The other two terms are positive. Thus the available majorant cannot itself
+be bounded by $Xe^{-\rate S}$ using this argument. This does not prove that the
+actual candidate count violates such a bound; it shows why the established
+coefficient range is strict. Taking $c$ to the boundary would also require
+control of the dependence of $X_0(c)$ on $c$.
+
+The right presentation is therefore the complete range $0<c<\rate$, followed
+by a simple explicit corollary. The parameter $t=1/(1000L)$ and the final
+coefficient $c$ have different roles. The former tunes the moment; the latter
+is the saving that survives all losses. Here the original $c=1/1000$ target
+happens to follow for free, but the proof never needs to optimize that
+arbitrary value.
+
+\section{Reusable mathematical and formal machinery}\label{sec:reuse}
+The proof yields more reusable material than the final statement alone. This
+section separates existing library components from natural extensions that
+have not been exported as Lean theorems in the audited snapshot.
+
+\subsection{Components already implemented}
+The finite package provides weighted Bonferroni inequalities for finite lists,
+coefficient bounds, and a bridge from list coefficients to subsets of a finite
+index set. These do not depend on the divisor problem. The distinction between
+indices and weight values allows repeated weights without accidental loss of
+multiplicity. They are suitable building blocks for deterministic lower-tail
+estimates in other finite sieves.
+
+The progression-counting result \eqref{eq:floor-count} is uniform in the
+translation and residue representative. The prime-subset product lemmas
+provide injective encoding by positive squarefree products. The combination
+of these with CRT supplies exact local densities and an explicit cumulative
+error. Their useful abstraction is not ``primes behave independently'', but
+``simultaneous congruences have exact finite root counts, and interval sampling
+has a controlled error''.
+
+The seven elementary modules promoted to the Mathlib-only package expose
+factorial bounds and limits, the finite Euler-product comparison, the
+reciprocal-prime lower bound, the mandatory debit, and the signed-budget
+estimate. Their public facade is \smallcode{Erdos647Sieve.Elementary}.
+The finite theorem is accessible through \smallcode{Erdos647Sieve.Finite}.
+Neither facade requires PNT+ \citep{SieveArtifact}.
+
+The analytic package supplies Mertens convergence and its two-cutoff
+cancellation in the precise form consumed by the application. Its public
+facades are \smallcode{Erdos647Research.Analytic} and
+\smallcode{Erdos647Research.Endpoint}. The latter exposes the completed
+endpoint; ``Research'' in the module name indicates its separate dependency
+boundary, not an unfinished proof. Only the compatibility layer knows the
+upstream PNT+ interfaces.
+
+\subsection{A general residue-set template}\label{sec:template}
+The following is a mathematical extension of the finite argument, stated to
+make the transfer mechanism explicit. It is \emph{not} claimed as a separately
+exported generic theorem in the v48 Lean package.
+Let $P$ be any finite set of distinct primes. At each $p\in P$ choose a residue
+set $R_p\subseteq\Z/p\Z$ of size $\rho_p$. Define
+\[
+ T_R(n)=\sum_{p\in P}\ind_{n\bmod p\in R_p},\qquad
+ \rho(S)=\prod_{p\in S}\rho_p,\qquad
+ d(S)=\prod_{p\in S}p.
+\]
+For $0<z<1$, $t=1-z$, even $J\ge0$, and an interval of $X$ consecutive integers,
+the same proof gives
+\begin{equation}\label{eq:template}
+ \sum_{A<n\le A+X}z^{T_R(n)}
+ \le X\left(e^{-\mu_R}+\frac{\mu_R^{J+1}}{(J+1)!}\right)
+  +\sum_{\substack{S\subseteq P\\|S|\le J}}t^{|S|}\rho(S),
+ \qquad \mu_R=t\sum_{p\in P}\frac{\rho_p}{p}.
+\end{equation}
+Indeed CRT gives $\rho(S)$ simultaneous classes modulo $d(S)$, the counting
+error is at most $\rho(S)$, and the model weights $t\rho_p/p$ lie in $[0,1]$.
+Equations~\eqref{eq:bonferroni}--\eqref{eq:discrepancy} then give
+\eqref{eq:template}. This proof on paper specifies the additional generic
+interface one could formalize; it does not silently generalize existing theorem
+types. Bounding the last sum still requires information on the particular
+residue sets and cutoff products.
+
+\subsection{Other budget profiles and practical limits}
+For restrictions $\tau(n-k)\le f(k)$ with $f(k)\ge1$, the same elementary
+argument suggests the budget
+\[
+ \sum_{k=1}^H\floor{\frac{\log f(k)}{\log2}}-D_H.
+\]
+For a nonconsecutive family of shifts, both the mandatory small-prime debit and
+the local root count must be recalculated. If several shifts coincide modulo
+$p$, the root density is no longer $H/p$. If prime powers are included as sieve
+moduli, prime-subset product injectivity alone is no longer the correct
+bookkeeping device. These are genuine extension obligations.
+
+The final ratio-absorption pattern is another broadly useful component: prove
+a normalized error tends to zero, retain a fixed gap in the exponent, and
+only then absorb finitely many positive contributions. It avoids a fragile
+sequence of unnecessarily sharp numerical thresholds. Our implementation
+keeps the relevant scale comparisons and the final assembly in separate
+modules.
+
+\section{Other Erd\H{o}s problems: concrete connections and limitations}\label{sec:other}
+The links below are proposed uses of the machinery, not new results on the
+listed problems. The statements are taken from the original problem literature
+and the modern problem catalogue, with contemporary comparisons to
+Tao--Ter\"av\"ainen and Lau. A common arithmetic vocabulary does not make an
+existence theorem a consequence of an upper-counting bound.
+
+\subsection{Problem \#679: smaller backward prime-factor barriers}
+Problem \#679 asks, for each $\varepsilon>0$, whether infinitely many $n$ satisfy
+\[
+ \omega(n-k)<(1+\varepsilon)\frac{\log k}{\log\log k}
+\]
+for all $k<n$ sufficiently large depending only on $\varepsilon$
+\citep{Erdos1979Acta,Bloom679}. The quantifier on the initial cutoff is important:
+it must be independent of $n$.
+
+This is a close structural match to the backward-window bookkeeping. A possible
+first application is a finite necessary-condition count over shifts
+$K_\varepsilon\le k\le H$, with the aggregate barrier replacing $Q_H$ and the
+mandatory debit recomputed for the shorter shifted window. The weighted
+coefficient and CRT machinery would then be available. Such an application
+could quantify the scarcity of integers satisfying a prescribed finite set of
+barriers. It would not, by itself, settle whether infinitely many full barrier
+solutions exist, nor may one let $K_\varepsilon$ grow with $n$ without changing
+the question. Lau discusses sharper barriers in connection with a conditional
+Cram\'er-type model; those conditional conclusions are not inputs to our proof
+\citep{Lau2026}.
+
+\subsection{Problem \#826: linear forward divisor barriers}
+Problem \#826 asks whether infinitely many $n$ have
+$\tau(n+k)\ll k$ for every $k\ge1$, with a uniform implied constant
+\citep{Bloom826}. Lau obtains a polynomial barrier
+$\tau(n+k)\ll k^C$ for an absolute $C$, not the requested linear one
+\citep{Lau2026}.
+
+A forward window admits the same local congruence counting after reversing the
+shift convention. For a fixed proposed divisor-barrier constant, the
+logarithmic-budget conversion could yield finite upper bounds for its
+survivors, with constants and the length of the window kept explicit.
+The limitation is decisive: $2^{\omega(m)}\le\tau(m)$ gives a necessary
+condition for small $\tau$, not a sufficient one. Constructing many integers
+with small divisor counts also requires control of prime multiplicities and
+cofactors. The current sieve does not provide that construction.
+
+\subsection{Problem \#413: the barrier \texorpdfstring{$\omega(n-k)\le k$}{omega(n-k) <= k}}
+Problem \#413 concerns infinitely many integers obeying backward prime-factor
+barriers of the form $\omega(n-k)\le k$ for $1\le k<n$
+\citep{Bloom413,TaoTeravainen2026}. The same finite incidence-counting and
+congruence modules could formalize a relaxation of these constraints.
+But summing this barrier gives a budget of order $H^2$, rather than the
+$H\log H$ budget used in this paper. Thus neither the exponent $a$ nor the
+mass--budget gap transfers automatically. A useful project here would be a
+formal, parameter-dependent finite counting theorem for that exact barrier,
+followed by an independent assessment of whether it says anything substantive
+about the infinite existence question.
+
+\subsection{Problem \#248: a solved benchmark for reusable formalization}
+Problem \#248 asks for infinitely many $n$ with a uniform linear forward bound
+on the number of prime factors. Tao--Ter\"av\"ainen prove
+$\omega(n+k)\le\Omega(n+k)\ll k$ for every positive $k$
+\citep{Bloom248,TaoTeravainen2026}; Lau subsequently obtains a logarithmic
+barrier for $k\ge2$ \citep{Lau2026}.
+
+Here the prospective benefit is formalization, not another claimed solution.
+The finite weighted algebra, local root counting, and exponential-error
+interfaces could serve as independently usable components of a formalized
+proof or companion quantitative estimate. The existence arguments in those
+papers need additional probabilistic and sieve ingredients. Our deterministic
+upper-moment estimate cannot replace those ingredients merely because both
+arguments discuss prime factors of nearby integers.
+
+\subsection{A disciplined transfer criterion}
+For each proposed application, three tasks should precede a large new
+formalization: identify the exact arithmetic barrier and its quantifiers;
+compute the local root densities and compulsory debit; and determine whether
+the desired conclusion is an upper bound, an existence result, or a uniform
+all-shifts assertion. Only then is reuse more than a similarity of notation.
+The present work is strongest as a library for finite counting and audited
+analytic assembly. It does not furnish a general mechanism for resolving all
+prime-factor problems.
+
+\section{Conclusion}\label{sec:conclusion}
+The divisor restrictions in Erd\H{o}s \#647 impose a logarithmic bound on the
+total number of distinct prime-factor occurrences in a growing backward
+window. Removing the unavoidable small-prime occurrences leaves a signed
+budget that can be compared with a precisely evaluated selected-prime mass.
+A finite weighted Bonferroni argument, exact CRT root counts, and an injective
+encoding of all retained prime subsets control the averaging error without an
+extra factor depending on the truncation order.
+
+At the exponent $a=\log2/(1+\log2)$, the leading terms cancel. Mertens error
+cancellation and the retained linear factorial term leave a fixed positive
+mass--budget gap. The complete amplified principal term, factorial tail,
+arithmetic remainder, and exceptional window then give
+Theorem~\ref{thm:majorant}. Final ratio absorption proves
+Theorem~\ref{thm:main} for every fixed $0<c<1499/10^6$, including $1/1000$.
+
+The audited formalization and the human-readable proof have complementary
+roles. Lean fixes exact hypotheses, signs, boundary cases, and dependencies;
+the exposition identifies the mathematical mechanism and its limitations.
+The AI--operator workflow produced the development, but its claims rest on
+the statements and proof artifacts rather than on the model's authority.
+The reusable finite and elementary library is separate from the analytic
+package, and the latter imports only the audited PNT+ slice it needs.
+
+What remains is not a missing step in this endpoint deduction, but a different
+question: can one exclude every candidate beyond $24$, or construct one?
+The bound proved here still allows an infinite sparse set. External comparison
+of novelty, mathematical review, broader independent proof replay, and any
+extension to related problems should therefore be pursued as distinct tasks,
+not conflated with a resolution of \#647.
+
+\section*{Acknowledgments and contributions}
+\addcontentsline{toc}{section}{Acknowledgments and contributions}
+The project uses the work of the Lean, Mathlib, and PNT+ communities, and the
+public problem curation of Thomas F. Bloom. Existing mathematical and formal
+sources are credited in the bibliography and the repository. GPT 6 Astra is
+the AI author attribution requested for this paper. Justin V. Wick operated
+the interactive workflow, executed the verification runs, supplied the returned
+artifacts, and managed the project. No institutional affiliation or endorsement
+by the cited communities is implied.
+
+\appendix
+\section{Technical details and boundary cases}\label{app:technical}
+\subsection{The finite Bonferroni recurrence}\label{app:bonferroni}
+This supplies a direct algebraic proof of \eqref{eq:bonferroni}. For a finite
+list $w$, write $V(w)=\prod_i(1-w_i)$ and $E_J(w)=P_J(w)-V(w)$. Inserting a
+new weight $u$ gives
+\[
+ e_{j+1}(u::w)=e_{j+1}(w)+u e_j(w),\qquad
+ P_{j+1}(u::w)=P_{j+1}(w)-uP_j(w).
+\]
+It follows that
+\[
+ E_{j+1}(u::w)=E_{j+1}(w)-uE_j(w).
+\]
+The invariant $(-1)^j E_j(w)\ge0$ is proved by induction on the list. At
+$j=0$, $E_0=1-V\ge0$ because $0\le V\le1$. At $j+1$, multiplying the
+recurrence by $(-1)^{j+1}$ expresses it as the sum of the two nonnegative
+quantities $(-1)^{j+1}E_{j+1}(w)$ and $u(-1)^jE_j(w)$.
+For even $J$ this proves $P_J\ge V$. The next truncation satisfies
+$P_{J+1}=P_J-e_{J+1}\le V$, giving the upper half of
+\eqref{eq:bonferroni}. This also covers the empty list and orders above its
+length.
+
+\subsection{The elementary logarithm constants}\label{app:constants}
+The numerical arguments need only coarse certified bounds
+\[
+ 0.693<\log2<0.7.
+\]
+These follow from the explicit real-logarithm bounds in the pinned Mathlib
+sources \citep{MathlibPin}. Since $25/2>8$,
+\[
+ K>3\log2+\frac1{\log2}-2
+   >3\frac{693}{1000}+\frac{10}{7}-2
+   =\frac{10553}{7000}>\frac32.
+\]
+Similarly $20>16$ implies $\log20>4\log2>2772/1000$, whence
+\[
+ \frac{\log20-1}{50}-\frac1{500}
+ >\frac{1.772}{50}-\frac1{500}
+ =\frac{209}{6250}>\frac1{30}.
+\]
+All decimals in these displayed comparisons denote exact rational numbers.
+No floating-point numerical evaluation is a proof dependency. Sharpening these
+inequalities is unnecessary for the stated endpoint.
+
+\subsection{Boundary cases recorded in the formal interfaces}
+\begin{center}
+\begin{tabularx}{\textwidth}{@{}p{0.25\textwidth}X@{}}
+\toprule
+Case & Treatment \\
+\midrule
+Negative interval translation & The finite moment uses integer intervals and Euclidean quotient counts; no positivity is imposed on the translation. \\
+Zeros of $F_H(n)$ & Divisibility and CRT root identities apply to all integer inputs, including zero values of the polynomial. \\
+Empty prime set or subset & Empty products equal one; the empty subset has modulus one and exact count $X$. \\
+$J=0$ or $J>|\Pset|$ & The finite Bonferroni and coefficient conventions cover these cases. Endpoint parameters eventually have $J>0$. \\
+Negative corrected budget & A separate exclusion gives $C(X)\le H$; the positive-weight estimates are not multiplied by a negative budget. \\
+Coefficient at the boundary & Only $c<\rate$ is asserted. Equation~\eqref{eq:boundary-ratio} shows the limitation of the current majorant. \\
+A translated endpoint & The finite moment is uniform in translation. No separate all-translations endpoint theorem is claimed as an exported result here. \\
+\bottomrule
+\end{tabularx}
+\end{center}
+
+\section{Formalization map and verification provenance}\label{app:evidence}
+\subsection{Theorem-to-source correspondence}\label{app:map}
+The following map identifies representative exported or audited declarations;
+it is not a claim that every sentence of the exposition is a separate Lean
+lemma. In the table, the prefixes are
+$\mathsf{S}$ for \smallcode{Erdos647Sieve},
+$\mathsf{E}$ for \smallcode{Erdos647Sieve.Elementary},
+$\mathsf{A}$ for \smallcode{Erdos647Sieve.Analytic}, and
+$\mathsf{P}$ for \smallcode{Erdos647Sieve.Endpoint}.
+The complete source snapshot is in the accompanying verification artifact
+\citep{SieveArtifact}.
+
+\begingroup\small
+\renewcommand{\arraystretch}{1.18}
+\begin{longtable}{@{}>{\raggedright\arraybackslash}p{0.29\textwidth}>{\raggedright\arraybackslash}p{0.66\textwidth}@{}}
+\toprule
+Mathematical component & Representative Lean declaration \\
+\midrule
+\endfirsthead
+\toprule
+Mathematical component & Representative Lean declaration \\
+\midrule
+\endhead
+\bottomrule
+\endfoot
+Candidate and finite claims & $\mathsf{S}$.\leanname{Candidate};
+ $\mathsf{S}$.\leanname{FiniteMomentClaim};
+ $\mathsf{S}$.\leanname{FiniteCountingClaim} \\
+Mandatory debit, Section~\ref{sec:budget} &
+ $\mathsf{S}$.\leanname{budgetDebit} \\
+Weighted inclusion--exclusion, Section~\ref{sec:moment} &
+ $\mathsf{S}$.\leanname{Bonferroni.even_sum_bounds} \\
+Finite moment and transfer, Sections~\ref{sec:moment}--\ref{sec:transfer} &
+ $\mathsf{S}$.\leanname{finiteMoment};
+ $\mathsf{S}$.\leanname{finiteCounting} \\
+Reciprocal-prime lower bound &
+ $\mathsf{E}$.\leanname{prime_reciprocal_lower} \\
+Fixed-constant debit &
+ $\mathsf{E}$.\leanname{smallPrimeDebit_lower} \\
+Factorial lower bound and shifted limit &
+ $\mathsf{E}$.\leanname{factorial_pow_lower};
+ $\mathsf{E}$.\leanname{shiftedFactorialLog_residual_tendsto_zero} \\
+Budget estimate, Proposition~\ref{prop:budget-upper} &
+ $\mathsf{E}$.\leanname{correctedBudget_upper_eventually} \\
+Mertens convergence &
+ $\mathsf{A}$.\leanname{reciprocalPrimeLimit_exists} \\
+Two-cutoff error cancellation &
+ $\mathsf{A}$.\leanname{selectedPrimeSum_difference_tendsto_zero} \\
+Actual prime-mass expansion &
+ $\mathsf{P}$.\leanname{endpoint_primeMass_expansion_tendsto_zero} \\
+Positive mass--budget gap &
+ $\mathsf{P}$.\leanname{eventually_primeMass_sub_correctedBudget_ge} \\
+Mass and budget sizes &
+ $\mathsf{P}$.\leanname{eventually_endpoint_mass_budget_bounds} \\
+Principal exponent &
+ $\mathsf{P}$.\leanname{eventually_amplification_exponents_le} \\
+Amplified factorial tail &
+ $\mathsf{P}$.\leanname{eventually_amplified_moment_tail_le} \\
+All-sign counting bound &
+ $\mathsf{P}$.\leanname{eventually_candidateCount_le_amplified_errors} \\
+Final absorption &
+ $\mathsf{P}$.\leanname{eventually_amplifiedErrorMajorant_le_endpointRHSWith} \\
+General coefficient theorem &
+ $\mathsf{P}$.\leanname{endpointBound_of_lt_principal_rate} \\
+Explicit and historical corollaries &
+ $\mathsf{P}$.\leanname{endpointBound_one_div_thousand};
+ $\mathsf{P}$.\leanname{positiveEndpoint};
+ $\mathsf{S}$.\leanname{endpoint} \\
+\end{longtable}
+\endgroup
+
+The final assembly is intentionally short. In outline, it combines the
+all-sign majorant with its absorption into the desired endpoint expression:
+\begin{quote}\small\ttfamily
+ theorem endpointBound\_of\_lt\_principal\_rate\par
+\hspace*{1em}(c : Real) (hc : c < (1499 / 1000000 : Real)) :\par
+\hspace*{1em}EndpointBound c
+\end{quote}
+The printed type is not the proof; the supplied source contains the proof
+body, and the final audit checks both the expanded endpoint definition and the
+transitive axioms. In particular $c$ is not an assumed bound on a finite
+majorant: that bound has already been proved in the imported absorption module.
+
+\subsection{Exact snapshot and trust record}
+The development URL is \url{https://github.com/JustinWick/erdos647}.
+The paper's precise basis is the operator-supplied v48 archive identified below,
+rather than an assertion that a mutable repository branch always contains the
+same bytes. The recorded UTC run spans
+\texttt{2026-09-09 01:40:11}--\texttt{01:45:24}.
+
+\begin{center}
+\begin{tabularx}{\textwidth}{@{}p{0.38\textwidth}X@{}}
+\toprule
+Recorded item & Value \\
+\midrule
+Lean toolchain & \smallcode{leanprover/lean4:v4.32.2} \\
+Platform in compiler report & \smallcode{x86\_64-unknown-linux-gnu} \\
+Configured proof gates & 30 passed; none failed or blocked \\
+Distinct audited declarations & 235 \\
+Exact-type/definition examples & 220 in 32 audit files \\
+Engineering tests & 317 passed \\
+Executed commands & 70, all with zero exit status \\
+Build and audit diagnostics & No warnings or errors found in the reviewed logs \\
+Archive manifest & 296 entries, all matching their recorded hashes \\
+Source snapshots & 179 checked inputs before and after; unchanged \\
+Retained PNT+ source closure & 14 modules; admission scan passed \\
+Axiom policy & Exactly the allowed set in \eqref{eq:axioms}; no unauthorized axiom reported \\
+\bottomrule
+\end{tabularx}
+\end{center}
+
+\noindent\textbf{Version identifiers.}
+\begin{quote}\small
+Lean compiler commit:\par
+\nolinkurl{f3b06c705e6c85f5314019d5d3baab0fec5b580c}\par\medskip
+Mathlib revision:\par
+\nolinkurl{905b95818eb32af7874a58b427f50c1711a5e96c}\par\medskip
+PNT+ revision:\par
+\nolinkurl{a5154676af9aa3095150ee410cdda80555aa0642}
+\end{quote}
+
+\noindent\textbf{Artifact and source hashes.}
+\begin{quote}\small
+Run archive:\par
+\nolinkurl{erdos647_repo_v48_results_20260909T014011Z_dd165b9f.zip}\par
+SHA-256:\par
+\nolinkurl{7043421f1ec2ca5c85963e84a1a670096b23a2688fb16932a42b738c1343561e}\par\medskip
+\nolinkurl{Erdos647Sieve/Specification.lean}:\par
+\nolinkurl{39d7c9e69faba89c27d738c6bf37f8b363197e2e5942281c5aedbbba7374c574}\par\medskip
+\nolinkurl{research/Erdos647Research/Endpoint/Main.lean}:\par
+\nolinkurl{91700a3fe721917602595cbd80ba1a515ada11abc679106b37f4167426dec0b4}
+\end{quote}
+The review that produced these counts verifies the supplied archive and its
+logs; it is not another Lean execution. The final endpoint had already passed
+in the v47 proof checkpoint. The v48 record additionally checks the promoted
+Mathlib-only elementary modules and the public analytic and endpoint facades.
+Thus the packaging changes are not confused with a new mathematical theorem.
+
+\subsection{Reproducibility and the public interface}
+The repository contains pinned toolchain and Lake manifests, ordinary core
+build/test targets, and separate research targets. The top-level runner manages
+incremental checking, setup when explicitly requested, and diagnostic archives.
+A mathematical consumer can instead import the public facades without knowing
+the historical overlay sequence. The core and analytic packages maintain
+separate dependency boundaries; only the latter needs PNT+.
+
+The companion paper-source bundle includes this LaTeX source, bibliography,
+a PDF build script, the evidence-review report, and the original v48 diagnostic
+archive. It is sufficient to identify the proof snapshot described here.
+Public deployment, independent kernel replay, and peer review are not inferred
+from the presence of a CI configuration or from file hashes.
+
+\section{Notation and proof dependencies}\label{app:notation}
+\begin{center}
+\begin{tabularx}{\textwidth}{@{}p{0.19\textwidth}X@{}}
+\toprule
+Symbol & Meaning \\
+\midrule
+$\tau,\omega,\Omega$ & Divisor count; number of distinct prime factors; number with multiplicity \\
+$C(X)$ & Number of actual full-condition candidates $24<n\le X$ \\
+$F_H(n)$ & $\prod_{k=1}^H(n-k)$, the window polynomial \\
+$\Pset(H,y)$ & Primes $H<p\le y$ \\
+$T_{H,y}(n)$ & Number of selected primes dividing $F_H(n)$ \\
+$Q_H,D_H,B_H$ & Logarithmic budget, mandatory small-prime debit, signed difference \\
+$\lambda$ & Prime mass $H\sum_{H<p\le y}1/p$ \\
+$Q,L,U,S$ & $\log X$, $\log\log X$, $Q^a$, $U/L$ \\
+$H,J,y$ & $\floor{Q^a}$, $2\ceil{H/100}$, $X^{1/(4J)}$ \\
+$t,z,\eta,\mu$ & $1/(1000L)$, $1-t$, $-\log z$, $t\lambda$ \\
+$K$ & $\log(25/2)+1/\log2-2$, the available gap constant \\
+$\rate$ & $1499/10^6$, the upper threshold of the proved open coefficient range \\
+$c$ & A fixed positive coefficient strictly below $\rate$ \\
+\bottomrule
+\end{tabularx}
+\end{center}
+
+The logical dependencies may be read as two converging chains. The finite
+chain is: weighted Bonferroni algebra and CRT progression counts imply the
+finite moment; that moment together with the signed divisor budget implies the
+finite counting inequality. The analytic chain is: the PNT/integrability input
+implies Mertens convergence; actual cutoff asymptotics and the elementary
+factorial/debit estimates imply the mass--budget gap. The gap controls the
+amplification of the finite inequality, and the scale limits absorb all
+remaining contributions. No arrow in these chains stands for an unproved
+premise in the final Lean theorem.
+
+\addcontentsline{toc}{section}{References}
+\bibliographystyle{plainnat}
+\bibliography{references}
+\end{document}

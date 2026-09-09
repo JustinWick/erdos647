@@ -104,6 +104,28 @@
         "Erdos647Sieve.card_retainedSubsets_cast_le",
         "Erdos647Sieve.retained_weighted_subset_error_le",
         "Erdos647Sieve.arithmetic_discrepancy_le"
+      ],
+      "Audit/Elementary.lean": [
+        "Erdos647Sieve.Elementary.log_factorial_upper",
+        "Erdos647Sieve.Elementary.log_factorial_lower",
+        "Erdos647Sieve.Elementary.factorial_pow_lower",
+        "Erdos647Sieve.Elementary.shiftedFactorialLog_eq_expanded",
+        "Erdos647Sieve.Elementary.log_factorial_residual_tendsto_zero",
+        "Erdos647Sieve.Elementary.shiftedFactorialLog_residual_tendsto_zero",
+        "Erdos647Sieve.Elementary.sum_log_shift_eq_factorial",
+        "Erdos647Sieve.Elementary.logBudget_le_factorial",
+        "Erdos647Sieve.Elementary.harmonic_sum_le_finitePrimeEuler",
+        "Erdos647Sieve.Elementary.reciprocal_remainder_telescope",
+        "Erdos647Sieve.Elementary.prime_log_factor_le",
+        "Erdos647Sieve.Elementary.log_finitePrimeEuler_le",
+        "Erdos647Sieve.Elementary.prime_reciprocal_lower",
+        "Erdos647Sieve.Elementary.nat_quotient_cast_lower",
+        "Erdos647Sieve.Elementary.smallPrimeDebit_ge_sum_sub_card",
+        "Erdos647Sieve.Elementary.smallPrimeDebit_lower",
+        "Erdos647Sieve.Elementary.neg_log_one_sub_le_add_sq",
+        "Erdos647Sieve.Elementary.endpoint_log_gap",
+        "Erdos647Sieve.Elementary.endpoint_tail_log_constant",
+        "Erdos647Sieve.Elementary.correctedBudget_upper_eventually"
       ]
     },
     "prerequisites": [],
@@ -640,5 +662,26 @@
       "endpoint_error_absorption"
     ],
     "historical_status": "new v46 final-absorption proof source; acceptance pending"
+  },
+  "endpoint_public_results": {
+    "package": "research",
+    "build": [
+      "+Erdos647Research.Endpoint",
+      "+Erdos647Research.Analytic",
+      "+Erdos647Research.Examples.EndpointUsage"
+    ],
+    "audits": {
+      "Audit/PublicResults.lean": [
+        "Erdos647Sieve.Endpoint.endpointBound_of_lt_principal_rate",
+        "Erdos647Sieve.Endpoint.endpointBound_one_div_thousand",
+        "Erdos647Sieve.Endpoint.positiveEndpoint",
+        "Erdos647Sieve.endpoint"
+      ]
+    },
+    "prerequisites": [
+      "endpoint_final",
+      "selected_prime_reciprocals"
+    ],
+    "historical_status": "v48 public facades and usage examples; underlying endpoint accepted in v47; new package-boundary check pending"
   }
 }

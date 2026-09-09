@@ -1,0 +1,173 @@
+{
+  "version": "v47",
+  "updated": "2026-09-08",
+  "scope": "endpoint research, not the accepted finite core",
+  "goal_declaration": "Erdos647Sieve.Endpoint.PositiveEndpointClaim",
+  "explicit_bound_declaration": "Erdos647Sieve.Endpoint.EndpointBound",
+  "critical_exponent": "Real.log 2 / (1 + Real.log 2)",
+  "saving_scale": "Real.rpow (Real.log (X : Real)) endpointExponent / Real.log (Real.log (X : Real))",
+  "quantifier_order": "exists c : Real, 0 < c and exists X0 : Nat, 3 <= X0 and forall X >= X0, bound(c, X)",
+  "coefficient_may_depend_on_X": false,
+  "historical_coefficient": {
+    "numerator": 1,
+    "denominator": 1000,
+    "required": false
+  },
+  "working_candidate": null,
+  "proved_coefficient": null,
+  "proved_endpoint_theorem": null,
+  "endpoint_acceptance_evidence": null,
+  "optimization_policy": "Preserve the critical exponent and scale; select an explicit fixed c > 0 from a proved comfortable decay margin. No coefficient optimization project and no new rigid target.",
+  "parameter_policy": {
+    "keep_existing_definitions": true,
+    "momentT": "1 / (1000 * log(log X))",
+    "change_only_if_mathematically_obstructive": true
+  },
+  "proof_priorities": [
+    "exact parameter asymptotics",
+    "eventual positive fixed gap lambda - B_H >= delta * H",
+    "every amplified error term",
+    "fixed positive explicit coefficient endpoint assembly"
+  ],
+  "legacy_corollary_policy": "Derive the historical EndpointClaim if the final proved coefficient is at least 1/1000 at essentially no extra effort; otherwise record the coefficient actually proved.",
+  "statement_interface": {
+    "status": "accepted",
+    "run_id": "erdos647_repo_v38_results_20260908T083224Z_ed5d26ea",
+    "gate": "endpoint_statement",
+    "declarations": 7,
+    "is_endpoint_bound_proof": false,
+    "latest_recheck_run_id": "erdos647_repo_v42_results_20260908T111052Z_81bd3ce5"
+  },
+  "parameter_acceptance": {
+    "status": "accepted",
+    "run_id": "erdos647_repo_v40_results_20260908T091111Z_0850cec9",
+    "accepted_gates": [
+      "endpoint_window_parameters",
+      "endpoint_truncation_parameters",
+      "endpoint_cutoff_parameters",
+      "endpoint_prime_mass_parameters"
+    ],
+    "newly_accepted_declarations": 15,
+    "all_parameter_declarations": 36,
+    "all_branch_declarations_including_statement": 43,
+    "cutoff_gate": "passed in v40",
+    "prime_mass_gate": "passed in v40",
+    "evidence": "provenance/accepted/v40/README.md",
+    "is_endpoint_bound_proof": false,
+    "latest_recheck_run_id": "erdos647_repo_v42_results_20260908T111052Z_81bd3ce5"
+  },
+  "next_effort": {
+    "status": "source implemented; acceptance pending",
+    "scope": "divergence and comparison of endpointScale, absorption of every normalized error, final fixed-c theorem and historical corollary",
+    "assignment": "docs/final-endpoint-branch.md"
+  },
+  "parameter_pr_local_acceptance": {
+    "status": "satisfied",
+    "run_id": "erdos647_repo_v40_results_20260908T091111Z_0850cec9",
+    "gates_passed": 19,
+    "gates_total": 19,
+    "new_proof_source_in_v41": false
+  },
+  "mass_budget_branch": {
+    "status": "accepted",
+    "fixed_gap_target": {
+      "numerator": 3,
+      "denominator": 2
+    },
+    "gap_is_not_endpoint_coefficient": true,
+    "general_margin": "every fixed delta < log(25/2) + 1/log(2) - 2",
+    "gates": [
+      "endpoint_prime_mass_gap",
+      "endpoint_mass_budget_bounds"
+    ],
+    "new_theorem_targets": 12,
+    "acceptance_evidence": "provenance/accepted/v42/README.md",
+    "subsequent_effort": "all amplified error terms, then a fixed-positive-coefficient endpoint",
+    "run_id": "erdos647_repo_v42_results_20260908T111052Z_81bd3ce5",
+    "accepted_declarations": 12,
+    "expanded_type_and_definition_checks": 13,
+    "fixed_gap_proved": {
+      "numerator": 3,
+      "denominator": 2
+    },
+    "assumes_nonnegative_budget": false,
+    "accepted_snapshot_mathematical_modules": 47,
+    "local_pr_acceptance": "satisfied on supplied source snapshot"
+  },
+  "amplified_error_branch": {
+    "status": "accepted",
+    "gates": [
+      "endpoint_amplification",
+      "endpoint_moment_tail",
+      "endpoint_error_scales",
+      "endpoint_arithmetic_remainder",
+      "endpoint_counting_reduction"
+    ],
+    "new_theorem_targets": 25,
+    "expanded_type_and_definition_checks": 31,
+    "acceptance_evidence": "provenance/accepted/v45/README.md",
+    "principal_rate": {
+      "numerator": 1499,
+      "denominator": 1000000
+    },
+    "tail_rate": {
+      "numerator": 1,
+      "denominator": 30
+    },
+    "arithmetic_upper_scale": "exp(log X / 2)",
+    "final_reduction_covers_negative_budget": true,
+    "is_endpoint_bound_proof": false,
+    "remaining": "final same-scale absorption; v46 source pending its own final audit",
+    "latest_run": {
+      "run_id": "erdos647_repo_v45_results_20260908T125209Z_b6d9b2cb",
+      "gates_passed": 26,
+      "gates_failed": 0,
+      "gates_blocked": 0,
+      "new_proof_gates_accepted": true,
+      "warnings": 0
+    },
+    "run_id": "erdos647_repo_v45_results_20260908T125209Z_b6d9b2cb",
+    "accepted_declarations": 25
+  },
+  "final_absorption_branch": {
+    "status": "source_implemented_acceptance_pending",
+    "gates": [
+      "endpoint_absorption_scales",
+      "endpoint_error_absorption",
+      "endpoint_final"
+    ],
+    "new_theorem_targets": 15,
+    "expanded_type_definition_checks": 23,
+    "implemented_explicit_coefficient": {
+      "numerator": 1,
+      "denominator": 1000
+    },
+    "implemented_positive_coefficient_range": {
+      "upper_exclusive": {
+        "numerator": 1499,
+        "denominator": 1000000
+      },
+      "lower_exclusive": 0
+    },
+    "implemented_theorems": [
+      "Erdos647Sieve.Endpoint.endpointBound_of_lt_principal_rate",
+      "Erdos647Sieve.Endpoint.endpointBound_one_div_thousand",
+      "Erdos647Sieve.Endpoint.positiveEndpoint",
+      "Erdos647Sieve.endpoint"
+    ],
+    "acceptance_evidence": null,
+    "coefficient_is_not_yet_accepted": true,
+    "legacy_corollary_cost": "rational strict inequality and the already accepted statement equivalence; no parameter retuning",
+    "latest_run": {
+      "run_id": "erdos647_repo_v46_results_20260908T203111Z_99d07146",
+      "gates_passed": 26,
+      "gates_failed": 1,
+      "gates_blocked": 2,
+      "new_final_layer_gates_accepted": false,
+      "failure_module": "AbsorptionScales.lean",
+      "failure_kind": "explicit-quotient / named endpointScale target conversion",
+      "repair_overlay": "v47",
+      "repair_acceptance": "pending"
+    }
+  }
+}

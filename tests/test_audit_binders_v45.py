@@ -20,6 +20,7 @@ import zipfile
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / 'scripts'))
 import check
+from promotion_history import assert_endpoint_evidence
 from test_amplified_errors_v44 import assert_amplified_acceptance
 
 FIXTURE = json.loads((ROOT / 'tests/fixtures/v44_error_audit_interfaces.json').read_text())
@@ -143,11 +144,11 @@ class BinderPatternRegression(unittest.TestCase):
         self.assertIn('tests/fixtures/v44_error_audit_interfaces.json', names)
         self.assertIn('tests/test_audit_binders_v45.py', names)
 
-    def test_current_version_has_no_endpoint_acceptance(self):
+    def test_endpoint_acceptance_is_backed_by_its_own_final_audit(self):
         record = json.loads((ROOT / 'docs/endpoint-coefficient-status.json').read_text())
         assert_amplified_acceptance(self, record)
-        self.assertIsNone(record['proved_coefficient'])
-        self.assertIsNone(record['proved_endpoint_theorem'])
+        assert_endpoint_evidence(self, ROOT, record)
+        self.assertEqual(record['final_absorption_branch']['status'], 'accepted')
 
     def test_actual_archive_names_and_latest_pointer_match(self):
         version = json.loads((ROOT / 'docs/endpoint-coefficient-status.json').read_text())['version']

@@ -1,0 +1,7 @@
+$ <REPO>/.tools/elan/toolchains/leanprover--lean4---v4.32.2/bin/lake env lean -DwarningAsError=true Audit/CorrectedBudgetEstimate.lean
+Erdos647Sieve.Elementary.correctedBudget_upper_eventually (ε : ℝ) (hε : 0 < ε) :
+  ∀ᶠ (H : ℕ) in Filter.atTop,
+    ↑(Erdos647Sieve.correctedBudget H) / ↑H ≤ Real.log ↑H / Real.log 2 - Real.log (Real.log ↑H) + 2 - 1 / Real.log 2 + ε
+'Erdos647Sieve.Elementary.correctedBudget_upper_eventually' depends on axioms: [propext, Classical.choice, Quot.sound]
+
+EXIT_CODE=0

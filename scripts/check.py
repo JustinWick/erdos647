@@ -215,6 +215,7 @@ def gate_module_sources(root: Path, gate: dict) -> dict[str, tuple[Path, Path]]:
         pending.extend(imports((package / file).read_text()))
     if gate['package'] == '.':
         pending.extend('Examples.' + p.stem for p in (root / 'Examples').glob('*.lean'))
+    pending.extend(target[1:] for target in gate['build'] if target.startswith('+'))
     found = {}
     while pending:
         name = pending.pop()
@@ -300,7 +301,8 @@ def source_boundary(root: Path = ROOT, include_research: bool = True) -> None:
                 path=name.replace('.','/')+'.lean'
                 if (root/path).is_file() or (root/'research'/path).is_file(): continue
                 raise ValueError('Unresolved project import: '+name)
-        registered={g['build'][0].lstrip('+') for g in GATES.values() if g['package']=='research'}
+        registered={target[1:] for g in GATES.values() if g['package']=='research'
+                    for target in g['build'] if target.startswith('+')}
         registered.add('Erdos647Research.Compat.PNTPlus')
         owned={'.'.join(p.relative_to(root/'research').with_suffix('').parts)
                for p in (root/'research/Erdos647Research').rglob('*.lean')}
@@ -356,7 +358,7 @@ class Run:
     def __init__(self, root: Path, args: argparse.Namespace):
         self.root=root; self.args=args; self.env=clean_env(); self.commands=0
         if args.jobs: self.env['LEAN_NUM_THREADS']=str(args.jobs)
-        self.id='erdos647_repo_v47_results_'+datetime.now(timezone.utc).strftime('%Y%m%dT%H%M%SZ')+'_'+uuid.uuid4().hex[:8]
+        self.id='erdos647_repo_v48_results_'+datetime.now(timezone.utc).strftime('%Y%m%dT%H%M%SZ')+'_'+uuid.uuid4().hex[:8]
         self.dest=root/'results'/self.id
         if (root/'results').is_symlink(): raise ValueError('Refusing symlinked results directory')
         self.dest.mkdir(parents=True,exist_ok=False)

@@ -1,3 +1,5 @@
+> **Completed in v47:** all 29 gates passed. The general coefficient range and the 1/1000 corollary are accepted. The plan below is historical; see [current proof status](proof-status.md).
+
 # Final endpoint branch — v46
 
 ## Accepted starting point and separate PR boundary

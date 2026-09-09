@@ -1,48 +1,57 @@
-# Statement guide
+# Theorem guide
 
-All names below are in `Erdos647Sieve`. These are the preserved theorem types,
-not strengthened versions or new assumptions.
+## Finite sieve — root package, Mathlib only
 
-## `Candidate`
-
-`Candidate n` means `24 < n` and for every natural `k`, `1 <= k < n` implies
-`(n-k).divisors.card <= k+2`. `Prefix H n` includes `H < n` and only the first
-`H` shift inequalities.
-
-## `finiteMoment : FiniteMomentClaim`
-
-For every integer `A`, natural `X H`, real `y z`, and natural `J`:
-`1 <= X`, `1 <= H`, `H < y`, `0 < z`, `z < 1`, and `Even J` imply
-
-```text
-sum_{n in Icc(A+1,A+X)} z^(hitCount H y n) <= momentBound X H y z J.
+```lean
+import Erdos647Sieve.Finite
 ```
 
-The interval and polynomial use integers throughout. Empty prime sets, zero
-polynomial values, `J=0`, and negative translations are included.
+`Erdos647Sieve.finiteMoment` gives the translated finite moment bound.
+`Erdos647Sieve.budgetDebit` proves the signed corrected budget.
+`Erdos647Sieve.finiteCounting` assembles them for the actual candidate predicate.
 
-## `budgetDebit : BudgetDebitClaim`
+## Elementary estimates — root package, Mathlib only
 
-For natural `n H` and real `y`, `1 <= H`, `H < y`, and `Prefix H n` imply
-`(hitCount H y (n:Int):Int) <= correctedBudget H`.
-The right side is the signed difference of the exact logarithmic-floor budget
-and the exact natural-quotient small-prime debit.
-
-## `finiteCounting : FiniteCountingClaim`
-
-For natural `X H`, real `y z`, and natural `J`, the moment parameter hypotheses
-and `0 <= correctedBudget H` imply
-
-```text
-(candidateCount X : Real) <= H +
-  exp((-log z) * (correctedBudget H : Real)) * momentBound X H y z J.
+```lean
+import Erdos647Sieve.Elementary
 ```
 
-The multiplier covers the ENTIRE bound. The negative-budget branch is a separate
-proved consequence; it is not silently omitted or converted to natural subtraction.
+The facade exposes all seven accepted elementary modules. Useful declarations:
 
-## What is not here
+- `Erdos647Sieve.Elementary.log_factorial_residual_tendsto_zero` and
+  `shiftedFactorialLog_residual_tendsto_zero` retain the factorial's linear term.
+- `Erdos647Sieve.Elementary.smallPrimeDebit_lower` proves
+  $H(\log\log H-2)\le D_H$ for $H\ge2$.
+- `Erdos647Sieve.Elementary.correctedBudget_upper_eventually` gives the
+  constant-sensitive one-sided asymptotic upper bound for the signed budget.
 
-No proof of `EndpointClaim`, no proof of finiteness, no exclusion of every candidate
-above 24, and no novelty claim. The public extraction changes packaging, not the
-mathematical strength of the accepted finite theorem.
+All 20 elementary audit targets and their original expanded statements are
+checked independently by the root's `Audit/Elementary.lean`. Old research
+imports remain supported by import-only forwarders.
+
+## Final endpoint — separate analytic package
+
+```lean
+import Erdos647Research.Endpoint
+```
+
+The declarations keep their established theorem namespace:
+
+```lean
+Erdos647Sieve.Endpoint.endpointBound_of_lt_principal_rate
+Erdos647Sieve.Endpoint.endpointBound_one_div_thousand
+Erdos647Sieve.Endpoint.positiveEndpoint
+Erdos647Sieve.endpoint
+```
+
+The main saving range is **0 < c < 1499/10^6**, with fixed c and a c-dependent
+eventual onset. The proof also handles nonpositive c, but these are not
+positive-saving results. c=1/1000 is the simple explicit corollary.
+The upper boundary is not included, and no optimality is asserted.
+
+`import Erdos647Research.Analytic` exposes the Mertens/selected-prime bridge
+without relying on endpoint implementation filenames. The restricted PNT+
+compatibility layer remains the only upstream interface.
+
+The detailed hypotheses and quantifiers are recorded in the checked-in audit
+files. The asymptotic result is not a finiteness proof or a resolution of #647.

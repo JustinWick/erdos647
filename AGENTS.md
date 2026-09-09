@@ -2,7 +2,7 @@
 
 - Stay on the checked-in Lean/Mathlib 4.32.2 pins unless the task explicitly requests
   a separately reviewed version migration.
-- The root is the Mathlib-only finite library; `research/` is a separate Lake
+- The root is the Mathlib-only finite and elementary library; `research/` is a separate Lake
   package. Never introduce PNT+ into the root's imports or lockfile.
 - Core import paths use `Erdos647Sieve`; research import paths use `Erdos647Research`.
   The theorem namespaces are independent of module paths and remain unchanged.
@@ -30,7 +30,14 @@
   registered current gates. Source edits invalidate Lake traces normally.
 - Add a checked-in exact-type and axiom audit for each new exported statement.
   Allowed axioms: propext, Classical.choice, Quot.sound only.
-- Keep historical logs separate from current acceptance. Pending endpoint work is
-  documented in docs/proof-status.md and research/README.md.
+- The final endpoint passed in v47, with every fixed 0<c<1499/10^6 and the explicit
+  c=1/1000 corollary. The upper boundary is strict. This does not solve #647.
+- Keep historical logs separate from current acceptance. The v48 layout still
+  needs its own core/compatibility/public-facade checks; see docs/proof-status.md.
+- Public imports are Erdos647Sieve.Finite, Erdos647Sieve.Elementary,
+  Erdos647Research.Analytic, and Erdos647Research.Endpoint. The last two stay in
+  the separate PNT+-dependent package even though their theorems are proved.
+- The seven research elementary paths are compatibility imports, not places to
+  add new proof implementations. Edit Erdos647Sieve/Elementary/ instead.
 - Do not spend time recreating migration/backup infrastructure or reorganizing
   accepted proof bodies for style.

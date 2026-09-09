@@ -1,0 +1,51 @@
+[
+  {
+    "module": "Erdos647Research.Endpoint.AbsorptionScales",
+    "expected": "<REPO>/research/.lake/build/lib/lean/Erdos647Research/Endpoint/AbsorptionScales.olean",
+    "resolved": "<REPO>/research/.lake/build/lib/lean/Erdos647Research/Endpoint/AbsorptionScales.olean",
+    "correct_owner": true,
+    "object_exists": true
+  },
+  {
+    "module": "Erdos647Research.Endpoint.CutoffParameters",
+    "expected": "<REPO>/research/.lake/build/lib/lean/Erdos647Research/Endpoint/CutoffParameters.olean",
+    "resolved": "<REPO>/research/.lake/build/lib/lean/Erdos647Research/Endpoint/CutoffParameters.olean",
+    "correct_owner": true,
+    "object_exists": true
+  },
+  {
+    "module": "Erdos647Research.Endpoint.ErrorScales",
+    "expected": "<REPO>/research/.lake/build/lib/lean/Erdos647Research/Endpoint/ErrorScales.olean",
+    "resolved": "<REPO>/research/.lake/build/lib/lean/Erdos647Research/Endpoint/ErrorScales.olean",
+    "correct_owner": true,
+    "object_exists": true
+  },
+  {
+    "module": "Erdos647Research.Endpoint.Statement",
+    "expected": "<REPO>/research/.lake/build/lib/lean/Erdos647Research/Endpoint/Statement.olean",
+    "resolved": "<REPO>/research/.lake/build/lib/lean/Erdos647Research/Endpoint/Statement.olean",
+    "correct_owner": true,
+    "object_exists": true
+  },
+  {
+    "module": "Erdos647Research.Endpoint.TruncationParameters",
+    "expected": "<REPO>/research/.lake/build/lib/lean/Erdos647Research/Endpoint/TruncationParameters.olean",
+    "resolved": "<REPO>/research/.lake/build/lib/lean/Erdos647Research/Endpoint/TruncationParameters.olean",
+    "correct_owner": true,
+    "object_exists": true
+  },
+  {
+    "module": "Erdos647Research.Endpoint.WindowParameters",
+    "expected": "<REPO>/research/.lake/build/lib/lean/Erdos647Research/Endpoint/WindowParameters.olean",
+    "resolved": "<REPO>/research/.lake/build/lib/lean/Erdos647Research/Endpoint/WindowParameters.olean",
+    "correct_owner": true,
+    "object_exists": true
+  },
+  {
+    "module": "Erdos647Sieve.Specification",
+    "expected": "<REPO>/.lake/build/lib/lean/Erdos647Sieve/Specification.olean",
+    "resolved": "<REPO>/.lake/build/lib/lean/Erdos647Sieve/Specification.olean",
+    "correct_owner": true,
+    "object_exists": true
+  }
+]

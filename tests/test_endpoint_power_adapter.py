@@ -3,6 +3,7 @@
 These check source interfaces and audit registration, not the analytic limit proofs.
 """
 from pathlib import Path
+from promotion_history import assert_endpoint_evidence
 import json
 import unittest
 
@@ -55,9 +56,9 @@ class ExplicitPowerAdapter(unittest.TestCase):
         status = json.loads((ROOT / 'docs/endpoint-coefficient-status.json').read_text())
         self.assertEqual(status['statement_interface']['status'], 'accepted')
         self.assertFalse(status['statement_interface']['is_endpoint_bound_proof'])
-        self.assertIsNone(status['proved_coefficient'])
-        self.assertIsNone(status['proved_endpoint_theorem'])
-        self.assertIsNone(status['endpoint_acceptance_evidence'])
+        assert_endpoint_evidence(self, ROOT, status)
+        self.assertEqual(status['final_absorption_branch']['status'], 'accepted')
+        self.assertEqual(status['cleanup_v48']['status'], 'acceptance_pending')
 
     def test_no_new_mandatory_output_coefficient(self):
         status = json.loads((ROOT / 'docs/endpoint-coefficient-status.json').read_text())

@@ -1,0 +1,10 @@
+$ <REPO>/.tools/elan/toolchains/leanprover--lean4---v4.32.2/bin/lake env lean -DwarningAsError=true Audit/FactorialBounds.lean
+Erdos647Sieve.Elementary.log_factorial_upper (n : ℕ) (hn : 1 ≤ n) :
+  Real.log ↑n.factorial ≤ ↑n * Real.log ↑n - ↑n + Real.log ↑n / 2 + 1
+'Erdos647Sieve.Elementary.log_factorial_upper' depends on axioms: [propext, Classical.choice, Quot.sound]
+Erdos647Sieve.Elementary.log_factorial_lower (n : ℕ) (hn : 1 ≤ n) : ↑n * Real.log ↑n - ↑n ≤ Real.log ↑n.factorial
+'Erdos647Sieve.Elementary.log_factorial_lower' depends on axioms: [propext, Classical.choice, Quot.sound]
+Erdos647Sieve.Elementary.factorial_pow_lower (n : ℕ) : (↑n / Real.exp 1) ^ n ≤ ↑n.factorial
+'Erdos647Sieve.Elementary.factorial_pow_lower' depends on axioms: [propext, Classical.choice, Quot.sound]
+
+EXIT_CODE=0

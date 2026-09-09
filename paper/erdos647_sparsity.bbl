@@ -1,0 +1,162 @@
+\begin{thebibliography}{20}
+\providecommand{\natexlab}[1]{#1}
+\providecommand{\url}[1]{\texttt{#1}}
+\expandafter\ifx\csname urlstyle\endcsname\relax
+  \providecommand{\doi}[1]{doi: #1}\else
+  \providecommand{\doi}{doi: \begingroup \urlstyle{rm}\Url}\fi
+
+\bibitem[Bloom(2026{\natexlab{a}})]{Bloom248}
+Thomas~F. Bloom.
+\newblock {Erd{\H o}s Problem \#248}.
+\newblock Erd{\H o}s Problems, 2026{\natexlab{a}}.
+\newblock URL \url{https://www.erdosproblems.com/248}.
+\newblock Problem catalogue; consulted September 2026.
+
+\bibitem[Bloom(2026{\natexlab{b}})]{Bloom413}
+Thomas~F. Bloom.
+\newblock {Erd{\H o}s Problem \#413}.
+\newblock Erd{\H o}s Problems, 2026{\natexlab{b}}.
+\newblock URL \url{https://www.erdosproblems.com/413}.
+\newblock Problem catalogue; consulted September 2026.
+
+\bibitem[Bloom(2026{\natexlab{c}})]{Bloom647}
+Thomas~F. Bloom.
+\newblock {Erd{\H o}s Problem \#647}.
+\newblock Erd{\H o}s Problems, 2026{\natexlab{c}}.
+\newblock URL \url{https://www.erdosproblems.com/647}.
+\newblock Problem catalogue; consulted September 2026.
+
+\bibitem[Bloom(2026{\natexlab{d}})]{Bloom679}
+Thomas~F. Bloom.
+\newblock {Erd{\H o}s Problem \#679}.
+\newblock Erd{\H o}s Problems, 2026{\natexlab{d}}.
+\newblock URL \url{https://www.erdosproblems.com/679}.
+\newblock Problem catalogue; consulted September 2026.
+
+\bibitem[Bloom(2026{\natexlab{e}})]{Bloom826}
+Thomas~F. Bloom.
+\newblock {Erd{\H o}s Problem \#826}.
+\newblock Erd{\H o}s Problems, 2026{\natexlab{e}}.
+\newblock URL \url{https://www.erdosproblems.com/826}.
+\newblock Problem catalogue; consulted September 2026.
+
+\bibitem[de~Moura and Ullrich(2021)]{Lean4}
+Leonardo de~Moura and Sebastian Ullrich.
+\newblock The {Lean 4} theorem prover and programming language.
+\newblock In \emph{Automated Deduction---CADE 28}, volume 12699 of
+  \emph{Lecture Notes in Computer Science}, pages 625--635. Springer, 2021.
+\newblock \doi{10.1007/978-3-030-79876-5_37}.
+\newblock URL \url{https://doi.org/10.1007/978-3-030-79876-5_37}.
+
+\bibitem[Erd{\H o}s(1979{\natexlab{a}})]{Erdos1979Acta}
+Paul Erd{\H o}s.
+\newblock Some unconventional problems in number theory.
+\newblock \emph{Acta Mathematica Academiae Scientiarum Hungaricae}, 33\penalty0
+  (1--2):\penalty0 71--80, 1979{\natexlab{a}}.
+\newblock URL \url{https://www.renyi.hu/~p_erdos/1979-23.pdf}.
+
+\bibitem[Erd{\H o}s(1979{\natexlab{b}})]{Erdos1979Magazine}
+Paul Erd{\H o}s.
+\newblock Some unconventional problems in number theory.
+\newblock \emph{Mathematics Magazine}, 52\penalty0 (2):\penalty0 67--70,
+  1979{\natexlab{b}}.
+\newblock \doi{10.1080/0025570X.1979.11976756}.
+\newblock URL \url{https://www.renyi.hu/~p_erdos/1979-22.pdf}.
+
+\bibitem[Friedlander and Iwaniec(2010)]{FriedlanderIwaniec2010}
+John Friedlander and Henryk Iwaniec.
+\newblock \emph{Opera de Cribro}, volume~57 of \emph{American Mathematical
+  Society Colloquium Publications}.
+\newblock American Mathematical Society, Providence, RI, 2010.
+\newblock URL \url{https://bookstore.ams.org/COLL/57}.
+
+\bibitem[Galambos and Simonelli(1996)]{GalambosSimonelli1996}
+J{\'a}nos Galambos and Italo Simonelli.
+\newblock \emph{{Bonferroni}-type Inequalities with Applications}.
+\newblock Probability and Its Applications. Springer, New York, 1996.
+\newblock ISBN 9780387947761.
+\newblock URL \url{https://link.springer.com/book/9780387947761}.
+
+\bibitem[{GPT 6 Astra} and Wick(2026)]{SieveArtifact}
+{GPT 6 Astra} and Justin~V. Wick.
+\newblock {Erdos647Sieve}: logarithmic-budget sieve and fixed-coefficient
+  sparsity formalization.
+\newblock Lean source and verification artifacts, 2026.
+\newblock URL \url{https://github.com/JustinWick/erdos647}.
+\newblock This paper describes the v48 source snapshot; the exact run
+  identifier and hashes appear in Appendix B. Wick is the operator.
+
+\bibitem[Hughes(2026)]{Hughes2026}
+Scott~D. Hughes.
+\newblock {Erd{\H o}s problem 647}: reductions, density bounds, and the
+  prime-tuples barrier.
+\newblock Repository manuscript, 2026.
+\newblock URL
+  \url{https://github.com/scottdhughes/erdos647-proof-chain/blob/main/paper/main.tex}.
+\newblock Consulted September 2026; the growing-window bound is attributed
+  there to companion manuscripts.
+
+\bibitem[Kontorovich and {PNT+ contributors}(2026)]{PNTPlus}
+Alex Kontorovich and {PNT+ contributors}.
+\newblock {PrimeNumberTheoremAnd}: formalized analytic number theory.
+\newblock Software, 2026.
+\newblock URL
+  \url{https://github.com/AlexKontorovich/PrimeNumberTheoremAnd/tree/a5154676af9aa3095150ee410cdda80555aa0642}.
+\newblock Only the explicitly audited import subtree is used in this work.
+
+\bibitem[Lau(2026)]{Lau2026}
+Cheuk~Fung Lau.
+\newblock On the number of prime factors of consecutive integers.
+\newblock arXiv:2604.15042v2, 2026.
+\newblock URL \url{https://arxiv.org/abs/2604.15042v2}.
+\newblock Revised 24 June 2026.
+
+\bibitem[Mian and Siddique(2026)]{MianSiddique2026}
+Ibrahim Mian and Shayaan Siddique.
+\newblock A kernel-checked exclusion certificate for {Erd{\H o}s Problem 647}.
+\newblock arXiv:2608.17880v1, 2026.
+\newblock URL \url{https://arxiv.org/abs/2608.17880v1}.
+\newblock Preprint, 18 August 2026.
+
+\bibitem[{OpenAI}(2026)]{OpenAIChatGPT}
+{OpenAI}.
+\newblock {ChatGPT}.
+\newblock Web application, 2026.
+\newblock URL \url{https://chatgpt.com}.
+\newblock The operator reports the interface label ``GPT-6 Pro'' (Astra); this
+  is workflow metadata, not a pinned model release.
+
+\bibitem[Rosser and Schoenfeld(1962)]{RosserSchoenfeld1962}
+J.~Barkley Rosser and Lowell Schoenfeld.
+\newblock Approximate formulas for some functions of prime numbers.
+\newblock \emph{Illinois Journal of Mathematics}, 6\penalty0 (1):\penalty0
+  64--94, 1962.
+\newblock \doi{10.1215/ijm/1255631807}.
+\newblock URL \url{https://doi.org/10.1215/ijm/1255631807}.
+
+\bibitem[Tao and Ter{\"a}v{\"a}inen(2026)]{TaoTeravainen2026}
+Terence Tao and Joni Ter{\"a}v{\"a}inen.
+\newblock Quantitative correlations and some problems on prime factors of
+  consecutive integers.
+\newblock arXiv:2512.01739v2, 2026.
+\newblock URL \url{https://arxiv.org/abs/2512.01739v2}.
+\newblock Revised 25 April 2026; first submitted December 2025.
+
+\bibitem[{The mathlib Community}(2020)]{Mathlib2020}
+{The mathlib Community}.
+\newblock The {Lean} mathematical library.
+\newblock In \emph{Proceedings of the 9th ACM SIGPLAN International Conference
+  on Certified Programs and Proofs}, pages 367--381. ACM, 2020.
+\newblock \doi{10.1145/3372885.3373824}.
+\newblock URL \url{https://arxiv.org/abs/1910.09336}.
+
+\bibitem[{The mathlib Community}(2026)]{MathlibPin}
+{The mathlib Community}.
+\newblock {Mathlib4}: pinned library sources.
+\newblock Software, 2026.
+\newblock URL
+  \url{https://github.com/leanprover-community/mathlib4/tree/905b95818eb32af7874a58b427f50c1711a5e96c}.
+\newblock Revision used by the formalization; see Appendix B for the toolchain
+  and proof artifact.
+
+\end{thebibliography}

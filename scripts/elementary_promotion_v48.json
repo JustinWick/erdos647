@@ -1,0 +1,103 @@
+{
+  "schema": 1,
+  "version": "v48",
+  "source_run": "erdos647_repo_v47_results_20260908T205250Z_0078dcb7",
+  "purpose": "one declaration implementation, core Mathlib-only ownership, stable old import paths",
+  "moves": [
+    {
+      "old": "research/Erdos647Research/FactorialBounds.lean",
+      "new": "Erdos647Sieve/Elementary/FactorialBounds.lean",
+      "before_sha256": "7fe2f547ac29f06000dc35e7cdc6f2b464324bff42a7776016c6b6f5426fb110",
+      "after_sha256": "7fe2f547ac29f06000dc35e7cdc6f2b464324bff42a7776016c6b6f5426fb110",
+      "shim_sha256": "0e4fca14e25216c70987940deb14c52d8cbed4789a33db5e9bd36efcee77f283",
+      "edits": []
+    },
+    {
+      "old": "research/Erdos647Research/FactorialEstimate.lean",
+      "new": "Erdos647Sieve/Elementary/FactorialEstimate.lean",
+      "before_sha256": "40c0ab51a12e3ef7096bb74395f05499dcde5b66248b2d5a4da64e718f13e2fe",
+      "after_sha256": "f86430a0d868c8e7535f2efdbd7f0ef65294300de120d223f3a1c689d808d47b",
+      "shim_sha256": "2d6c315904bd886460cc0cc7cee1a98d9b80266733b6d7e2971988c80a17805f",
+      "edits": [
+        {
+          "before": "import Erdos647Research.FactorialBounds\n",
+          "after": "import Erdos647Sieve.Elementary.FactorialBounds\n"
+        }
+      ]
+    },
+    {
+      "old": "research/Erdos647Research/LogBudgetFactorial.lean",
+      "new": "Erdos647Sieve/Elementary/LogBudgetFactorial.lean",
+      "before_sha256": "b81222c33ab8c74c8862adc17e1af25a78cedf91d00b6e2b14acd7b712b2407e",
+      "after_sha256": "481119052c89bf0e0ae57a817990c195f14da4ad74b0b59b516fdc1c6c6e1c91",
+      "shim_sha256": "1eae310efee23f4e90048cee476303ab6434e4302a49ba1a3712f14693275ec8",
+      "edits": [
+        {
+          "before": "import Erdos647Research.FactorialEstimate\n",
+          "after": "import Erdos647Sieve.Elementary.FactorialEstimate\n"
+        }
+      ]
+    },
+    {
+      "old": "research/Erdos647Research/PrimeReciprocalLower.lean",
+      "new": "Erdos647Sieve/Elementary/PrimeReciprocalLower.lean",
+      "before_sha256": "63948e4056a6244bd16587ba8a252dbf38053d02cb83fa6e44e6842931ba93c5",
+      "after_sha256": "5a9992d7e74940b34fdb588b23b56cb1ecb032a777e07e633c0e82ecf0d32c54",
+      "shim_sha256": "beb1b6e2cf894f2b84b67a04f869d93da723462b01ba8c60c8b6de3aab51d312",
+      "edits": [
+        {
+          "before": "New implementation source; compilation and transitive axiom audits are pending.\n",
+          "after": ""
+        }
+      ]
+    },
+    {
+      "old": "research/Erdos647Research/SmallPrimeDebitEstimate.lean",
+      "new": "Erdos647Sieve/Elementary/SmallPrimeDebitEstimate.lean",
+      "before_sha256": "b43230461e0f9da6624ba5005c8403bb33bb762e06034895a7bde713ee4f83e1",
+      "after_sha256": "226cdadb1f93ba772c57486793a834e7a4b4f9358e32ca5a20430bca0852cb96",
+      "shim_sha256": "b305d73cd9b666371f060191df785eaa0fea0715fe3aa9c30117964bbeb0653b",
+      "edits": [
+        {
+          "before": "import Erdos647Research.PrimeReciprocalLower\n",
+          "after": "import Erdos647Sieve.Elementary.PrimeReciprocalLower\n"
+        },
+        {
+          "before": "New source: compilation and transitive axiom audit are pending.\n",
+          "after": ""
+        }
+      ]
+    },
+    {
+      "old": "research/Erdos647Research/EndpointLogBounds.lean",
+      "new": "Erdos647Sieve/Elementary/EndpointLogBounds.lean",
+      "before_sha256": "29c06d7f25237e66f22b39296e4e70673b96e8c642836d67500e08fc12823585",
+      "after_sha256": "6c06a7d73c52ad809ac6010a4f08ab7aecebce969ee5e3f981bc3863a13b4fc9",
+      "shim_sha256": "ab800ae3120624606b75a7e48bea98f4aa072bba05b0469e0e833d0481613750",
+      "edits": [
+        {
+          "before": "New implementation source: compiler and transitive axiom audits are pending.\n",
+          "after": ""
+        }
+      ]
+    },
+    {
+      "old": "research/Erdos647Research/CorrectedBudgetEstimate.lean",
+      "new": "Erdos647Sieve/Elementary/CorrectedBudgetEstimate.lean",
+      "before_sha256": "58a6e2c48580408e2d7797d8ece5c1079d86ee6127ea1ae496b54d0d5f91ac1a",
+      "after_sha256": "42dab97b8cc378c50868b193e25be61ee17a9a2824ff21e166897684b283802b",
+      "shim_sha256": "a3af7f713e4e405108d12b2b8d4d2daed7583b781afb6cc367ee74507b6e71be",
+      "edits": [
+        {
+          "before": "import Erdos647Research.LogBudgetFactorial\n",
+          "after": "import Erdos647Sieve.Elementary.LogBudgetFactorial\n"
+        },
+        {
+          "before": "import Erdos647Research.SmallPrimeDebitEstimate\n",
+          "after": "import Erdos647Sieve.Elementary.SmallPrimeDebitEstimate\n"
+        }
+      ]
+    }
+  ],
+  "compatibility_shims_are_not_proof_copies": true
+}

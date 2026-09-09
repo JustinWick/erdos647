@@ -1,0 +1,31 @@
+$ <REPO>/.tools/elan/toolchains/leanprover--lean4---v4.32.2/bin/lake env lean -DwarningAsError=true Audit/PNTPlus.lean
+MediumPNT : ∃ c > 0, (Chebyshev.psi - id) =O[Filter.atTop] fun x => x * Real.exp (-c * Real.log x ^ (1 / 10))
+'MediumPNT' depends on axioms: [propext, Classical.choice, Quot.sound]
+RS_prime.pntBigO : (Chebyshev.theta - id) =O[Filter.atTop] fun x => x / Real.log x ^ 2
+'RS_prime.pntBigO' depends on axioms: [propext, Classical.choice, Quot.sound]
+RS_prime.pnt : ∃ C ≥ 0, ∀ x ≥ 2, |Chebyshev.theta x - x| ≤ C * x / Real.log x ^ 2
+'RS_prime.pnt' depends on axioms: [propext, Classical.choice, Quot.sound]
+RS_prime.intervalIntegrable_inv_log_pow (n m : ℕ) {x : ℝ} (hx : 1 < x) (y : ℝ) :
+  MeasureTheory.IntegrableOn (fun t => 1 / (t ^ n * Real.log t ^ m)) (Set.Ioc x y) MeasureTheory.volume
+'RS_prime.intervalIntegrable_inv_log_pow' depends on axioms: [propext, Classical.choice, Quot.sound]
+RS_prime.ioiIntegrable_inv_log_pow {n : ℕ} (hn : 1 < n) {x : ℝ} (hx : 1 < x) :
+  MeasureTheory.IntegrableOn (fun t => 1 / (t * Real.log t ^ n)) (Set.Ioi x) MeasureTheory.volume
+'RS_prime.ioiIntegrable_inv_log_pow' depends on axioms: [propext, Classical.choice, Quot.sound]
+RS_prime.bound_deriv {f : ℝ → ℝ} (hf : DifferentiableOn ℝ f (Set.Ici 2)) {C : ℝ}
+  (hC : ∀ x ∈ Set.Ici 2, |f x| ≤ C / x ∧ |deriv f x| ≤ C / x ^ 2) :
+  ∀ᵐ (a : ℝ) ∂MeasureTheory.volume.restrict (Set.Ioi 2),
+    ‖deriv (fun t => f t / Real.log t) a‖ ≤ C * (1 / (a ^ 2 * Real.log a) + 1 / (a ^ 2 * Real.log a ^ 2))
+'RS_prime.bound_deriv' depends on axioms: [propext, Classical.choice, Quot.sound]
+RS_prime.integrableOn_deriv {f : ℝ → ℝ} (hf : DifferentiableOn ℝ f (Set.Ici 2)) {C : ℝ}
+  (hC : ∀ x ∈ Set.Ici 2, |f x| ≤ C / x ∧ |deriv f x| ≤ C / x ^ 2) :
+  MeasureTheory.IntegrableOn (fun y => (Chebyshev.theta y - y) * deriv (fun t => f t / Real.log t) y) (Set.Ioi 2)
+      MeasureTheory.volume ∧
+    ∀ x ≥ 2, IntervalIntegrable (fun t => deriv (fun s => f s / Real.log s) t) MeasureTheory.volume 2 x
+'RS_prime.integrableOn_deriv' depends on axioms: [propext, Classical.choice, Quot.sound]
+RS_prime.integrableOn_deriv_inv_div_log :
+  MeasureTheory.IntegrableOn (fun y => (Chebyshev.theta y - y) * deriv (fun t => 1 / t / Real.log t) y) (Set.Ioi 2)
+      MeasureTheory.volume ∧
+    ∀ x ≥ 2, IntervalIntegrable (fun t => deriv (fun s => 1 / s / Real.log s) t) MeasureTheory.volume 2 x
+'RS_prime.integrableOn_deriv_inv_div_log' depends on axioms: [propext, Classical.choice, Quot.sound]
+
+EXIT_CODE=0

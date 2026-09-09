@@ -9,6 +9,7 @@ from fractions import Fraction as F
 import importlib.util
 import json
 from pathlib import Path
+from promotion_history import assert_endpoint_evidence
 import re
 import unittest
 
@@ -132,8 +133,8 @@ class GapInterfaces(unittest.TestCase):
             self.assertNotRegex(code, r'\b(?:def|abbrev)\s+(?:windowLength|primeCutoff|momentT|endpointExponent)\b')
             self.assertNotRegex(code, r'theorem\s+(?:endpoint|positiveEndpoint)\b')
         status = json.loads((ROOT/'docs/endpoint-coefficient-status.json').read_text())
-        self.assertIsNone(status['proved_coefficient'])
-        self.assertIsNone(status['proved_endpoint_theorem'])
+        assert_endpoint_evidence(self, ROOT, status)
+        self.assertEqual(status['final_absorption_branch']['status'], 'accepted')
         self.assertFalse(status['historical_coefficient']['required'])
         self.assertFalse(status['coefficient_may_depend_on_X'])
 
@@ -205,11 +206,11 @@ class GapGateWorkflow(unittest.TestCase):
                 rel = f'research/Erdos647Research/Endpoint/{mod}.lean'
                 self.assertEqual(check.sha(evidence.parent / 'source' / rel),
                                  summary['source_sha256_after'][rel])
-            self.assertIsNone(record['proved_endpoint_theorem'])
-            self.assertIsNone(record['endpoint_acceptance_evidence'])
+            self.assertEqual(record['final_absorption_branch']['status'], 'accepted')
+            self.assertEqual(record['cleanup_v48']['status'], 'acceptance_pending')
         else:
             self.assertIsNone(target['acceptance_evidence'])
-        self.assertIsNone(record['proved_coefficient'])
+        assert_endpoint_evidence(self, ROOT, record)
 
 
 class ExactGapAlgebra(unittest.TestCase):

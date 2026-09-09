@@ -1,0 +1,25 @@
+$ <REPO>/.tools/elan/toolchains/leanprover--lean4---v4.32.2/bin/lake env lean -DwarningAsError=true Audit/EndpointMomentTail.lean
+Erdos647Sieve.Endpoint.factorial_tail_le_geometric_exp (mu : ℝ) (q : ℕ) (hmu0 : 0 ≤ mu) (hq : 1 ≤ q)
+  (hratio : mu ≤ ↑q / 20) : mu ^ q / ↑q.factorial ≤ rexp ((1 - log 20) * ↑q)
+'Erdos647Sieve.Endpoint.factorial_tail_le_geometric_exp' depends on axioms: [propext, Classical.choice, Quot.sound]
+Erdos647Sieve.Endpoint.amplified_factorial_tail_le (H A mu : ℝ) (q : ℕ) (hH : 0 ≤ H) (hA : A ≤ H / 500) (hmu0 : 0 ≤ mu)
+  (hmu : mu ≤ H / 1000) (hq : 1 ≤ q) (horder : H / 50 ≤ ↑q) : rexp A * (mu ^ q / ↑q.factorial) ≤ rexp (-H / 30)
+'Erdos647Sieve.Endpoint.amplified_factorial_tail_le' depends on axioms: [propext, Classical.choice, Quot.sound]
+Erdos647Sieve.Endpoint.eventually_amplified_moment_tail_le :
+  ∀ᶠ (X : ℕ) in atTop,
+    0 ≤ correctedBudget (windowLength X) →
+      rexp (amplificationExponent X) * (endpointMu X ^ (truncationOrder X + 1) / ↑(truncationOrder X + 1).factorial) ≤
+        rexp (-↑(windowLength X) / 30)
+'Erdos647Sieve.Endpoint.eventually_amplified_moment_tail_le' depends on axioms: [propext, Classical.choice, Quot.sound]
+Erdos647Sieve.Endpoint.eventually_moment_tail_contribution_le :
+  ∀ᶠ (X : ℕ) in atTop,
+    0 ≤ correctedBudget (windowLength X) →
+      ↑X *
+          (rexp (amplificationExponent X) *
+            (endpointMu X ^ (truncationOrder X + 1) / ↑(truncationOrder X + 1).factorial)) ≤
+        ↑X * rexp (-↑(windowLength X) / 30)
+'Erdos647Sieve.Endpoint.eventually_moment_tail_contribution_le' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+
+EXIT_CODE=0
