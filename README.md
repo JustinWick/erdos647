@@ -4,14 +4,16 @@ A Lean formalization of a **quantitative sparsity theorem for Erdős problem #64
 together with reusable finite sieve and counting inequalities and a companion
 proof paper under [`paper/`](paper/).
 
-The final sparsity theorem is proved in the accepted **v47** checkpoint. It bounds
-how many integers could satisfy the condition in #647. **It does not decide
-whether any such integer greater than 24 exists.**
+The final sparsity theorem was accepted in the **v47** verification run and
+rechecked in **v48**, which also validated the public-library layout described
+below. It bounds the count of integers satisfying the full condition in #647.
+**It does not decide whether any such integer greater than 24 exists.**
 
 The repository root is a **Mathlib-only library**. The separate `research/` Lake
 package contains the analytic bridge and the completed endpoint proof, which
-also depend on PNT+. The directory name `research/` describes the dependency
-boundary; it does not mean that the endpoint is still unproved.
+also depend on **PrimeNumberTheoremAnd (PNT+)**. The historical directory name
+`research/` is retained for compatibility; the separate package isolates that
+dependency, rather than marking the endpoint as unproved.
 
 ## The problem
 
@@ -58,7 +60,8 @@ All logarithms below are natural logarithms.
 0\lt c\lt \frac{1499}{10^6}=0.001499,
 ```
 
-there exists $`X_0=X_0(c)`$ such that, for every natural number $`X\ge X_0`$,
+there exists a natural number $`X_0=X_0(c)\ge3`$ such that, for every natural
+number $`X\ge X_0`$,
 
 ```math
 \boxed{
@@ -80,12 +83,21 @@ C(X)\le X\exp\!\left(
 The coefficient range is **strict**: $`1499/10^6`$ is the upper threshold of the
 proved range, not an attained coefficient in the final theorem. The theorem
 does not provide a numerical value for $`X_0`$, and the threshold may depend on
-the chosen $`c`$.
+the chosen $`c`$. No optimality claim is made for this coefficient range.
+
+The general declaration is
+`Erdos647Sieve.Endpoint.endpointBound_of_lt_principal_rate`; the explicit
+specialization is `Erdos647Sieve.Endpoint.endpointBound_one_div_thousand`.
+Both are in [the final assembly](research/Erdos647Research/Endpoint/Main.lean).
+The Lean generalization allows any real $`c\lt1499/10^6`$; the positive range
+above is the one that gives the stated saving.
 
 The saving scale $`(\log X)^a/\log\log X`$ tends to infinity. Consequently, the
 proportion $`C(X)/X`$ tends to zero at the displayed rate. As an asymptotic
-consequence, the bound is eventually smaller than $`X/(\log X)^M`$ for every fixed
-$`M\gt 0`$. However, the displayed upper bound itself still tends to infinity:
+consequence, for each fixed admissible $`c`$ and each fixed $`M\gt0`$, its
+right-hand side is eventually smaller than $`X/(\log X)^M`$. These are mathematical
+consequences of the endpoint bound, not additional exported Lean theorems claimed
+here. For fixed $`c`$, the right-hand side still tends to infinity:
 **this proves neither finiteness nor the nonexistence of candidates**, and it
 does not construct an example. It is a sparsity result toward #647.
 
@@ -97,8 +109,20 @@ Put
 Q=\log X,\qquad L=\log\log X,\qquad H=\lfloor Q^a\rfloor.
 ```
 
-For the project's selected prime cutoff $`y`$, define the prime mass and corrected
-budget by
+For the endpoint, the truncation order and prime cutoff are
+
+```math
+J=2\left\lceil\frac H{100}\right\rceil,
+\qquad y=X^{1/(4J)}.
+```
+
+These formulas are used for sufficiently large $`X`$, when $`H,J\ge1`$.
+The formal natural-number definition of $`J`$ is
+`2 * ((H + 99) / 100)`; its equality to the ceiling expression is proved.
+The resulting parameters satisfy $`H\lt y`$ eventually. Thus the estimates below
+refer to these particular growing parameters, not to an arbitrary cutoff.
+
+Define the prime mass and corrected budget by
 
 ```math
 \lambda=H\sum_{\substack{H\lt p\le y\\p\ \mathrm{prime}}}\frac1p,
@@ -112,7 +136,8 @@ B_H=
 ```
 
 The subtraction defining $`B_H`$ is in the **signed integers**, not truncated
-natural-number subtraction. For all sufficiently large $`X`$, the accepted estimates give
+natural-number subtraction. All limits in this subsection are taken as natural
+$`X\to\infty`$. For all sufficiently large $`X`$, the accepted estimates give
 
 ```math
 \lambda-B_H\ge\frac32H,\qquad
@@ -144,9 +169,11 @@ X\exp\!\left(-\frac{1499}{10^6}\frac HL\right)
 }
 ```
 
-The last two contributions include the factorial truncation error, the amplified
-arithmetic remainder, and the exceptional initial window. The final theorem
-absorbs all of them into one exponential bound.
+The term $`X\exp(-H/30)`$ bounds the amplified factorial truncation error.
+The term $`2\sqrt X`$ combines one $`\sqrt X`$ bound for the amplified arithmetic
+remainder and another for the exceptional initial window. The formal expression
+uses $`2\exp(\log X/2)`$, which equals $`2\sqrt X`$ for positive $`X`$.
+The final theorem absorbs all three contributions into one exponential bound.
 
 ## How the proof works
 
@@ -154,8 +181,9 @@ absorbs all of them into one exponential bound.
 
 Let $`\omega(m)`$ count the distinct prime divisors of a positive integer $`m`$.
 The elementary inequality $`2^{\omega(m)}\le\tau(m)`$ means that a candidate with
-$`n\gt H`$ has a bounded total number of prime-factor occurrences in the window
-$`n-1,\ldots,n-H`$.
+$`n\gt H`$ has a bounded sum $`\sum_{k=1}^{H}\omega(n-k)`$ across the window
+$`n-1,\ldots,n-H`$. Each prime is counted once per window entry it divides,
+regardless of its multiplicity in that entry.
 
 Every prime $`p\le H`$ already divides at least $`\lfloor H/p\rfloor`$ numbers in
 this window. Subtracting these unavoidable small-prime occurrences gives the
@@ -178,7 +206,8 @@ with $`n\gt H`$ is possible, and the separate exclusion theorem gives $`C(X)\le 
 
 Choose $`0\lt z\lt 1`$. A candidate with $`T(n)\le B_H`$ has
 $`z^{T(n)}\ge z^{B_H}`$, so an upper bound on the sum of $`z^{T(n)}`$ controls
-the number of candidates.
+the number of candidates beyond the initial window. The first $`H`$ integers
+are accounted for separately.
 
 For each selected prime $`p\gt H`$, the condition $`p\mid F_H(n)`$ occupies exactly
 $`H`$ residue classes modulo $`p`$. The Chinese remainder theorem combines these
@@ -202,9 +231,10 @@ Keeping the lower-order terms and constants yields the positive gap
 $`\lambda-B_H\ge3H/2`$. That gap is what makes candidates rare: they must have
 substantially fewer selected prime factors than the prime mass suggests.
 
-The reciprocal-prime estimates come from the project's formalized analytic
-bridge to PNT+. They are proved inputs to the endpoint, not conjectural
-prime-distribution assumptions.
+The reciprocal-prime estimates come from the project's clean Mertens argument,
+using the restricted analytic bridge to PNT+. They are proved inputs to the
+endpoint, not additional conjectural prime-distribution assumptions in its
+statement.
 
 ### 4. Convert the gap into an exponential saving, including the errors
 
@@ -216,7 +246,8 @@ t=\frac1{1000L},\qquad z=1-t,\qquad
 ```
 
 In the nonnegative-budget case, the principal counting contribution is
-$`X\exp(\eta B_H-\mu)`$. Using $`\eta\le t+t^2`$ for the eventual parameter range,
+$`X\exp(\eta B_H-\mu)`$. The parameter lemmas give $`0\lt t\le1/2`$ eventually.
+Using $`\eta\le t+t^2`$ in that range,
 the gap and size bounds give
 
 ```math
@@ -255,13 +286,21 @@ absorbs the remaining errors; the argument does not establish $`c=\alpha`$.
 
 ## Reusable finite theorem
 
-The finite library is useful independently of the asymptotic endpoint. For
-natural numbers $`X,H\ge1`$, real $`y\gt H`$, $`0\lt z\lt 1`$, even natural $`J`$, and **any
-integer translation $`A`$**, let $`T`$ be as above and set
+The finite library is useful independently of the asymptotic endpoint. In this
+subsection, $`H,y,z,J`$ are free parameters satisfying the stated conditions; they
+need not be the endpoint choices above.
+
+For natural numbers $`X,H\ge1`$, real $`y\gt H`$, $`0\lt z\lt1`$, any even natural
+$`J`$ (including zero), and **any integer translation $`A`$**, define $`T`$ using
+the same selected-prime rule and set
 
 ```math
 \mu=(1-z)H\sum_{\substack{H\lt p\le y\\p\ \mathrm{prime}}}\frac1p.
 ```
+
+Here $`F_H(n)=\prod_{k=1}^{H}(n-k)`$ uses **integer subtraction** for every
+$`n\in\mathbb Z`$, with no assumption $`n\gt H`$. If a factor is zero, all selected
+primes divide the product; thus $`T(n)`$ remains well defined.
 
 The proved moment inequality is
 
@@ -287,7 +326,11 @@ See [theorem statements](docs/theorems.md) for the library interfaces.
 
 ## Lean verification and acceptance
 
-The accepted **v48 release** records:
+The accepted **v48 verification run**, completed on September 9, 2026 (UTC), records:
+
+```text
+erdos647_repo_v48_results_20260909T014011Z_dd165b9f
+```
 
 | Check | Accepted result |
 | --- | --- |
@@ -300,9 +343,22 @@ The accepted **v48 release** records:
 | Final endpoint | General strict coefficient range and explicit $`c=1/1000`$ corollary |
 | Promoted elementary library | Seven Mathlib-only modules in `Erdos647Sieve/Elementary/` and public facades |
 
-This release completes the mathematical chain through final absorption (accepted in v47)
-and promotes the reusable Mathlib-only elementary estimates to the core library (v48).
-See [proof status](docs/proof-status.md) and [library promotion](docs/library-promotion-v48.md).
+The final mathematical assembly first passed in v47. The v48 run rechecked that
+result and validated the promoted elementary library and public facades. These
+counts describe that recorded source snapshot, not an automatic acceptance claim
+for later commits or a count of independent mathematical results.
+
+The PNT+ compatibility module imports `MediumPNT`; the runner also scans its
+retained **14-module source subtree** for admissions. The consumed declarations
+receive transitive-axiom audits. This does not certify the entire upstream PNT+
+repository or complete its excluded theorem catalogues.
+
+Exact-type checks pin the intended formal statements. Axiom reports identify
+their transitive assumptions; they do not independently certify the prose proof,
+novelty, or replay the development in a different implementation of Lean's kernel.
+See [proof status](docs/proof-status.md),
+[library promotion](docs/library-promotion-v48.md), and
+[the PNT+ trust boundary](docs/pntplus-trust-boundary.md).
 
 ## Use the public library
 
@@ -324,6 +380,8 @@ import Erdos647Research.Endpoint
 
 #check Erdos647Sieve.Endpoint.endpointBound_of_lt_principal_rate
 #check Erdos647Sieve.Endpoint.endpointBound_one_div_thousand
+#check Erdos647Sieve.Endpoint.positiveEndpoint
+#check Erdos647Sieve.endpoint
 ```
 
 The public interfaces in the v48 layout are:
@@ -343,16 +401,25 @@ The elementary facade is opt-in. Importing the finite library does not import
 the analytic development or PNT+.
 
 For downstream Lake projects, this repository's **root** is the package to use as
-a Git dependency for the core. The dependent project must use a compatible
-Lean/Mathlib pin. See the [examples](Examples/) and
+a Git dependency for the finite and elementary core. That dependency alone does
+**not** expose `Erdos647Research.*`: those imports belong to the separate Lake
+package under `research/`, which depends on the root by path. Use the recorded
+pins for the checked configuration; compatibility with a different Lean/Mathlib
+combination requires its own build and audit. See the [examples](Examples/) and
 [dependency boundaries](docs/dependency-boundaries.md).
 
 ## Build and check
 
-System prerequisites: **Bash, Python 3.10+, Git, curl, tar, a C/C++ build toolchain,
-unzip, zstd, and CA certificates**. Linux and macOS are supported by the wrapper;
-on Windows use WSL. No Python packages, GPU, API key, or paid service is needed.
-The first setup requires internet access to download the compiler and libraries.
+System prerequisites for the proof workflow: **Bash, Python 3.10+, Git, curl,
+tar, a C/C++ build toolchain, unzip, zstd, and CA certificates**. The runner uses
+Unix process and file-locking APIs. The recorded v48 build used **x86-64 Linux**;
+on Windows, run in a Linux environment such as WSL rather than native Windows
+Python. That run does not establish a tested macOS configuration.
+
+The proof checks require no third-party Python packages, GPU, API key, or paid
+model service. The first setup requires internet access to download the compiler
+and libraries. Rebuilding the paper is separate and requires the TeX tools
+described in its build documentation; TeX is not a dependency of the Lean checks.
 
 From the repository root:
 
@@ -377,9 +444,12 @@ An existing matching Lean installation is reused. Otherwise setup installs a
 repository-local Elan/toolchain under ignored `.tools/`, without changing the
 global default or shell profile. Git dependencies use the exact commits in the
 checked-in lockfiles. Existing caches are reused; a missing matching Mathlib
-cache is resumed automatically once the toolchain and checkouts exist. Compiler
-and dependency installation still require `--setup`. Both manifests are parsed
-by the installed Lake implementation before dependency/cache preparation.
+cache download is retried automatically once the toolchain and checkouts exist.
+Thus a run without `--setup` can still need network access to restore a missing
+Mathlib cache. Compiler and dependency installation still require `--setup`.
+The core manifest, and the research manifest when research gates are selected,
+are parsed by the installed Lake implementation before dependency/cache
+preparation.
 
 ### Choose the scope
 
@@ -387,12 +457,12 @@ by the installed Lake implementation before dependency/cache preparation.
 | --- | --- |
 | `bash RUN.sh` or `bash TEST_ALL.sh` | All registered core and research gates, including the endpoint. |
 | `bash RUN.sh core` | Public core, examples, expanded types and axiom audits; includes the promoted elementary checks in v48. No PNT+ setup required. |
-| `bash RUN.sh research` | All registered research gates; core imports build as dependencies. |
+| `bash RUN.sh research` | All registered research gates and their prerequisites; needed core modules build as dependencies, but this is not a substitute for the separate core gate. |
 | `bash RUN.sh --gate endpoint_public_results` | Public facade gate and registered prerequisites. |
 | `bash RUN.sh tooling` | Offline runner/architecture tests only; not a Lean proof check. |
 | `bash RUN.sh --list` | Gate inventory. |
 | `bash RUN.sh --setup --refresh-cache` | Retry the matching Mathlib cache download. |
-| `bash RUN.sh --jobs 4` | Set Lean worker-thread count. |
+| `bash RUN.sh --jobs 4` | Run the default full suite with Lean worker-thread count set to four. |
 
 `--setup` can be combined with `core`, `research`, or `--gate`.
 `bash RUN.sh core --setup` installs only the public core's dependencies.
@@ -404,7 +474,7 @@ invocation. The runner does not reuse a historical audit verdict, invoke
 
 ### Ordinary Lake interface
 
-With the pinned toolchain available on `PATH`, the root also supports:
+With the pinned Lean/Lake toolchain available on `PATH`, the root also supports:
 
 ```bash
 lake exe cache get
@@ -412,38 +482,66 @@ lake build
 lake test
 ```
 
-Here `lake test` checks the **public core only**. Inside `research/`, its own
-`lake build` and `lake test` check the research package. The repository-wide
-runner joins these scopes and continues independent gates after failures.
-There is no recursive `lake test` invocation.
+Here `lake build` builds the root library; **the exact-type and axiom audits run
+through `lake test`**, whose driver checks the public core, including the elementary
+estimates and examples. It does not audit the final endpoint. Inside `research/`,
+`lake build` builds that package and `lake test` runs its research checks.
+
+The test drivers delegate to the same Python checker used by `RUN.sh`; their
+system prerequisites and diagnostic behavior therefore still apply. The
+repository-wide runner joins the scopes and continues independent gates after
+failures. There is no recursive `lake test` invocation.
 
 ## Results and failure behavior
 
-Every actual runner invocation creates a unique directory and ZIP under
-`results/`, then prints `RESULTS ZIP: ...`. `results/latest_result.txt` records
-the archive path. Reports include executed commands, exit codes, source and
-configuration snapshots, dependency revisions, and available axiom output.
-They do not collect caches, complete environment dumps, credential files, or
-Git remote configuration. Log redaction is best-effort; reports should be
-reviewed before public sharing.
+A checking run normally creates a unique directory and ZIP under `results/`,
+then prints `RESULTS ZIP: ...`. `results/latest_result.txt` records the completed
+archive path. The directory, ZIP, and summary share one run identifier. The
+version label identifies the runner; the recorded source hashes and executed
+checks identify what was actually tested.
+
+`--list` and `--collect-only` do not start a new proof check or create a new result
+archive. Argument errors, lock acquisition failures, or early filesystem failures
+can also occur before an archive is created.
+
+Reports contain executed commands, exit codes, selected source/configuration
+snapshots, dependency revisions, and available axiom output. The PNT+ closure
+check also preserves the retained upstream source files. The collector excludes
+tools and compiled caches and does not dump the entire environment or `.git`
+configuration. **Source/configuration snapshots are copied byte-for-byte, not
+secret-scrubbed.** Diagnostic redaction is best-effort; credentials accidentally
+placed in collected source/configuration files can still be included. Review
+archives before public sharing.
+
+The v48 proof-result collector does not include `paper/`. The manuscript and its
+supplement are separate artifacts; a successful Lean run does not itself rebuild
+or verify the paper.
 
 | Exit code | Meaning |
 | --- | --- |
-| `0` | All selected gates passed. |
-| `1` | A proof or audit failed, or a gate was blocked. |
-| `2` | Setup or integrity failure. |
-| `130` | Interruption. |
+| `0` | All requested checks succeeded. In `tooling` mode, no Lean gate has run. |
+| `1` | At least one selected proof/audit gate failed or was blocked. |
+| `2` | Argument, setup, source-integrity, tooling, or runner failure. |
+| `130` | A handled interruption of an active run. |
 
 A failed prerequisite blocks downstream gates but leaves independent checks
-running. Changes to Lean source, Lake configuration, scripts, or tests during
-a run invalidate that run. CI workflow changes are recorded separately because
-they do not affect the locally invoked proof commands. Setup failures remain
-visible. A normal Ctrl+C still packages partial output; a machine crash can
-leave a partial results directory. `--collect-only` reports the last completed
-archive without making a new acceptance claim.
+running. Changes to collected checked inputs—including Lean source, Lake
+configuration, scripts, tests, and collected documentation—between the recorded
+before/after snapshots invalidate acceptance. CI workflow changes are recorded
+separately because they do not affect the locally invoked proof commands.
+
+Setup failures after the run has started are included in its diagnostics when
+collection completes. A handled Ctrl+C normally packages partial output; abrupt
+termination or a collection failure can leave only a partial results directory.
+`--collect-only` reports the last completed archive without making a new
+acceptance claim.
 
 A failed full run is never converted to success because the core passed or a
-historical checkpoint was green. Tooling tests alone do not certify a theorem.
+historical checkpoint was green. An audit command that exits with an error does
+not pass merely because it printed an allowed axiom list. The runner records
+`endpoint_proved` only when the final gate and its prerequisites pass in that
+invocation with stable checked inputs. Tooling tests or a core-only run do not
+establish endpoint acceptance.
 
 ## Repository layout
 
@@ -465,22 +563,33 @@ historical checkpoint was green. Tooling tests alone do not certify a theorem.
 | `.github/workflows/` | Core CI and manually dispatched research CI |
 
 The core owns `Erdos647Sieve.*` import paths; research owns
-`Erdos647Research.*`. Theorem namespaces are preserved. The separate module
-roots prevent Lean's first-root import resolution from finding a research
-object in the core's build directory.
+`Erdos647Research.*`. Import paths and theorem namespaces are different: a theorem
+in an `Erdos647Research` module can still have an `Erdos647Sieve.Endpoint` name.
+The module roots are disjoint, and the runner checks that each audited module's
+compiled object resolves to its expected package build directory. This detects
+source-path shadowing rather than assuming that separate directory names alone
+make it impossible.
 
 The original rejected `MertensProbe` is retained as text under
 `provenance/rejected/` and is never imported or built. Legacy source relocation
-applies only to overlays over v32/v33; a new checkout needs no migration.
-Ordinary runs do not copy or rewrite source files or delete compiled caches.
+handles only the exact predecessor paths recorded for the v34 migration; a
+checkout without those obsolete files needs no migration. Outside that guarded
+one-time operation, ordinary checks do not synchronize or rewrite active proof
+sources or clear compiled caches. They do copy source snapshots into diagnostics.
 
 ## CI and further documentation
 
-The core GitHub workflow builds and tests the public core. Its triggers are
-controlled in `.github/workflows/ci.yml`; local checks do not rewrite them.
-The full research workflow remains manually dispatched. Both upload diagnostics
-and preserve failed check results. A successful local checkpoint and the CI
-result for a particular commit are separate pieces of evidence.
+The core GitHub workflow builds and tests the public core. The full research
+workflow invokes the complete repository-wide suite. In the supplied v48 snapshot,
+**both workflows are manually dispatched**; automatic push and pull-request
+triggers in the core workflow are commented out. The checked-in workflow files
+are authoritative for the current trigger policy; local checks do not rewrite
+them.
+
+Both workflows request diagnostic uploads even when checking fails, provided
+those files were produced. A successful local checkpoint and a successful CI
+run for a particular commit are separate pieces of evidence. The recorded local
+result does not imply that CI has run on every PR.
 
 - [Theorem statements](docs/theorems.md)
 - [Proof status](docs/proof-status.md)
