@@ -1,0 +1,669 @@
+{
+  "basis": "erdos647_repo_v45_results_20260908T125209Z_b6d9b2cb",
+  "source_sha256": {
+    "Erdos647Sieve.lean": "f22620cd952b6b6715d0ef94a62d64dd45e90dd1b8c7950e27fb43aa10e75d74",
+    "Erdos647Sieve/ProgressionCount.lean": "2519b4c5689d42f673479daf2410d99bcc68d76b111bd5d6df8dc904b8061f6f",
+    "Erdos647Sieve/HitCountBridge.lean": "3fed51085afd72c0d6bbc5b5f1c94e927063d2cc216d6d644241f22f8ae8a8fe",
+    "Erdos647Sieve/BudgetDebit.lean": "9e5e0e9e7c487db01f5df02f9a6bd21b1cade7f51d9fa8f9a189d8866d21f7df",
+    "Erdos647Sieve/Bonferroni.lean": "fa6681c9e1193ad131660a70f15ebbccafd581d669899ad1f6d87e84f495b6b9",
+    "Erdos647Sieve/FiniteCounting.lean": "fe68b3177cd3b0078e9108a854fc58ebcd9e1ae7dba792c31c4a04cde25e1dea",
+    "Erdos647Sieve/SubsetCountError.lean": "4ae9ec3a289b52e47664685180c3050eca8f72e8de59e127414560872b3f14ee",
+    "Erdos647Sieve/ArithmeticDiscrepancy.lean": "7b2770edf4ae2901336f46bf50d2108d3c446ece484ac4f8a9e65d3f95746bd5",
+    "Erdos647Sieve/Specification.lean": "39d7c9e69faba89c27d738c6bf37f8b363197e2e5942281c5aedbbba7374c574",
+    "Erdos647Sieve/WindowCRT.lean": "4ba4e9056b09ab39345615ae896788701bcee1bb89be361e2999c83d0d7deb8a",
+    "Erdos647Sieve/SieveWeights.lean": "4990d5fb123787498ff07405b734f9175762243c31624d0f3e4d9c3c297cd80a",
+    "Erdos647Sieve/RetainedSubsets.lean": "1d7aac7cd64da63303632c6741363021caab8138ab4ac0fd579bf416fe6d9042",
+    "Erdos647Sieve/Occupancy.lean": "5a64098aa3ad2783999740d309b84da85bc309eca91ee6e6e4ad322b7da4a99b",
+    "Erdos647Sieve/IntegerWindowRoots.lean": "5e42d61897ec840959c6e403a1b214c895e122b0230d172c1f648ff69efb6cb7",
+    "Erdos647Sieve/DivisorBudget.lean": "6e13592c2257315c3f67f113033fc0cb110e63afff6c483c915805929a4f9469",
+    "Erdos647Sieve/BonferroniMajorant.lean": "8d455a41ecc304dc3783d9a25578124489ef30c4dd9b947338150db0720da5c6",
+    "Erdos647Sieve/FiniteMoment.lean": "666dece16c9c67f989a76e5af3aa105852df6409013e1dce989d1cac587e9e9c",
+    "Erdos647Sieve/Basic.lean": "801483b731fbdbcfd08582b0567267c60296f2874a502ef1cb4efb43a054449a",
+    "Erdos647Sieve/Finite.lean": "cfd298bd1807bc6817feca47cc701269814c95db481a3bbb7437552a6a8a5409",
+    "Erdos647Sieve/WeightedCounting.lean": "1e21212539c6b939b7b812d8c962ee3ecb2085f3b68a7f18f50d25a054ebdeca",
+    "Erdos647Sieve/PrimeSubsetProducts.lean": "c77f4366aefa92243977ce65728ba5d0237c0adf5c241fc472d00815cd5b803d",
+    "Erdos647Sieve/BudgetConsequences.lean": "404951e385f8bab9f1c03d56a5dd6a687037f8652f7ebe22a256e9a46aabc37a",
+    "Erdos647Sieve/FiniteCountingAssembly.lean": "959a694d2ea2c627c98a8637b8f5fa9eff59273f4f659507fbdc9db7b22b6612",
+    "Erdos647Sieve/SubsetWeightIdentities.lean": "243d7f006c7d2262d2d74c3986ec6429ff230e3547685e7da56557683611024e",
+    "Erdos647Sieve/PrimeSubsetCoefficients.lean": "baabc8d6d395a9ff7aab98e7e8dd48e57a16d76eaa1650a0a613cd180d04db73",
+    "Erdos647Sieve/ExponentialProduct.lean": "1c2994bccfff93af5c25f4b209a88d15f4a1552ff0a776f933c68fc032e4263e",
+    "Erdos647Sieve/CoefficientBounds.lean": "3acbc15b73e30719befb9390cbb70c5213f909848c3933556c0cefc131dd34e9",
+    "Audit/Finite.lean": "e6480a1d1eac14413da8b4181b0ff739bbb3c2b2919b2a6707b3b982d8926f27",
+    "Audit/Components.lean": "f3283d3bf24e6eceaadb3c6f9f515b1b4afbb1a1d9f44749bd8c70a04a49b435",
+    "research/Erdos647Research/FactorialBounds.lean": "7fe2f547ac29f06000dc35e7cdc6f2b464324bff42a7776016c6b6f5426fb110",
+    "research/Erdos647Research/FactorialEstimate.lean": "40c0ab51a12e3ef7096bb74395f05499dcde5b66248b2d5a4da64e718f13e2fe",
+    "research/Erdos647Research/ReciprocalKernel.lean": "263fa9c8abb0d1d3994bdb64ce490d1feed1c27470be210ba111cb279ffc192c",
+    "research/Erdos647Research/PrimeReciprocalSummation.lean": "9e457bec1731f08ba0265c25b6b47d7cac49696d7ee3ce229bc0e3f2646bc4b6",
+    "research/Erdos647Research/CorrectedBudgetEstimate.lean": "58a6e2c48580408e2d7797d8ece5c1079d86ee6127ea1ae496b54d0d5f91ac1a",
+    "research/Erdos647Research/EndpointLogBounds.lean": "29c06d7f25237e66f22b39296e4e70673b96e8c642836d67500e08fc12823585",
+    "research/Erdos647Research/SmallPrimeDebitEstimate.lean": "b43230461e0f9da6624ba5005c8403bb33bb762e06034895a7bde713ee4f83e1",
+    "research/Erdos647Research/SelectedPrimeReciprocals.lean": "17df5a48ef4d6fd3fadab695309ecb73371a158fe94284759e8a329e52eb8a84",
+    "research/Erdos647Research/CleanMertens.lean": "b2e9935c9e72ce23f81ec57946badb92631fe7a7e1bf3c4fba4d6fec9fab07cc",
+    "research/Erdos647Research/AnalyticInputs.lean": "df46dee45c8a536801f468772befdf14bceda030a36d391c515e9d0b700c59f3",
+    "research/Erdos647Research/LogBudgetFactorial.lean": "b81222c33ab8c74c8862adc17e1af25a78cedf91d00b6e2b14acd7b712b2407e",
+    "research/Erdos647Research/PrimeReciprocalLower.lean": "63948e4056a6244bd16587ba8a252dbf38053d02cb83fa6e44e6842931ba93c5",
+    "research/Audit/EndpointWindowParameters.lean": "adee11b7e1b628b470ef6f21d577020ffa2e2e53348b593a7001ab6d3c966991",
+    "research/Audit/EndpointMomentTail.lean": "c2981fa98fa10afd18c97a7b37025618676690a55cc5fa2cfd2f7818dac71910",
+    "research/Audit/ReciprocalAbel.lean": "f16d2027ced573d5320a9813318a971e22f364f943f7414ca2f4a55307f8d621",
+    "research/Audit/FactorialBounds.lean": "5e17e07371641ca3b61186c3e3c3f1c06e55665509c7a7afe8adeb2cd2589ac6",
+    "research/Audit/FactorialEstimate.lean": "ef32a83328383408a41ead58a38468e8e3f7fd328dc2c4f13a6b7665295ee76d",
+    "research/Audit/EndpointMassBudgetBounds.lean": "298ec16ccf27901b8843570d3023c6cd3b519796f1e2fa134b36058dc073d724",
+    "research/Audit/EndpointCutoffParameters.lean": "5fe67602b08f3d90d56bd5eac64fbccf5501c34e132d6b69ff658403b36c0479",
+    "research/Audit/EndpointArithmeticRemainder.lean": "3a16325bb6f71a2057b60817967871b52f684e328cc00c355d797de7fe9db8ce",
+    "research/Audit/ReciprocalKernel.lean": "62adb40f692c88d444119e83cd97c2784fdf7f1ac38448f1f0eaa851b8b60f5d",
+    "research/Audit/CorrectedBudgetEstimate.lean": "1aca4d18fa6cde9d49447d415cc9fe5ee22ff693d6549d0a02e2566be99c3169",
+    "research/Audit/EndpointLogBounds.lean": "17979f237156366db382cfe3ca58bc5794438e578649820a210b5ef44ef07f08",
+    "research/Audit/EndpointStatement.lean": "bfc168c0cc32571b373a61c82620dea066a6f2e05cad12c50848907e0b95a1ce",
+    "research/Audit/EndpointPrimeMassParameters.lean": "69fad6850a6aeb6c3708c96c88098e617cb6774659a26ac4d0a2bd808aa0af12",
+    "research/Audit/SmallPrimeDebitEstimate.lean": "e42f6ef65b61d294e756a80ef29073685e2f8ce9295b40019c42316ca36f333c",
+    "research/Audit/SelectedPrimeReciprocals.lean": "cb5021cdca73b80b147528c0f3ef5e22dad9429338b6930f879c495e5dbd4b77",
+    "research/Audit/PNTPlus.lean": "bf5ccb4456ff85788d15175a5f9b42b4e9e2b522048856fe4fc9a168070875e0",
+    "research/Audit/EndpointCountingReduction.lean": "cd9b3a26077a8296c254ff5aa8339e3d20b93cc98f3e3de65628938dd1ff61d3",
+    "research/Audit/CleanMertens.lean": "08a1877c54a0d25800ff9bb6ab5acca22cb79fb7c8d21578189e576746874009",
+    "research/Audit/AnalyticInputs.lean": "0f11d20c229f79e7680525b46ac2c8a66c93277ab0e2c8cda645e6a207b81abe",
+    "research/Audit/EndpointTruncationParameters.lean": "d2c015b3cdfd411f5f46c249f43872b75dd628ece8b2db142db956a59a5ef36b",
+    "research/Audit/EndpointPrimeMassGap.lean": "eadbf38cc4ac42881aa0e717ff2cdab3de34aa057be2a93854ab534fd4a28d22",
+    "research/Audit/EndpointAmplification.lean": "6d71e68af8475261526d4c5cefcfd661bf6b9d7092122e233ec924df3ca68c16",
+    "research/Audit/EndpointErrorScales.lean": "d114cb9684b5c8b45993d9fb23d4deb39de0d63c0cad6ef9ddc12b8df4ec89d4",
+    "research/Audit/LogBudgetFactorial.lean": "72b719e371704458e82cd13876d8f1ab11da491bfd38c07da521b90e626eb417",
+    "research/Audit/PrimeReciprocalLower.lean": "818b85246c3eb0f088e29fa1e000c81f0981329a941ed608940752e2f81f70e5",
+    "research/Erdos647Research/Compat/PNTPlus.lean": "be9ea21290ba047a63e75eed972ffd40c803c0c59f4fbf23925a9c9e98056759",
+    "research/Erdos647Research/Endpoint/PrimeMassParameters.lean": "324f6ad078f922212c90b579cdec8d43decd3a5918bff3df4ed5557cc40d5277",
+    "research/Erdos647Research/Endpoint/ArithmeticRemainder.lean": "19b189e29bb0dd5363aeb7170990795fd791705ff4f88b7290cfbbe966aff1d2",
+    "research/Erdos647Research/Endpoint/TruncationParameters.lean": "8ac6f8e7cc894b94b404d4474f23c0d446160bbe177b2895302bc990cf0bc75d",
+    "research/Erdos647Research/Endpoint/Amplification.lean": "29730803157dbfebe59ad4e471f51849819192ec609e5c21aa049c9c302cd6d0",
+    "research/Erdos647Research/Endpoint/WindowParameters.lean": "430d0a002c4ff8b6524c7720e0cd3bec4a70064861d571fffa2be834ee11a410",
+    "research/Erdos647Research/Endpoint/Statement.lean": "79dc70f99795868a9e46630b345ef37792784da486d7355eea770789f35208b4",
+    "research/Erdos647Research/Endpoint/CountingReduction.lean": "5ac4a64cfa5776a51b7c2d0166a33fab65107c39209ce69929e850563c0755ca",
+    "research/Erdos647Research/Endpoint/PrimeMassGap.lean": "26f8611380e6951c77e6cc2cb39c999afff32d45ca2668aabd462792ea9912cc",
+    "research/Erdos647Research/Endpoint/CutoffParameters.lean": "27d4df6dc2865067536ab8dd2b2eb788ad92f0c286c2ee50a8aff7fe6a7bd0b0",
+    "research/Erdos647Research/Endpoint/MomentTail.lean": "ec01b0a84dedb0ef906824d531763f22481e5cbe1cb7ad3530a2a7b615320d2c",
+    "research/Erdos647Research/Endpoint/ErrorScales.lean": "f31751942a62dd7dbed21dc83cfbf7f80a3f9482f483bca08cc772554a05b31b",
+    "research/Erdos647Research/Endpoint/MassBudgetBounds.lean": "24e4fed36084ee71fa12bad03fb03243052bbc3400585c8e055655ca5f860492"
+  },
+  "gates": {
+    "core": {
+      "package": ".",
+      "build": [
+        "Erdos647Sieve",
+        "Examples"
+      ],
+      "audits": {
+        "Audit/Finite.lean": [
+          "Erdos647Sieve.finiteMoment",
+          "Erdos647Sieve.budgetDebit",
+          "Erdos647Sieve.finiteCounting"
+        ],
+        "Audit/Components.lean": [
+          "Erdos647Sieve.Bonferroni.pow_add_linear_le",
+          "Erdos647Sieve.Bonferroni.factorial_mul_elementary_le_pow_sum",
+          "Erdos647Sieve.Bonferroni.elementary_le_pow_sum_div_factorial",
+          "Erdos647Sieve.Bonferroni.avoidProduct_le_exp_neg_sum",
+          "Erdos647Sieve.Bonferroni.even_truncation_le_exp_add_tail",
+          "Erdos647Sieve.Bonferroni.even_sum_le_exp_add_tail",
+          "Erdos647Sieve.sum_map_toList_eq_sum",
+          "Erdos647Sieve.prod_map_toList_eq_prod",
+          "Erdos647Sieve.avoidProduct_map_toList",
+          "Erdos647Sieve.prod_ite_eq_pow_card_filter",
+          "Erdos647Sieve.hitWeights_bounds",
+          "Erdos647Sieve.avoidProduct_hitWeights",
+          "Erdos647Sieve.meanWeights_sum",
+          "Erdos647Sieve.meanWeights_bounds",
+          "Erdos647Sieve.hitWeight_pointwise_upper",
+          "Erdos647Sieve.hitWeight_interval_upper",
+          "Erdos647Sieve.meanWeight_truncation_upper",
+          "Erdos647Sieve.card_filter_natCast_image",
+          "Erdos647Sieve.hitCount_eq_nat_filter_card",
+          "Erdos647Sieve.two_pow_primeFactors_card_le_tau",
+          "Erdos647Sieve.primeFactors_card_le_log_floor",
+          "Erdos647Sieve.prefix_primeFactor_sum_le_logBudget",
+          "Erdos647Sieve.div_le_divisorOccurrences",
+          "Erdos647Sieve.sum_divisorOccurrences_eq",
+          "Erdos647Sieve.windowPolynomial_eq_nat_product",
+          "Erdos647Sieve.prime_dvd_nat_product_iff",
+          "Erdos647Sieve.prime_dvd_window_iff",
+          "Erdos647Sieve.one_le_divisorOccurrences_of_hit",
+          "Erdos647Sieve.smallPrimes_disjoint_selectedPrimes",
+          "Erdos647Sieve.smallPrimeDebit_add_hitCount_le_primeFactor_sum",
+          "Erdos647Sieve.no_prefix_of_negative_correctedBudget",
+          "Erdos647Sieve.finiteCounting_of_finiteMoment",
+          "Erdos647Sieve.candidateCount_le_window_of_negative_correctedBudget",
+          "Erdos647Sieve.count_le_exceptions_add_weight",
+          "Erdos647Sieve.one_le_budget_weight",
+          "Erdos647Sieve.Bonferroni.signedError_nonneg",
+          "Erdos647Sieve.Bonferroni.even_sum_bounds",
+          "Erdos647Sieve.candidate_prefix",
+          "Erdos647Sieve.candidateCount_eq_filter_Icc",
+          "Erdos647Sieve.sum_nat_Icc_eq_int",
+          "Erdos647Sieve.no_prefix_of_negative_budget",
+          "Erdos647Sieve.finiteCounting_of_budgetDebit_of_finiteMoment",
+          "Erdos647Sieve.candidateCount_le_window_of_negative_budget",
+          "Erdos647Sieve.sum_powersetCard_succ_insert",
+          "Erdos647Sieve.elementary_map_eq_sum_powersetCard",
+          "Erdos647Sieve.elementary_toList_eq_sum_powersetCard",
+          "Erdos647Sieve.elementary_map_eq_of_toFinset_eq",
+          "Erdos647Sieve.primeSubsetProduct_pos",
+          "Erdos647Sieve.selected_subset_product_pos",
+          "Erdos647Sieve.prime_dvd_primeSubsetProduct_iff_mem",
+          "Erdos647Sieve.primeSubsetProduct_injective",
+          "Erdos647Sieve.primeSubsetProduct_int_dvd_iff",
+          "Erdos647Sieve.card_primeSubsetFamily_le",
+          "Erdos647Sieve.prime_dvd_window_iff_int",
+          "Erdos647Sieve.prime_dvd_window_iff_mem_residues",
+          "Erdos647Sieve.card_primeWindowResidues",
+          "Erdos647Sieve.subsetHitCount_empty",
+          "Erdos647Sieve.subsetHitCount_eq_modulus_count",
+          "Erdos647Sieve.prod_ite_zero_eq_pow_card",
+          "Erdos647Sieve.hitWeights_elementary_eq_subset_sum",
+          "Erdos647Sieve.sum_hitWeights_elementary_eq_subset_counts",
+          "Erdos647Sieve.interval_hitWeights_elementary_eq_subset_counts",
+          "Erdos647Sieve.meanWeights_elementary_eq_subset_sum",
+          "Erdos647Sieve.coefficient_discrepancy_eq_subset_errors",
+          "Erdos647Sieve.signed_discrepancy_eq_subset_errors",
+          "Erdos647Sieve.mul_le_iff_le_euclideanQuotient",
+          "Erdos647Sieve.progressionCount_eq_quotient_difference",
+          "Erdos647Sieve.euclideanQuotient_real_bounds",
+          "Erdos647Sieve.progressionCount_error_le_one",
+          "Erdos647Sieve.residueClassCount_eq_progressionCount",
+          "Erdos647Sieve.residueClassCount_error_le_one",
+          "Erdos647Sieve.residueSetCount_error_le_card",
+          "Erdos647Sieve.map_windowEvaluation",
+          "Erdos647Sieve.windowEvaluation_intCast",
+          "Erdos647Sieve.mem_windowRootResidues",
+          "Erdos647Sieve.intCast_mem_windowRootResidues_iff",
+          "Erdos647Sieve.windowRootResidues_eq_primeWindowResidues",
+          "Erdos647Sieve.card_windowRootResidues_prime",
+          "Erdos647Sieve.card_windowRootResidues_one",
+          "Erdos647Sieve.card_windowRootResidues_mul",
+          "Erdos647Sieve.card_windowRootResidues_primeSubsetProduct",
+          "Erdos647Sieve.subsetHitCount_eq_windowRootResidues_count",
+          "Erdos647Sieve.subsetHitCount_error_le",
+          "Erdos647Sieve.selected_subsetHitCount_error_le",
+          "Erdos647Sieve.mem_retainedSubsets",
+          "Erdos647Sieve.sum_powersetCard_le_eq_retained",
+          "Erdos647Sieve.real_pow_mono_of_one_le",
+          "Erdos647Sieve.retained_primeSubsetProduct_le",
+          "Erdos647Sieve.card_retainedSubsets_le_floor",
+          "Erdos647Sieve.card_retainedSubsets_cast_le",
+          "Erdos647Sieve.retained_weighted_subset_error_le",
+          "Erdos647Sieve.arithmetic_discrepancy_le"
+        ]
+      },
+      "prerequisites": [],
+      "historical_status": "finite source chain accepted; standalone package boundary added in v31"
+    },
+    "reciprocal_kernel": {
+      "package": "research",
+      "build": [
+        "+Erdos647Research.ReciprocalKernel"
+      ],
+      "audits": {
+        "Audit/ReciprocalKernel.lean": [
+          "Erdos647Sieve.Analytic.hasDerivAt_reciprocalLog",
+          "Erdos647Sieve.Analytic.deriv_reciprocalLog_integrableOn",
+          "Erdos647Sieve.Analytic.mainPrimitive_integral"
+        ]
+      },
+      "prerequisites": [],
+      "historical_status": "accepted in earlier research workspace"
+    },
+    "reciprocal_abel": {
+      "package": "research",
+      "build": [
+        "+Erdos647Research.PrimeReciprocalSummation"
+      ],
+      "audits": {
+        "Audit/ReciprocalAbel.lean": [
+          "Erdos647Sieve.Analytic.primeLogCoefficient_partial_sum",
+          "Erdos647Sieve.Analytic.reciprocalPrimeSum_eq_weighted_sum",
+          "Erdos647Sieve.Analytic.reciprocalPrimeSum_abel",
+          "Erdos647Sieve.Analytic.reciprocalPrimeSum_partial_summation",
+          "Erdos647Sieve.Analytic.reciprocalPrimeSum_error_identity"
+        ]
+      },
+      "prerequisites": [
+        "reciprocal_kernel"
+      ],
+      "historical_status": "accepted in earlier research workspace"
+    },
+    "pntplus_inputs": {
+      "package": "research",
+      "build": [
+        "+Erdos647Research.Compat.PNTPlus"
+      ],
+      "audits": {
+        "Audit/PNTPlus.lean": [
+          "MediumPNT",
+          "RS_prime.pntBigO",
+          "RS_prime.pnt",
+          "RS_prime.intervalIntegrable_inv_log_pow",
+          "RS_prime.ioiIntegrable_inv_log_pow",
+          "RS_prime.bound_deriv",
+          "RS_prime.integrableOn_deriv",
+          "RS_prime.integrableOn_deriv_inv_div_log"
+        ]
+      },
+      "prerequisites": [],
+      "historical_status": "new source-restricted PNT+ boundary; separate from prior broad import"
+    },
+    "analytic_inputs": {
+      "package": "research",
+      "build": [
+        "+Erdos647Research.AnalyticInputs"
+      ],
+      "audits": {
+        "Audit/AnalyticInputs.lean": [
+          "RS_prime.pnt",
+          "RS_prime.integrableOn_deriv_inv_div_log",
+          "Erdos647Sieve.Analytic.theta_pnt_bound",
+          "Erdos647Sieve.Analytic.theta_error_deriv_integrable",
+          "Erdos647Sieve.Analytic.theta_error_boundary_tendsto_zero"
+        ]
+      },
+      "prerequisites": [
+        "reciprocal_kernel",
+        "pntplus_inputs"
+      ],
+      "historical_status": "accepted in earlier research workspace"
+    },
+    "clean_mertens": {
+      "package": "research",
+      "build": [
+        "+Erdos647Research.CleanMertens"
+      ],
+      "audits": {
+        "Audit/CleanMertens.lean": [
+          "Erdos647Sieve.Analytic.reciprocalPrimeSum_tendsto",
+          "Erdos647Sieve.Analytic.reciprocalPrimeLimit_exists",
+          "Erdos647Sieve.Analytic.reciprocalPrime_difference_tendsto_zero"
+        ]
+      },
+      "prerequisites": [
+        "reciprocal_abel",
+        "analytic_inputs"
+      ],
+      "historical_status": "accepted in earlier research workspace"
+    },
+    "selected_prime_reciprocals": {
+      "package": "research",
+      "build": [
+        "+Erdos647Research.SelectedPrimeReciprocals"
+      ],
+      "audits": {
+        "Audit/SelectedPrimeReciprocals.lean": [
+          "Erdos647Sieve.Analytic.selectedPrimeSum_eq_difference",
+          "Erdos647Sieve.Analytic.primeMass_eq_reciprocal_difference",
+          "Erdos647Sieve.Analytic.selectedPrimeSum_difference_tendsto_zero"
+        ]
+      },
+      "prerequisites": [
+        "clean_mertens"
+      ],
+      "historical_status": "accepted in earlier research workspace"
+    },
+    "endpoint_log_bounds": {
+      "package": "research",
+      "build": [
+        "+Erdos647Research.EndpointLogBounds"
+      ],
+      "audits": {
+        "Audit/EndpointLogBounds.lean": [
+          "Erdos647Sieve.Elementary.neg_log_one_sub_le_add_sq",
+          "Erdos647Sieve.Elementary.endpoint_log_gap",
+          "Erdos647Sieve.Elementary.endpoint_tail_log_constant"
+        ]
+      },
+      "prerequisites": [],
+      "historical_status": "accepted in earlier research workspace"
+    },
+    "factorial_bounds": {
+      "package": "research",
+      "build": [
+        "+Erdos647Research.FactorialBounds"
+      ],
+      "audits": {
+        "Audit/FactorialBounds.lean": [
+          "Erdos647Sieve.Elementary.log_factorial_upper",
+          "Erdos647Sieve.Elementary.log_factorial_lower",
+          "Erdos647Sieve.Elementary.factorial_pow_lower"
+        ]
+      },
+      "prerequisites": [],
+      "historical_status": "accepted in earlier research workspace"
+    },
+    "factorial_estimate": {
+      "package": "research",
+      "build": [
+        "+Erdos647Research.FactorialEstimate"
+      ],
+      "audits": {
+        "Audit/FactorialEstimate.lean": [
+          "Erdos647Sieve.Elementary.shiftedFactorialLog_eq_expanded",
+          "Erdos647Sieve.Elementary.log_factorial_residual_tendsto_zero",
+          "Erdos647Sieve.Elementary.shiftedFactorialLog_residual_tendsto_zero"
+        ]
+      },
+      "prerequisites": [
+        "factorial_bounds"
+      ],
+      "historical_status": "accepted in earlier research workspace"
+    },
+    "log_budget_factorial": {
+      "package": "research",
+      "build": [
+        "+Erdos647Research.LogBudgetFactorial"
+      ],
+      "audits": {
+        "Audit/LogBudgetFactorial.lean": [
+          "Erdos647Sieve.Elementary.sum_log_shift_eq_factorial",
+          "Erdos647Sieve.Elementary.logBudget_le_factorial"
+        ]
+      },
+      "prerequisites": [
+        "factorial_estimate"
+      ],
+      "historical_status": "accepted in earlier research workspace"
+    },
+    "prime_reciprocal_lower": {
+      "package": "research",
+      "build": [
+        "+Erdos647Research.PrimeReciprocalLower"
+      ],
+      "audits": {
+        "Audit/PrimeReciprocalLower.lean": [
+          "Erdos647Sieve.Elementary.harmonic_sum_le_finitePrimeEuler",
+          "Erdos647Sieve.Elementary.reciprocal_remainder_telescope",
+          "Erdos647Sieve.Elementary.prime_log_factor_le",
+          "Erdos647Sieve.Elementary.log_finitePrimeEuler_le",
+          "Erdos647Sieve.Elementary.prime_reciprocal_lower"
+        ]
+      },
+      "prerequisites": [],
+      "historical_status": "accepted in v34 run 20260908T064235Z_611434a1; v35 lint edits require a new audit"
+    },
+    "small_prime_debit_estimate": {
+      "package": "research",
+      "build": [
+        "+Erdos647Research.SmallPrimeDebitEstimate"
+      ],
+      "audits": {
+        "Audit/SmallPrimeDebitEstimate.lean": [
+          "Erdos647Sieve.Elementary.nat_quotient_cast_lower",
+          "Erdos647Sieve.Elementary.smallPrimeDebit_ge_sum_sub_card",
+          "Erdos647Sieve.Elementary.smallPrimeDebit_lower"
+        ]
+      },
+      "prerequisites": [
+        "prime_reciprocal_lower"
+      ],
+      "historical_status": "pending"
+    },
+    "corrected_budget_estimate": {
+      "package": "research",
+      "build": [
+        "+Erdos647Research.CorrectedBudgetEstimate"
+      ],
+      "audits": {
+        "Audit/CorrectedBudgetEstimate.lean": [
+          "Erdos647Sieve.Elementary.correctedBudget_upper_eventually"
+        ]
+      },
+      "prerequisites": [
+        "log_budget_factorial",
+        "small_prime_debit_estimate"
+      ],
+      "historical_status": "pending"
+    },
+    "endpoint_statement": {
+      "package": "research",
+      "build": [
+        "+Erdos647Research.Endpoint.Statement"
+      ],
+      "audits": {
+        "Audit/EndpointStatement.lean": [
+          "Erdos647Sieve.Endpoint.endpointScale_pos",
+          "Erdos647Sieve.Endpoint.endpointRHSWith_le_of_le",
+          "Erdos647Sieve.Endpoint.endpointBound_iff_eventually",
+          "Erdos647Sieve.Endpoint.endpointBound_mono",
+          "Erdos647Sieve.Endpoint.endpointRHSWith_one_div_thousand",
+          "Erdos647Sieve.Endpoint.legacyEndpointClaim_iff",
+          "Erdos647Sieve.Endpoint.positiveEndpointClaim_of_explicit"
+        ]
+      },
+      "prerequisites": [],
+      "historical_status": "new v38 coefficient interface; not an endpoint proof"
+    },
+    "endpoint_window_parameters": {
+      "package": "research",
+      "build": [
+        "+Erdos647Research.Endpoint.WindowParameters"
+      ],
+      "audits": {
+        "Audit/EndpointWindowParameters.lean": [
+          "Erdos647Sieve.Endpoint.log_div_rpow_eq",
+          "Erdos647Sieve.Endpoint.endpointExponent_pos",
+          "Erdos647Sieve.Endpoint.endpointExponent_lt_one",
+          "Erdos647Sieve.Endpoint.endpointExponent_cancellation",
+          "Erdos647Sieve.Endpoint.logX_tendsto_atTop",
+          "Erdos647Sieve.Endpoint.logLogX_tendsto_atTop",
+          "Erdos647Sieve.Endpoint.windowScale_tendsto_atTop",
+          "Erdos647Sieve.Endpoint.windowLength_tendsto_atTop",
+          "Erdos647Sieve.Endpoint.windowLength_cast_tendsto_atTop",
+          "Erdos647Sieve.Endpoint.windowLength_ratio_tendsto_one",
+          "Erdos647Sieve.Endpoint.eventually_windowLength_pos",
+          "Erdos647Sieve.Endpoint.log_windowLength_sub_tendsto_zero",
+          "Erdos647Sieve.Endpoint.log_windowLength_div_logLog_tendsto"
+        ]
+      },
+      "prerequisites": [],
+      "historical_status": "new v38 parameter proof source; acceptance pending"
+    },
+    "endpoint_truncation_parameters": {
+      "package": "research",
+      "build": [
+        "+Erdos647Research.Endpoint.TruncationParameters"
+      ],
+      "audits": {
+        "Audit/EndpointTruncationParameters.lean": [
+          "Erdos647Sieve.Endpoint.rounded_hundred_eq_ceil",
+          "Erdos647Sieve.Endpoint.truncationOrder_eq_ceil",
+          "Erdos647Sieve.Endpoint.truncationOrder_even",
+          "Erdos647Sieve.Endpoint.truncationOrder_bounds",
+          "Erdos647Sieve.Endpoint.eventually_truncationOrder_pos",
+          "Erdos647Sieve.Endpoint.truncationOrder_div_windowLength_tendsto",
+          "Erdos647Sieve.Endpoint.truncationOrder_scale_ratio_tendsto",
+          "Erdos647Sieve.Endpoint.truncationOrder_cast_tendsto_atTop"
+        ]
+      },
+      "prerequisites": [
+        "endpoint_window_parameters"
+      ],
+      "historical_status": "new v38 parameter proof source; acceptance pending"
+    },
+    "endpoint_cutoff_parameters": {
+      "package": "research",
+      "build": [
+        "+Erdos647Research.Endpoint.CutoffParameters"
+      ],
+      "audits": {
+        "Audit/EndpointCutoffParameters.lean": [
+          "Erdos647Sieve.Endpoint.primeCutoff_pos",
+          "Erdos647Sieve.Endpoint.log_primeCutoff",
+          "Erdos647Sieve.Endpoint.complementaryScale_tendsto_atTop",
+          "Erdos647Sieve.Endpoint.log_primeCutoff_scale_ratio_tendsto",
+          "Erdos647Sieve.Endpoint.log_primeCutoff_tendsto_atTop",
+          "Erdos647Sieve.Endpoint.primeCutoff_tendsto_atTop",
+          "Erdos647Sieve.Endpoint.loglog_primeCutoff_sub_tendsto",
+          "Erdos647Sieve.Endpoint.log_windowLength_div_complementaryScale_tendsto_zero",
+          "Erdos647Sieve.Endpoint.log_windowLength_div_log_primeCutoff_tendsto_zero",
+          "Erdos647Sieve.Endpoint.eventually_windowLength_lt_primeCutoff",
+          "Erdos647Sieve.Endpoint.momentT_tendsto_zero",
+          "Erdos647Sieve.Endpoint.eventually_momentT_bounds",
+          "Erdos647Sieve.Endpoint.endpoint_parameters_admissible"
+        ]
+      },
+      "prerequisites": [
+        "endpoint_truncation_parameters"
+      ],
+      "historical_status": "new v38 parameter proof source; acceptance pending"
+    },
+    "endpoint_prime_mass_parameters": {
+      "package": "research",
+      "build": [
+        "+Erdos647Research.Endpoint.PrimeMassParameters"
+      ],
+      "audits": {
+        "Audit/EndpointPrimeMassParameters.lean": [
+          "Erdos647Sieve.Endpoint.endpoint_selectedPrimeSum_error_tendsto_zero",
+          "Erdos647Sieve.Endpoint.endpoint_primeMass_expansion_tendsto_zero"
+        ]
+      },
+      "prerequisites": [
+        "endpoint_cutoff_parameters",
+        "selected_prime_reciprocals"
+      ],
+      "historical_status": "new v38 parameter proof source; acceptance pending"
+    },
+    "endpoint_prime_mass_gap": {
+      "package": "research",
+      "build": [
+        "+Erdos647Research.Endpoint.PrimeMassGap"
+      ],
+      "audits": {
+        "Audit/EndpointPrimeMassGap.lean": [
+          "Erdos647Sieve.Endpoint.primeMassGapConstant_gt_three_halves",
+          "Erdos647Sieve.Endpoint.endpoint_primeMass_budgetMain_gap_tendsto",
+          "Erdos647Sieve.Endpoint.eventually_primeMass_gap_of_lt",
+          "Erdos647Sieve.Endpoint.eventually_primeMass_sub_correctedBudget_ge",
+          "Erdos647Sieve.Endpoint.eventually_correctedBudget_le_primeMass"
+        ]
+      },
+      "prerequisites": [
+        "endpoint_prime_mass_parameters",
+        "corrected_budget_estimate",
+        "endpoint_log_bounds"
+      ],
+      "historical_status": "new v42 mass-budget proof source; acceptance pending"
+    },
+    "endpoint_mass_budget_bounds": {
+      "package": "research",
+      "build": [
+        "+Erdos647Research.Endpoint.MassBudgetBounds"
+      ],
+      "audits": {
+        "Audit/EndpointMassBudgetBounds.lean": [
+          "Erdos647Sieve.Endpoint.log_windowLength_tendsto_atTop",
+          "Erdos647Sieve.Endpoint.loglog_windowLength_div_logLog_tendsto_zero",
+          "Erdos647Sieve.Endpoint.endpoint_primeMass_div_window_logLog_tendsto",
+          "Erdos647Sieve.Endpoint.endpoint_primeMass_nonneg",
+          "Erdos647Sieve.Endpoint.eventually_primeMass_le_window_mul_logLog",
+          "Erdos647Sieve.Endpoint.eventually_correctedBudget_le_window_mul_logLog",
+          "Erdos647Sieve.Endpoint.eventually_endpoint_mass_budget_bounds"
+        ]
+      },
+      "prerequisites": [
+        "endpoint_prime_mass_gap"
+      ],
+      "historical_status": "new v42 mass-budget proof source; acceptance pending"
+    },
+    "endpoint_amplification": {
+      "package": "research",
+      "build": [
+        "+Erdos647Research.Endpoint.Amplification"
+      ],
+      "audits": {
+        "Audit/EndpointAmplification.lean": [
+          "Erdos647Sieve.Endpoint.neg_log_weight_bounds",
+          "Erdos647Sieve.Endpoint.amplification_exponents_le",
+          "Erdos647Sieve.Endpoint.eventually_endpointMu_bounds",
+          "Erdos647Sieve.Endpoint.eventually_amplification_exponents_le",
+          "Erdos647Sieve.Endpoint.eventually_amplification_le",
+          "Erdos647Sieve.Endpoint.eventually_principal_contribution_le"
+        ]
+      },
+      "prerequisites": [
+        "endpoint_mass_budget_bounds",
+        "endpoint_log_bounds"
+      ],
+      "historical_status": "new v44 amplified-error proof source; acceptance pending"
+    },
+    "endpoint_moment_tail": {
+      "package": "research",
+      "build": [
+        "+Erdos647Research.Endpoint.MomentTail"
+      ],
+      "audits": {
+        "Audit/EndpointMomentTail.lean": [
+          "Erdos647Sieve.Endpoint.factorial_tail_le_geometric_exp",
+          "Erdos647Sieve.Endpoint.amplified_factorial_tail_le",
+          "Erdos647Sieve.Endpoint.eventually_amplified_moment_tail_le",
+          "Erdos647Sieve.Endpoint.eventually_moment_tail_contribution_le"
+        ]
+      },
+      "prerequisites": [
+        "endpoint_amplification",
+        "factorial_bounds"
+      ],
+      "historical_status": "new v44 amplified-error proof source; acceptance pending"
+    },
+    "endpoint_error_scales": {
+      "package": "research",
+      "build": [
+        "+Erdos647Research.Endpoint.ErrorScales"
+      ],
+      "audits": {
+        "Audit/EndpointErrorScales.lean": [
+          "Erdos647Sieve.Endpoint.window_complementary_scale_product",
+          "Erdos647Sieve.Endpoint.window_mul_logLog_div_logX_tendsto_zero",
+          "Erdos647Sieve.Endpoint.window_div_logX_tendsto_zero",
+          "Erdos647Sieve.Endpoint.truncation_log_window_div_logX_tendsto_zero",
+          "Erdos647Sieve.Endpoint.arithmetic_overhead_div_logX_tendsto_zero",
+          "Erdos647Sieve.Endpoint.log_window_div_logX_tendsto_zero",
+          "Erdos647Sieve.Endpoint.primeCutoff_pow_truncation_eq"
+        ]
+      },
+      "prerequisites": [
+        "endpoint_cutoff_parameters"
+      ],
+      "historical_status": "new v44 amplified-error proof source; acceptance pending"
+    },
+    "endpoint_arithmetic_remainder": {
+      "package": "research",
+      "build": [
+        "+Erdos647Research.Endpoint.ArithmeticRemainder"
+      ],
+      "audits": {
+        "Audit/EndpointArithmeticRemainder.lean": [
+          "Erdos647Sieve.Endpoint.amplified_arithmetic_remainder_eq",
+          "Erdos647Sieve.Endpoint.eventually_arithmetic_overhead_le",
+          "Erdos647Sieve.Endpoint.eventually_amplified_arithmetic_remainder_le",
+          "Erdos647Sieve.Endpoint.eventually_exceptional_window_le"
+        ]
+      },
+      "prerequisites": [
+        "endpoint_amplification",
+        "endpoint_error_scales"
+      ],
+      "historical_status": "new v44 amplified-error proof source; acceptance pending"
+    },
+    "endpoint_counting_reduction": {
+      "package": "research",
+      "build": [
+        "+Erdos647Research.Endpoint.CountingReduction"
+      ],
+      "audits": {
+        "Audit/EndpointCountingReduction.lean": [
+          "Erdos647Sieve.Endpoint.amplified_momentBound_eq",
+          "Erdos647Sieve.Endpoint.eventually_candidateCount_le_four_contributions",
+          "Erdos647Sieve.Endpoint.eventually_candidateCount_le_of_negative_budget",
+          "Erdos647Sieve.Endpoint.eventually_candidateCount_le_amplified_errors"
+        ]
+      },
+      "prerequisites": [
+        "endpoint_moment_tail",
+        "endpoint_arithmetic_remainder"
+      ],
+      "historical_status": "new v44 amplified-error proof source; acceptance pending"
+    }
+  }
+}

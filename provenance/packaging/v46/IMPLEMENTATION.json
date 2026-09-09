@@ -1,0 +1,19 @@
+{
+  "version": "v46",
+  "accepted_base_run": "erdos647_repo_v45_results_20260908T125209Z_b6d9b2cb",
+  "accepted_base_gates": 26,
+  "current_total_gates": 29,
+  "new_mathematical_modules": 3,
+  "new_theorem_targets": 15,
+  "new_exact_type_definition_checks": 23,
+  "new_endpoint_acceptance": "pending",
+  "implemented_explicit_coefficient": {
+    "numerator": 1,
+    "denominator": 1000
+  },
+  "all_52_prior_math_modules_unchanged": true,
+  "all_27_prior_audits_unchanged": true,
+  "existing_26_gate_objects_unchanged": true,
+  "dependency_and_toolchain_pins_unchanged": true,
+  "ci_files_not_in_overlay": true
+}

@@ -1,0 +1,33 @@
+$ <REPO>/.tools/elan/toolchains/leanprover--lean4---v4.32.2/bin/lake env lean -DwarningAsError=true Audit/EndpointWindowParameters.lean
+Erdos647Sieve.Endpoint.log_div_rpow_eq (u v r : ℝ) (hu : u ≠ 0) (hv : 0 < v) :
+  Real.log (u / v.rpow r) = Real.log u - r * Real.log v
+'Erdos647Sieve.Endpoint.log_div_rpow_eq' depends on axioms: [propext, Classical.choice, Quot.sound]
+Erdos647Sieve.Endpoint.endpointExponent_pos : 0 < endpointExponent
+'Erdos647Sieve.Endpoint.endpointExponent_pos' depends on axioms: [propext, Classical.choice, Quot.sound]
+Erdos647Sieve.Endpoint.endpointExponent_lt_one : endpointExponent < 1
+'Erdos647Sieve.Endpoint.endpointExponent_lt_one' depends on axioms: [propext, Classical.choice, Quot.sound]
+Erdos647Sieve.Endpoint.endpointExponent_cancellation : endpointExponent / Real.log 2 = 1 - endpointExponent
+'Erdos647Sieve.Endpoint.endpointExponent_cancellation' depends on axioms: [propext, Classical.choice, Quot.sound]
+Erdos647Sieve.Endpoint.logX_tendsto_atTop : Tendsto (fun X => Real.log ↑X) atTop atTop
+'Erdos647Sieve.Endpoint.logX_tendsto_atTop' depends on axioms: [propext, Classical.choice, Quot.sound]
+Erdos647Sieve.Endpoint.logLogX_tendsto_atTop : Tendsto (fun X => Real.log (Real.log ↑X)) atTop atTop
+'Erdos647Sieve.Endpoint.logLogX_tendsto_atTop' depends on axioms: [propext, Classical.choice, Quot.sound]
+Erdos647Sieve.Endpoint.windowScale_tendsto_atTop : Tendsto (fun X => (Real.log ↑X).rpow endpointExponent) atTop atTop
+'Erdos647Sieve.Endpoint.windowScale_tendsto_atTop' depends on axioms: [propext, Classical.choice, Quot.sound]
+Erdos647Sieve.Endpoint.windowLength_tendsto_atTop : Tendsto windowLength atTop atTop
+'Erdos647Sieve.Endpoint.windowLength_tendsto_atTop' depends on axioms: [propext, Classical.choice, Quot.sound]
+Erdos647Sieve.Endpoint.windowLength_cast_tendsto_atTop : Tendsto (fun X => ↑(windowLength X)) atTop atTop
+'Erdos647Sieve.Endpoint.windowLength_cast_tendsto_atTop' depends on axioms: [propext, Classical.choice, Quot.sound]
+Erdos647Sieve.Endpoint.windowLength_ratio_tendsto_one :
+  Tendsto (fun X => ↑(windowLength X) / (Real.log ↑X).rpow endpointExponent) atTop (𝓝 1)
+'Erdos647Sieve.Endpoint.windowLength_ratio_tendsto_one' depends on axioms: [propext, Classical.choice, Quot.sound]
+Erdos647Sieve.Endpoint.eventually_windowLength_pos : ∀ᶠ (X : ℕ) in atTop, 1 ≤ windowLength X
+'Erdos647Sieve.Endpoint.eventually_windowLength_pos' depends on axioms: [propext, Classical.choice, Quot.sound]
+Erdos647Sieve.Endpoint.log_windowLength_sub_tendsto_zero :
+  Tendsto (fun X => Real.log ↑(windowLength X) - endpointExponent * Real.log (Real.log ↑X)) atTop (𝓝 0)
+'Erdos647Sieve.Endpoint.log_windowLength_sub_tendsto_zero' depends on axioms: [propext, Classical.choice, Quot.sound]
+Erdos647Sieve.Endpoint.log_windowLength_div_logLog_tendsto :
+  Tendsto (fun X => Real.log ↑(windowLength X) / Real.log (Real.log ↑X)) atTop (𝓝 endpointExponent)
+'Erdos647Sieve.Endpoint.log_windowLength_div_logLog_tendsto' depends on axioms: [propext, Classical.choice, Quot.sound]
+
+EXIT_CODE=0

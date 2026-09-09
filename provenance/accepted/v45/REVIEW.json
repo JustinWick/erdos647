@@ -1,0 +1,27 @@
+{
+  "run_id": "erdos647_repo_v45_results_20260908T125209Z_b6d9b2cb",
+  "source_archive": "erdos647_repo_v45_results_20260908T125209Z_b6d9b2cb.zip",
+  "status": "PASS_SELECTED_CHECKS",
+  "gates_passed": 26,
+  "gates_total": 26,
+  "unique_audited_declarations": 220,
+  "new_amplified_error_declarations": 25,
+  "exact_type_definition_examples": 169,
+  "audit_files": 27,
+  "runner_tests_passed": 244,
+  "manifest_entries_verified": 252,
+  "source_hashes_per_snapshot": 148,
+  "mathematical_modules": 52,
+  "all_recorded_commands_succeeded": true,
+  "build_audit_diagnostics": 0,
+  "source_changes": {},
+  "toolchain": "leanprover/lean4:v4.32.2",
+  "compiler_version": "Lean (version 4.32.2, x86_64-unknown-linux-gnu, commit f3b06c705e6c85f5314019d5d3baab0fec5b580c, Release)",
+  "cache_actions": {
+    ".": "reuse_existing",
+    "research": "reuse_existing"
+  },
+  "local_pr_acceptance": "satisfied on supplied source snapshot; actual Git diff and CI not reviewed",
+  "endpoint_proved_in_this_run": false,
+  "validation_basis": "uploaded compiler/type/axiom reports and matching source snapshots"
+}

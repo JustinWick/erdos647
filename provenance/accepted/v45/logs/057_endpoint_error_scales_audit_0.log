@@ -1,0 +1,28 @@
+$ <REPO>/.tools/elan/toolchains/leanprover--lean4---v4.32.2/bin/lake env lean -DwarningAsError=true Audit/EndpointErrorScales.lean
+Erdos647Sieve.Endpoint.window_complementary_scale_product (X : ℕ) (hX : 2 ≤ X) :
+  (log ↑X).rpow endpointExponent * (log ↑X).rpow (1 - endpointExponent) = log ↑X
+'Erdos647Sieve.Endpoint.window_complementary_scale_product' depends on axioms: [propext, Classical.choice, Quot.sound]
+Erdos647Sieve.Endpoint.window_mul_logLog_div_logX_tendsto_zero :
+  Tendsto (fun X => ↑(windowLength X) * log (log ↑X) / log ↑X) atTop (𝓝 0)
+'Erdos647Sieve.Endpoint.window_mul_logLog_div_logX_tendsto_zero' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+Erdos647Sieve.Endpoint.window_div_logX_tendsto_zero : Tendsto (fun X => ↑(windowLength X) / log ↑X) atTop (𝓝 0)
+'Erdos647Sieve.Endpoint.window_div_logX_tendsto_zero' depends on axioms: [propext, Classical.choice, Quot.sound]
+Erdos647Sieve.Endpoint.truncation_log_window_div_logX_tendsto_zero :
+  Tendsto (fun X => ↑(truncationOrder X) * log ↑(windowLength X) / log ↑X) atTop (𝓝 0)
+'Erdos647Sieve.Endpoint.truncation_log_window_div_logX_tendsto_zero' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+Erdos647Sieve.Endpoint.arithmetic_overhead_div_logX_tendsto_zero :
+  Tendsto (fun X => (↑(truncationOrder X) * log ↑(windowLength X) + ↑(windowLength X) / 500) / log ↑X) atTop (𝓝 0)
+'Erdos647Sieve.Endpoint.arithmetic_overhead_div_logX_tendsto_zero' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+Erdos647Sieve.Endpoint.log_window_div_logX_tendsto_zero : Tendsto (fun X => log ↑(windowLength X) / log ↑X) atTop (𝓝 0)
+'Erdos647Sieve.Endpoint.log_window_div_logX_tendsto_zero' depends on axioms: [propext, Classical.choice, Quot.sound]
+Erdos647Sieve.Endpoint.primeCutoff_pow_truncation_eq (X : ℕ) (hX : 0 < X) (hJ : 0 < truncationOrder X) :
+  primeCutoff X ^ truncationOrder X = (↑X).rpow (1 / 4)
+'Erdos647Sieve.Endpoint.primeCutoff_pow_truncation_eq' depends on axioms: [propext, Classical.choice, Quot.sound]
+
+EXIT_CODE=0

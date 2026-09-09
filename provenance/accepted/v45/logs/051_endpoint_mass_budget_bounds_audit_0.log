@@ -1,0 +1,40 @@
+$ <REPO>/.tools/elan/toolchains/leanprover--lean4---v4.32.2/bin/lake env lean -DwarningAsError=true Audit/EndpointMassBudgetBounds.lean
+Erdos647Sieve.Endpoint.log_windowLength_tendsto_atTop : Tendsto (fun X => Real.log ↑(windowLength X)) atTop atTop
+'Erdos647Sieve.Endpoint.log_windowLength_tendsto_atTop' depends on axioms: [propext, Classical.choice, Quot.sound]
+Erdos647Sieve.Endpoint.loglog_windowLength_div_logLog_tendsto_zero :
+  Tendsto (fun X => Real.log (Real.log ↑(windowLength X)) / Real.log (Real.log ↑X)) atTop (𝓝 0)
+'Erdos647Sieve.Endpoint.loglog_windowLength_div_logLog_tendsto_zero' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+Erdos647Sieve.Endpoint.endpoint_primeMass_div_window_logLog_tendsto :
+  Tendsto (fun X => primeMass (windowLength X) (primeCutoff X) / (↑(windowLength X) * Real.log (Real.log ↑X))) atTop
+    (𝓝 (1 - endpointExponent))
+'Erdos647Sieve.Endpoint.endpoint_primeMass_div_window_logLog_tendsto' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+Erdos647Sieve.Endpoint.endpoint_primeMass_nonneg (X : ℕ) : 0 ≤ primeMass (windowLength X) (primeCutoff X)
+'Erdos647Sieve.Endpoint.endpoint_primeMass_nonneg' depends on axioms: [propext, Classical.choice, Quot.sound]
+Erdos647Sieve.Endpoint.eventually_primeMass_le_window_mul_logLog :
+  ∀ᶠ (X : ℕ) in atTop, primeMass (windowLength X) (primeCutoff X) ≤ ↑(windowLength X) * Real.log (Real.log ↑X)
+'Erdos647Sieve.Endpoint.eventually_primeMass_le_window_mul_logLog' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+Erdos647Sieve.Endpoint.eventually_correctedBudget_le_window_mul_logLog :
+  ∀ᶠ (X : ℕ) in atTop, ↑(correctedBudget (windowLength X)) ≤ ↑(windowLength X) * Real.log (Real.log ↑X)
+'Erdos647Sieve.Endpoint.eventually_correctedBudget_le_window_mul_logLog' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+Erdos647Sieve.Endpoint.eventually_endpoint_mass_budget_bounds :
+  ∀ᶠ (X : ℕ) in atTop,
+    1 ≤ windowLength X ∧
+      0 < Real.log (Real.log ↑X) ∧
+        0 ≤ primeMass (windowLength X) (primeCutoff X) ∧
+          primeMass (windowLength X) (primeCutoff X) ≤ ↑(windowLength X) * Real.log (Real.log ↑X) ∧
+            ↑(correctedBudget (windowLength X)) ≤ ↑(windowLength X) * Real.log (Real.log ↑X) ∧
+              3 / 2 * ↑(windowLength X) ≤
+                primeMass (windowLength X) (primeCutoff X) - ↑(correctedBudget (windowLength X))
+'Erdos647Sieve.Endpoint.eventually_endpoint_mass_budget_bounds' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+
+EXIT_CODE=0

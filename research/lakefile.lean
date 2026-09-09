@@ -37,7 +37,10 @@ lean_lib Erdos647Endpoint where
     `Erdos647Research.Endpoint.MomentTail,
     `Erdos647Research.Endpoint.ErrorScales,
     `Erdos647Research.Endpoint.ArithmeticRemainder,
-    `Erdos647Research.Endpoint.CountingReduction]
+    `Erdos647Research.Endpoint.CountingReduction,
+    `Erdos647Research.Endpoint.AbsorptionScales,
+    `Erdos647Research.Endpoint.ErrorAbsorption,
+    `Erdos647Research.Endpoint.Main]
 
 /-- All registered research proof gates, including the endpoint parameter layer. -/
 script audit (args) do

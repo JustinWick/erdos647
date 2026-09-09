@@ -1,0 +1,48 @@
+# Lean/Lake: applies at any package depth. Manifests stay version-controlled.
+.lake/
+*.olean
+*.ilean
+*.olean.server
+*.olean.private
+*.trace
+
+# Local toolchains and generated diagnostics
+.tools/
+.audit/
+/results/
+/research/results/
+/erdos647*_results_*.zip
+
+# Python
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.venv/
+venv/
+.coverage
+htmlcov/
+
+# Editor/OS files; recommended extensions remain shareable.
+.vscode/*
+!.vscode/extensions.json
+.idea/
+.DS_Store
+Thumbs.db
+*~
+*.swp
+*.swo
+
+# Secrets and local overrides
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+*.local
+/provenance/private/
+
+# Deliberately NOT ignored: lake-manifest.json, Lean source, Audit/*.lean,
+# examples, documentation, and historical evidence under provenance/.
+
+# Locally produced source archives
+/*.zip

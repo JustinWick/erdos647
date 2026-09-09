@@ -96,7 +96,15 @@ class EndpointRegistration(unittest.TestCase):
             self.assertFalse(re.search(r'\b(?:def|abbrev)\s+(?:windowLength|truncationOrder|primeCutoff|momentT|endpointExponent)\b',code))
             self.assertFalse(check.FORBIDDEN.search(code))
         self.assertNotIn('endpoint',check.GATES)
-        self.assertFalse((ROOT/'research/Erdos647Research/Endpoint/Main.lean').exists())
+        main = ROOT/'research/Erdos647Research/Endpoint/Main.lean'
+        self.assertEqual(main.exists(), 'endpoint_final' in check.GATES)
+        if main.exists():
+            self.assertEqual(check.GATES['endpoint_final']['build'],
+                             ['+Erdos647Research.Endpoint.Main'])
+            self.assertIn('eventually_candidateCount_le_amplified_errors', main.read_text())
+            final_audit = (ROOT/'research/Audit/EndpointFinal.lean').read_text()
+            self.assertIn('example : EndpointClaim :=', final_audit)
+            self.assertIn('#print axioms Erdos647Sieve.endpoint', final_audit)
 
     def test_new_library_enforces_warnings_as_errors(self):
         cfg=(ROOT/'research/lakefile.lean').read_text()

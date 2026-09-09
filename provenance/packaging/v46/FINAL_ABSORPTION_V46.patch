@@ -1,0 +1,1743 @@
+--- a/docs/endpoint-coefficient-status.json
++++ b/docs/endpoint-coefficient-status.json
+@@ -1,5 +1,5 @@
+ {
+-  "version": "v45",
++  "version": "v46",
+   "updated": "2026-09-08",
+   "scope": "endpoint research, not the accepted finite core",
+   "goal_declaration": "Erdos647Sieve.Endpoint.PositiveEndpointClaim",
+@@ -58,8 +58,8 @@
+   },
+   "next_effort": {
+     "status": "source implemented; acceptance pending",
+-    "scope": "all amplified contributions and all-sign intermediate counting bound; final same-scale absorption remains",
+-    "assignment": "docs/amplified-errors-branch.md"
++    "scope": "divergence and comparison of endpointScale, absorption of every normalized error, final fixed-c theorem and historical corollary",
++    "assignment": "docs/final-endpoint-branch.md"
+   },
+   "parameter_pr_local_acceptance": {
+     "status": "satisfied",
+@@ -95,7 +95,7 @@
+     "local_pr_acceptance": "satisfied on supplied source snapshot"
+   },
+   "amplified_error_branch": {
+-    "status": "source_implemented_acceptance_pending",
++    "status": "accepted",
+     "gates": [
+       "endpoint_amplification",
+       "endpoint_moment_tail",
+@@ -105,7 +105,7 @@
+     ],
+     "new_theorem_targets": 25,
+     "expanded_type_and_definition_checks": 31,
+-    "acceptance_evidence": null,
++    "acceptance_evidence": "provenance/accepted/v45/README.md",
+     "principal_rate": {
+       "numerator": 1499,
+       "denominator": 1000000
+@@ -117,19 +117,46 @@
+     "arithmetic_upper_scale": "exp(log X / 2)",
+     "final_reduction_covers_negative_budget": true,
+     "is_endpoint_bound_proof": false,
+-    "remaining": "final absorption to EndpointBound c and PositiveEndpointClaim for an explicit fixed c>0",
++    "remaining": "final same-scale absorption; v46 source pending its own final audit",
+     "latest_run": {
+-      "run_id": "erdos647_repo_v44_results_20260908T123705Z_9d028f71",
+-      "gates_passed": 21,
+-      "gates_failed": 2,
+-      "gates_blocked": 3,
+-      "new_modules_built": [
+-        "Amplification",
+-        "ErrorScales"
+-      ],
+-      "failing_stage": "exact-type audit unused hypothesis-name lint",
+-      "new_proof_gates_accepted": false,
+-      "repair": "v45 retains every quantified hypothesis and makes its unused proof name anonymous in four new audit files; no mathematical module changes"
+-    }
++      "run_id": "erdos647_repo_v45_results_20260908T125209Z_b6d9b2cb",
++      "gates_passed": 26,
++      "gates_failed": 0,
++      "gates_blocked": 0,
++      "new_proof_gates_accepted": true,
++      "warnings": 0
++    },
++    "run_id": "erdos647_repo_v45_results_20260908T125209Z_b6d9b2cb",
++    "accepted_declarations": 25
++  },
++  "final_absorption_branch": {
++    "status": "source_implemented_acceptance_pending",
++    "gates": [
++      "endpoint_absorption_scales",
++      "endpoint_error_absorption",
++      "endpoint_final"
++    ],
++    "new_theorem_targets": 15,
++    "expanded_type_definition_checks": 23,
++    "implemented_explicit_coefficient": {
++      "numerator": 1,
++      "denominator": 1000
++    },
++    "implemented_positive_coefficient_range": {
++      "upper_exclusive": {
++        "numerator": 1499,
++        "denominator": 1000000
++      },
++      "lower_exclusive": 0
++    },
++    "implemented_theorems": [
++      "Erdos647Sieve.Endpoint.endpointBound_of_lt_principal_rate",
++      "Erdos647Sieve.Endpoint.endpointBound_one_div_thousand",
++      "Erdos647Sieve.Endpoint.positiveEndpoint",
++      "Erdos647Sieve.endpoint"
++    ],
++    "acceptance_evidence": null,
++    "coefficient_is_not_yet_accepted": true,
++    "legacy_corollary_cost": "rational strict inequality and the already accepted statement equivalence; no parameter retuning"
+   }
+ }
+--- /dev/null
++++ b/research/Audit/EndpointAbsorptionScales.lean
+@@ -0,0 +1,43 @@
++import Erdos647Research.Endpoint.AbsorptionScales
++
++set_option autoImplicit false
++set_option warningAsError true
++open scoped Topology
++open Filter Real Erdos647Sieve Erdos647Sieve.Endpoint
++
++example : ∀ (c : ℝ) (X : ℕ) (_ : 0 < X),
++    0 < endpointRHSWith c X :=
++  Erdos647Sieve.Endpoint.endpointRHSWith_pos
++#check Erdos647Sieve.Endpoint.endpointRHSWith_pos
++#print axioms Erdos647Sieve.Endpoint.endpointRHSWith_pos
++
++example : Tendsto endpointScale atTop atTop :=
++  Erdos647Sieve.Endpoint.endpointScale_tendsto_atTop
++#check Erdos647Sieve.Endpoint.endpointScale_tendsto_atTop
++#print axioms Erdos647Sieve.Endpoint.endpointScale_tendsto_atTop
++
++example : Tendsto (fun X : ℕ => endpointScale X / (windowLength X : ℝ)) atTop (𝓝 0) :=
++  Erdos647Sieve.Endpoint.endpointScale_div_window_tendsto_zero
++#check Erdos647Sieve.Endpoint.endpointScale_div_window_tendsto_zero
++#print axioms Erdos647Sieve.Endpoint.endpointScale_div_window_tendsto_zero
++
++example : Tendsto (fun X : ℕ => endpointScale X / Real.log (X : ℝ)) atTop (𝓝 0) :=
++  Erdos647Sieve.Endpoint.endpointScale_div_logX_tendsto_zero
++#check Erdos647Sieve.Endpoint.endpointScale_div_logX_tendsto_zero
++#print axioms Erdos647Sieve.Endpoint.endpointScale_div_logX_tendsto_zero
++
++-- Expanded scale, with the protected exponent and natural X retained.
++example : Tendsto (fun X : ℕ =>
++    Real.rpow (Real.log (X : ℝ)) endpointExponent /
++      Real.log (Real.log (X : ℝ))) atTop atTop :=
++  endpointScale_tendsto_atTop
++
++example : Tendsto (fun X : ℕ =>
++    (Real.rpow (Real.log (X : ℝ)) endpointExponent /
++      Real.log (Real.log (X : ℝ))) / (windowLength X : ℝ)) atTop (𝓝 0) :=
++  endpointScale_div_window_tendsto_zero
++
++example : Tendsto (fun X : ℕ =>
++    (Real.rpow (Real.log (X : ℝ)) endpointExponent /
++      Real.log (Real.log (X : ℝ))) / Real.log (X : ℝ)) atTop (𝓝 0) :=
++  endpointScale_div_logX_tendsto_zero
+--- /dev/null
++++ b/research/Audit/EndpointErrorAbsorption.lean
+@@ -0,0 +1,64 @@
++import Erdos647Research.Endpoint.ErrorAbsorption
++
++set_option autoImplicit false
++set_option warningAsError true
++open scoped Topology
++open Filter Real Erdos647Sieve Erdos647Sieve.Endpoint
++
++example : ∀ (c u : ℝ) (X : ℕ) (_ : 0 < X),
++    ((X : ℝ) * Real.exp u) / endpointRHSWith c X =
++      Real.exp (u + c * endpointScale X) :=
++  Erdos647Sieve.Endpoint.scaled_exp_div_endpointRHSWith
++#check Erdos647Sieve.Endpoint.scaled_exp_div_endpointRHSWith
++#print axioms Erdos647Sieve.Endpoint.scaled_exp_div_endpointRHSWith
++
++example : ∀ (c u : ℝ) (X : ℕ) (_ : 0 < X),
++    Real.exp u / endpointRHSWith c X =
++      Real.exp (u - Real.log (X : ℝ) + c * endpointScale X) :=
++  Erdos647Sieve.Endpoint.exp_div_endpointRHSWith
++#check Erdos647Sieve.Endpoint.exp_div_endpointRHSWith
++#print axioms Erdos647Sieve.Endpoint.exp_div_endpointRHSWith
++
++example : ∀ (c : ℝ) (_ : c < (1499 / 1000000 : ℝ)),
++    Tendsto (fun X : ℕ =>
++      ((X : ℝ) * Real.exp (-(1499 / 1000000 : ℝ) *
++        ((windowLength X : ℝ) / Real.log (Real.log (X : ℝ))))) /
++          endpointRHSWith c X) atTop (𝓝 0) :=
++  Erdos647Sieve.Endpoint.principal_ratio_tendsto_zero
++#check Erdos647Sieve.Endpoint.principal_ratio_tendsto_zero
++#print axioms Erdos647Sieve.Endpoint.principal_ratio_tendsto_zero
++
++example : ∀ (c : ℝ),
++    Tendsto (fun X : ℕ =>
++      ((X : ℝ) * Real.exp (-(windowLength X : ℝ) / 30)) /
++        endpointRHSWith c X) atTop (𝓝 0) :=
++  Erdos647Sieve.Endpoint.momentTail_ratio_tendsto_zero
++#check Erdos647Sieve.Endpoint.momentTail_ratio_tendsto_zero
++#print axioms Erdos647Sieve.Endpoint.momentTail_ratio_tendsto_zero
++
++example : ∀ (c : ℝ),
++    Tendsto (fun X : ℕ => Real.exp (Real.log (X : ℝ) / 2) /
++      endpointRHSWith c X) atTop (𝓝 0) :=
++  Erdos647Sieve.Endpoint.squareRoot_ratio_tendsto_zero
++#check Erdos647Sieve.Endpoint.squareRoot_ratio_tendsto_zero
++#print axioms Erdos647Sieve.Endpoint.squareRoot_ratio_tendsto_zero
++
++example : ∀ (c : ℝ) (_ : c < (1499 / 1000000 : ℝ)),
++    Tendsto (fun X : ℕ => amplifiedErrorMajorant X / endpointRHSWith c X)
++      atTop (𝓝 0) :=
++  Erdos647Sieve.Endpoint.amplifiedErrorMajorant_ratio_tendsto_zero
++#check Erdos647Sieve.Endpoint.amplifiedErrorMajorant_ratio_tendsto_zero
++#print axioms Erdos647Sieve.Endpoint.amplifiedErrorMajorant_ratio_tendsto_zero
++
++example : ∀ (c : ℝ) (_ : c < (1499 / 1000000 : ℝ)),
++    ∀ᶠ X : ℕ in atTop, amplifiedErrorMajorant X ≤ endpointRHSWith c X :=
++  Erdos647Sieve.Endpoint.eventually_amplifiedErrorMajorant_le_endpointRHSWith
++#check Erdos647Sieve.Endpoint.eventually_amplifiedErrorMajorant_le_endpointRHSWith
++#print axioms Erdos647Sieve.Endpoint.eventually_amplifiedErrorMajorant_le_endpointRHSWith
++
++-- The majorant is the entire accepted expression, not only the principal term.
++example : amplifiedErrorMajorant = fun X : ℕ =>
++    (X : ℝ) * Real.exp (-(1499 / 1000000 : ℝ) *
++      ((windowLength X : ℝ) / Real.log (Real.log (X : ℝ)))) +
++    (X : ℝ) * Real.exp (-(windowLength X : ℝ) / 30) +
++    2 * Real.exp (Real.log (X : ℝ) / 2) := rfl
+--- /dev/null
++++ b/research/Audit/EndpointFinal.lean
+@@ -0,0 +1,53 @@
++import Erdos647Research.Endpoint.Main
++
++set_option autoImplicit false
++set_option warningAsError true
++open scoped Topology
++open Filter Real Erdos647Sieve Erdos647Sieve.Endpoint
++
++example : ∀ (c : ℝ) (_ : c < (1499 / 1000000 : ℝ)),
++    EndpointBound c :=
++  Erdos647Sieve.Endpoint.endpointBound_of_lt_principal_rate
++#check Erdos647Sieve.Endpoint.endpointBound_of_lt_principal_rate
++#print axioms Erdos647Sieve.Endpoint.endpointBound_of_lt_principal_rate
++
++example : EndpointBound ((1 : ℝ) / 1000) :=
++  Erdos647Sieve.Endpoint.endpointBound_one_div_thousand
++#check Erdos647Sieve.Endpoint.endpointBound_one_div_thousand
++#print axioms Erdos647Sieve.Endpoint.endpointBound_one_div_thousand
++
++example : PositiveEndpointClaim :=
++  Erdos647Sieve.Endpoint.positiveEndpoint
++#check Erdos647Sieve.Endpoint.positiveEndpoint
++#print axioms Erdos647Sieve.Endpoint.positiveEndpoint
++
++example : EndpointClaim :=
++  Erdos647Sieve.endpoint
++#check Erdos647Sieve.endpoint
++#print axioms Erdos647Sieve.endpoint
++
++-- The constant is fixed before the onset and interval-length quantifiers.
++example : ∀ (c : ℝ) (_ : c < (1499 / 1000000 : ℝ)),
++    ∃ X0 : ℕ, 3 ≤ X0 ∧ ∀ X : ℕ, X0 ≤ X →
++      (candidateCount X : ℝ) ≤ (X : ℝ) * Real.exp
++        (-(c * (Real.rpow (Real.log (X : ℝ)) endpointExponent /
++          Real.log (Real.log (X : ℝ))))) :=
++  endpointBound_of_lt_principal_rate
++
++example : ∃ X0 : ℕ, 3 ≤ X0 ∧ ∀ X : ℕ, X0 ≤ X →
++    (candidateCount X : ℝ) ≤ (X : ℝ) * Real.exp
++      (-(((1 : ℝ) / 1000) *
++        (Real.rpow (Real.log (X : ℝ)) endpointExponent /
++          Real.log (Real.log (X : ℝ))))) :=
++  endpointBound_one_div_thousand
++
++example : ∃ c : ℝ, 0 < c ∧ ∃ X0 : ℕ, 3 ≤ X0 ∧
++    ∀ X : ℕ, X0 ≤ X → (candidateCount X : ℝ) ≤
++      (X : ℝ) * Real.exp (-(c *
++        (Real.rpow (Real.log (X : ℝ)) endpointExponent /
++          Real.log (Real.log (X : ℝ))))) :=
++  positiveEndpoint
++
++example : ∃ X0 : ℕ, 3 ≤ X0 ∧ ∀ X : ℕ, X0 ≤ X →
++    (candidateCount X : ℝ) ≤ endpointRHS X :=
++  Erdos647Sieve.endpoint
+--- /dev/null
++++ b/research/Erdos647Research/Endpoint/AbsorptionScales.lean
+@@ -0,0 +1,76 @@
++/-
++The final saving scale diverges but is smaller than both the window and log X.
++These estimates depend only on accepted parameter results, not PNT+ or counting.
++-/
++import Erdos647Research.Endpoint.Statement
++import Erdos647Research.Endpoint.ErrorScales
++
++set_option autoImplicit false
++open scoped Topology
++open Filter Real
++
++noncomputable section
++namespace Erdos647Sieve.Endpoint
++
++/-- The comparison denominator is positive on the eventual natural domain. -/
++theorem endpointRHSWith_pos (c : ℝ) (X : ℕ) (hX : 0 < X) :
++    0 < endpointRHSWith c X := by
++  unfold endpointRHSWith
++  exact mul_pos (by exact_mod_cast hX) (Real.exp_pos _)
++
++/-- The required saving scale itself grows without bound. -/
++theorem endpointScale_tendsto_atTop : Tendsto endpointScale atTop atTop := by
++  have hsmall : Tendsto (fun X : ℕ => Real.log (Real.log (X : ℝ)) /
++      Real.rpow (Real.log (X : ℝ)) endpointExponent) atTop (𝓝 0) :=
++    ((isLittleO_log_rpow_atTop endpointExponent_pos).tendsto_div_nhds_zero).comp
++      logX_tendsto_atTop
++  have hright : Tendsto (fun X : ℕ => Real.log (Real.log (X : ℝ)) /
++      Real.rpow (Real.log (X : ℝ)) endpointExponent) atTop (𝓝[>] (0 : ℝ)) := by
++    refine tendsto_nhdsWithin_iff.mpr ⟨hsmall, ?_⟩
++    filter_upwards [logLogX_tendsto_atTop.eventually (eventually_gt_atTop (0 : ℝ)),
++      logX_tendsto_atTop.eventually (eventually_gt_atTop (0 : ℝ))] with X hL hQ
++    exact div_pos hL (Real.rpow_pos_of_pos hQ _)
++  have hinv := tendsto_inv_nhdsGT_zero.comp hright
++  change Tendsto (fun X : ℕ => (Real.log (Real.log (X : ℝ)) /
++    Real.rpow (Real.log (X : ℝ)) endpointExponent)⁻¹) atTop atTop at hinv
++  simpa only [inv_div, endpointScale] using hinv
++
++/-- The factorial tail decays on the larger window scale: S/H tends to zero. -/
++theorem endpointScale_div_window_tendsto_zero :
++    Tendsto (fun X : ℕ => endpointScale X / (windowLength X : ℝ)) atTop (𝓝 0) := by
++  have hratio : Tendsto (fun X : ℕ =>
++      Real.rpow (Real.log (X : ℝ)) endpointExponent / (windowLength X : ℝ))
++      atTop (𝓝 1) := by
++    have hinv := windowLength_ratio_tendsto_one.inv₀ (by norm_num : (1 : ℝ) ≠ 0)
++    change Tendsto (fun X : ℕ => ((windowLength X : ℝ) /
++      Real.rpow (Real.log (X : ℝ)) endpointExponent)⁻¹) atTop (𝓝 ((1 : ℝ)⁻¹)) at hinv
++    simpa only [inv_div, inv_one] using hinv
++  have h := hratio.div_atTop logLogX_tendsto_atTop
++  exact h.congr (fun X => by dsimp only [endpointScale]; ring)
++
++/-- The square-root-scale remainder is negligible since S/log X tends to zero. -/
++theorem endpointScale_div_logX_tendsto_zero :
++    Tendsto (fun X : ℕ => endpointScale X / Real.log (X : ℝ)) atTop (𝓝 0) := by
++  have hsmall : Tendsto (fun X : ℕ =>
++      1 / Real.rpow (Real.log (X : ℝ)) (1 - endpointExponent)) atTop (𝓝 0) :=
++    complementaryScale_tendsto_atTop.const_div_atTop (1 : ℝ)
++  have h := hsmall.div_atTop logLogX_tendsto_atTop
++  apply h.congr'
++  filter_upwards [eventually_ge_atTop (2 : ℕ)] with X hX
++  have hQ : 0 < Real.log (X : ℝ) :=
++    Real.log_pos (by exact_mod_cast (show 1 < X by omega))
++  have hV : Real.rpow (Real.log (X : ℝ)) (1 - endpointExponent) ≠ 0 :=
++    (Real.rpow_pos_of_pos hQ _).ne'
++  have hquot : Real.rpow (Real.log (X : ℝ)) endpointExponent / Real.log (X : ℝ) =
++      1 / Real.rpow (Real.log (X : ℝ)) (1 - endpointExponent) := by
++    apply (div_eq_div_iff hQ.ne' hV).mpr
++    simpa only [one_mul] using window_complementary_scale_product X hX
++  change (1 / Real.rpow (Real.log (X : ℝ)) (1 - endpointExponent)) /
++      Real.log (Real.log (X : ℝ)) = _
++  calc
++    _ = (Real.rpow (Real.log (X : ℝ)) endpointExponent / Real.log (X : ℝ)) /
++        Real.log (Real.log (X : ℝ)) := by rw [hquot]
++    _ = endpointScale X / Real.log (X : ℝ) := by dsimp only [endpointScale]; ring
++
++end Erdos647Sieve.Endpoint
++end
+--- /dev/null
++++ b/research/Erdos647Research/Endpoint/ErrorAbsorption.lean
+@@ -0,0 +1,144 @@
++/-
++Normalize the accepted amplified-error majorant by the fixed-c endpoint RHS.
++Every contribution tends to zero for c strictly below the existing principal
++rate. No tuning of the protected parameters or numerical approximation is used.
++-/
++import Erdos647Research.Endpoint.AbsorptionScales
++
++set_option autoImplicit false
++open scoped Topology
++open Filter Real
++
++noncomputable section
++namespace Erdos647Sieve.Endpoint
++
++/-- Exactly the three-term majorant from the accepted all-sign counting reduction. -/
++def amplifiedErrorMajorant (X : ℕ) : ℝ :=
++  (X : ℝ) * Real.exp (-(1499 / 1000000 : ℝ) *
++    ((windowLength X : ℝ) / Real.log (Real.log (X : ℝ)))) +
++  (X : ℝ) * Real.exp (-(windowLength X : ℝ) / 30) +
++  2 * Real.exp (Real.log (X : ℝ) / 2)
++
++/-- Cancel the common interval length before comparing two exponential rates. -/
++theorem scaled_exp_div_endpointRHSWith (c u : ℝ) (X : ℕ) (hX : 0 < X) :
++    ((X : ℝ) * Real.exp u) / endpointRHSWith c X =
++      Real.exp (u + c * endpointScale X) := by
++  have hXR : (X : ℝ) ≠ 0 := by exact_mod_cast hX.ne'
++  rw [endpointRHSWith, mul_div_mul_left _ _ hXR, ← Real.exp_sub]
++  congr 1
++  ring
++
++/-- The interval-length denominator contributes minus log X to the exponent. -/
++theorem exp_div_endpointRHSWith (c u : ℝ) (X : ℕ) (hX : 0 < X) :
++    Real.exp u / endpointRHSWith c X =
++      Real.exp (u - Real.log (X : ℝ) + c * endpointScale X) := by
++  have hXR : 0 < (X : ℝ) := by exact_mod_cast hX
++  have hd : endpointRHSWith c X =
++      Real.exp (Real.log (X : ℝ) - c * endpointScale X) := by
++    unfold endpointRHSWith
++    rw [sub_eq_add_neg, Real.exp_add, Real.exp_log hXR]
++  rw [hd, ← Real.exp_sub]
++  congr 1
++  ring
++
++/-- The strict principal-rate margin absorbs rounding of H and any fixed factor. -/
++theorem principal_ratio_tendsto_zero (c : ℝ) (hc : c < (1499 / 1000000 : ℝ)) :
++    Tendsto (fun X : ℕ =>
++      ((X : ℝ) * Real.exp (-(1499 / 1000000 : ℝ) *
++        ((windowLength X : ℝ) / Real.log (Real.log (X : ℝ))))) /
++          endpointRHSWith c X) atTop (𝓝 0) := by
++  have hcoef : Tendsto (fun X : ℕ => c - (1499 / 1000000 : ℝ) *
++      ((windowLength X : ℝ) / Real.rpow (Real.log (X : ℝ)) endpointExponent))
++      atTop (𝓝 (c - (1499 / 1000000 : ℝ))) := by
++    simpa only [mul_one] using
++      (windowLength_ratio_tendsto_one.const_mul (1499 / 1000000 : ℝ)).const_sub c
++  have h := Real.tendsto_exp_atBot.comp
++    (hcoef.neg_mul_atTop (sub_neg.mpr hc) endpointScale_tendsto_atTop)
++  apply h.congr'
++  filter_upwards [eventually_ge_atTop (2 : ℕ)] with X hX
++  have hXN : 0 < X := by omega
++  have hQ : 0 < Real.log (X : ℝ) :=
++    Real.log_pos (by exact_mod_cast (show 1 < X by omega))
++  have hU : Real.rpow (Real.log (X : ℝ)) endpointExponent ≠ 0 :=
++    (Real.rpow_pos_of_pos hQ _).ne'
++  rw [scaled_exp_div_endpointRHSWith c _ X hXN]
++  change Real.exp ((c - (1499 / 1000000 : ℝ) *
++    ((windowLength X : ℝ) / Real.rpow (Real.log (X : ℝ)) endpointExponent)) *
++      endpointScale X) = _
++  congr 1
++  have hcancel : ((windowLength X : ℝ) /
++      Real.rpow (Real.log (X : ℝ)) endpointExponent) * endpointScale X =
++      (windowLength X : ℝ) / Real.log (Real.log (X : ℝ)) := by
++    dsimp only [endpointScale]
++    exact div_mul_div_cancel₀ hU
++  rw [sub_mul, mul_assoc, hcancel]
++  ring
++
++/-- The factorial tail is negligible relative to every fixed-c endpoint scale. -/
++theorem momentTail_ratio_tendsto_zero (c : ℝ) :
++    Tendsto (fun X : ℕ =>
++      ((X : ℝ) * Real.exp (-(windowLength X : ℝ) / 30)) /
++        endpointRHSWith c X) atTop (𝓝 0) := by
++  have hcoef : Tendsto (fun X : ℕ =>
++      c * (endpointScale X / (windowLength X : ℝ)) - (1 / 30 : ℝ))
++      atTop (𝓝 (-(1 / 30 : ℝ))) := by
++    simpa only [mul_zero, zero_sub] using
++      (endpointScale_div_window_tendsto_zero.const_mul c).sub_const (1 / 30 : ℝ)
++  have h := Real.tendsto_exp_atBot.comp
++    (hcoef.neg_mul_atTop (by norm_num) windowLength_cast_tendsto_atTop)
++  apply h.congr'
++  filter_upwards [eventually_ge_atTop (1 : ℕ), eventually_windowLength_pos] with X hX hH
++  have hXR : 0 < X := by omega
++  have hHR : (windowLength X : ℝ) ≠ 0 := by
++    exact_mod_cast (show windowLength X ≠ 0 by omega)
++  rw [scaled_exp_div_endpointRHSWith c _ X hXR]
++  change Real.exp ((c * (endpointScale X / (windowLength X : ℝ)) - (1 / 30 : ℝ)) *
++      (windowLength X : ℝ)) = _
++  congr 1
++  rw [sub_mul, mul_assoc, div_mul_cancel₀ _ hHR]
++  ring
++
++/-- The square-root majorant is negligible relative to every fixed-c endpoint. -/
++theorem squareRoot_ratio_tendsto_zero (c : ℝ) :
++    Tendsto (fun X : ℕ => Real.exp (Real.log (X : ℝ) / 2) /
++      endpointRHSWith c X) atTop (𝓝 0) := by
++  have hcoef : Tendsto (fun X : ℕ =>
++      c * (endpointScale X / Real.log (X : ℝ)) - (1 / 2 : ℝ))
++      atTop (𝓝 (-(1 / 2 : ℝ))) := by
++    simpa only [mul_zero, zero_sub] using
++      (endpointScale_div_logX_tendsto_zero.const_mul c).sub_const (1 / 2 : ℝ)
++  have h := Real.tendsto_exp_atBot.comp
++    (hcoef.neg_mul_atTop (by norm_num) logX_tendsto_atTop)
++  apply h.congr'
++  filter_upwards [eventually_ge_atTop (2 : ℕ)] with X hX
++  have hXN : 0 < X := by omega
++  have hQ : Real.log (X : ℝ) ≠ 0 :=
++    (Real.log_pos (by exact_mod_cast (show 1 < X by omega))).ne'
++  rw [exp_div_endpointRHSWith c _ X hXN]
++  change Real.exp ((c * (endpointScale X / Real.log (X : ℝ)) - (1 / 2 : ℝ)) *
++      Real.log (X : ℝ)) = _
++  congr 1
++  rw [sub_mul, mul_assoc, div_mul_cancel₀ _ hQ]
++  ring
++
++/-- The full majorant, including the factor two, divided by the target tends to zero. -/
++theorem amplifiedErrorMajorant_ratio_tendsto_zero
++    (c : ℝ) (hc : c < (1499 / 1000000 : ℝ)) :
++    Tendsto (fun X : ℕ => amplifiedErrorMajorant X / endpointRHSWith c X)
++      atTop (𝓝 0) := by
++  have h := ((principal_ratio_tendsto_zero c hc).add
++    (momentTail_ratio_tendsto_zero c)).add ((squareRoot_ratio_tendsto_zero c).const_mul 2)
++  simpa only [amplifiedErrorMajorant, add_div, mul_div_assoc, add_zero, mul_zero] using h
++
++/-- One eventual comparison absorbs the entire sum with no residual prefactor. -/
++theorem eventually_amplifiedErrorMajorant_le_endpointRHSWith
++    (c : ℝ) (hc : c < (1499 / 1000000 : ℝ)) :
++    ∀ᶠ X : ℕ in atTop, amplifiedErrorMajorant X ≤ endpointRHSWith c X := by
++  have hsmall := (amplifiedErrorMajorant_ratio_tendsto_zero c hc).eventually
++    (gt_mem_nhds (by norm_num : (0 : ℝ) < 1))
++  filter_upwards [hsmall, eventually_ge_atTop (1 : ℕ)] with X hX hpos
++  have hd := endpointRHSWith_pos c X (by omega)
++  exact (div_le_one hd).mp hX.le
++
++end Erdos647Sieve.Endpoint
++end
+--- /dev/null
++++ b/research/Erdos647Research/Endpoint/Main.lean
+@@ -0,0 +1,44 @@
++/-
++Final fixed-coefficient endpoint assembly from the accepted all-sign counting
++reduction. The old 1/1000 constant is a free specialization of the strict range;
++no parameter is retuned and no accepted proof is reopened.
++-/
++import Erdos647Research.Endpoint.CountingReduction
++import Erdos647Research.Endpoint.ErrorAbsorption
++
++set_option autoImplicit false
++open scoped Topology
++open Filter Real
++
++noncomputable section
++namespace Erdos647Sieve.Endpoint
++
++/-- Every fixed coefficient strictly below the established principal rate works.
++For the requested saving theorem take any positive c in this interval. -/
++theorem endpointBound_of_lt_principal_rate
++    (c : ℝ) (hc : c < (1499 / 1000000 : ℝ)) : EndpointBound c := by
++  apply (endpointBound_iff_eventually c).mpr
++  filter_upwards [eventually_candidateCount_le_amplified_errors,
++    eventually_amplifiedErrorMajorant_le_endpointRHSWith c hc] with X hcount habsorb
++  have hmajorant : (candidateCount X : ℝ) ≤ amplifiedErrorMajorant X := hcount
++  exact hmajorant.trans habsorb
++
++/-- Explicit fixed coefficient. Its strict margin is rational arithmetic only. -/
++theorem endpointBound_one_div_thousand : EndpointBound ((1 : ℝ) / 1000) :=
++  endpointBound_of_lt_principal_rate ((1 : ℝ) / 1000) (by norm_num)
++
++/-- The requested positive-coefficient theorem with an explicit constant witness. -/
++theorem positiveEndpoint : PositiveEndpointClaim :=
++  positiveEndpointClaim_of_explicit ((1 : ℝ) / 1000) (by norm_num)
++    endpointBound_one_div_thousand
++
++end Erdos647Sieve.Endpoint
++
++namespace Erdos647Sieve
++
++/-- Historical endpoint target, now obtained as a corollary at no new analytic cost. -/
++theorem endpoint : EndpointClaim :=
++  Endpoint.legacyEndpointClaim_iff.mpr Endpoint.endpointBound_one_div_thousand
++
++end Erdos647Sieve
++end
+--- a/research/lakefile.lean
++++ b/research/lakefile.lean
+@@ -37,7 +37,10 @@
+     `Erdos647Research.Endpoint.MomentTail,
+     `Erdos647Research.Endpoint.ErrorScales,
+     `Erdos647Research.Endpoint.ArithmeticRemainder,
+-    `Erdos647Research.Endpoint.CountingReduction]
++    `Erdos647Research.Endpoint.CountingReduction,
++    `Erdos647Research.Endpoint.AbsorptionScales,
++    `Erdos647Research.Endpoint.ErrorAbsorption,
++    `Erdos647Research.Endpoint.Main]
+ 
+ /-- All registered research proof gates, including the endpoint parameter layer. -/
+ script audit (args) do
+--- a/scripts/check.py
++++ b/scripts/check.py
+@@ -356,7 +356,7 @@
+     def __init__(self, root: Path, args: argparse.Namespace):
+         self.root=root; self.args=args; self.env=clean_env(); self.commands=0
+         if args.jobs: self.env['LEAN_NUM_THREADS']=str(args.jobs)
+-        self.id='erdos647_repo_v45_results_'+datetime.now(timezone.utc).strftime('%Y%m%dT%H%M%SZ')+'_'+uuid.uuid4().hex[:8]
++        self.id='erdos647_repo_v46_results_'+datetime.now(timezone.utc).strftime('%Y%m%dT%H%M%SZ')+'_'+uuid.uuid4().hex[:8]
+         self.dest=root/'results'/self.id
+         if (root/'results').is_symlink(): raise ValueError('Refusing symlinked results directory')
+         self.dest.mkdir(parents=True,exist_ok=False)
+@@ -579,6 +579,7 @@
+         self.save();print(f'[{result["status"]}] {name}',flush=True)
+ 
+     def finish(self):
++        record_endpoint_acceptance(self.record)
+         self.record['finished_utc']=datetime.now(timezone.utc).isoformat();self.save()
+         lines=['# Repository check results','',f'Run: `{self.id}`',f'Status: **{self.record["status"]}**','',
+             '| Gate | This invocation |','|---|---|']
+@@ -596,7 +597,9 @@
+             lines += ['', '## Recorded metadata changes', ''] + self.record['warnings']
+         lines += ['','Historical proof acceptance is not a current run result.',
+                   'A selected failure or blocked gate makes the overall command fail.',
+-                  'The asymptotic endpoint remains outside the completed theorem inventory.']
++                  ('The fixed-coefficient endpoint passed in this invocation with c=1/1000; '
++                   'this is not a resolution of Erdos #647.' if self.record['endpoint_proved'] else
++                   'No final endpoint acceptance is established by this invocation.')]
+         (self.dest/'SUMMARY.md').write_text('\n'.join(lines)+'\n')
+         for p in source_files(self.root):
+             dst=self.dest/'source'/p.relative_to(self.root);dst.parent.mkdir(parents=True,exist_ok=True);shutil.copy2(p,dst)
+@@ -612,6 +615,59 @@
+                 if p.is_file():z.write(p,self.id+'/'+p.relative_to(self.dest).as_posix())
+         (self.root/'results/latest_result.txt').write_text(str(report)+'\n')
+         print('\nRESULTS ZIP: '+str(report),flush=True)
++
++
++def record_endpoint_acceptance(record: dict) -> None:
++    """Endpoint status comes only from this invocation's successful final audit.
++
++    Static documentation, historical evidence and a clean printed axiom list after
++    a failed command never count. A failed overall/source check keeps status false.
++    """
++    record['endpoint_proved'] = False
++    record['endpoint_coefficient'] = None
++    record['endpoint_acceptance'] = None
++    name = 'endpoint_final'
++    if record.get('status') != 'PASS_SELECTED_CHECKS' or name not in record.get('selected_gates', []):
++        return
++    if record.get('checks_role') != 'BUILD_TYPE_AXIOM':
++        return
++    before, after = record.get('source_sha256_before'), record.get('source_sha256_after')
++    if not before or not after or any(e['role'] == 'checked_input' for e in changed_sources(before, after).values()):
++        return
++    final = record.get('gates', {}).get(name, {})
++    if final.get('status') != 'PASS' or final.get('build_warnings'):
++        return
++    targets = [t for ts in GATES[name]['audits'].values() for t in ts]
++    axioms = final.get('axioms', {})
++    if set(axioms) != set(targets) or any(set(axioms[t]) - ALLOW for t in targets):
++        return
++    needed = set()
++    def include(gate):
++        if gate in needed:
++            return
++        needed.add(gate)
++        for parent in GATES[gate]['prerequisites']:
++            include(parent)
++    include(name)
++    if any(record.get('gates', {}).get(g, {}).get('status') != 'PASS' for g in needed):
++        return
++    commands = record.get('commands', [])
++    for label in [name + '_build', name + '_audit_0']:
++        matching = [c for c in commands if c.get('label') == label]
++        if len(matching) != 1 or matching[0].get('exit_code') != 0:
++            return
++    record['endpoint_proved'] = True
++    record['endpoint_coefficient'] = {'numerator': 1, 'denominator': 1000}
++    record['endpoint_acceptance'] = {
++        'run_id': record['run_id'], 'gate': name,
++        'theorem': 'Erdos647Sieve.Endpoint.endpointBound_one_div_thousand',
++        'legacy_theorem': 'Erdos647Sieve.endpoint',
++        'general_theorem': 'Erdos647Sieve.Endpoint.endpointBound_of_lt_principal_rate',
++        'positive_coefficient_range': {'lower_exclusive': 0,
++            'upper_exclusive': {'numerator': 1499, 'denominator': 1000000}},
++        'positive_claim': 'Erdos647Sieve.Endpoint.positiveEndpoint',
++        'is_resolution_of_erdos647': False,
++        'basis': 'current build, expanded-type and transitive-axiom audits; stable checked inputs'}
+ 
+ 
+ def selected_gates(args: argparse.Namespace) -> list[str]:
+--- a/scripts/gates.json
++++ b/scripts/gates.json
+@@ -581,5 +581,64 @@
+       "endpoint_arithmetic_remainder"
+     ],
+     "historical_status": "new v44 amplified-error proof source; acceptance pending"
++  },
++  "endpoint_absorption_scales": {
++    "package": "research",
++    "build": [
++      "+Erdos647Research.Endpoint.AbsorptionScales"
++    ],
++    "audits": {
++      "Audit/EndpointAbsorptionScales.lean": [
++        "Erdos647Sieve.Endpoint.endpointRHSWith_pos",
++        "Erdos647Sieve.Endpoint.endpointScale_tendsto_atTop",
++        "Erdos647Sieve.Endpoint.endpointScale_div_window_tendsto_zero",
++        "Erdos647Sieve.Endpoint.endpointScale_div_logX_tendsto_zero"
++      ]
++    },
++    "prerequisites": [
++      "endpoint_statement",
++      "endpoint_error_scales"
++    ],
++    "historical_status": "new v46 final-absorption proof source; acceptance pending"
++  },
++  "endpoint_error_absorption": {
++    "package": "research",
++    "build": [
++      "+Erdos647Research.Endpoint.ErrorAbsorption"
++    ],
++    "audits": {
++      "Audit/EndpointErrorAbsorption.lean": [
++        "Erdos647Sieve.Endpoint.scaled_exp_div_endpointRHSWith",
++        "Erdos647Sieve.Endpoint.exp_div_endpointRHSWith",
++        "Erdos647Sieve.Endpoint.principal_ratio_tendsto_zero",
++        "Erdos647Sieve.Endpoint.momentTail_ratio_tendsto_zero",
++        "Erdos647Sieve.Endpoint.squareRoot_ratio_tendsto_zero",
++        "Erdos647Sieve.Endpoint.amplifiedErrorMajorant_ratio_tendsto_zero",
++        "Erdos647Sieve.Endpoint.eventually_amplifiedErrorMajorant_le_endpointRHSWith"
++      ]
++    },
++    "prerequisites": [
++      "endpoint_absorption_scales"
++    ],
++    "historical_status": "new v46 final-absorption proof source; acceptance pending"
++  },
++  "endpoint_final": {
++    "package": "research",
++    "build": [
++      "+Erdos647Research.Endpoint.Main"
++    ],
++    "audits": {
++      "Audit/EndpointFinal.lean": [
++        "Erdos647Sieve.Endpoint.endpointBound_of_lt_principal_rate",
++        "Erdos647Sieve.Endpoint.endpointBound_one_div_thousand",
++        "Erdos647Sieve.Endpoint.positiveEndpoint",
++        "Erdos647Sieve.endpoint"
++      ]
++    },
++    "prerequisites": [
++      "endpoint_counting_reduction",
++      "endpoint_error_absorption"
++    ],
++    "historical_status": "new v46 final-absorption proof source; acceptance pending"
+   }
+ }
+--- /dev/null
++++ b/tests/fixtures/v45_accepted_sources.json
+@@ -0,0 +1,669 @@
++{
++  "basis": "erdos647_repo_v45_results_20260908T125209Z_b6d9b2cb",
++  "source_sha256": {
++    "Erdos647Sieve.lean": "f22620cd952b6b6715d0ef94a62d64dd45e90dd1b8c7950e27fb43aa10e75d74",
++    "Erdos647Sieve/ProgressionCount.lean": "2519b4c5689d42f673479daf2410d99bcc68d76b111bd5d6df8dc904b8061f6f",
++    "Erdos647Sieve/HitCountBridge.lean": "3fed51085afd72c0d6bbc5b5f1c94e927063d2cc216d6d644241f22f8ae8a8fe",
++    "Erdos647Sieve/BudgetDebit.lean": "9e5e0e9e7c487db01f5df02f9a6bd21b1cade7f51d9fa8f9a189d8866d21f7df",
++    "Erdos647Sieve/Bonferroni.lean": "fa6681c9e1193ad131660a70f15ebbccafd581d669899ad1f6d87e84f495b6b9",
++    "Erdos647Sieve/FiniteCounting.lean": "fe68b3177cd3b0078e9108a854fc58ebcd9e1ae7dba792c31c4a04cde25e1dea",
++    "Erdos647Sieve/SubsetCountError.lean": "4ae9ec3a289b52e47664685180c3050eca8f72e8de59e127414560872b3f14ee",
++    "Erdos647Sieve/ArithmeticDiscrepancy.lean": "7b2770edf4ae2901336f46bf50d2108d3c446ece484ac4f8a9e65d3f95746bd5",
++    "Erdos647Sieve/Specification.lean": "39d7c9e69faba89c27d738c6bf37f8b363197e2e5942281c5aedbbba7374c574",
++    "Erdos647Sieve/WindowCRT.lean": "4ba4e9056b09ab39345615ae896788701bcee1bb89be361e2999c83d0d7deb8a",
++    "Erdos647Sieve/SieveWeights.lean": "4990d5fb123787498ff07405b734f9175762243c31624d0f3e4d9c3c297cd80a",
++    "Erdos647Sieve/RetainedSubsets.lean": "1d7aac7cd64da63303632c6741363021caab8138ab4ac0fd579bf416fe6d9042",
++    "Erdos647Sieve/Occupancy.lean": "5a64098aa3ad2783999740d309b84da85bc309eca91ee6e6e4ad322b7da4a99b",
++    "Erdos647Sieve/IntegerWindowRoots.lean": "5e42d61897ec840959c6e403a1b214c895e122b0230d172c1f648ff69efb6cb7",
++    "Erdos647Sieve/DivisorBudget.lean": "6e13592c2257315c3f67f113033fc0cb110e63afff6c483c915805929a4f9469",
++    "Erdos647Sieve/BonferroniMajorant.lean": "8d455a41ecc304dc3783d9a25578124489ef30c4dd9b947338150db0720da5c6",
++    "Erdos647Sieve/FiniteMoment.lean": "666dece16c9c67f989a76e5af3aa105852df6409013e1dce989d1cac587e9e9c",
++    "Erdos647Sieve/Basic.lean": "801483b731fbdbcfd08582b0567267c60296f2874a502ef1cb4efb43a054449a",
++    "Erdos647Sieve/Finite.lean": "cfd298bd1807bc6817feca47cc701269814c95db481a3bbb7437552a6a8a5409",
++    "Erdos647Sieve/WeightedCounting.lean": "1e21212539c6b939b7b812d8c962ee3ecb2085f3b68a7f18f50d25a054ebdeca",
++    "Erdos647Sieve/PrimeSubsetProducts.lean": "c77f4366aefa92243977ce65728ba5d0237c0adf5c241fc472d00815cd5b803d",
++    "Erdos647Sieve/BudgetConsequences.lean": "404951e385f8bab9f1c03d56a5dd6a687037f8652f7ebe22a256e9a46aabc37a",
++    "Erdos647Sieve/FiniteCountingAssembly.lean": "959a694d2ea2c627c98a8637b8f5fa9eff59273f4f659507fbdc9db7b22b6612",
++    "Erdos647Sieve/SubsetWeightIdentities.lean": "243d7f006c7d2262d2d74c3986ec6429ff230e3547685e7da56557683611024e",
++    "Erdos647Sieve/PrimeSubsetCoefficients.lean": "baabc8d6d395a9ff7aab98e7e8dd48e57a16d76eaa1650a0a613cd180d04db73",
++    "Erdos647Sieve/ExponentialProduct.lean": "1c2994bccfff93af5c25f4b209a88d15f4a1552ff0a776f933c68fc032e4263e",
++    "Erdos647Sieve/CoefficientBounds.lean": "3acbc15b73e30719befb9390cbb70c5213f909848c3933556c0cefc131dd34e9",
++    "Audit/Finite.lean": "e6480a1d1eac14413da8b4181b0ff739bbb3c2b2919b2a6707b3b982d8926f27",
++    "Audit/Components.lean": "f3283d3bf24e6eceaadb3c6f9f515b1b4afbb1a1d9f44749bd8c70a04a49b435",
++    "research/Erdos647Research/FactorialBounds.lean": "7fe2f547ac29f06000dc35e7cdc6f2b464324bff42a7776016c6b6f5426fb110",
++    "research/Erdos647Research/FactorialEstimate.lean": "40c0ab51a12e3ef7096bb74395f05499dcde5b66248b2d5a4da64e718f13e2fe",
++    "research/Erdos647Research/ReciprocalKernel.lean": "263fa9c8abb0d1d3994bdb64ce490d1feed1c27470be210ba111cb279ffc192c",
++    "research/Erdos647Research/PrimeReciprocalSummation.lean": "9e457bec1731f08ba0265c25b6b47d7cac49696d7ee3ce229bc0e3f2646bc4b6",
++    "research/Erdos647Research/CorrectedBudgetEstimate.lean": "58a6e2c48580408e2d7797d8ece5c1079d86ee6127ea1ae496b54d0d5f91ac1a",
++    "research/Erdos647Research/EndpointLogBounds.lean": "29c06d7f25237e66f22b39296e4e70673b96e8c642836d67500e08fc12823585",
++    "research/Erdos647Research/SmallPrimeDebitEstimate.lean": "b43230461e0f9da6624ba5005c8403bb33bb762e06034895a7bde713ee4f83e1",
++    "research/Erdos647Research/SelectedPrimeReciprocals.lean": "17df5a48ef4d6fd3fadab695309ecb73371a158fe94284759e8a329e52eb8a84",
++    "research/Erdos647Research/CleanMertens.lean": "b2e9935c9e72ce23f81ec57946badb92631fe7a7e1bf3c4fba4d6fec9fab07cc",
++    "research/Erdos647Research/AnalyticInputs.lean": "df46dee45c8a536801f468772befdf14bceda030a36d391c515e9d0b700c59f3",
++    "research/Erdos647Research/LogBudgetFactorial.lean": "b81222c33ab8c74c8862adc17e1af25a78cedf91d00b6e2b14acd7b712b2407e",
++    "research/Erdos647Research/PrimeReciprocalLower.lean": "63948e4056a6244bd16587ba8a252dbf38053d02cb83fa6e44e6842931ba93c5",
++    "research/Audit/EndpointWindowParameters.lean": "adee11b7e1b628b470ef6f21d577020ffa2e2e53348b593a7001ab6d3c966991",
++    "research/Audit/EndpointMomentTail.lean": "c2981fa98fa10afd18c97a7b37025618676690a55cc5fa2cfd2f7818dac71910",
++    "research/Audit/ReciprocalAbel.lean": "f16d2027ced573d5320a9813318a971e22f364f943f7414ca2f4a55307f8d621",
++    "research/Audit/FactorialBounds.lean": "5e17e07371641ca3b61186c3e3c3f1c06e55665509c7a7afe8adeb2cd2589ac6",
++    "research/Audit/FactorialEstimate.lean": "ef32a83328383408a41ead58a38468e8e3f7fd328dc2c4f13a6b7665295ee76d",
++    "research/Audit/EndpointMassBudgetBounds.lean": "298ec16ccf27901b8843570d3023c6cd3b519796f1e2fa134b36058dc073d724",
++    "research/Audit/EndpointCutoffParameters.lean": "5fe67602b08f3d90d56bd5eac64fbccf5501c34e132d6b69ff658403b36c0479",
++    "research/Audit/EndpointArithmeticRemainder.lean": "3a16325bb6f71a2057b60817967871b52f684e328cc00c355d797de7fe9db8ce",
++    "research/Audit/ReciprocalKernel.lean": "62adb40f692c88d444119e83cd97c2784fdf7f1ac38448f1f0eaa851b8b60f5d",
++    "research/Audit/CorrectedBudgetEstimate.lean": "1aca4d18fa6cde9d49447d415cc9fe5ee22ff693d6549d0a02e2566be99c3169",
++    "research/Audit/EndpointLogBounds.lean": "17979f237156366db382cfe3ca58bc5794438e578649820a210b5ef44ef07f08",
++    "research/Audit/EndpointStatement.lean": "bfc168c0cc32571b373a61c82620dea066a6f2e05cad12c50848907e0b95a1ce",
++    "research/Audit/EndpointPrimeMassParameters.lean": "69fad6850a6aeb6c3708c96c88098e617cb6774659a26ac4d0a2bd808aa0af12",
++    "research/Audit/SmallPrimeDebitEstimate.lean": "e42f6ef65b61d294e756a80ef29073685e2f8ce9295b40019c42316ca36f333c",
++    "research/Audit/SelectedPrimeReciprocals.lean": "cb5021cdca73b80b147528c0f3ef5e22dad9429338b6930f879c495e5dbd4b77",
++    "research/Audit/PNTPlus.lean": "bf5ccb4456ff85788d15175a5f9b42b4e9e2b522048856fe4fc9a168070875e0",
++    "research/Audit/EndpointCountingReduction.lean": "cd9b3a26077a8296c254ff5aa8339e3d20b93cc98f3e3de65628938dd1ff61d3",
++    "research/Audit/CleanMertens.lean": "08a1877c54a0d25800ff9bb6ab5acca22cb79fb7c8d21578189e576746874009",
++    "research/Audit/AnalyticInputs.lean": "0f11d20c229f79e7680525b46ac2c8a66c93277ab0e2c8cda645e6a207b81abe",
++    "research/Audit/EndpointTruncationParameters.lean": "d2c015b3cdfd411f5f46c249f43872b75dd628ece8b2db142db956a59a5ef36b",
++    "research/Audit/EndpointPrimeMassGap.lean": "eadbf38cc4ac42881aa0e717ff2cdab3de34aa057be2a93854ab534fd4a28d22",
++    "research/Audit/EndpointAmplification.lean": "6d71e68af8475261526d4c5cefcfd661bf6b9d7092122e233ec924df3ca68c16",
++    "research/Audit/EndpointErrorScales.lean": "d114cb9684b5c8b45993d9fb23d4deb39de0d63c0cad6ef9ddc12b8df4ec89d4",
++    "research/Audit/LogBudgetFactorial.lean": "72b719e371704458e82cd13876d8f1ab11da491bfd38c07da521b90e626eb417",
++    "research/Audit/PrimeReciprocalLower.lean": "818b85246c3eb0f088e29fa1e000c81f0981329a941ed608940752e2f81f70e5",
++    "research/Erdos647Research/Compat/PNTPlus.lean": "be9ea21290ba047a63e75eed972ffd40c803c0c59f4fbf23925a9c9e98056759",
++    "research/Erdos647Research/Endpoint/PrimeMassParameters.lean": "324f6ad078f922212c90b579cdec8d43decd3a5918bff3df4ed5557cc40d5277",
++    "research/Erdos647Research/Endpoint/ArithmeticRemainder.lean": "19b189e29bb0dd5363aeb7170990795fd791705ff4f88b7290cfbbe966aff1d2",
++    "research/Erdos647Research/Endpoint/TruncationParameters.lean": "8ac6f8e7cc894b94b404d4474f23c0d446160bbe177b2895302bc990cf0bc75d",
++    "research/Erdos647Research/Endpoint/Amplification.lean": "29730803157dbfebe59ad4e471f51849819192ec609e5c21aa049c9c302cd6d0",
++    "research/Erdos647Research/Endpoint/WindowParameters.lean": "430d0a002c4ff8b6524c7720e0cd3bec4a70064861d571fffa2be834ee11a410",
++    "research/Erdos647Research/Endpoint/Statement.lean": "79dc70f99795868a9e46630b345ef37792784da486d7355eea770789f35208b4",
++    "research/Erdos647Research/Endpoint/CountingReduction.lean": "5ac4a64cfa5776a51b7c2d0166a33fab65107c39209ce69929e850563c0755ca",
++    "research/Erdos647Research/Endpoint/PrimeMassGap.lean": "26f8611380e6951c77e6cc2cb39c999afff32d45ca2668aabd462792ea9912cc",
++    "research/Erdos647Research/Endpoint/CutoffParameters.lean": "27d4df6dc2865067536ab8dd2b2eb788ad92f0c286c2ee50a8aff7fe6a7bd0b0",
++    "research/Erdos647Research/Endpoint/MomentTail.lean": "ec01b0a84dedb0ef906824d531763f22481e5cbe1cb7ad3530a2a7b615320d2c",
++    "research/Erdos647Research/Endpoint/ErrorScales.lean": "f31751942a62dd7dbed21dc83cfbf7f80a3f9482f483bca08cc772554a05b31b",
++    "research/Erdos647Research/Endpoint/MassBudgetBounds.lean": "24e4fed36084ee71fa12bad03fb03243052bbc3400585c8e055655ca5f860492"
++  },
++  "gates": {
++    "core": {
++      "package": ".",
++      "build": [
++        "Erdos647Sieve",
++        "Examples"
++      ],
++      "audits": {
++        "Audit/Finite.lean": [
++          "Erdos647Sieve.finiteMoment",
++          "Erdos647Sieve.budgetDebit",
++          "Erdos647Sieve.finiteCounting"
++        ],
++        "Audit/Components.lean": [
++          "Erdos647Sieve.Bonferroni.pow_add_linear_le",
++          "Erdos647Sieve.Bonferroni.factorial_mul_elementary_le_pow_sum",
++          "Erdos647Sieve.Bonferroni.elementary_le_pow_sum_div_factorial",
++          "Erdos647Sieve.Bonferroni.avoidProduct_le_exp_neg_sum",
++          "Erdos647Sieve.Bonferroni.even_truncation_le_exp_add_tail",
++          "Erdos647Sieve.Bonferroni.even_sum_le_exp_add_tail",
++          "Erdos647Sieve.sum_map_toList_eq_sum",
++          "Erdos647Sieve.prod_map_toList_eq_prod",
++          "Erdos647Sieve.avoidProduct_map_toList",
++          "Erdos647Sieve.prod_ite_eq_pow_card_filter",
++          "Erdos647Sieve.hitWeights_bounds",
++          "Erdos647Sieve.avoidProduct_hitWeights",
++          "Erdos647Sieve.meanWeights_sum",
++          "Erdos647Sieve.meanWeights_bounds",
++          "Erdos647Sieve.hitWeight_pointwise_upper",
++          "Erdos647Sieve.hitWeight_interval_upper",
++          "Erdos647Sieve.meanWeight_truncation_upper",
++          "Erdos647Sieve.card_filter_natCast_image",
++          "Erdos647Sieve.hitCount_eq_nat_filter_card",
++          "Erdos647Sieve.two_pow_primeFactors_card_le_tau",
++          "Erdos647Sieve.primeFactors_card_le_log_floor",
++          "Erdos647Sieve.prefix_primeFactor_sum_le_logBudget",
++          "Erdos647Sieve.div_le_divisorOccurrences",
++          "Erdos647Sieve.sum_divisorOccurrences_eq",
++          "Erdos647Sieve.windowPolynomial_eq_nat_product",
++          "Erdos647Sieve.prime_dvd_nat_product_iff",
++          "Erdos647Sieve.prime_dvd_window_iff",
++          "Erdos647Sieve.one_le_divisorOccurrences_of_hit",
++          "Erdos647Sieve.smallPrimes_disjoint_selectedPrimes",
++          "Erdos647Sieve.smallPrimeDebit_add_hitCount_le_primeFactor_sum",
++          "Erdos647Sieve.no_prefix_of_negative_correctedBudget",
++          "Erdos647Sieve.finiteCounting_of_finiteMoment",
++          "Erdos647Sieve.candidateCount_le_window_of_negative_correctedBudget",
++          "Erdos647Sieve.count_le_exceptions_add_weight",
++          "Erdos647Sieve.one_le_budget_weight",
++          "Erdos647Sieve.Bonferroni.signedError_nonneg",
++          "Erdos647Sieve.Bonferroni.even_sum_bounds",
++          "Erdos647Sieve.candidate_prefix",
++          "Erdos647Sieve.candidateCount_eq_filter_Icc",
++          "Erdos647Sieve.sum_nat_Icc_eq_int",
++          "Erdos647Sieve.no_prefix_of_negative_budget",
++          "Erdos647Sieve.finiteCounting_of_budgetDebit_of_finiteMoment",
++          "Erdos647Sieve.candidateCount_le_window_of_negative_budget",
++          "Erdos647Sieve.sum_powersetCard_succ_insert",
++          "Erdos647Sieve.elementary_map_eq_sum_powersetCard",
++          "Erdos647Sieve.elementary_toList_eq_sum_powersetCard",
++          "Erdos647Sieve.elementary_map_eq_of_toFinset_eq",
++          "Erdos647Sieve.primeSubsetProduct_pos",
++          "Erdos647Sieve.selected_subset_product_pos",
++          "Erdos647Sieve.prime_dvd_primeSubsetProduct_iff_mem",
++          "Erdos647Sieve.primeSubsetProduct_injective",
++          "Erdos647Sieve.primeSubsetProduct_int_dvd_iff",
++          "Erdos647Sieve.card_primeSubsetFamily_le",
++          "Erdos647Sieve.prime_dvd_window_iff_int",
++          "Erdos647Sieve.prime_dvd_window_iff_mem_residues",
++          "Erdos647Sieve.card_primeWindowResidues",
++          "Erdos647Sieve.subsetHitCount_empty",
++          "Erdos647Sieve.subsetHitCount_eq_modulus_count",
++          "Erdos647Sieve.prod_ite_zero_eq_pow_card",
++          "Erdos647Sieve.hitWeights_elementary_eq_subset_sum",
++          "Erdos647Sieve.sum_hitWeights_elementary_eq_subset_counts",
++          "Erdos647Sieve.interval_hitWeights_elementary_eq_subset_counts",
++          "Erdos647Sieve.meanWeights_elementary_eq_subset_sum",
++          "Erdos647Sieve.coefficient_discrepancy_eq_subset_errors",
++          "Erdos647Sieve.signed_discrepancy_eq_subset_errors",
++          "Erdos647Sieve.mul_le_iff_le_euclideanQuotient",
++          "Erdos647Sieve.progressionCount_eq_quotient_difference",
++          "Erdos647Sieve.euclideanQuotient_real_bounds",
++          "Erdos647Sieve.progressionCount_error_le_one",
++          "Erdos647Sieve.residueClassCount_eq_progressionCount",
++          "Erdos647Sieve.residueClassCount_error_le_one",
++          "Erdos647Sieve.residueSetCount_error_le_card",
++          "Erdos647Sieve.map_windowEvaluation",
++          "Erdos647Sieve.windowEvaluation_intCast",
++          "Erdos647Sieve.mem_windowRootResidues",
++          "Erdos647Sieve.intCast_mem_windowRootResidues_iff",
++          "Erdos647Sieve.windowRootResidues_eq_primeWindowResidues",
++          "Erdos647Sieve.card_windowRootResidues_prime",
++          "Erdos647Sieve.card_windowRootResidues_one",
++          "Erdos647Sieve.card_windowRootResidues_mul",
++          "Erdos647Sieve.card_windowRootResidues_primeSubsetProduct",
++          "Erdos647Sieve.subsetHitCount_eq_windowRootResidues_count",
++          "Erdos647Sieve.subsetHitCount_error_le",
++          "Erdos647Sieve.selected_subsetHitCount_error_le",
++          "Erdos647Sieve.mem_retainedSubsets",
++          "Erdos647Sieve.sum_powersetCard_le_eq_retained",
++          "Erdos647Sieve.real_pow_mono_of_one_le",
++          "Erdos647Sieve.retained_primeSubsetProduct_le",
++          "Erdos647Sieve.card_retainedSubsets_le_floor",
++          "Erdos647Sieve.card_retainedSubsets_cast_le",
++          "Erdos647Sieve.retained_weighted_subset_error_le",
++          "Erdos647Sieve.arithmetic_discrepancy_le"
++        ]
++      },
++      "prerequisites": [],
++      "historical_status": "finite source chain accepted; standalone package boundary added in v31"
++    },
++    "reciprocal_kernel": {
++      "package": "research",
++      "build": [
++        "+Erdos647Research.ReciprocalKernel"
++      ],
++      "audits": {
++        "Audit/ReciprocalKernel.lean": [
++          "Erdos647Sieve.Analytic.hasDerivAt_reciprocalLog",
++          "Erdos647Sieve.Analytic.deriv_reciprocalLog_integrableOn",
++          "Erdos647Sieve.Analytic.mainPrimitive_integral"
++        ]
++      },
++      "prerequisites": [],
++      "historical_status": "accepted in earlier research workspace"
++    },
++    "reciprocal_abel": {
++      "package": "research",
++      "build": [
++        "+Erdos647Research.PrimeReciprocalSummation"
++      ],
++      "audits": {
++        "Audit/ReciprocalAbel.lean": [
++          "Erdos647Sieve.Analytic.primeLogCoefficient_partial_sum",
++          "Erdos647Sieve.Analytic.reciprocalPrimeSum_eq_weighted_sum",
++          "Erdos647Sieve.Analytic.reciprocalPrimeSum_abel",
++          "Erdos647Sieve.Analytic.reciprocalPrimeSum_partial_summation",
++          "Erdos647Sieve.Analytic.reciprocalPrimeSum_error_identity"
++        ]
++      },
++      "prerequisites": [
++        "reciprocal_kernel"
++      ],
++      "historical_status": "accepted in earlier research workspace"
++    },
++    "pntplus_inputs": {
++      "package": "research",
++      "build": [
++        "+Erdos647Research.Compat.PNTPlus"
++      ],
++      "audits": {
++        "Audit/PNTPlus.lean": [
++          "MediumPNT",
++          "RS_prime.pntBigO",
++          "RS_prime.pnt",
++          "RS_prime.intervalIntegrable_inv_log_pow",
++          "RS_prime.ioiIntegrable_inv_log_pow",
++          "RS_prime.bound_deriv",
++          "RS_prime.integrableOn_deriv",
++          "RS_prime.integrableOn_deriv_inv_div_log"
++        ]
++      },
++      "prerequisites": [],
++      "historical_status": "new source-restricted PNT+ boundary; separate from prior broad import"
++    },
++    "analytic_inputs": {
++      "package": "research",
++      "build": [
++        "+Erdos647Research.AnalyticInputs"
++      ],
++      "audits": {
++        "Audit/AnalyticInputs.lean": [
++          "RS_prime.pnt",
++          "RS_prime.integrableOn_deriv_inv_div_log",
++          "Erdos647Sieve.Analytic.theta_pnt_bound",
++          "Erdos647Sieve.Analytic.theta_error_deriv_integrable",
++          "Erdos647Sieve.Analytic.theta_error_boundary_tendsto_zero"
++        ]
++      },
++      "prerequisites": [
++        "reciprocal_kernel",
++        "pntplus_inputs"
++      ],
++      "historical_status": "accepted in earlier research workspace"
++    },
++    "clean_mertens": {
++      "package": "research",
++      "build": [
++        "+Erdos647Research.CleanMertens"
++      ],
++      "audits": {
++        "Audit/CleanMertens.lean": [
++          "Erdos647Sieve.Analytic.reciprocalPrimeSum_tendsto",
++          "Erdos647Sieve.Analytic.reciprocalPrimeLimit_exists",
++          "Erdos647Sieve.Analytic.reciprocalPrime_difference_tendsto_zero"
++        ]
++      },
++      "prerequisites": [
++        "reciprocal_abel",
++        "analytic_inputs"
++      ],
++      "historical_status": "accepted in earlier research workspace"
++    },
++    "selected_prime_reciprocals": {
++      "package": "research",
++      "build": [
++        "+Erdos647Research.SelectedPrimeReciprocals"
++      ],
++      "audits": {
++        "Audit/SelectedPrimeReciprocals.lean": [
++          "Erdos647Sieve.Analytic.selectedPrimeSum_eq_difference",
++          "Erdos647Sieve.Analytic.primeMass_eq_reciprocal_difference",
++          "Erdos647Sieve.Analytic.selectedPrimeSum_difference_tendsto_zero"
++        ]
++      },
++      "prerequisites": [
++        "clean_mertens"
++      ],
++      "historical_status": "accepted in earlier research workspace"
++    },
++    "endpoint_log_bounds": {
++      "package": "research",
++      "build": [
++        "+Erdos647Research.EndpointLogBounds"
++      ],
++      "audits": {
++        "Audit/EndpointLogBounds.lean": [
++          "Erdos647Sieve.Elementary.neg_log_one_sub_le_add_sq",
++          "Erdos647Sieve.Elementary.endpoint_log_gap",
++          "Erdos647Sieve.Elementary.endpoint_tail_log_constant"
++        ]
++      },
++      "prerequisites": [],
++      "historical_status": "accepted in earlier research workspace"
++    },
++    "factorial_bounds": {
++      "package": "research",
++      "build": [
++        "+Erdos647Research.FactorialBounds"
++      ],
++      "audits": {
++        "Audit/FactorialBounds.lean": [
++          "Erdos647Sieve.Elementary.log_factorial_upper",
++          "Erdos647Sieve.Elementary.log_factorial_lower",
++          "Erdos647Sieve.Elementary.factorial_pow_lower"
++        ]
++      },
++      "prerequisites": [],
++      "historical_status": "accepted in earlier research workspace"
++    },
++    "factorial_estimate": {
++      "package": "research",
++      "build": [
++        "+Erdos647Research.FactorialEstimate"
++      ],
++      "audits": {
++        "Audit/FactorialEstimate.lean": [
++          "Erdos647Sieve.Elementary.shiftedFactorialLog_eq_expanded",
++          "Erdos647Sieve.Elementary.log_factorial_residual_tendsto_zero",
++          "Erdos647Sieve.Elementary.shiftedFactorialLog_residual_tendsto_zero"
++        ]
++      },
++      "prerequisites": [
++        "factorial_bounds"
++      ],
++      "historical_status": "accepted in earlier research workspace"
++    },
++    "log_budget_factorial": {
++      "package": "research",
++      "build": [
++        "+Erdos647Research.LogBudgetFactorial"
++      ],
++      "audits": {
++        "Audit/LogBudgetFactorial.lean": [
++          "Erdos647Sieve.Elementary.sum_log_shift_eq_factorial",
++          "Erdos647Sieve.Elementary.logBudget_le_factorial"
++        ]
++      },
++      "prerequisites": [
++        "factorial_estimate"
++      ],
++      "historical_status": "accepted in earlier research workspace"
++    },
++    "prime_reciprocal_lower": {
++      "package": "research",
++      "build": [
++        "+Erdos647Research.PrimeReciprocalLower"
++      ],
++      "audits": {
++        "Audit/PrimeReciprocalLower.lean": [
++          "Erdos647Sieve.Elementary.harmonic_sum_le_finitePrimeEuler",
++          "Erdos647Sieve.Elementary.reciprocal_remainder_telescope",
++          "Erdos647Sieve.Elementary.prime_log_factor_le",
++          "Erdos647Sieve.Elementary.log_finitePrimeEuler_le",
++          "Erdos647Sieve.Elementary.prime_reciprocal_lower"
++        ]
++      },
++      "prerequisites": [],
++      "historical_status": "accepted in v34 run 20260908T064235Z_611434a1; v35 lint edits require a new audit"
++    },
++    "small_prime_debit_estimate": {
++      "package": "research",
++      "build": [
++        "+Erdos647Research.SmallPrimeDebitEstimate"
++      ],
++      "audits": {
++        "Audit/SmallPrimeDebitEstimate.lean": [
++          "Erdos647Sieve.Elementary.nat_quotient_cast_lower",
++          "Erdos647Sieve.Elementary.smallPrimeDebit_ge_sum_sub_card",
++          "Erdos647Sieve.Elementary.smallPrimeDebit_lower"
++        ]
++      },
++      "prerequisites": [
++        "prime_reciprocal_lower"
++      ],
++      "historical_status": "pending"
++    },
++    "corrected_budget_estimate": {
++      "package": "research",
++      "build": [
++        "+Erdos647Research.CorrectedBudgetEstimate"
++      ],
++      "audits": {
++        "Audit/CorrectedBudgetEstimate.lean": [
++          "Erdos647Sieve.Elementary.correctedBudget_upper_eventually"
++        ]
++      },
++      "prerequisites": [
++        "log_budget_factorial",
++        "small_prime_debit_estimate"
++      ],
++      "historical_status": "pending"
++    },
++    "endpoint_statement": {
++      "package": "research",
++      "build": [
++        "+Erdos647Research.Endpoint.Statement"
++      ],
++      "audits": {
++        "Audit/EndpointStatement.lean": [
++          "Erdos647Sieve.Endpoint.endpointScale_pos",
++          "Erdos647Sieve.Endpoint.endpointRHSWith_le_of_le",
++          "Erdos647Sieve.Endpoint.endpointBound_iff_eventually",
++          "Erdos647Sieve.Endpoint.endpointBound_mono",
++          "Erdos647Sieve.Endpoint.endpointRHSWith_one_div_thousand",
++          "Erdos647Sieve.Endpoint.legacyEndpointClaim_iff",
++          "Erdos647Sieve.Endpoint.positiveEndpointClaim_of_explicit"
++        ]
++      },
++      "prerequisites": [],
++      "historical_status": "new v38 coefficient interface; not an endpoint proof"
++    },
++    "endpoint_window_parameters": {
++      "package": "research",
++      "build": [
++        "+Erdos647Research.Endpoint.WindowParameters"
++      ],
++      "audits": {
++        "Audit/EndpointWindowParameters.lean": [
++          "Erdos647Sieve.Endpoint.log_div_rpow_eq",
++          "Erdos647Sieve.Endpoint.endpointExponent_pos",
++          "Erdos647Sieve.Endpoint.endpointExponent_lt_one",
++          "Erdos647Sieve.Endpoint.endpointExponent_cancellation",
++          "Erdos647Sieve.Endpoint.logX_tendsto_atTop",
++          "Erdos647Sieve.Endpoint.logLogX_tendsto_atTop",
++          "Erdos647Sieve.Endpoint.windowScale_tendsto_atTop",
++          "Erdos647Sieve.Endpoint.windowLength_tendsto_atTop",
++          "Erdos647Sieve.Endpoint.windowLength_cast_tendsto_atTop",
++          "Erdos647Sieve.Endpoint.windowLength_ratio_tendsto_one",
++          "Erdos647Sieve.Endpoint.eventually_windowLength_pos",
++          "Erdos647Sieve.Endpoint.log_windowLength_sub_tendsto_zero",
++          "Erdos647Sieve.Endpoint.log_windowLength_div_logLog_tendsto"
++        ]
++      },
++      "prerequisites": [],
++      "historical_status": "new v38 parameter proof source; acceptance pending"
++    },
++    "endpoint_truncation_parameters": {
++      "package": "research",
++      "build": [
++        "+Erdos647Research.Endpoint.TruncationParameters"
++      ],
++      "audits": {
++        "Audit/EndpointTruncationParameters.lean": [
++          "Erdos647Sieve.Endpoint.rounded_hundred_eq_ceil",
++          "Erdos647Sieve.Endpoint.truncationOrder_eq_ceil",
++          "Erdos647Sieve.Endpoint.truncationOrder_even",
++          "Erdos647Sieve.Endpoint.truncationOrder_bounds",
++          "Erdos647Sieve.Endpoint.eventually_truncationOrder_pos",
++          "Erdos647Sieve.Endpoint.truncationOrder_div_windowLength_tendsto",
++          "Erdos647Sieve.Endpoint.truncationOrder_scale_ratio_tendsto",
++          "Erdos647Sieve.Endpoint.truncationOrder_cast_tendsto_atTop"
++        ]
++      },
++      "prerequisites": [
++        "endpoint_window_parameters"
++      ],
++      "historical_status": "new v38 parameter proof source; acceptance pending"
++    },
++    "endpoint_cutoff_parameters": {
++      "package": "research",
++      "build": [
++        "+Erdos647Research.Endpoint.CutoffParameters"
++      ],
++      "audits": {
++        "Audit/EndpointCutoffParameters.lean": [
++          "Erdos647Sieve.Endpoint.primeCutoff_pos",
++          "Erdos647Sieve.Endpoint.log_primeCutoff",
++          "Erdos647Sieve.Endpoint.complementaryScale_tendsto_atTop",
++          "Erdos647Sieve.Endpoint.log_primeCutoff_scale_ratio_tendsto",
++          "Erdos647Sieve.Endpoint.log_primeCutoff_tendsto_atTop",
++          "Erdos647Sieve.Endpoint.primeCutoff_tendsto_atTop",
++          "Erdos647Sieve.Endpoint.loglog_primeCutoff_sub_tendsto",
++          "Erdos647Sieve.Endpoint.log_windowLength_div_complementaryScale_tendsto_zero",
++          "Erdos647Sieve.Endpoint.log_windowLength_div_log_primeCutoff_tendsto_zero",
++          "Erdos647Sieve.Endpoint.eventually_windowLength_lt_primeCutoff",
++          "Erdos647Sieve.Endpoint.momentT_tendsto_zero",
++          "Erdos647Sieve.Endpoint.eventually_momentT_bounds",
++          "Erdos647Sieve.Endpoint.endpoint_parameters_admissible"
++        ]
++      },
++      "prerequisites": [
++        "endpoint_truncation_parameters"
++      ],
++      "historical_status": "new v38 parameter proof source; acceptance pending"
++    },
++    "endpoint_prime_mass_parameters": {
++      "package": "research",
++      "build": [
++        "+Erdos647Research.Endpoint.PrimeMassParameters"
++      ],
++      "audits": {
++        "Audit/EndpointPrimeMassParameters.lean": [
++          "Erdos647Sieve.Endpoint.endpoint_selectedPrimeSum_error_tendsto_zero",
++          "Erdos647Sieve.Endpoint.endpoint_primeMass_expansion_tendsto_zero"
++        ]
++      },
++      "prerequisites": [
++        "endpoint_cutoff_parameters",
++        "selected_prime_reciprocals"
++      ],
++      "historical_status": "new v38 parameter proof source; acceptance pending"
++    },
++    "endpoint_prime_mass_gap": {
++      "package": "research",
++      "build": [
++        "+Erdos647Research.Endpoint.PrimeMassGap"
++      ],
++      "audits": {
++        "Audit/EndpointPrimeMassGap.lean": [
++          "Erdos647Sieve.Endpoint.primeMassGapConstant_gt_three_halves",
++          "Erdos647Sieve.Endpoint.endpoint_primeMass_budgetMain_gap_tendsto",
++          "Erdos647Sieve.Endpoint.eventually_primeMass_gap_of_lt",
++          "Erdos647Sieve.Endpoint.eventually_primeMass_sub_correctedBudget_ge",
++          "Erdos647Sieve.Endpoint.eventually_correctedBudget_le_primeMass"
++        ]
++      },
++      "prerequisites": [
++        "endpoint_prime_mass_parameters",
++        "corrected_budget_estimate",
++        "endpoint_log_bounds"
++      ],
++      "historical_status": "new v42 mass-budget proof source; acceptance pending"
++    },
++    "endpoint_mass_budget_bounds": {
++      "package": "research",
++      "build": [
++        "+Erdos647Research.Endpoint.MassBudgetBounds"
++      ],
++      "audits": {
++        "Audit/EndpointMassBudgetBounds.lean": [
++          "Erdos647Sieve.Endpoint.log_windowLength_tendsto_atTop",
++          "Erdos647Sieve.Endpoint.loglog_windowLength_div_logLog_tendsto_zero",
++          "Erdos647Sieve.Endpoint.endpoint_primeMass_div_window_logLog_tendsto",
++          "Erdos647Sieve.Endpoint.endpoint_primeMass_nonneg",
++          "Erdos647Sieve.Endpoint.eventually_primeMass_le_window_mul_logLog",
++          "Erdos647Sieve.Endpoint.eventually_correctedBudget_le_window_mul_logLog",
++          "Erdos647Sieve.Endpoint.eventually_endpoint_mass_budget_bounds"
++        ]
++      },
++      "prerequisites": [
++        "endpoint_prime_mass_gap"
++      ],
++      "historical_status": "new v42 mass-budget proof source; acceptance pending"
++    },
++    "endpoint_amplification": {
++      "package": "research",
++      "build": [
++        "+Erdos647Research.Endpoint.Amplification"
++      ],
++      "audits": {
++        "Audit/EndpointAmplification.lean": [
++          "Erdos647Sieve.Endpoint.neg_log_weight_bounds",
++          "Erdos647Sieve.Endpoint.amplification_exponents_le",
++          "Erdos647Sieve.Endpoint.eventually_endpointMu_bounds",
++          "Erdos647Sieve.Endpoint.eventually_amplification_exponents_le",
++          "Erdos647Sieve.Endpoint.eventually_amplification_le",
++          "Erdos647Sieve.Endpoint.eventually_principal_contribution_le"
++        ]
++      },
++      "prerequisites": [
++        "endpoint_mass_budget_bounds",
++        "endpoint_log_bounds"
++      ],
++      "historical_status": "new v44 amplified-error proof source; acceptance pending"
++    },
++    "endpoint_moment_tail": {
++      "package": "research",
++      "build": [
++        "+Erdos647Research.Endpoint.MomentTail"
++      ],
++      "audits": {
++        "Audit/EndpointMomentTail.lean": [
++          "Erdos647Sieve.Endpoint.factorial_tail_le_geometric_exp",
++          "Erdos647Sieve.Endpoint.amplified_factorial_tail_le",
++          "Erdos647Sieve.Endpoint.eventually_amplified_moment_tail_le",
++          "Erdos647Sieve.Endpoint.eventually_moment_tail_contribution_le"
++        ]
++      },
++      "prerequisites": [
++        "endpoint_amplification",
++        "factorial_bounds"
++      ],
++      "historical_status": "new v44 amplified-error proof source; acceptance pending"
++    },
++    "endpoint_error_scales": {
++      "package": "research",
++      "build": [
++        "+Erdos647Research.Endpoint.ErrorScales"
++      ],
++      "audits": {
++        "Audit/EndpointErrorScales.lean": [
++          "Erdos647Sieve.Endpoint.window_complementary_scale_product",
++          "Erdos647Sieve.Endpoint.window_mul_logLog_div_logX_tendsto_zero",
++          "Erdos647Sieve.Endpoint.window_div_logX_tendsto_zero",
++          "Erdos647Sieve.Endpoint.truncation_log_window_div_logX_tendsto_zero",
++          "Erdos647Sieve.Endpoint.arithmetic_overhead_div_logX_tendsto_zero",
++          "Erdos647Sieve.Endpoint.log_window_div_logX_tendsto_zero",
++          "Erdos647Sieve.Endpoint.primeCutoff_pow_truncation_eq"
++        ]
++      },
++      "prerequisites": [
++        "endpoint_cutoff_parameters"
++      ],
++      "historical_status": "new v44 amplified-error proof source; acceptance pending"
++    },
++    "endpoint_arithmetic_remainder": {
++      "package": "research",
++      "build": [
++        "+Erdos647Research.Endpoint.ArithmeticRemainder"
++      ],
++      "audits": {
++        "Audit/EndpointArithmeticRemainder.lean": [
++          "Erdos647Sieve.Endpoint.amplified_arithmetic_remainder_eq",
++          "Erdos647Sieve.Endpoint.eventually_arithmetic_overhead_le",
++          "Erdos647Sieve.Endpoint.eventually_amplified_arithmetic_remainder_le",
++          "Erdos647Sieve.Endpoint.eventually_exceptional_window_le"
++        ]
++      },
++      "prerequisites": [
++        "endpoint_amplification",
++        "endpoint_error_scales"
++      ],
++      "historical_status": "new v44 amplified-error proof source; acceptance pending"
++    },
++    "endpoint_counting_reduction": {
++      "package": "research",
++      "build": [
++        "+Erdos647Research.Endpoint.CountingReduction"
++      ],
++      "audits": {
++        "Audit/EndpointCountingReduction.lean": [
++          "Erdos647Sieve.Endpoint.amplified_momentBound_eq",
++          "Erdos647Sieve.Endpoint.eventually_candidateCount_le_four_contributions",
++          "Erdos647Sieve.Endpoint.eventually_candidateCount_le_of_negative_budget",
++          "Erdos647Sieve.Endpoint.eventually_candidateCount_le_amplified_errors"
++        ]
++      },
++      "prerequisites": [
++        "endpoint_moment_tail",
++        "endpoint_arithmetic_remainder"
++      ],
++      "historical_status": "new v44 amplified-error proof source; acceptance pending"
++    }
++  }
++}
+--- a/tests/test_amplified_errors_v44.py
++++ b/tests/test_amplified_errors_v44.py
+@@ -34,6 +34,33 @@
+ 
+ def header(mod, name):
+     return code(mod).split('theorem ' + name, 1)[1].split(' := by', 1)[0]
++
++
++def assert_amplified_acceptance(testcase, record):
++    branch = record['amplified_error_branch']
++    testcase.assertIn(branch['status'], {'source_implemented_acceptance_pending', 'accepted'})
++    if branch['status'] != 'accepted':
++        testcase.assertIsNone(branch['acceptance_evidence'])
++        return
++    evidence = ROOT / branch['acceptance_evidence']
++    testcase.assertTrue(evidence.is_file())
++    summary = json.loads((evidence.parent / 'summary.json').read_text())
++    testcase.assertEqual(summary['run_id'], branch['run_id'])
++    testcase.assertEqual(summary['status'], 'PASS_SELECTED_CHECKS')
++    testcase.assertEqual(summary['source_sha256_before'], summary['source_sha256_after'])
++    commands = {c['label']: c for c in summary['commands']}
++    for gate, module in MODULES.items():
++        testcase.assertEqual(summary['gates'][gate]['status'], 'PASS')
++        testcase.assertIn(gate, summary['selected_gates'])
++        for suffix in ['_build', '_audit_0']:
++            command = commands[gate + suffix]
++            testcase.assertEqual(command['exit_code'], 0)
++            text = (evidence.parent / command['log']).read_text()
++            testcase.assertRegex(text, r'EXIT_CODE=0\s*$')
++            testcase.assertFalse(check.lean_warnings(text))
++        targets = check.GATES[gate]['audits']['Audit/Endpoint' + module + '.lean']
++        for target in targets:
++            testcase.assertEqual(check.parse_axioms(text, target), summary['gates'][gate]['axioms'][target])
+ 
+ 
+ class ErrorInterfaces(unittest.TestCase):
+@@ -133,15 +160,14 @@
+         for mod in MODULES.values():
+             self.assertNotRegex(check.strip_comments(code(mod)), r'^theorem\s+(?:endpoint|positiveEndpoint)\b')
+         record = json.loads((ROOT / 'docs/endpoint-coefficient-status.json').read_text())
+-        self.assertEqual(record['amplified_error_branch']['status'], 'source_implemented_acceptance_pending')
+-        self.assertIsNone(record['amplified_error_branch']['acceptance_evidence'])
++        assert_amplified_acceptance(self, record)
+ 
+ 
+ class ErrorGateWorkflow(unittest.TestCase):
+     def test_all_gates_includes_accepted_baseline_and_five_new_checks(self):
+         selected = check.selected_gates(check.parser().parse_args([]))
+         self.assertEqual(selected, list(check.GATES))
+-        self.assertEqual(len(selected), 26)
++        self.assertGreaterEqual(len(selected), 26)
+         self.assertTrue(set(MODULES).issubset(selected))
+ 
+     def test_scale_checks_do_not_require_tail_or_pnt(self):
+--- a/tests/test_audit_binders_v45.py
++++ b/tests/test_audit_binders_v45.py
+@@ -20,6 +20,7 @@
+ ROOT = Path(__file__).resolve().parents[1]
+ sys.path.insert(0, str(ROOT / 'scripts'))
+ import check
++from test_amplified_errors_v44 import assert_amplified_acceptance
+ 
+ FIXTURE = json.loads((ROOT / 'tests/fixtures/v44_error_audit_interfaces.json').read_text())
+ ENTRIES = FIXTURE['entries']
+@@ -144,8 +145,7 @@
+ 
+     def test_current_version_has_no_endpoint_acceptance(self):
+         record = json.loads((ROOT / 'docs/endpoint-coefficient-status.json').read_text())
+-        self.assertEqual(record['amplified_error_branch']['status'],
+-                         'source_implemented_acceptance_pending')
++        assert_amplified_acceptance(self, record)
+         self.assertIsNone(record['proved_coefficient'])
+         self.assertIsNone(record['proved_endpoint_theorem'])
+ 
+--- /dev/null
++++ b/tests/test_endpoint_final_v46.py
+@@ -0,0 +1,264 @@
++"""Final-assembly interfaces, coefficient quantifiers, and fail-closed reporting.
++
++Source/algebra/workflow tests are separate from the registered Lean proof gates.
++"""
++from __future__ import annotations
++
++import contextlib
++from copy import deepcopy
++from fractions import Fraction as F
++import hashlib
++import io
++import json
++from pathlib import Path
++import re
++import sys
++import tempfile
++import unittest
++import zipfile
++
++ROOT = Path(__file__).resolve().parents[1]
++sys.path.insert(0, str(ROOT / 'scripts'))
++import check
++
++FIXTURE = json.loads((ROOT / 'tests/fixtures/v45_accepted_sources.json').read_text())
++MODULES = {'endpoint_absorption_scales': ('AbsorptionScales', 'EndpointAbsorptionScales'),
++           'endpoint_error_absorption': ('ErrorAbsorption', 'EndpointErrorAbsorption'),
++           'endpoint_final': ('Main', 'EndpointFinal')}
++NS = 'Erdos647Sieve.Endpoint.'
++
++
++def source(module):
++    return (ROOT / 'research/Erdos647Research/Endpoint' / (module + '.lean')).read_text()
++
++
++def audit(module):
++    return (ROOT / 'research/Audit' / (module + '.lean')).read_text()
++
++
++class FinalInterfaces(unittest.TestCase):
++    def test_all_52_accepted_modules_and_27_audits_are_byte_exact(self):
++        self.assertEqual(len(FIXTURE['source_sha256']), 79)
++        for path, digest in FIXTURE['source_sha256'].items():
++            with self.subTest(path=path):
++                self.assertEqual(hashlib.sha256((ROOT / path).read_bytes()).hexdigest(), digest)
++
++    def test_all_26_predecessor_gate_objects_are_preserved(self):
++        self.assertEqual(len(FIXTURE['gates']), 26)
++        for name, gate in FIXTURE['gates'].items():
++            self.assertEqual(check.GATES[name], gate)
++
++    def test_all_15_new_declarations_are_registered_and_audited(self):
++        count = 0
++        for gate, (module, audit_name) in MODULES.items():
++            names = [('Erdos647Sieve.' if n == 'endpoint' else NS) + n
++                     for n in re.findall(r'^theorem (\w+)', source(module), re.M)]
++            self.assertEqual(check.GATES[gate]['audits'], {'Audit/' + audit_name + '.lean': names})
++            self.assertEqual(re.findall(r'^#print axioms (\S+)', audit(audit_name), re.M), names)
++            self.assertEqual(re.findall(r'^#check (\S+)', audit(audit_name), re.M), names)
++            count += len(names)
++        self.assertEqual(count, 15)
++
++    def test_23_expanded_checks(self):
++        self.assertEqual(sum(len(re.findall(r'^example\s*:', audit(a), re.M))
++                             for _, a in MODULES.values()), 23)
++
++    def test_all_29_gates_are_default_selected(self):
++        selected = check.selected_gates(check.parser().parse_args([]))
++        self.assertEqual(selected, list(check.GATES))
++        self.assertEqual(len(selected), 29)
++
++    def test_scale_check_is_independent_of_counting_pnt_and_budget(self):
++        selected = check.selected_gates(check.parser().parse_args(['--gate','endpoint_absorption_scales']))
++        for name in ['pntplus_inputs','endpoint_prime_mass_gap','endpoint_moment_tail','endpoint_counting_reduction']:
++            self.assertNotIn(name, selected)
++
++    def test_final_check_selects_counting_and_absorption(self):
++        selected = check.selected_gates(check.parser().parse_args(['--gate','endpoint_final']))
++        self.assertIn('endpoint_counting_reduction', selected)
++        self.assertIn('endpoint_error_absorption', selected)
++        self.assertEqual(selected[-1], 'endpoint_final')
++
++    def test_no_admissions_or_warning_suppression(self):
++        for module, a in MODULES.values():
++            self.assertFalse(check.FORBIDDEN.search(check.strip_comments(source(module))))
++            self.assertFalse(check.FORBIDDEN.search(check.strip_comments(audit(a))))
++            self.assertIn('set_option warningAsError true', audit(a))
++        check.source_boundary(ROOT)
++
++    def test_no_parameter_or_endpoint_statement_redefinition(self):
++        for module, _ in MODULES.values():
++            self.assertNotRegex(check.strip_comments(source(module)),
++                r'\b(?:def|abbrev)\s+(?:Candidate|EndpointBound|EndpointClaim|endpointExponent|windowLength|primeCutoff|truncationOrder|momentT|correctedBudget)\b')
++            self.assertNotIn('RS_prime.', source(module))
++            self.assertNotIn('PrimeNumberTheoremAnd.', source(module))
++
++    def test_final_declarations_have_no_extra_mathematical_premise(self):
++        text = source('Main')
++        head = text.split('theorem endpointBound_of_lt_principal_rate',1)[1].split(':=',1)[0]
++        self.assertEqual(' '.join(head.split()),
++            '(c : ℝ) (hc : c < (1499 / 1000000 : ℝ)) : EndpointBound c')
++        for name, typ in [('endpointBound_one_div_thousand','EndpointBound ((1 : ℝ) / 1000)'),
++                          ('positiveEndpoint','PositiveEndpointClaim'),('endpoint','EndpointClaim')]:
++            self.assertRegex(text, r'theorem '+name+r'\s*:\s*'+re.escape(typ)+r'\s*:=')
++
++    def test_final_fixed_constant_is_outside_onset_and_X(self):
++        text = audit('EndpointFinal')
++        self.assertIn('∃ c : ℝ, 0 < c ∧ ∃ X0 : ℕ', text)
++        self.assertIn('∀ X : ℕ, X0 ≤ X →', text)
++        self.assertNotIn('∃ c : ℕ →', text)
++        self.assertIn('Real.rpow (Real.log (X : ℝ)) endpointExponent', text)
++        self.assertIn('Real.log (Real.log (X : ℝ))', text)
++        self.assertIn('(candidateCount X : ℝ)', text)
++
++    def test_no_linter_prone_unused_named_audit_hypotheses(self):
++        for _, a in MODULES.values():
++            for typ in re.findall(r'^example\s*:\s*(.*?)\s*:=',audit(a),re.M|re.S):
++                for name in re.findall(r'\((h\w*)\s*:',typ):
++                    self.assertGreater(len(re.findall(r'\b'+name+r'\b',typ)),1)
++
++    def test_legacy_is_a_corollary_not_a_new_analytic_argument(self):
++        text=source('Main')
++        self.assertIn('legacyEndpointClaim_iff.mpr Endpoint.endpointBound_one_div_thousand',text)
++        self.assertIn('endpointBound_of_lt_principal_rate ((1 : ℝ) / 1000) (by norm_num)',text)
++
++    def test_absorption_includes_both_error_terms_and_factor_two(self):
++        text=source('ErrorAbsorption')
++        self.assertIn('2 * Real.exp (Real.log (X : ℝ) / 2)',text)
++        self.assertIn('((squareRoot_ratio_tendsto_zero c).const_mul 2)',text)
++        self.assertIn('momentTail_ratio_tendsto_zero c',text)
++        self.assertIn('principal_ratio_tendsto_zero c hc',text)
++        self.assertIn('eventually_candidateCount_le_amplified_errors',source('Main'))
++
++    def test_majorant_definition_is_the_exact_accepted_expression(self):
++        definition=source('ErrorAbsorption').split('def amplifiedErrorMajorant',1)[1].split('/--',1)[0]
++        self.assertIn('(1499 / 1000000 : ℝ)',definition)
++        self.assertIn('Real.exp (-(windowLength X : ℝ) / 30)',definition)
++        self.assertIn('2 * Real.exp (Real.log (X : ℝ) / 2)',definition)
++        self.assertNotIn('correctedBudget',definition)
++
++    def test_current_static_coefficient_record_is_pending_not_claimed(self):
++        r=json.loads((ROOT/'docs/endpoint-coefficient-status.json').read_text())
++        self.assertEqual(r['version'],'v46')
++        self.assertIsNone(r['proved_coefficient'])
++        self.assertIsNone(r['proved_endpoint_theorem'])
++        self.assertEqual(r['amplified_error_branch']['status'],'accepted')
++        self.assertEqual(r['final_absorption_branch']['status'],'source_implemented_acceptance_pending')
++        self.assertEqual(r['final_absorption_branch']['implemented_explicit_coefficient'],{'numerator':1,'denominator':1000})
++        self.assertFalse(r['historical_coefficient']['required'])
++
++    def test_new_sources_audits_and_fixture_are_collected(self):
++        paths={p.relative_to(ROOT).as_posix() for p in check.source_files(ROOT)}
++        for m,a in MODULES.values():
++            self.assertIn('research/Erdos647Research/Endpoint/'+m+'.lean',paths)
++            self.assertIn('research/Audit/'+a+'.lean',paths)
++        self.assertIn('tests/fixtures/v45_accepted_sources.json',paths)
++
++
++class ExactAbsorptionAlgebra(unittest.TestCase):
++    def test_principal_slack_needs_no_numerical_log_approximation(self):
++        self.assertLess(F(1,1000),F(1499,1000000))
++        self.assertEqual(F(1499,1000000)-F(1,1000),F(499,1000000))
++
++    def test_normalized_exponents(self):
++        for U in [F(3,2),F(99,7),F(100000,3)]:
++            H=F(U.numerator//U.denominator)
++            for L,Q in [(F(1,2),F(7)),(F(20),F(9000)),(F(301,7),F(999999))]:
++                S=U/L
++                for c in [F(-1),F(0),F(1,1000),F(1498999,10**9)]:
++                    k=F(1499,1000000)
++                    self.assertEqual((c-k*H/U)*S,-k*H/L+c*S)
++                    self.assertEqual((c*S/H-F(1,30))*H,-H/30+c*S)
++                    self.assertEqual((c*S/Q-F(1,2))*Q,-Q/2+c*S)
++                    self.assertEqual((U/H)/L,S/H)
++
++    def test_strict_upper_coefficient_is_not_silently_closed(self):
++        k=F(1499,1000000)
++        for U,H in [(F(3,2),F(1)),(F(101,2),F(50))]:
++            self.assertGreater(k-k*H/U,0)
++        self.assertIn('(hc : c < (1499 / 1000000 : ℝ))',source('Main'))
++
++
++def passing_fixture():
++    final='endpoint_final'
++    names=next(iter(check.GATES[final]['audits'].values()))
++    return {'run_id':'MOCK_CURRENT_RUN_NOT_PROOF_EVIDENCE','status':'PASS_SELECTED_CHECKS',
++        'selected_gates':list(check.GATES),'checks_role':'BUILD_TYPE_AXIOM',
++        'source_sha256_before':{'Example.lean':'same'},'source_sha256_after':{'Example.lean':'same'},
++        'source_changes':{},'gates':{g:{'status':'PASS','build_warnings':[],
++            'axioms':{n:sorted(check.ALLOW) for n in names} if g==final else {}} for g in check.GATES},
++        'commands':[{'label':final+'_build','exit_code':0},{'label':final+'_audit_0','exit_code':0}]}
++
++
++class EndpointReporting(unittest.TestCase):
++    def assert_rejected(self, record):
++        record['endpoint_proved']=True
++        record['endpoint_coefficient']={'numerator':99,'denominator':1}
++        check.record_endpoint_acceptance(record)
++        self.assertFalse(record['endpoint_proved'])
++        self.assertIsNone(record['endpoint_coefficient'])
++        self.assertIsNone(record['endpoint_acceptance'])
++
++    def test_current_full_acceptance_records_the_explicit_constant(self):
++        record=passing_fixture();check.record_endpoint_acceptance(record)
++        self.assertTrue(record['endpoint_proved'])
++        self.assertEqual(record['endpoint_coefficient'],{'numerator':1,'denominator':1000})
++        self.assertFalse(record['endpoint_acceptance']['is_resolution_of_erdos647'])
++        self.assertEqual(record['endpoint_acceptance']['run_id'],record['run_id'])
++
++    def test_old_v45_success_does_not_claim_the_final_endpoint(self):
++        record=json.loads((ROOT/'provenance/accepted/v45/summary.json').read_text())
++        self.assert_rejected(record)
++
++    def test_failed_overall_run_rejected(self):
++        r=passing_fixture();r['status']='FAIL_OR_BLOCKED';self.assert_rejected(r)
++
++    def test_tooling_only_run_rejected(self):
++        r=passing_fixture();r['checks_role']='TOOLING_ONLY';self.assert_rejected(r)
++
++    def test_unrequested_final_gate_rejected(self):
++        r=passing_fixture();r['selected_gates'].remove('endpoint_final');self.assert_rejected(r)
++
++    def test_failed_or_blocked_final_gate_rejected(self):
++        for status in ['FAIL','BLOCKED','RUNNING','NOT_REQUESTED']:
++            r=passing_fixture();r['gates']['endpoint_final']['status']=status;self.assert_rejected(r)
++
++    def test_critical_source_change_rejected(self):
++        r=passing_fixture();r['source_sha256_after']['Example.lean']='changed';self.assert_rejected(r)
++
++    def test_missing_source_snapshot_rejected(self):
++        r=passing_fixture();del r['source_sha256_after'];self.assert_rejected(r)
++
++    def test_foreign_axiom_rejected(self):
++        r=passing_fixture();next(iter(r['gates']['endpoint_final']['axioms'].values())).append('sorryAx');self.assert_rejected(r)
++
++    def test_missing_or_extra_theorem_report_rejected(self):
++        r=passing_fixture();r['gates']['endpoint_final']['axioms'].pop('Erdos647Sieve.endpoint');self.assert_rejected(r)
++        r=passing_fixture();r['gates']['endpoint_final']['axioms']['Fake.theorem']=[];self.assert_rejected(r)
++
++    def test_failed_prerequisite_rejected(self):
++        r=passing_fixture();r['gates']['endpoint_error_absorption']['status']='FAIL';self.assert_rejected(r)
++
++    def test_nonzero_final_audit_even_with_clean_reports_rejected(self):
++        r=passing_fixture();r['commands'][-1]['exit_code']=1;self.assert_rejected(r)
++
++    def test_duplicate_or_missing_command_rejected(self):
++        r=passing_fixture();r['commands'].append(deepcopy(r['commands'][-1]));self.assert_rejected(r)
++        r=passing_fixture();r['commands'].pop();self.assert_rejected(r)
++
++    def test_build_warning_rejected(self):
++        r=passing_fixture();r['gates']['endpoint_final']['build_warnings']=['warning'];self.assert_rejected(r)
++
++    def test_finished_tooling_archive_labels_stay_consistent(self):
++        with tempfile.TemporaryDirectory() as temp,contextlib.redirect_stdout(io.StringIO()):
++            root=Path(temp);r=check.Run(root,check.parser().parse_args(['tooling']))
++            r.record['status']='PASS_SELECTED_CHECKS';r.finish()
++            self.assertTrue(r.dest.name.startswith('erdos647_repo_v46_results_'))
++            zpath=r.dest.with_suffix('.zip')
++            self.assertEqual((root/'results/latest_result.txt').read_text().strip(),str(zpath))
++            with zipfile.ZipFile(zpath) as z:
++                report=json.loads(z.read(r.id+'/summary.json'))
++                self.assertFalse(report['endpoint_proved'])
++                self.assertIsNone(report['endpoint_coefficient'])
++                text=z.read(r.id+'/SUMMARY.md').decode()
++                self.assertIn('No final endpoint acceptance',text)
+--- a/tests/test_endpoint_parameters_v38.py
++++ b/tests/test_endpoint_parameters_v38.py
+@@ -96,7 +96,15 @@
+             self.assertFalse(re.search(r'\b(?:def|abbrev)\s+(?:windowLength|truncationOrder|primeCutoff|momentT|endpointExponent)\b',code))
+             self.assertFalse(check.FORBIDDEN.search(code))
+         self.assertNotIn('endpoint',check.GATES)
+-        self.assertFalse((ROOT/'research/Erdos647Research/Endpoint/Main.lean').exists())
++        main = ROOT/'research/Erdos647Research/Endpoint/Main.lean'
++        self.assertEqual(main.exists(), 'endpoint_final' in check.GATES)
++        if main.exists():
++            self.assertEqual(check.GATES['endpoint_final']['build'],
++                             ['+Erdos647Research.Endpoint.Main'])
++            self.assertIn('eventually_candidateCount_le_amplified_errors', main.read_text())
++            final_audit = (ROOT/'research/Audit/EndpointFinal.lean').read_text()
++            self.assertIn('example : EndpointClaim :=', final_audit)
++            self.assertIn('#print axioms Erdos647Sieve.endpoint', final_audit)
+ 
+     def test_new_library_enforces_warnings_as_errors(self):
+         cfg=(ROOT/'research/lakefile.lean').read_text()

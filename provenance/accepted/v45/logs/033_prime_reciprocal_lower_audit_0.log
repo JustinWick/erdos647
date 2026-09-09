@@ -1,0 +1,18 @@
+$ <REPO>/.tools/elan/toolchains/leanprover--lean4---v4.32.2/bin/lake env lean -DwarningAsError=true Audit/PrimeReciprocalLower.lean
+Erdos647Sieve.Elementary.harmonic_sum_le_finitePrimeEuler (H : ℕ) :
+  ∑ m ∈ Finset.Icc 1 H, (↑m)⁻¹ ≤ Erdos647Sieve.Elementary.finitePrimeEuler H
+'Erdos647Sieve.Elementary.harmonic_sum_le_finitePrimeEuler' depends on axioms: [propext, Classical.choice, Quot.sound]
+Erdos647Sieve.Elementary.reciprocal_remainder_telescope (n : ℕ) :
+  ∑ m ∈ Finset.Icc 2 (n + 1), 1 / (↑m * (↑m - 1)) = 1 - 1 / (↑n + 1)
+'Erdos647Sieve.Elementary.reciprocal_remainder_telescope' depends on axioms: [propext, Classical.choice, Quot.sound]
+Erdos647Sieve.Elementary.prime_log_factor_le (p : ℕ) (hp : 2 ≤ p) :
+  -Real.log (1 - (↑p)⁻¹) ≤ (↑p)⁻¹ + 1 / (↑p * (↑p - 1))
+'Erdos647Sieve.Elementary.prime_log_factor_le' depends on axioms: [propext, Classical.choice, Quot.sound]
+Erdos647Sieve.Elementary.log_finitePrimeEuler_le (H : ℕ) (hH : 1 ≤ H) :
+  Real.log (Erdos647Sieve.Elementary.finitePrimeEuler H) ≤ ∑ p ∈ Erdos647Sieve.Elementary.debitPrimes H, (↑p)⁻¹ + 1
+'Erdos647Sieve.Elementary.log_finitePrimeEuler_le' depends on axioms: [propext, Classical.choice, Quot.sound]
+Erdos647Sieve.Elementary.prime_reciprocal_lower (H : ℕ) (hH : 2 ≤ H) :
+  Real.log (Real.log ↑H) - 1 ≤ ∑ p ∈ Erdos647Sieve.Elementary.debitPrimes H, (↑p)⁻¹
+'Erdos647Sieve.Elementary.prime_reciprocal_lower' depends on axioms: [propext, Classical.choice, Quot.sound]
+
+EXIT_CODE=0

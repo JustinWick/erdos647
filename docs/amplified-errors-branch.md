@@ -1,3 +1,13 @@
+# Accepted milestone update — v45
+
+All five gates below passed in the v45 full **26/26** run. The source implementation
+and audit repair described below are historical stages, not current blockers.
+The accepted output is the all-sign intermediate counting bound, with no final
+endpoint coefficient claimed by that run. See [accepted evidence](../provenance/accepted/v45/README.md).
+Final absorption is the separate [v46 branch](final-endpoint-branch.md).
+
+---
+
 # Amplified errors: the next mathematical changeset (v44)
 
 ## Boundary between the two PRs

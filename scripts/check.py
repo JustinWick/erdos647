@@ -356,7 +356,7 @@ class Run:
     def __init__(self, root: Path, args: argparse.Namespace):
         self.root=root; self.args=args; self.env=clean_env(); self.commands=0
         if args.jobs: self.env['LEAN_NUM_THREADS']=str(args.jobs)
-        self.id='erdos647_repo_v45_results_'+datetime.now(timezone.utc).strftime('%Y%m%dT%H%M%SZ')+'_'+uuid.uuid4().hex[:8]
+        self.id='erdos647_repo_v47_results_'+datetime.now(timezone.utc).strftime('%Y%m%dT%H%M%SZ')+'_'+uuid.uuid4().hex[:8]
         self.dest=root/'results'/self.id
         if (root/'results').is_symlink(): raise ValueError('Refusing symlinked results directory')
         self.dest.mkdir(parents=True,exist_ok=False)
@@ -579,6 +579,7 @@ class Run:
         self.save();print(f'[{result["status"]}] {name}',flush=True)
 
     def finish(self):
+        record_endpoint_acceptance(self.record)
         self.record['finished_utc']=datetime.now(timezone.utc).isoformat();self.save()
         lines=['# Repository check results','',f'Run: `{self.id}`',f'Status: **{self.record["status"]}**','',
             '| Gate | This invocation |','|---|---|']
@@ -596,7 +597,9 @@ class Run:
             lines += ['', '## Recorded metadata changes', ''] + self.record['warnings']
         lines += ['','Historical proof acceptance is not a current run result.',
                   'A selected failure or blocked gate makes the overall command fail.',
-                  'The asymptotic endpoint remains outside the completed theorem inventory.']
+                  ('The fixed-coefficient endpoint passed in this invocation with c=1/1000; '
+                   'this is not a resolution of Erdos #647.' if self.record['endpoint_proved'] else
+                   'No final endpoint acceptance is established by this invocation.')]
         (self.dest/'SUMMARY.md').write_text('\n'.join(lines)+'\n')
         for p in source_files(self.root):
             dst=self.dest/'source'/p.relative_to(self.root);dst.parent.mkdir(parents=True,exist_ok=True);shutil.copy2(p,dst)
@@ -612,6 +615,59 @@ class Run:
                 if p.is_file():z.write(p,self.id+'/'+p.relative_to(self.dest).as_posix())
         (self.root/'results/latest_result.txt').write_text(str(report)+'\n')
         print('\nRESULTS ZIP: '+str(report),flush=True)
+
+
+def record_endpoint_acceptance(record: dict) -> None:
+    """Endpoint status comes only from this invocation's successful final audit.
+
+    Static documentation, historical evidence and a clean printed axiom list after
+    a failed command never count. A failed overall/source check keeps status false.
+    """
+    record['endpoint_proved'] = False
+    record['endpoint_coefficient'] = None
+    record['endpoint_acceptance'] = None
+    name = 'endpoint_final'
+    if record.get('status') != 'PASS_SELECTED_CHECKS' or name not in record.get('selected_gates', []):
+        return
+    if record.get('checks_role') != 'BUILD_TYPE_AXIOM':
+        return
+    before, after = record.get('source_sha256_before'), record.get('source_sha256_after')
+    if not before or not after or any(e['role'] == 'checked_input' for e in changed_sources(before, after).values()):
+        return
+    final = record.get('gates', {}).get(name, {})
+    if final.get('status') != 'PASS' or final.get('build_warnings'):
+        return
+    targets = [t for ts in GATES[name]['audits'].values() for t in ts]
+    axioms = final.get('axioms', {})
+    if set(axioms) != set(targets) or any(set(axioms[t]) - ALLOW for t in targets):
+        return
+    needed = set()
+    def include(gate):
+        if gate in needed:
+            return
+        needed.add(gate)
+        for parent in GATES[gate]['prerequisites']:
+            include(parent)
+    include(name)
+    if any(record.get('gates', {}).get(g, {}).get('status') != 'PASS' for g in needed):
+        return
+    commands = record.get('commands', [])
+    for label in [name + '_build', name + '_audit_0']:
+        matching = [c for c in commands if c.get('label') == label]
+        if len(matching) != 1 or matching[0].get('exit_code') != 0:
+            return
+    record['endpoint_proved'] = True
+    record['endpoint_coefficient'] = {'numerator': 1, 'denominator': 1000}
+    record['endpoint_acceptance'] = {
+        'run_id': record['run_id'], 'gate': name,
+        'theorem': 'Erdos647Sieve.Endpoint.endpointBound_one_div_thousand',
+        'legacy_theorem': 'Erdos647Sieve.endpoint',
+        'general_theorem': 'Erdos647Sieve.Endpoint.endpointBound_of_lt_principal_rate',
+        'positive_coefficient_range': {'lower_exclusive': 0,
+            'upper_exclusive': {'numerator': 1499, 'denominator': 1000000}},
+        'positive_claim': 'Erdos647Sieve.Endpoint.positiveEndpoint',
+        'is_resolution_of_erdos647': False,
+        'basis': 'current build, expanded-type and transitive-axiom audits; stable checked inputs'}
 
 
 def selected_gates(args: argparse.Namespace) -> list[str]:

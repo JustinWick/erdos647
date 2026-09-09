@@ -1,0 +1,59 @@
+{
+  "review_basis": "Read-only uploaded source/log/manifest review; not a fresh Lean execution",
+  "archive": "erdos647_repo_v46_results_20260908T203111Z_99d07146.zip",
+  "archive_sha256": "f81b31e89970201dd90597872c70ef2e9e3a38ef2f9d20ea0ae38119846efa11",
+  "run_id": "erdos647_repo_v46_results_20260908T203111Z_99d07146",
+  "gates": {
+    "PASS": 26,
+    "FAIL": 1,
+    "BLOCKED": 2
+  },
+  "total_gates": 29,
+  "manifest_entries_verified": 262,
+  "source_snapshot_entries_each": 157,
+  "snapshots_match": true,
+  "source_changes": {},
+  "toolchain": "leanprover/lean4:v4.32.2",
+  "pinned_dependency_entries_checked": 23,
+  "mathematical_module_files": 55,
+  "accepted_source_and_audit_fixture_entries": 79,
+  "accepted_gate_definitions_preserved": 26,
+  "delivered_v46_payload_files_matched": [
+    "research/Audit/EndpointAbsorptionScales.lean",
+    "research/Audit/EndpointErrorAbsorption.lean",
+    "research/Audit/EndpointFinal.lean",
+    "research/Erdos647Research/Endpoint/AbsorptionScales.lean",
+    "research/Erdos647Research/Endpoint/ErrorAbsorption.lean",
+    "research/Erdos647Research/Endpoint/Main.lean",
+    "scripts/check.py",
+    "scripts/gates.json"
+  ],
+  "distinct_audited_declarations": 220,
+  "passing_audit_files": 27,
+  "passing_exact_type_definition_examples": 169,
+  "passing_build_audit_logs_checked": 53,
+  "permitted_axioms": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "passing_warning_count": 0,
+  "recorded_runner_tests": 279,
+  "cache_actions": {
+    ".": "reuse_existing",
+    "research": "reuse_existing"
+  },
+  "failed_gates": {
+    "endpoint_absorption_scales": "endpoint_absorption_scales_build: exit 1; see logs/062_endpoint_absorption_scales_build.log"
+  },
+  "blocked_gates": {
+    "endpoint_error_absorption": "Failed prerequisite: endpoint_absorption_scales",
+    "endpoint_final": "Failed prerequisite: endpoint_error_absorption"
+  },
+  "failed_source_line": 36,
+  "failure": "AbsorptionScales.lean: named endpointScale in target versus explicit quotient in hinv",
+  "new_final_layer_acceptance": false,
+  "endpoint_proved": false,
+  "proved_coefficient": null,
+  "integrity_errors": []
+}

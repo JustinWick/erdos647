@@ -1,0 +1,156 @@
+[
+  {
+    "module": "Erdos647Research.AnalyticInputs",
+    "expected": "<REPO>/research/.lake/build/lib/lean/Erdos647Research/AnalyticInputs.olean",
+    "resolved": "<REPO>/research/.lake/build/lib/lean/Erdos647Research/AnalyticInputs.olean",
+    "correct_owner": true,
+    "object_exists": true
+  },
+  {
+    "module": "Erdos647Research.CleanMertens",
+    "expected": "<REPO>/research/.lake/build/lib/lean/Erdos647Research/CleanMertens.olean",
+    "resolved": "<REPO>/research/.lake/build/lib/lean/Erdos647Research/CleanMertens.olean",
+    "correct_owner": true,
+    "object_exists": true
+  },
+  {
+    "module": "Erdos647Research.Compat.PNTPlus",
+    "expected": "<REPO>/research/.lake/build/lib/lean/Erdos647Research/Compat/PNTPlus.olean",
+    "resolved": "<REPO>/research/.lake/build/lib/lean/Erdos647Research/Compat/PNTPlus.olean",
+    "correct_owner": true,
+    "object_exists": true
+  },
+  {
+    "module": "Erdos647Research.CorrectedBudgetEstimate",
+    "expected": "<REPO>/research/.lake/build/lib/lean/Erdos647Research/CorrectedBudgetEstimate.olean",
+    "resolved": "<REPO>/research/.lake/build/lib/lean/Erdos647Research/CorrectedBudgetEstimate.olean",
+    "correct_owner": true,
+    "object_exists": true
+  },
+  {
+    "module": "Erdos647Research.Endpoint.Amplification",
+    "expected": "<REPO>/research/.lake/build/lib/lean/Erdos647Research/Endpoint/Amplification.olean",
+    "resolved": "<REPO>/research/.lake/build/lib/lean/Erdos647Research/Endpoint/Amplification.olean",
+    "correct_owner": true,
+    "object_exists": true
+  },
+  {
+    "module": "Erdos647Research.Endpoint.CutoffParameters",
+    "expected": "<REPO>/research/.lake/build/lib/lean/Erdos647Research/Endpoint/CutoffParameters.olean",
+    "resolved": "<REPO>/research/.lake/build/lib/lean/Erdos647Research/Endpoint/CutoffParameters.olean",
+    "correct_owner": true,
+    "object_exists": true
+  },
+  {
+    "module": "Erdos647Research.Endpoint.MassBudgetBounds",
+    "expected": "<REPO>/research/.lake/build/lib/lean/Erdos647Research/Endpoint/MassBudgetBounds.olean",
+    "resolved": "<REPO>/research/.lake/build/lib/lean/Erdos647Research/Endpoint/MassBudgetBounds.olean",
+    "correct_owner": true,
+    "object_exists": true
+  },
+  {
+    "module": "Erdos647Research.Endpoint.PrimeMassGap",
+    "expected": "<REPO>/research/.lake/build/lib/lean/Erdos647Research/Endpoint/PrimeMassGap.olean",
+    "resolved": "<REPO>/research/.lake/build/lib/lean/Erdos647Research/Endpoint/PrimeMassGap.olean",
+    "correct_owner": true,
+    "object_exists": true
+  },
+  {
+    "module": "Erdos647Research.Endpoint.PrimeMassParameters",
+    "expected": "<REPO>/research/.lake/build/lib/lean/Erdos647Research/Endpoint/PrimeMassParameters.olean",
+    "resolved": "<REPO>/research/.lake/build/lib/lean/Erdos647Research/Endpoint/PrimeMassParameters.olean",
+    "correct_owner": true,
+    "object_exists": true
+  },
+  {
+    "module": "Erdos647Research.Endpoint.TruncationParameters",
+    "expected": "<REPO>/research/.lake/build/lib/lean/Erdos647Research/Endpoint/TruncationParameters.olean",
+    "resolved": "<REPO>/research/.lake/build/lib/lean/Erdos647Research/Endpoint/TruncationParameters.olean",
+    "correct_owner": true,
+    "object_exists": true
+  },
+  {
+    "module": "Erdos647Research.Endpoint.WindowParameters",
+    "expected": "<REPO>/research/.lake/build/lib/lean/Erdos647Research/Endpoint/WindowParameters.olean",
+    "resolved": "<REPO>/research/.lake/build/lib/lean/Erdos647Research/Endpoint/WindowParameters.olean",
+    "correct_owner": true,
+    "object_exists": true
+  },
+  {
+    "module": "Erdos647Research.EndpointLogBounds",
+    "expected": "<REPO>/research/.lake/build/lib/lean/Erdos647Research/EndpointLogBounds.olean",
+    "resolved": "<REPO>/research/.lake/build/lib/lean/Erdos647Research/EndpointLogBounds.olean",
+    "correct_owner": true,
+    "object_exists": true
+  },
+  {
+    "module": "Erdos647Research.FactorialBounds",
+    "expected": "<REPO>/research/.lake/build/lib/lean/Erdos647Research/FactorialBounds.olean",
+    "resolved": "<REPO>/research/.lake/build/lib/lean/Erdos647Research/FactorialBounds.olean",
+    "correct_owner": true,
+    "object_exists": true
+  },
+  {
+    "module": "Erdos647Research.FactorialEstimate",
+    "expected": "<REPO>/research/.lake/build/lib/lean/Erdos647Research/FactorialEstimate.olean",
+    "resolved": "<REPO>/research/.lake/build/lib/lean/Erdos647Research/FactorialEstimate.olean",
+    "correct_owner": true,
+    "object_exists": true
+  },
+  {
+    "module": "Erdos647Research.LogBudgetFactorial",
+    "expected": "<REPO>/research/.lake/build/lib/lean/Erdos647Research/LogBudgetFactorial.olean",
+    "resolved": "<REPO>/research/.lake/build/lib/lean/Erdos647Research/LogBudgetFactorial.olean",
+    "correct_owner": true,
+    "object_exists": true
+  },
+  {
+    "module": "Erdos647Research.PrimeReciprocalLower",
+    "expected": "<REPO>/research/.lake/build/lib/lean/Erdos647Research/PrimeReciprocalLower.olean",
+    "resolved": "<REPO>/research/.lake/build/lib/lean/Erdos647Research/PrimeReciprocalLower.olean",
+    "correct_owner": true,
+    "object_exists": true
+  },
+  {
+    "module": "Erdos647Research.PrimeReciprocalSummation",
+    "expected": "<REPO>/research/.lake/build/lib/lean/Erdos647Research/PrimeReciprocalSummation.olean",
+    "resolved": "<REPO>/research/.lake/build/lib/lean/Erdos647Research/PrimeReciprocalSummation.olean",
+    "correct_owner": true,
+    "object_exists": true
+  },
+  {
+    "module": "Erdos647Research.ReciprocalKernel",
+    "expected": "<REPO>/research/.lake/build/lib/lean/Erdos647Research/ReciprocalKernel.olean",
+    "resolved": "<REPO>/research/.lake/build/lib/lean/Erdos647Research/ReciprocalKernel.olean",
+    "correct_owner": true,
+    "object_exists": true
+  },
+  {
+    "module": "Erdos647Research.SelectedPrimeReciprocals",
+    "expected": "<REPO>/research/.lake/build/lib/lean/Erdos647Research/SelectedPrimeReciprocals.olean",
+    "resolved": "<REPO>/research/.lake/build/lib/lean/Erdos647Research/SelectedPrimeReciprocals.olean",
+    "correct_owner": true,
+    "object_exists": true
+  },
+  {
+    "module": "Erdos647Research.SmallPrimeDebitEstimate",
+    "expected": "<REPO>/research/.lake/build/lib/lean/Erdos647Research/SmallPrimeDebitEstimate.olean",
+    "resolved": "<REPO>/research/.lake/build/lib/lean/Erdos647Research/SmallPrimeDebitEstimate.olean",
+    "correct_owner": true,
+    "object_exists": true
+  },
+  {
+    "module": "Erdos647Sieve.Specification",
+    "expected": "<REPO>/.lake/build/lib/lean/Erdos647Sieve/Specification.olean",
+    "resolved": "<REPO>/.lake/build/lib/lean/Erdos647Sieve/Specification.olean",
+    "correct_owner": true,
+    "object_exists": true
+  },
+  {
+    "module": "PrimeNumberTheoremAnd.MediumPNT",
+    "expected": "<REPO>/research/.lake/packages/PrimeNumberTheoremAnd/.lake/build/lib/lean/PrimeNumberTheoremAnd/MediumPNT.olean",
+    "resolved": "<REPO>/research/.lake/packages/PrimeNumberTheoremAnd/.lake/build/lib/lean/PrimeNumberTheoremAnd/MediumPNT.olean",
+    "correct_owner": true,
+    "object_exists": true
+  }
+]

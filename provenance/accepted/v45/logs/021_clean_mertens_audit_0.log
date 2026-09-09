@@ -1,0 +1,21 @@
+$ <REPO>/.tools/elan/toolchains/leanprover--lean4---v4.32.2/bin/lake env lean -DwarningAsError=true Audit/CleanMertens.lean
+Erdos647Sieve.Analytic.reciprocalPrimeSum_tendsto :
+  Filter.Tendsto (fun x => Erdos647Sieve.Analytic.reciprocalPrimeSum x - Real.log (Real.log x)) Filter.atTop
+    (𝓝 Erdos647Sieve.Analytic.reciprocalPrimeConstant)
+'Erdos647Sieve.Analytic.reciprocalPrimeSum_tendsto' depends on axioms: [propext, Classical.choice, Quot.sound]
+Erdos647Sieve.Analytic.reciprocalPrimeLimit_exists :
+  ∃ B,
+    Filter.Tendsto (fun x => ∑ p ∈ Finset.Iic ⌊x⌋₊ with Nat.Prime p, 1 / ↑p - Real.log (Real.log x)) Filter.atTop (𝓝 B)
+'Erdos647Sieve.Analytic.reciprocalPrimeLimit_exists' depends on axioms: [propext, Classical.choice, Quot.sound]
+Erdos647Sieve.Analytic.reciprocalPrime_difference_tendsto_zero.{u_1} {ι : Type u_1} {l : Filter ι} (u v : ι → ℝ)
+  (hu : Filter.Tendsto u l Filter.atTop) (hv : Filter.Tendsto v l Filter.atTop) :
+  Filter.Tendsto
+    (fun i =>
+      Erdos647Sieve.Analytic.reciprocalPrimeSum (v i) - Erdos647Sieve.Analytic.reciprocalPrimeSum (u i) -
+        (Real.log (Real.log (v i)) - Real.log (Real.log (u i))))
+    l (𝓝 0)
+'Erdos647Sieve.Analytic.reciprocalPrime_difference_tendsto_zero' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+
+EXIT_CODE=0
