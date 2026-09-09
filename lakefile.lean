@@ -16,7 +16,7 @@ lean_lib Erdos647Sieve where
 
 lean_lib Examples where
   moreLeanArgs := #["-DwarningAsError=true"]
-  roots := #[`Examples.BasicUsage, `Examples.MomentSpecialization]
+  roots := #[`Examples.BasicUsage, `Examples.MomentSpecialization, `Examples.ElementaryUsage]
 
 /-- Check the public package, examples, exact theorem types, and transitive axioms. -/
 script audit (args) do

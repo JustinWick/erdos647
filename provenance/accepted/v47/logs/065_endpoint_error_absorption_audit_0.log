@@ -1,0 +1,29 @@
+$ <REPO>/.tools/elan/toolchains/leanprover--lean4---v4.32.2/bin/lake env lean -DwarningAsError=true Audit/EndpointErrorAbsorption.lean
+Erdos647Sieve.Endpoint.scaled_exp_div_endpointRHSWith (c u : ℝ) (X : ℕ) (hX : 0 < X) :
+  ↑X * rexp u / endpointRHSWith c X = rexp (u + c * endpointScale X)
+'Erdos647Sieve.Endpoint.scaled_exp_div_endpointRHSWith' depends on axioms: [propext, Classical.choice, Quot.sound]
+Erdos647Sieve.Endpoint.exp_div_endpointRHSWith (c u : ℝ) (X : ℕ) (hX : 0 < X) :
+  rexp u / endpointRHSWith c X = rexp (u - log ↑X + c * endpointScale X)
+'Erdos647Sieve.Endpoint.exp_div_endpointRHSWith' depends on axioms: [propext, Classical.choice, Quot.sound]
+Erdos647Sieve.Endpoint.principal_ratio_tendsto_zero (c : ℝ) (hc : c < 1499 / 1000000) :
+  Tendsto (fun X => ↑X * rexp (-(1499 / 1000000) * (↑(windowLength X) / log (log ↑X))) / endpointRHSWith c X) atTop
+    (𝓝 0)
+'Erdos647Sieve.Endpoint.principal_ratio_tendsto_zero' depends on axioms: [propext, Classical.choice, Quot.sound]
+Erdos647Sieve.Endpoint.momentTail_ratio_tendsto_zero (c : ℝ) :
+  Tendsto (fun X => ↑X * rexp (-↑(windowLength X) / 30) / endpointRHSWith c X) atTop (𝓝 0)
+'Erdos647Sieve.Endpoint.momentTail_ratio_tendsto_zero' depends on axioms: [propext, Classical.choice, Quot.sound]
+Erdos647Sieve.Endpoint.squareRoot_ratio_tendsto_zero (c : ℝ) :
+  Tendsto (fun X => rexp (log ↑X / 2) / endpointRHSWith c X) atTop (𝓝 0)
+'Erdos647Sieve.Endpoint.squareRoot_ratio_tendsto_zero' depends on axioms: [propext, Classical.choice, Quot.sound]
+Erdos647Sieve.Endpoint.amplifiedErrorMajorant_ratio_tendsto_zero (c : ℝ) (hc : c < 1499 / 1000000) :
+  Tendsto (fun X => amplifiedErrorMajorant X / endpointRHSWith c X) atTop (𝓝 0)
+'Erdos647Sieve.Endpoint.amplifiedErrorMajorant_ratio_tendsto_zero' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+Erdos647Sieve.Endpoint.eventually_amplifiedErrorMajorant_le_endpointRHSWith (c : ℝ) (hc : c < 1499 / 1000000) :
+  ∀ᶠ (X : ℕ) in atTop, amplifiedErrorMajorant X ≤ endpointRHSWith c X
+'Erdos647Sieve.Endpoint.eventually_amplifiedErrorMajorant_le_endpointRHSWith' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+
+EXIT_CODE=0

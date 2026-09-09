@@ -1,0 +1,32 @@
+{
+  "version": "v48",
+  "role": "package, source-preservation, audit-coverage and runner tests; not a new proof-strength claim",
+  "accepted_source_run": "erdos647_repo_v47_results_20260908T205250Z_0078dcb7",
+  "new_layout_acceptance": "pending current 30-gate Lean run",
+  "python_tests": 317,
+  "python_tests_exit_code": 0,
+  "promoted_implementations": 7,
+  "accepted_mathematical_modules": 55,
+  "same_path_byte_unchanged_modules": 48,
+  "all_accepted_proof_bodies_preserved": true,
+  "preexisting_audits_byte_unchanged": 30,
+  "original_gates": 29,
+  "current_gates": 30,
+  "new_core_elementary_audit_targets": 20,
+  "old_research_paths": "import-only compatibility forwarders, not deleted or duplicate proof implementations",
+  "pins_lockfiles_core_facades_CI_gitignore_entrypoints": "unchanged",
+  "source_moves_manifest": "scripts/elementary_promotion_v48.json",
+  "changes_outside_math": "docs, explicitly additive audit/build ownership bookkeeping, acceptance-aware regression tests",
+  "tooling_run": "passed; result prefix v48; endpoint status false for tooling-only run",
+  "clean_extraction_test": {
+    "tests": 317,
+    "exit_code": 0,
+    "outside_overlay_files_preserved": 927,
+    "second_overlay_application_preserved_outside_files": true,
+    "cache_tool_results_sentinels_preserved": true,
+    "user_modified_CI_preserved": true,
+    "actual_tooling_entrypoint_exit_code": 0,
+    "output_label_consistent": "v48",
+    "tooling_did_not_promote_endpoint": true
+  }
+}

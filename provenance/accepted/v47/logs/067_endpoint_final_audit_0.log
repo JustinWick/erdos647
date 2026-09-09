@@ -1,0 +1,11 @@
+$ <REPO>/.tools/elan/toolchains/leanprover--lean4---v4.32.2/bin/lake env lean -DwarningAsError=true Audit/EndpointFinal.lean
+Erdos647Sieve.Endpoint.endpointBound_of_lt_principal_rate (c : ℝ) (hc : c < 1499 / 1000000) : EndpointBound c
+'Erdos647Sieve.Endpoint.endpointBound_of_lt_principal_rate' depends on axioms: [propext, Classical.choice, Quot.sound]
+Erdos647Sieve.Endpoint.endpointBound_one_div_thousand : EndpointBound (1 / 1000)
+'Erdos647Sieve.Endpoint.endpointBound_one_div_thousand' depends on axioms: [propext, Classical.choice, Quot.sound]
+Erdos647Sieve.Endpoint.positiveEndpoint : PositiveEndpointClaim
+'Erdos647Sieve.Endpoint.positiveEndpoint' depends on axioms: [propext, Classical.choice, Quot.sound]
+Erdos647Sieve.endpoint : EndpointClaim
+'Erdos647Sieve.endpoint' depends on axioms: [propext, Classical.choice, Quot.sound]
+
+EXIT_CODE=0

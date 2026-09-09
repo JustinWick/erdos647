@@ -1,0 +1,78 @@
+{
+  "run_id": "erdos647_repo_v48_results_20260909T014011Z_dd165b9f",
+  "archive_sha256": "7043421f1ec2ca5c85963e84a1a670096b23a2688fb16932a42b738c1343561e",
+  "manifest_entries": 296,
+  "missing_manifest_files": [],
+  "hash_mismatches": [],
+  "source_snapshot_entries": 179,
+  "snapshot_mismatches": {
+    "before": [],
+    "after": []
+  },
+  "gates": 30,
+  "passed_gates": [
+    "core",
+    "reciprocal_kernel",
+    "reciprocal_abel",
+    "pntplus_inputs",
+    "analytic_inputs",
+    "clean_mertens",
+    "selected_prime_reciprocals",
+    "endpoint_log_bounds",
+    "factorial_bounds",
+    "factorial_estimate",
+    "log_budget_factorial",
+    "prime_reciprocal_lower",
+    "small_prime_debit_estimate",
+    "corrected_budget_estimate",
+    "endpoint_statement",
+    "endpoint_window_parameters",
+    "endpoint_truncation_parameters",
+    "endpoint_cutoff_parameters",
+    "endpoint_prime_mass_parameters",
+    "endpoint_prime_mass_gap",
+    "endpoint_mass_budget_bounds",
+    "endpoint_amplification",
+    "endpoint_moment_tail",
+    "endpoint_error_scales",
+    "endpoint_arithmetic_remainder",
+    "endpoint_counting_reduction",
+    "endpoint_absorption_scales",
+    "endpoint_error_absorption",
+    "endpoint_final",
+    "endpoint_public_results"
+  ],
+  "command_count": 70,
+  "nonzero_commands": [],
+  "distinct_axiom_reports": 235,
+  "unapproved_axioms": {},
+  "audit_files": 32,
+  "expanded_examples": 220,
+  "mathematical_module_files": 66,
+  "warnings": [],
+  "source_changes": {},
+  "endpoint_acceptance": {
+    "run_id": "erdos647_repo_v48_results_20260909T014011Z_dd165b9f",
+    "gate": "endpoint_final",
+    "theorem": "Erdos647Sieve.Endpoint.endpointBound_one_div_thousand",
+    "legacy_theorem": "Erdos647Sieve.endpoint",
+    "general_theorem": "Erdos647Sieve.Endpoint.endpointBound_of_lt_principal_rate",
+    "positive_coefficient_range": {
+      "lower_exclusive": 0,
+      "upper_exclusive": {
+        "numerator": 1499,
+        "denominator": 1000000
+      }
+    },
+    "positive_claim": "Erdos647Sieve.Endpoint.positiveEndpoint",
+    "is_resolution_of_erdos647": false,
+    "basis": "current build, expanded-type and transitive-axiom audits; stable checked inputs"
+  },
+  "toolchain": "leanprover/lean4:v4.32.2",
+  "compiler": "Lean (version 4.32.2, x86_64-unknown-linux-gnu, commit f3b06c705e6c85f5314019d5d3baab0fec5b580c, Release)",
+  "important_hashes": {
+    "Erdos647Sieve/Specification.lean": "39d7c9e69faba89c27d738c6bf37f8b363197e2e5942281c5aedbbba7374c574",
+    "research/Erdos647Research/Endpoint/Main.lean": "91700a3fe721917602595cbd80ba1a515ada11abc679106b37f4167426dec0b4",
+    "research/Erdos647Research/Endpoint/Statement.lean": "79dc70f99795868a9e46630b345ef37792784da486d7355eea770789f35208b4"
+  }
+}

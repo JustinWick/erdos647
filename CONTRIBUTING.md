@@ -1,12 +1,13 @@
 # Contributing
 
 The default public API is `import Erdos647Sieve`, with `Basic` and `Finite` facades.
+`Erdos647Sieve.Elementary` is the opt-in Mathlib-only elementary-estimate surface.
 Preserve existing declarations and exact theorem hypotheses. Avoid proof-body
 refactors during packaging changes; use small named adapters for repeated API or
 cast mismatches. Never replace an unproved result by an axiom or implicit premise.
 
-The root package must remain Mathlib-only. Experimental and PNT+-dependent work
-belongs in `research/`. New research modules need a narrow root in its Lake file,
+The root package must remain Mathlib-only. PNT+-dependent work belongs
+in `research/`, including the accepted endpoint; proved does not mean dependency-free. New research modules need a narrow root in its Lake file,
 a checked-in `research/Audit/*.lean` file, and a gate in `scripts/gates.json`.
 A prerequisite edge means its audit must pass first; imports remain the actual
 mathematical dependency mechanism. `RUN.sh --list` shows the current inventory.
@@ -26,5 +27,14 @@ Commit source, manifests, audit files, documentation, and tests. Do not commit
 The `.gitignore` protects those paths without excluding historical axiom logs.
 CI has read-only repository permissions and needs no repository-specific secrets.
 
-A clean public build is not a proof of the unfinished endpoint. Update proof-status
-records only from actual theorem-type and axiom results, keeping their provenance.
+A core-only build does not check the PNT+-dependent endpoint. The accepted v47
+endpoint is historical evidence; current-layout validation must run its own
+selected audits. Update proof-status records only from actual theorem-type and
+axiom results, keeping their provenance.
+
+Seven elementary implementations live under `Erdos647Sieve/Elementary/`. Their
+old research imports remain forwarding modules, not duplicate implementations.
+New theorem statements should receive exact-type/axiom checks in the owning
+package. Preserve the existing checks on old imports as compatibility regressions.
+Do not add PNT+ to the core to move the endpoint into it. The public endpoint
+facade is `Erdos647Research.Endpoint` in the separate package.

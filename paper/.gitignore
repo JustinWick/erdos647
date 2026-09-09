@@ -1,0 +1,10 @@
+*.aux
+*.blg
+*.fdb_latexmk
+*.fls
+*.log
+*.out
+*.synctex.gz
+*.toc
+__pycache__/
+# Keep the PDF and .bbl: both are intentional release artifacts.

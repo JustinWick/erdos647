@@ -1,0 +1,13 @@
+{
+  "BUILD_PDF.sh": "5704a50b04e8eeb981f3176b3c1208fe4fc66aa489d58cc2ba599c91e96cdab8",
+  "erdos647_sparsity.pdf": "37a2cde5e9daee8d24fdb598355321104c27d29354ccfed10d6b82b5a77ba23f",
+  ".gitignore": "46c6693f60b0c2232bb16918684dbe43cbccbfa022a4015739cec1cb0263159a",
+  "erdos647_sparsity.bbl": "cce1bc701acfcba6236b6142c2e67faef1562aa05ac6eced450b1d26dea2d462",
+  "erdos647_sparsity.tex": "9faff1fd70e6ee3dfc6b89a8c6f9875c6138551d22669734ce62a72291f9256a",
+  "references.bib": "3825e966a707fb58e13755061266ad6a43782f0f2dbb3d9359f6013488b210e0",
+  "README.md": "8d49dabf565e24a4f6be261f01c025a3c02f528f009fe972d0cd19d924a4f51d",
+  "supplement/verify_evidence.py": "d3a28d948e9b46472bc841d5a02ce6b326ac6a5c0cec95dcbcad1bb5ea446f10",
+  "supplement/v48_evidence_review.json": "71a6d4b2b76ae6f7871ee33c0e4809c25817a6eaa2c2f5a3c4511b9102db0188",
+  "supplement/erdos647_repo_v48_results_20260909T014011Z_dd165b9f.zip": "7043421f1ec2ca5c85963e84a1a670096b23a2688fb16932a42b738c1343561e",
+  "supplement/manuscript_validation.json": "6d823441a646df73509b761f55247c35dc02043dc450511bff1510f86abb2269"
+}

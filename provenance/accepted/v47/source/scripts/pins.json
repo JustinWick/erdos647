@@ -1,0 +1,41 @@
+{
+  "schema": 1,
+  "toolchain": "leanprover/lean4:v4.32.2",
+  "lean_version": "4.32.2",
+  "specification_sha256": "39d7c9e69faba89c27d738c6bf37f8b363197e2e5942281c5aedbbba7374c574",
+  "mathlib_revision": "905b95818eb32af7874a58b427f50c1711a5e96c",
+  "allowed_axioms": [
+    "propext",
+    "Classical.choice",
+    "Quot.sound"
+  ],
+  "dependencies": {
+    ".": {
+      "mathlib": "905b95818eb32af7874a58b427f50c1711a5e96c",
+      "plausible": "e12c1910fe855cbfc38803cd4e55543906d5fa62",
+      "LeanSearchClient": "c5d5b8fe6e5158def25cd28eb94e4141ad97c843",
+      "importGraph": "7e9612bf0b9ee66db3cb5b9988a35afc706f5a12",
+      "proofwidgets": "6e311e2a844da9b2cc3971187df2fe0066947b93",
+      "aesop": "a7dbf0c63b694e47f425f3dcddbc0e178bb432d3",
+      "Qq": "38d591e778f100aec9762bb582f9c7f55f50e9dc",
+      "batteries": "023ce7d62a0531e22a5331e20b587817a80d49ff",
+      "Cli": "88679d088c9720c27ebdf2ba4dafe17341747f94"
+    },
+    "research": {
+      "mathlib": "905b95818eb32af7874a58b427f50c1711a5e96c",
+      "PrimeCert": "6cac6fcb55fe9070afc4c42cad1d0eaa1c59e6a1",
+      "leancert": "6b11513512c9d27183fb4725bfc291ab38b4a6d7",
+      "checkdecls": "3d425859e73fcfbef85b9638c2a91708ef4a22d4",
+      "LeanArchitect": "d9013cc08bd2b5483e837368dfa4cc7ead92a5c2",
+      "plausible": "e12c1910fe855cbfc38803cd4e55543906d5fa62",
+      "LeanSearchClient": "c5d5b8fe6e5158def25cd28eb94e4141ad97c843",
+      "importGraph": "7e9612bf0b9ee66db3cb5b9988a35afc706f5a12",
+      "proofwidgets": "6e311e2a844da9b2cc3971187df2fe0066947b93",
+      "aesop": "a7dbf0c63b694e47f425f3dcddbc0e178bb432d3",
+      "Qq": "38d591e778f100aec9762bb582f9c7f55f50e9dc",
+      "batteries": "023ce7d62a0531e22a5331e20b587817a80d49ff",
+      "Cli": "88679d088c9720c27ebdf2ba4dafe17341747f94",
+      "PrimeNumberTheoremAnd": "a5154676af9aa3095150ee410cdda80555aa0642"
+    }
+  }
+}

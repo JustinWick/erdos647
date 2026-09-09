@@ -1,0 +1,31 @@
+name: Full research checks (manual)
+on:
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: research-${{ github.ref }}
+  cancel-in-progress: false
+jobs:
+  all-implemented-gates:
+    runs-on: ubuntu-latest
+    timeout-minutes: 180
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/cache@v4
+        with:
+          path: |
+            .tools/elan
+            .lake
+            research/.lake
+          key: research-${{ runner.os }}-${{ runner.arch }}-${{ hashFiles('lean-toolchain', 'lake-manifest.json', 'research/lake-manifest.json') }}
+      - name: Setup pinned dependencies and run all implemented gates
+        run: bash TEST_ALL.sh --setup --jobs 2
+      - name: Preserve diagnostics even after a failure
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: full-research-results
+          path: results/
+          if-no-files-found: ignore
+          retention-days: 14

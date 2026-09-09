@@ -1,0 +1,39 @@
+{
+  "run_id": "erdos647_repo_v47_results_20260908T205250Z_0078dcb7",
+  "review_date": "2026-09-08",
+  "basis": "uploaded source and build/type/axiom logs; no remote PR inspection",
+  "gates_passed": 29,
+  "distinct_audited_declarations": 235,
+  "audit_files": 30,
+  "exact_type_definition_examples": 194,
+  "manifest_entries_verified": 272,
+  "checked_source_files": 159,
+  "runner_tests": 284,
+  "warnings_in_build_audit_logs": 0,
+  "all_recorded_commands_succeeded": true,
+  "source_stable": true,
+  "allowed_axioms": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "endpoint_acceptance": {
+    "run_id": "erdos647_repo_v47_results_20260908T205250Z_0078dcb7",
+    "gate": "endpoint_final",
+    "theorem": "Erdos647Sieve.Endpoint.endpointBound_one_div_thousand",
+    "legacy_theorem": "Erdos647Sieve.endpoint",
+    "general_theorem": "Erdos647Sieve.Endpoint.endpointBound_of_lt_principal_rate",
+    "positive_coefficient_range": {
+      "lower_exclusive": 0,
+      "upper_exclusive": {
+        "numerator": 1499,
+        "denominator": 1000000
+      }
+    },
+    "positive_claim": "Erdos647Sieve.Endpoint.positiveEndpoint",
+    "is_resolution_of_erdos647": false,
+    "basis": "current build, expanded-type and transitive-axiom audits; stable checked inputs"
+  },
+  "archive_sha256": "86f4a7e93c93c50d2ffed4479d94325e450cd7c30a56e0d8e55683d8692173dd",
+  "scope": "accepted v47 endpoint source, before v48 architecture cleanup"
+}

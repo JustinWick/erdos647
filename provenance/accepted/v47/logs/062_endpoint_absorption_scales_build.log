@@ -1,0 +1,5 @@
+$ <REPO>/.tools/elan/toolchains/leanprover--lean4---v4.32.2/bin/lake build +Erdos647Research.Endpoint.AbsorptionScales
+✔ [8662/8662] Built Erdos647Research.Endpoint.AbsorptionScales (3.9s)
+Build completed successfully (8662 jobs).
+
+EXIT_CODE=0

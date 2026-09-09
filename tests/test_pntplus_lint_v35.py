@@ -155,7 +155,7 @@ class LintAndGates(unittest.TestCase):
             self.assertEqual(run.record['gates']['pntplus_inputs']['status'],'FAIL')
             command.assert_not_called()
     def test_small_prime_indices_are_explicit_naturals(self):
-        t=(ROOT/'research/Erdos647Research/SmallPrimeDebitEstimate.lean').read_text()
+        t=(ROOT/'Erdos647Sieve/Elementary/SmallPrimeDebitEstimate.lean').read_text()
         self.assertIn('(f := fun p : ℕ =>',t)
         self.assertIn('(g := fun p : ℕ =>',t)
         self.assertIn('(fun (p : ℕ) hp =>',t)

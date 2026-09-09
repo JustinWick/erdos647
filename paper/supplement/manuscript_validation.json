@@ -1,0 +1,18 @@
+{
+  "pages": 25,
+  "bibliography_entries": 20,
+  "latex_overfull_boxes": [],
+  "latex_warnings": [],
+  "unresolved_references": false,
+  "pdf_replacement_characters": 0,
+  "out_of_page_text_blocks": [],
+  "visual_review": "All pages rendered and inspected in page-contact sheets; final title, theorem, mathematical displays, tables and references checked at larger size.",
+  "paper_mathematics": "Full proof through the accepted fixed-coefficient endpoint. Paper-only residue-template extension and proposed applications are labeled separately.",
+  "main_result": {
+    "coefficient_lower_exclusive": 0,
+    "coefficient_upper_exclusive": "1499/1000000",
+    "explicit_corollary": "1/1000",
+    "is_resolution_of_647": false
+  },
+  "evidence_archive": "supplement/erdos647_repo_v48_results_20260909T014011Z_dd165b9f.zip"
+}

@@ -1,0 +1,23 @@
+Erdos647Sieve — repository packaging, 2026-09-08
+
+This distribution retains the project Lean source from the Erdős #647 research
+workflow and the v31 attached-sum repair. Mathematical proof files are reproduced
+without additional proof-body edits. Source provenance, historical axiom reports,
+and supplied handoffs are retained under provenance/.
+
+The Apache-2.0 license text is retained from the v31 package scaffold. Project
+attribution and release ownership belong to the repository owner; this package
+does not invent an author name or claim third-party authorship of project proofs.
+Mathlib and PrimeNumberTheoremAnd are external Git dependencies with their own
+licenses and notices. No third-party compiler binaries or complete library source
+copies are bundled in this distribution.
+
+PNT+ analytic compatibility extraction (v35)
+-------------------------------------------
+research/Erdos647Research/Compat/PNTPlus.lean extracts seven proved routines from
+PrimeNumberTheoremAnd by its contributors, under Apache-2.0:
+https://github.com/AlexKontorovich/PrimeNumberTheoremAnd/blob/a5154676af9aa3095150ee410cdda80555aa0642/PrimeNumberTheoremAnd/IEANTN/RosserSchoenfeld/RosserSchoenfeldPrime.lean
+The broad catalogue imports and unrelated declarations/blueprint annotations are
+omitted; the mathematical PNT/integrability interfaces are retained. No claim is
+made that the complete upstream research catalogue is free of unfinished proofs.
+The source-map and license are included with this repository.

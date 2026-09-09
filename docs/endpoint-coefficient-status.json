@@ -1,7 +1,7 @@
 {
-  "version": "v47",
+  "version": "v48",
   "updated": "2026-09-08",
-  "scope": "endpoint research, not the accepted finite core",
+  "scope": "accepted endpoint in the separate analytic package; v48 package cleanup requires its own checks",
   "goal_declaration": "Erdos647Sieve.Endpoint.PositiveEndpointClaim",
   "explicit_bound_declaration": "Erdos647Sieve.Endpoint.EndpointBound",
   "critical_exponent": "Real.log 2 / (1 + Real.log 2)",
@@ -14,9 +14,12 @@
     "required": false
   },
   "working_candidate": null,
-  "proved_coefficient": null,
-  "proved_endpoint_theorem": null,
-  "endpoint_acceptance_evidence": null,
+  "proved_coefficient": {
+    "numerator": 1,
+    "denominator": 1000
+  },
+  "proved_endpoint_theorem": "Erdos647Sieve.Endpoint.endpointBound_one_div_thousand",
+  "endpoint_acceptance_evidence": "provenance/accepted/v47/README.md",
   "optimization_policy": "Preserve the critical exponent and scale; select an explicit fixed c > 0 from a proved comfortable decay margin. No coefficient optimization project and no new rigid target.",
   "parameter_policy": {
     "keep_existing_definitions": true,
@@ -57,9 +60,10 @@
     "latest_recheck_run_id": "erdos647_repo_v42_results_20260908T111052Z_81bd3ce5"
   },
   "next_effort": {
-    "status": "source implemented; acceptance pending",
-    "scope": "divergence and comparison of endpointScale, absorption of every normalized error, final fixed-c theorem and historical corollary",
-    "assignment": "docs/final-endpoint-branch.md"
+    "status": "implemented; new-layout checks pending",
+    "scope": "Mathlib-only elementary promotion and public analytic/endpoint facades",
+    "assignment": "docs/library-promotion-v48.md",
+    "mathematical_strength_change": false
   },
   "parameter_pr_local_acceptance": {
     "status": "satisfied",
@@ -117,7 +121,7 @@
     "arithmetic_upper_scale": "exp(log X / 2)",
     "final_reduction_covers_negative_budget": true,
     "is_endpoint_bound_proof": false,
-    "remaining": "final same-scale absorption; v46 source pending its own final audit",
+    "remaining": "completed by the accepted v47 final absorption",
     "latest_run": {
       "run_id": "erdos647_repo_v45_results_20260908T125209Z_b6d9b2cb",
       "gates_passed": 26,
@@ -130,7 +134,7 @@
     "accepted_declarations": 25
   },
   "final_absorption_branch": {
-    "status": "source_implemented_acceptance_pending",
+    "status": "accepted",
     "gates": [
       "endpoint_absorption_scales",
       "endpoint_error_absorption",
@@ -155,19 +159,31 @@
       "Erdos647Sieve.Endpoint.positiveEndpoint",
       "Erdos647Sieve.endpoint"
     ],
-    "acceptance_evidence": null,
-    "coefficient_is_not_yet_accepted": true,
+    "acceptance_evidence": "provenance/accepted/v47/README.md",
+    "coefficient_is_not_yet_accepted": false,
     "legacy_corollary_cost": "rational strict inequality and the already accepted statement equivalence; no parameter retuning",
     "latest_run": {
-      "run_id": "erdos647_repo_v46_results_20260908T203111Z_99d07146",
-      "gates_passed": 26,
-      "gates_failed": 1,
-      "gates_blocked": 2,
-      "new_final_layer_gates_accepted": false,
-      "failure_module": "AbsorptionScales.lean",
-      "failure_kind": "explicit-quotient / named endpointScale target conversion",
-      "repair_overlay": "v47",
-      "repair_acceptance": "pending"
+      "run_id": "erdos647_repo_v47_results_20260908T205250Z_0078dcb7",
+      "gates_passed": 29,
+      "gates_failed": 0,
+      "gates_blocked": 0,
+      "new_final_layer_gates_accepted": true,
+      "repair_acceptance": "accepted"
+    },
+    "run_id": "erdos647_repo_v47_results_20260908T205250Z_0078dcb7",
+    "proved_positive_coefficient_range": {
+      "lower_exclusive": 0,
+      "upper_exclusive": {
+        "numerator": 1499,
+        "denominator": 1000000
+      }
     }
+  },
+  "cleanup_v48": {
+    "status": "acceptance_pending",
+    "does_not_promote_new_layout_from_old_run": true,
+    "new_gate": "endpoint_public_results",
+    "expanded_core_gate": "core",
+    "total_gates": 30
   }
 }

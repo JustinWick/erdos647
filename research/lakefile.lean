@@ -42,7 +42,14 @@ lean_lib Erdos647Endpoint where
     `Erdos647Research.Endpoint.ErrorAbsorption,
     `Erdos647Research.Endpoint.Main]
 
-/-- All registered research proof gates, including the endpoint parameter layer. -/
+/-- Public analytic/endpoint facades and facade-only usage examples. -/
+@[default_target]
+lean_lib Erdos647PublicResults where
+  moreLeanArgs := #["-DwarningAsError=true"]
+  roots := #[`Erdos647Research.Endpoint, `Erdos647Research.Analytic,
+    `Erdos647Research.Examples.EndpointUsage]
+
+/-- All registered checks for the separate analytic/endpoint package. -/
 script audit (args) do
   let child ← IO.Process.spawn {
     cmd := "python3"
